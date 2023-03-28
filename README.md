@@ -15,18 +15,14 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 
 <!-- resumo do projeto -->
 <p>
-    O IONIC Deploy Manager foi um projeto destinado à empresa IONIC Health solucionando o tema proposto. Usando react + typescript para o front-end e Node + Typescript para back-end juntamente com outras ferramentas e a metodologia SCRUM para o desenvolvimento do projeto foi feito uma aplicação web resolvendo o problema apresentado no início do projeto
+    O IONIC Deploy Manager foi um projeto destinado à empresa IONIC Health solucionando o problema apresentado no kick-off. Foi utilizado react + typescript para o front-end, Node + Typescript para back-end e outras ferramentas para organização e planejamento, além da metodologia SCRUM para o desenvolvimento do projeto.
 </p>
-
-<br>
 
 <!-- objetivo -->
 ## :dart: Objetivo
 <p>
-    Este projeto tem como objetivo resolver o problema de gerenciamento de chamados da empresa IONIC Health, sendo possível administrar as solicitações de implementação ou solução de bugs e erros.
+    Este projeto tem como objetivo, através de uma aplicação web, resolver o problema de gerenciamento de chamados da empresa, tornando mais organizado a criação de novos chamados, as avaliações das solicitações e o controle de produção das implementações ou correções de erros nos projetos, tendo todo o processo gerenciado pelo sistema.
 </p>
-
-<br>
 
 <!-- backlog -->
 ## :repeat: Backlog
