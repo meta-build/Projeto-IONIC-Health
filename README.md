@@ -11,11 +11,11 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 <span><img src="https://user-images.githubusercontent.com/111146527/227815206-46a81688-4715-4b95-a693-7b111edfa3e3.png" width="50%" alt="IONIC Health"></span>
 
 <!-- cabeçalho -->
-<h4>Aprendizagem por projeto Integrado <h1>Nome projeto</h1></h4>
+<h4>Aprendizagem por projeto Integrado <h1>IONIC Deploy Manager</h1></h4>
 
 <!-- resumo do projeto -->
 <p>
-    Donec lacus dui, eleifend et mi non, mollis cursus lectus. Praesent ut finibus tortor, vitae faucibus turpis. Sed nec eros eu orci ullamcorper ullamcorper. Integer eleifend at nisi non egestas. Curabitur venenatis et sapien id pulvinar. 
+    O IONIC Deploy Manager foi um projeto destinado à empresa IONIC Health solucionando o tema proposto. Usando react + typescript para o front-end e Node + Typescript para back-end juntamente com outras ferramentas e a metodologia SCRUM para o desenvolvimento do projeto foi feito uma aplicação web resolvendo o problema apresentado no início do projeto
 </p>
 
 <br>
@@ -23,7 +23,7 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 <!-- objetivo -->
 ## :dart: Objetivo
 <p>
-    Donec lacus dui, eleifend et mi non, mollis cursus lectus. Praesent ut finibus tortor, vitae faucibus turpis. Sed nec eros eu orci ullamcorper ullamcorper. Integer eleifend at nisi non egestas. Curabitur venenatis et sapien id pulvinar. 
+    Este projeto tem como objetivo resolver o problema de gerenciamento de chamados da empresa IONIC Health, sendo possível administrar as solicitações de implementação ou solução de bugs e erros.
 </p>
 
 <br>
@@ -104,22 +104,22 @@ modelo:
 ## :busts_in_silhouette: Equipe
 <!-- scrum master -->
 <div>
+<span>
 <!--link github aqui -->
  <a href="https://github.com/RodrigoDGoulart">
  <!-- card aqui -->
   <img src="https://user-images.githubusercontent.com/111146527/227824022-e663d388-5db0-4900-9d9c-05a98872277f.png" width="350px">
  </a>
-</div>
-
-<br>
+</span>
 
 <!-- product owner -->
-<div>
+<span>
 <!--link github aqui -->
  <a href="https://github.com/WallaceMarinho">
  <!-- card aqui -->
   <img src="https://user-images.githubusercontent.com/111146527/227824051-5366357b-ce70-4051-9bf5-36f262235784.png" width="350px">
  </a>
+</span>
 </div>
 
 <br>
