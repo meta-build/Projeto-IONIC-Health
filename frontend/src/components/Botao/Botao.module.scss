@@ -1,0 +1,25 @@
+@import '@/styles/variables.scss';
+
+.botao {
+    font-size: 16px;
+    padding: 4px;
+    border-radius: 24px;
+    width: 200px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.preenchido, .contornado:hover {
+    background-color: $ciano-300;
+    color: $cinza-600;
+}
+
+.preenchido:hover {
+    background-color: $ciano-400;
+}
+
+.contornado {
+    background: none;
+    border: 2px solid $ciano-300;
+    color: $ciano-300;
+}
