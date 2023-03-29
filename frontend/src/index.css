@@ -4,4 +4,9 @@
 
 body {
   margin: 0;
+  background-color: #0E0E19;
+}
+
+body * {
+  color: white;
 }
