@@ -1,14 +1,11 @@
 import { faGrinHearts } from "@fortawesome/free-regular-svg-icons";
-import IconButton from "../../components/Botao/BotaoDropdown";
-import DropdownPopup from "../../components/DropdownPopup";
-import AddButton from "../../components/Botao/BotaoIcon";
-import Menu from "../../components/Menu";
+import BotaoIcon from "../../components/BotaoIcon";
 
 
 export default function Home () {
     return(
         <div>
-            <Menu />
+            <BotaoIcon handleClick={() => console.log('foi')} icon={faGrinHearts}>Teste 123123123123</BotaoIcon>
         </div>
     );
 }
