@@ -5,6 +5,8 @@
 body {
   margin: 0;
   background-color: #0E0E19;
+  background-image: url('assets/background.png');
+  background-position: center top;
   color: white;
   font-size: 16px;
 }
