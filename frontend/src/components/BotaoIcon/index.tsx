@@ -1,11 +1,9 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import styles from './BotaoIcon.module.scss';
 import { ReactNode } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 interface Props {
-    icon: IconDefinition;
+    icon: JSX.Element;
     children: ReactNode;
     handleClick: () => void;
     className?: string;
@@ -20,7 +18,7 @@ export default function BotaoIcon (props: Props) {
             [className]: true
         }) }>
             <button onClick={props.handleClick}>
-                <FontAwesomeIcon icon={props.icon} />
+                {props.icon}
             </button>
             <span>{props.children}</span>
         </div>
