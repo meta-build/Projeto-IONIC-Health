@@ -1,6 +1,5 @@
 import styles from './Home.module.scss';
-import { faFolder, faFile, faFileLines} from "@fortawesome/free-regular-svg-icons";
-import { faPlus, faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { faFile } from "@fortawesome/free-regular-svg-icons";
 import BotaoIcon from "../../components/BotaoIcon";
 import { Header36 } from '../../components/Header';
 import classNames from 'classnames';
@@ -23,7 +22,6 @@ export default function Home () {
 
     return(
         <div className={styles.container}>
-            
             <Header36 className={styles.children}>Home</Header36>
             <div className={classNames({
                 [styles['container-button']]: true,
