@@ -1,0 +1,81 @@
+@import '@/styles/variables.scss';
+
+$icon-size: 16px;
+
+.container {
+    position: relative;
+    width: fit-content;
+    padding: 0;
+    margin: 0;
+}
+
+.botao {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    min-width: 155px;
+    border: none;
+    background: none;
+    border-bottom: 1px solid white;
+    color: white;
+    .children {
+        flex: 1;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        justify-content: center;
+    }
+    .arrow {
+        height: 16px;
+        font-weight: bold;
+    }
+}
+
+.icon {
+    font-size: $icon-size;
+    margin-right: 8px;
+    span{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: -2px;
+        font-size: calc($icon-size + 2px);
+    }
+}
+
+.botao:hover {
+    background-color: $cinza-300-hover;
+    cursor: pointer;
+}
+
+.list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    margin-top: 8px;
+    list-style: none;
+    color: $cinza-600;
+    border-radius: 12px;
+    width: 100%;
+    overflow: hidden;
+    li {
+        padding: 0;
+        margin: 0;
+        button {
+            border: none;
+            display: flex;
+            align-items: center;
+            background-color: $cinza-300;
+            padding: 8px;
+            width: 100%;
+            text-align: left;
+        }
+        button:hover{
+            background-color: $cinza-300-hover;
+            cursor: pointer;
+        }
+    }
+}
