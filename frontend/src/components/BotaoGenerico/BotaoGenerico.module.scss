@@ -1,0 +1,36 @@
+@import '@/styles/variables.scss';
+
+$icon-size: 16px;
+
+.container {
+    position: relative;
+    width: fit-content;
+    padding: 0;
+    margin: 0;
+}
+
+.botao {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    min-width: 155px;
+    border: none;
+    background: $cinza-300;
+    color: black;
+    border-radius: 10px;
+    .children {
+        flex: 1;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        justify-content: center;
+    }
+   
+}
+
+
+.botao:hover {
+    background-color: $cinza-300-hover;
+    cursor: pointer;
+}
+
