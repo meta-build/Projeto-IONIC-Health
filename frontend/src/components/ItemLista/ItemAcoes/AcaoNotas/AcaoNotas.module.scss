@@ -1,0 +1,14 @@
+@import '@/styles/variables.scss';
+
+.container, .nota {
+    display: flex;
+    align-items: baseline;
+}
+
+.nota {
+    margin-right: 18px;
+}
+
+.numero {
+    margin-left: 2px;
+}
