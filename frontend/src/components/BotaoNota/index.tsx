@@ -5,13 +5,14 @@ import { useState } from 'react';
 interface Props {
     cor?: 'cinza' | 'verde' | 'azul1' | 'azul2' | 'amarelo' | 'vermelho';
     valor: number;
-    handleClick: () => void;
+    handleClick?: () => void;
     selecionado: boolean;
     className?: string | any;
+    clicavel?: boolean
 }
 
 export default function BotaoNota (props: Props) {
-    const {cor = 'cinza'} = props;
+    const {cor = 'cinza', clicavel = false} = props;
 
     return(
         <div className={props.className}>
@@ -19,7 +20,9 @@ export default function BotaoNota (props: Props) {
             className={classNames({
                 [styles.botao]: true,
                 [styles[`${cor}-contorno`]]: true,
-                [styles[`${cor}-preenchimento`]]: props.selecionado
+                [styles[`${cor}-preenchimento`]]: props.selecionado,
+                [styles.clicavel]: clicavel,
+                [props.className]: true
             })}
             onClick={props.handleClick}
             >
