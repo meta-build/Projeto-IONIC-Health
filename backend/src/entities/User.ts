@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } fr
 export class User {
     // define a chave primária como auto incremento
     @PrimaryGeneratedColumn()
-    idSolicitacao: number;
+    id: number;
 
     @Column({nullable:false, unique:true, length: 100})
     nomeSolicitacao: string;
