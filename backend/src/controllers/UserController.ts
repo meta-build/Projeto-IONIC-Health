@@ -80,7 +80,7 @@ class UserController {
     const { idSolicitacao, mail, password, nomeSolicitacao, tipoSolicitacao } = req.body;
     // obtém o id do usuário que foi salvo na autorização na middleware
     const { id } = res.locals;
-    const usuario: any = await AppDataSource.manager.findOneBy(User, { idSolicitacao }).catch((e) => {
+    const usuario: any = await AppDataSource.manager.findOneBy(User, { id }).catch((e) => {
       return { error: "Identificador inválido" };
     })
     if (usuario && usuario.idSolicitacao) {
