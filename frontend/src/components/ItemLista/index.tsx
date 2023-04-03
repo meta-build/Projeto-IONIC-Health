@@ -13,7 +13,7 @@ export default function ItemLista (props: Props) {
     return(
         <>
             <li className={styles.item}>
-                <a className={styles.nome} onClick={props.handleClickName}>nome solicitação</a>
+                <a className={styles.nome} onClick={props.handleClickName}>{props.itemName}</a>
                 {props.acao}
             </li>
         </>

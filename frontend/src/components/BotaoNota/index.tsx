@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface Props {
     cor?: 'cinza' | 'verde' | 'azul1' | 'azul2' | 'amarelo' | 'vermelho';
-    valor: number;
+    valor?: number;
     handleClick?: () => void;
     selecionado: boolean;
     className?: string | any;

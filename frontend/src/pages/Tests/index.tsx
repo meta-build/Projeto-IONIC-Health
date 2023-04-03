@@ -39,7 +39,7 @@ export default function Tests () {
                 <ItemLista
                 itemName="teste"
                 handleClickName={() => console.log('click name')}
-                acao={<AcaoNotas notaRisco={1} notaImpacto={2} notaCusto={3} />}
+                acao={<AcaoNotas notaRisco={1} notaImpacto={2} notaCusto={2} />}
                 />
                 <ItemLista
                 itemName="teste"

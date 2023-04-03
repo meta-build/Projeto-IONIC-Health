@@ -14,10 +14,7 @@ export default function Home () {
 
     const itens = [
         new HomeItem('Criar Feature/Hotfix', <GoogleIcon>&#xe89c;</GoogleIcon>, '/nova-feature'),
-        new HomeItem('Solicitações Recentes', <FontAwesomeIcon icon={faFile} />, '/solicitacoes/recentes'),
-        new HomeItem('Solicitações em Avaliação', <GoogleIcon>&#xf801;</GoogleIcon>, '/solicitacoes/avaliacao'),
-        new HomeItem('Solicitações em Produção', <GoogleIcon>&#xe9fc;</GoogleIcon>, '/solicitacoes/producao'),
-        new HomeItem('Solicitações Arquivadas', <GoogleIcon>&#xE2c8;</GoogleIcon>, '/solicitacoes/arquivadas'),
+        new HomeItem('Solicitações', <FontAwesomeIcon icon={faFile} />, '/solicitacoes'),
     ]
 
     return(
