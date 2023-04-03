@@ -41,13 +41,14 @@ class UserController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { nome, tipo, solicitante } = req.body;
+    const { nome, tipo, solicitante, verificaSolicitacao } = req.body;
     console.log(req.body)
     //verifica se foram fornecidos os parâmetros
     const obj = new User();
     obj.nomeSolicitacao = nome;
     obj.tipoSolicitacao = tipo;
     obj.solicitante = solicitante;
+    obj.verificaSolicitacao = verificaSolicitacao
 
     console.log(obj)
 
@@ -69,7 +70,8 @@ class UserController {
         id: usuario.idSolicitacao,
         nome: usuario.nomeSolicitacao,
         tipoSolicitacao: usuario.tipoSolicitacao,
-        solicitante: usuario.solicitante
+        solicitante: usuario.solicitante,
+        verificaSolicitacao: usuario.verificaSolicitacao
       });
     }
     return res.json(usuario);
