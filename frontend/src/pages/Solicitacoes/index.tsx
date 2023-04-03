@@ -96,10 +96,10 @@ export default function Solicitacoes () {
                         </Botao>
                 </div>
                 <ul className={styles.lista}>
-                    {solicitacoes.map(s => (
+                    {solicitacoes.map((s, index) => (
                         <ItemLista
                         itemName={s['nome']}
-                        handleClickName={() => console.log(s['nome'])}
+                        handleClickName={() => navigate(`/editar-solicitacao/${index}`)}
                         acao={
                         s['status']['nome'] == 'Recentes' ?
                         <AcaoEditarExcluir
