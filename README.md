@@ -27,7 +27,7 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 <!-- backlog -->
 ## :repeat: Backlog
 <!-- remover comentário da imagem abaixo -->
-<!-- <img src="https://user-images.githubusercontent.com/90328897/183754169-d53ec32c-cf02-4135-9bbb-a39c5b414254.png" width="100%"> -->
+<img src="https://user-images.githubusercontent.com/90328897/229401867-6c327c67-188d-41d4-a167-153cb717ef4c.png" width="100%">
 
 <!-- sprints --> 
 ## :gear: Sprints
@@ -35,6 +35,8 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
     1ª Sprint
 </h2>
 <p>Entrega: 13/03/2023 à 02/04/2023</p>
+
+<img src="https://user-images.githubusercontent.com/90328897/229401721-f29b68e8-7fd7-4c1f-8a0c-8146fbab9ce4.png" width="100%">
 
 <!--
 ### Funcionalidade 1

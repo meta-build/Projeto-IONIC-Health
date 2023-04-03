@@ -6,7 +6,7 @@ import GetAllSolicitacao from "../services/GetAllSolicitacao";
 
 const routes = Router();
 
-routes.post('/', UserController.create);
+routes.post('/create', UserController.create);
 routes.put('/', authorization, UserController.update);
 routes.get('/solicitacao', GetOneSolicitacao.getSolicitacaoById)
 routes.get('/all', GetAllSolicitacao.getAllSolicitacao)

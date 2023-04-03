@@ -5,11 +5,11 @@ import { User } from '../entities/User';
 class GetAllSolicitacao {
 
 public async getAllSolicitacao(req: Request, res: Response){
-    const usuario: any = await AppDataSource
+    const solicitacao: any = await AppDataSource
     .getRepository(User)
     .find()
-    console.log(usuario)
-    return usuario
+    res.send(solicitacao)
+    return solicitacao
 }
     }
 export default new GetAllSolicitacao();
