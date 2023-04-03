@@ -10,8 +10,11 @@ import ItemLista from '../../components/ItemLista';
 import AcaoEditarExcluir from '../../components/ItemLista/ItemAcoes/AcaoEditarExcluir';
 import AcaoNotas from '../../components/ItemLista/ItemAcoes/AcaoNotas';
 import AcaoProducao from '../../components/ItemLista/ItemAcoes/AcaoProducao';
+import { useNavigate } from 'react-router-dom';
+import Voltar from '../../components/Voltar';
 
 export default function Solicitacoes () {
+    const navigate = useNavigate();
 
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
@@ -56,63 +59,65 @@ export default function Solicitacoes () {
     }, [filtroNome, tipo, status]);
     
     return (
-        <section className={styles.section}>
-            <Header32>Solicitações</Header32>
-            <div className={styles.inputContainer}>
-                <InputContornado
-                className={styles.inputPreenchimento}
-                placeholder='Pesquisar Solicitação...'
-                icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
-                handleChange={(e) => setFiltroNome(e.target.value)} />
-                <DropdownContornado
-                itens={[
-                    new DropdownItem('Feature', <GoogleIcon>&#xE8B8;</GoogleIcon>),
-                    new DropdownItem('Hotfix', <GoogleIcon>&#xf10b;</GoogleIcon>)
-                ]}
-                handleSelected={(s: string) => setTipo(s)}
-                />
-            </div>
-            <div className={styles.botoes}>
-                {listaStatus.map(s => (
-                    <Botao
-                    className={styles.botao}
-                    handleClick={() => setStatus(s)}
-                    variante={s == status ? 'preenchido' : 'contornado'}>
-                        {s}
-                    </Botao>
-                ))}
-            </div>
-            <div className={styles.botaoCriarContainer}>
-                    <Botao
-                    className={styles.botaoCriar}
-                    // edite aqui fabia \/ \/ \/
-                    handleClick={() => console.log('criar')}
-                    variante='contornado'>
-                        Criar Solicitação
-                    </Botao>
-            </div>
-            <ul className={styles.lista}>
-                {solicitacoes.map(s => (
-                    <ItemLista
-                    itemName={s['nome']}
-                    handleClickName={() => console.log(s['nome'])}
-                    acao={
-                    s['status']['nome'] == 'Recentes' ?
-                    <AcaoEditarExcluir
-                    onDelete={() => console.log('foidelete')}
-                    onEdit={() => console.log('foiedit')} /> :
-                    (s['status']['nome'] == 'Em avaliação' ?
-                    (s['tipo'] == 'Hotfix' ?
-                    <AcaoNotas notaCusto={s['status']['custo']} /> :
-                    <AcaoNotas
-                    notaRisco={s['status']['risco']}
-                    notaImpacto={s['status']['impacto']}
-                    notaCusto={s['status']['custo']} />)
-                    : (s['status']['nome'] == 'Em produção' ?
-                    <AcaoProducao status={s['status']['status']} /> :
-                    <></>))} />
-                ))}
-            </ul>
-        </section>
+        <>
+            <Voltar />
+            <section className={styles.section}>
+                <Header32>Solicitações</Header32>
+                <div className={styles.inputContainer}>
+                    <InputContornado
+                    className={styles.inputPreenchimento}
+                    placeholder='Pesquisar Solicitação...'
+                    icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
+                    handleChange={(e) => setFiltroNome(e.target.value)} />
+                    <DropdownContornado
+                    itens={[
+                        new DropdownItem('Feature', <GoogleIcon>&#xE8B8;</GoogleIcon>),
+                        new DropdownItem('Hotfix', <GoogleIcon>&#xf10b;</GoogleIcon>)
+                    ]}
+                    handleSelected={(s: string) => setTipo(s)}
+                    />
+                </div>
+                <div className={styles.botoes}>
+                    {listaStatus.map(s => (
+                        <Botao
+                        className={styles.botao}
+                        handleClick={() => setStatus(s)}
+                        variante={s == status ? 'preenchido' : 'contornado'}>
+                            {s}
+                        </Botao>
+                    ))}
+                </div>
+                <div className={styles.botaoCriarContainer}>
+                        <Botao
+                        className={styles.botaoCriar}
+                        handleClick={() => navigate('/nova-solicitacao')}
+                        variante='contornado'>
+                            Criar Solicitação
+                        </Botao>
+                </div>
+                <ul className={styles.lista}>
+                    {solicitacoes.map(s => (
+                        <ItemLista
+                        itemName={s['nome']}
+                        handleClickName={() => console.log(s['nome'])}
+                        acao={
+                        s['status']['nome'] == 'Recentes' ?
+                        <AcaoEditarExcluir
+                        onDelete={() => console.log('foidelete')}
+                        onEdit={() => console.log('foiedit')} /> :
+                        (s['status']['nome'] == 'Em avaliação' ?
+                        (s['tipo'] == 'Hotfix' ?
+                        <AcaoNotas notaCusto={s['status']['custo']} /> :
+                        <AcaoNotas
+                        notaRisco={s['status']['risco']}
+                        notaImpacto={s['status']['impacto']}
+                        notaCusto={s['status']['custo']} />)
+                        : (s['status']['nome'] == 'Em produção' ?
+                        <AcaoProducao status={s['status']['status']} /> :
+                        <></>))} />
+                    ))}
+                </ul>
+            </section>
+        </>
     );
 }

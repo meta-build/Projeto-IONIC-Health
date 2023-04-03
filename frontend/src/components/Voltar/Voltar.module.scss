@@ -1,0 +1,23 @@
+@import '@/styles/variables.scss';
+
+.voltar {
+    position: absolute;
+    top: 76px;
+    left: 6px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    .iconVoltar {
+        margin-right: 6px;
+        font-size: 16px;
+    }
+}
+
+.voltar:hover {
+    cursor: pointer;
+    color: $cinza-300;
+}

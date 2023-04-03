@@ -13,7 +13,7 @@ export default function Home () {
     const history = useNavigate();
 
     const itens = [
-        new HomeItem('Criar Feature/Hotfix', <GoogleIcon>&#xe89c;</GoogleIcon>, '/nova-feature'),
+        new HomeItem('Criar Feature/Hotfix', <GoogleIcon>&#xe89c;</GoogleIcon>, '/nova-solicitacao'),
         new HomeItem('Solicitações', <FontAwesomeIcon icon={faFile} />, '/solicitacoes'),
     ]
 
