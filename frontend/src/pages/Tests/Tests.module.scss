@@ -1,0 +1,10 @@
+@import '@/styles/variables.scss';
+
+.lista {
+    padding: 12px;
+    margin: 0;
+    width: 500px;
+    // border: 1px solid red;
+    background-color: $cinza-300;
+    border-radius: 12px;
+}

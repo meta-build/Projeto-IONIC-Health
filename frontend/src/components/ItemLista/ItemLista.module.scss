@@ -1,0 +1,26 @@
+@import '@/styles/variables.scss';
+
+.item {
+    list-style: none;
+    margin: 0;
+    padding: 12px;
+    // border: 1px solid red;
+    border-bottom: 1px solid $cinza-600;
+    display: flex;
+    color: $cinza-600;
+}
+
+
+.item:last-child {
+    border: none;
+}
+
+.nome {
+    flex: 1;
+    margin-right: 16px;
+}
+
+.nome:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
