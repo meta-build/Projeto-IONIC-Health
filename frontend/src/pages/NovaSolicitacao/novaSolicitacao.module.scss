@@ -1,0 +1,80 @@
+@import '@/styles/variables.scss';
+
+.container{
+    position: absolute;
+    width: 1365px;
+    height: 649px;
+    left: 1px;
+    top: 0px;
+    background: rgba(0, 0, 0, 0.4); 
+    backdrop-filter: blur(18px);
+
+}
+
+.containerCinza{
+  left: 157px;
+  top: 100px;
+  position: absolute;
+  width: 1057px;
+  height: 450px;
+  background: $cinza-200;
+  border-radius: 15px;
+}
+
+
+
+.solicitacao {
+  h1 {
+      // Estilizar o título da tela
+      align-items: center;
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px; 
+      color: $cinza-600;
+    }
+    
+    form {
+      // Estilizar o formulário
+      display: inline-block;
+      flex-direction: column;
+      align-items: left;
+      text-align: left;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 30px;
+
+      label {
+        // Estilizar as etiquetas
+        font-size: 16px;
+        margin-bottom: 10px;
+        text-align:  left;
+      }
+
+      input {
+        // Estilizar as entradas
+        display: flex;
+        width: 45%;
+        margin-right: 10px;
+        
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 10px;
+        gap: 10px;
+
+        width: 810px;
+        height: 12px;
+
+        background: $cinza-300;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+
+    
+      order: 1;
+      flex-grow: 0;
+      }
+    }
+  }
