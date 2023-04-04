@@ -2,12 +2,12 @@ import { DataSource } from "typeorm";
 
 //https://orkhan.gitbook.io/typeorm/docs/data-source-options
 const AppDataSource = new DataSource({
-    database: 'bdatividade', // se for SQLite, então use bdaula.db
+    database: 'bd_ionic', // se for SQLite, então use bdaula.db
     type: "mysql", // se for SQLite, então use sqlite
     host: 'localhost', // não use esta propriedade se for sqlite
     port: 3306, // não use esta propriedade se for sqlite
-    username: 'root', // não use esta propriedade se for sqlite
-    password:'asterisk', // não use esta propriedade se for sqlite
+    username: 'rodrigo', // não use esta propriedade se for sqlite
+    password:'fatec', // não use esta propriedade se for sqlite
     // true indica que o schema do BD será criado a cada vez que a aplicação inicializar
     // deixe false ao usar migrations
     synchronize: true, 
