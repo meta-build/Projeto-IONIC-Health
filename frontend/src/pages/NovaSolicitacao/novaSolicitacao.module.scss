@@ -9,12 +9,13 @@
     background: rgba(0, 0, 0, 0.4); 
     backdrop-filter: $blur;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
 }
 
 .fechar {
   display: none;
+
 }
 
 .containerCinza{
@@ -27,15 +28,6 @@
 
 
 .solicitacao {
-  h1 {
-      // Estilizar o título da tela
-      align-items: center;
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 20px; 
-      color: $cinza-600;
-    }
-    
     form {
       // Estilizar o formulário
       display: inline-block;
@@ -50,29 +42,28 @@
       font-size: 16px;
       line-height: 30px;
       color:$cinza-600;
-      position: absolute;
-     
-
+      display: inline-block;
+      
       label {
         // Estilizar as etiquetas
         font-size: 16px;
         margin-bottom: 10px;
         text-align:  left;
+
       }
 
-
       input {
-        // Estilizar as entradas
+        // Estilizar as entradas      
         display: flex;
-        width: 45%;
         margin-right: 10px;
+        text-align: left;
         
         flex-direction: row;
         align-items: flex-start;
         padding: 10px;
         gap: 10px;
 
-        width: 810px;
+        width: 400px;
         height: 12px;
 
         background: $cinza-300;
@@ -83,6 +74,35 @@
     
       order: 1;
       flex-grow: 0;
+      align-self: stretch;
+
       }
     }
-  }
+}
+
+      /*.inputDescricao{
+
+       
+
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 10px;
+        gap: 10px;
+        font-family: sans-serif;
+
+        width: 990px;
+        height: 180px;
+
+        border: none;
+
+        background: $cinza-300;
+        border-radius: 12px;
+
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        flex-grow: 1;
+        outline: none;
+      }*/
+

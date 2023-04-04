@@ -5,48 +5,44 @@ import BotaoPopup from "../../components/BotaoPopUp";
 import DropdownPopup from "../../components/DropdownPopup";
 import classNames from "classnames";
 import { useState } from "react";
+import PopUp from "../../components/PopUp";
+import { useNavigate } from "react-router-dom";
+/*<textarea className={styles.inputDescricao}/>*/
 
-export default function NovaSolicitacao() {
-  const [fechado, setFechado] = useState(true);
+export default function novaSolicitacao () {
+  // const [selecionado, setSelecionado] = useState<number>();
+  const [popup, setPopup] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <>
-      <button onClick={() => setFechado(false)}>abrir</button>
-      <div className={classNames({
-        [styles.container]: true,
-        [styles.fechar]: fechado
-      })}>
-        <Voltar />
-        <div className={styles.containerCinza}>
-          <button onClick={() => setFechado(true)}>fechar</button>
-          <div className={styles.solicitacao}>
-            <h1>Nova Solicitação</h1>
-
+      <>
+      <div className={styles.solicitacao}>
+          <button onClick={() => setPopup(true)}>abrir</button>
+          <PopUp
+          titulo="Nova Solicitação"
+          visivel={popup}
+          onClose={() => setPopup(false)}
+          >
             <form>
-              <label className="titulo">Título</label>
-              <input type="text" id="titulo" />
 
-
-
-
-              <label className="descricao">Descrição:</label>
-              <input  type="text" />
-              
-              
-
+              <label className="titulo">Título:</label>
+              <input type="text" className={styles.input} />    
+    
             </form>
-            
             <DropdownPopup itens={["Feature", "Hotflix"]} handleSelected={function (selected: string): void { }} />
-            
+                     
 
-            <BotaoPopup children={"Criar"} handleClick={() => console.log('foi')} />
-          </div>
+ 
+        <div className={styles.voltar} onClick={() => navigate(-1)}>
+          <BotaoPopup children={"Criar"} handleClick={() => console.log('foi')} />
         </div>
-      </div>
-    </>
+
+          </PopUp>
+
+          </div>
+      </>
   );
 }
-
 
 
 
