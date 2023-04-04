@@ -8,24 +8,20 @@ import AcaoNotas from "../../components/ItemLista/ItemAcoes/AcaoNotas";
 import AcaoEditarExcluir from "../../components/ItemLista/ItemAcoes/AcaoEditarExcluir";
 import AcaoProducao from "../../components/ItemLista/ItemAcoes/AcaoProducao";
 import PopUp from "../../components/PopUp";
+import InputPopup from "../../components/InputPopup";
+import CriarSolicitacao from "../../popUps/EditarSolicitacao";
+import axios from "axios";
 
 export default function Tests () {
     // const [selecionado, setSelecionado] = useState<number>();
     const [popup, setPopup] = useState(false);
 
-    useEffect(() => {
-        console.log(popup)
-    }, [popup])
+axios.get(`http://localhost:3001/solicitacao/2`).then(res => {
+            console.log(res)
+        })
     return (
         <>
-            <button onClick={() => setPopup(true)}>abrir</button>
-            <PopUp
-            titulo="Popup"
-            visivel={popup}
-            onClose={() => setPopup(false)}
-            >
-                <h1>conteutod</h1>
-            </PopUp>
+            <CriarSolicitacao id={1}/>
         </>
     );
 }

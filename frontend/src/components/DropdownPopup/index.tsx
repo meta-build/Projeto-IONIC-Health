@@ -8,11 +8,13 @@ interface Props {
     itens: string[];
     children?: ReactNode;
     handleSelected: (selected: string) => void;
+    selecionado?: string;
 }
 
 export default function DropdownPopup (props: Props) {
     const [aberto, setAberto] = useState(false);
-    const [selecionado, setSelecionado] = useState('');
+
+    const [selecionado, setSelecionado] = useState(props.selecionado);
 
     return(
         <div className={styles.container}>
@@ -20,7 +22,9 @@ export default function DropdownPopup (props: Props) {
             onClick={() => setAberto(!aberto)}
             className={classNames({
                 [styles.botao]: true
-            })}>
+            })}
+            type='button'
+            >
                 <span className={styles.children}>
                     {selecionado !== '' ? selecionado : (props.children === undefined ? props.itens[0] : props.children)}
                 </span>
@@ -28,7 +32,10 @@ export default function DropdownPopup (props: Props) {
             </button>
 
             {aberto && 
-            <ul className={styles.list} >
+            <ul className={classNames({
+                [styles.list]: true,
+                [styles.fechar]: !aberto
+            })} >
             {props.itens.map(item => (
                 <li><button onClick={() => {setSelecionado(item); setAberto(false); props.handleSelected(item)}}>{item}</button></li>
             ))}
