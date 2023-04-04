@@ -8,23 +8,22 @@ import AcaoNotas from "../../components/ItemLista/ItemAcoes/AcaoNotas";
 import AcaoEditarExcluir from "../../components/ItemLista/ItemAcoes/AcaoEditarExcluir";
 import AcaoProducao from "../../components/ItemLista/ItemAcoes/AcaoProducao";
 import PopUp from "../../components/PopUp";
+import { Button } from "react-bootstrap";
 
 export default function Tests () {
     // const [selecionado, setSelecionado] = useState<number>();
     const [popup, setPopup] = useState(false);
 
-    useEffect(() => {
-        console.log(popup)
-    }, [popup])
     return (
         <>
             <button onClick={() => setPopup(true)}>abrir</button>
             <PopUp
-            titulo="Popup"
+            titulo="Confirmar Exclusao?"
             visivel={popup}
             onClose={() => setPopup(false)}
             >
-                <h1>conteutod</h1>
+                <Button>sim</Button>
+                <Button>nao</Button>
             </PopUp>
         </>
     );

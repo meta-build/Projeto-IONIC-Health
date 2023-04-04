@@ -1,7 +1,7 @@
 
 import styles from "./novaSolicitacao.module.scss";
 import Voltar from "../../components/Voltar";
-import BotaoPopup from "../../components/BotaoPopup";
+import BotaoPopup from "../../components/BotaoPopUp";
 import DropdownPopup from "../../components/DropdownPopup";
 import classNames from "classnames";
 import { useState } from "react";
@@ -26,15 +26,17 @@ export default function NovaSolicitacao() {
               <label className="titulo">Título</label>
               <input type="text" id="titulo" />
 
-              <label className="tipo">Tipo</label>
+
 
 
               <label className="descricao">Descrição:</label>
-              <input type="text" />
+              
+              
 
             </form>
+            <input className={styles.descricaoInput} type="text" />
             <DropdownPopup itens={["Feature", "Hotflix"]} handleSelected={function (selected: string): void { }} />
-
+            
 
             <BotaoPopup children={"Criar"} handleClick={() => console.log('foi')} />
           </div>
