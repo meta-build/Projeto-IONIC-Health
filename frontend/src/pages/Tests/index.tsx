@@ -8,6 +8,7 @@ import AcaoNotas from "../../components/ItemLista/ItemAcoes/AcaoNotas";
 import AcaoEditarExcluir from "../../components/ItemLista/ItemAcoes/AcaoEditarExcluir";
 import AcaoProducao from "../../components/ItemLista/ItemAcoes/AcaoProducao";
 import PopUp from "../../components/PopUp";
+import { Button } from "react-bootstrap";
 import InputPopup from "../../components/InputPopup";
 import CriarSolicitacao from "../../popUps/EditarSolicitacao";
 import axios from "axios";
@@ -16,12 +17,20 @@ export default function Tests () {
     // const [selecionado, setSelecionado] = useState<number>();
     const [popup, setPopup] = useState(false);
 
-axios.get(`http://localhost:3001/solicitacao/2`).then(res => {
-            console.log(res)
-        })
+    useEffect(() => {
+        console.log(popup)
+    }, [popup])
     return (
         <>
-            <CriarSolicitacao id={1}/>
+            <button onClick={() => setPopup(true)}>abrir</button>
+            <PopUp
+            titulo="Confirmar Exclusao?"
+            visivel={popup}
+            onClose={() => setPopup(false)}
+            >
+                <Button>sim</Button>
+                <Button>nao</Button>
+            </PopUp>
         </>
     );
 }
