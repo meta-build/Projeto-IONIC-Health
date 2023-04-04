@@ -30,11 +30,12 @@ export default function NovaSolicitacao() {
 
 
               <label className="descricao">Descrição:</label>
+              <input  type="text" />
               
               
 
             </form>
-            <input className={styles.descricaoInput} type="text" />
+            
             <DropdownPopup itens={["Feature", "Hotflix"]} handleSelected={function (selected: string): void { }} />
             
 
