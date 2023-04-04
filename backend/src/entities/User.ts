@@ -6,7 +6,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({nullable:false, unique:true, length: 100})
+    @Column({nullable:false, unique:false, length: 100})
     nomeSolicitacao: string;
 
     @Column({nullable: false, unique:false, length: 70})
