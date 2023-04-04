@@ -77,41 +77,28 @@ class UserController {
     return res.json(usuario);
   }
 
-  // o usuário pode atualizar somente os seus dados
+  // a solciitação pode atualizar somente os seus dados
   public async update(req: Request, res: Response): Promise<Response> {
-    const { idSolicitacao, mail, password, nomeSolicitacao, tipoSolicitacao } = req.body;
-    // obtém o id do usuário que foi salvo na autorização na middleware
-    const { id } = res.locals;
-    const usuario: any = await AppDataSource.manager.findOneBy(User, { id }).catch((e) => {
-      return { error: "Identificador inválido" };
-    })
-    if (usuario && usuario.idSolicitacao) {
-      if (mail !== "") {
-        usuario.mail = mail;
-      }
-      if (password !== "") {
-        usuario.password = password;
-      }
+    const id = parseInt(req.params.id);
+    const { nomeSolicitacao, tipoSolicitacao, solicitante, verificaSolicitacao } = req.body;
 
-      const r = await AppDataSource.manager.save(User, usuario).catch((e) => {
-        // testa se o e-mail é repetido
-        if (/(mail)[\s\S]+(already exists)/.test(e.detail)) {
-          return ({ error: 'e-mail já existe' });
-        }
-        return e;
-      })
-      if (!r.error) {
-        return res.json({ id: usuario.id, mail: usuario.mail, nome: usuario.nomeSolicitacao, tipo: usuario.tipoSolicitacao });
+    const solicitacao: any = await AppDataSource
+    .getRepository(User)
+    .findOneBy({id})
+
+    if (!solicitacao) {
+        return res.status(404).send({ error: 'Solicitação não encontrada.' });
       }
-      return res.json(r);
-    }
-    else if (usuario && usuario.error) {
-      return res.json(mail)
-    }
-    else {
-      return res.json({ error: "Usuário não localizado" });
-    }
-  }
+    
+    solicitacao.nomeSolicitacao = nomeSolicitacao,
+    solicitacao.tipoSolicitacao = tipoSolicitacao,
+    solicitacao.solicitante = solicitante,
+    solicitacao.verificaSolicitacao = verificaSolicitacao
+
+    const r = await AppDataSource.manager.save(solicitacao)
+    return res.status(200).send(r);
+
+}
 
 }
 

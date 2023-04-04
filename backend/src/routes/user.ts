@@ -8,7 +8,7 @@ import ArchiveSolicitacao from "../services/ArchiveSolicitacao";
 const routes = Router();
 
 routes.post('/create', UserController.create);
-routes.put('/', authorization, UserController.update);
+routes.put('/update', authorization, UserController.update);
 routes.get('/solicitacao', GetOneSolicitacao.getSolicitacaoById)
 routes.get('/all', GetAllSolicitacao.getAllSolicitacao)
 routes.put('/arquivo', ArchiveSolicitacao.archiveSolicitacao)

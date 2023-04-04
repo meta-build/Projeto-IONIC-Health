@@ -11,6 +11,7 @@ routes.use("/usuario", user);
 // routes.use("/gasto", authorization, spent);
 routes.post("/login", UserController.login);
 routes.post("/create", UserController.create);
+routes.put("/update/:id", UserController.update)
 
 routes.get("/solicitacao/:id", GetOneSolicitacao.getSolicitacaoById)
 routes.get("/solicitacao", GetAllSolicitacao.getAllSolicitacao)
