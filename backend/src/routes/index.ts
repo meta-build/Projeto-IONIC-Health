@@ -3,6 +3,7 @@ import user from './user';
 import UserController from "../controllers/UserController";
 import GetOneSolicitacao from "../services/GetOneSolicitacao";
 import GetAllSolicitacao from "../services/GetAllSolicitacao";
+import ArchiveSolicitacao from "../services/ArchiveSolicitacao";
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.post("/create", UserController.create);
 
 routes.get("/solicitacao/:id", GetOneSolicitacao.getSolicitacaoById)
 routes.get("/solicitacao", GetAllSolicitacao.getAllSolicitacao)
+routes.put("/arquivo/:id", ArchiveSolicitacao.archiveSolicitacao)
 
 export default routes;

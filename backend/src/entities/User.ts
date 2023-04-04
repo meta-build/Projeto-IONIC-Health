@@ -17,5 +17,8 @@ export class User {
 
     @Column({nullable: true, unique:false, default:null})
     verificaSolicitacao: boolean;
+
+    @Column({nullable: true, unique:false, default:null})
+    arquivar: boolean;
     
 }
