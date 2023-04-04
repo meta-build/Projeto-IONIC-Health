@@ -12,11 +12,11 @@ interface Props {
 export default function AcaoEditarExcluir (props: Props) {
     return(
         <span>
-            <IconeClicavel
+            {/* <IconeClicavel
             icone={<FontAwesomeIcon icon={faTrash} />}
             handleClick={props.onDelete}
             className={styles.icone}
-            />
+            /> */}
             <IconeClicavel
             icone={<FontAwesomeIcon icon={faPen} />}
             handleClick={props.onEdit}

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @import '@/styles/variables.scss';
 
 .botao {
@@ -7,19 +6,9 @@
     border-radius: 12px;
     min-width: 155px;
     border: none;
-    float: right;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-   
-    
     .children {
         flex: 1;
-        padding: 0;
-        margin: 0;
         text-align: left;
-        
-
     }
     .icon {
         height: 16px;
@@ -46,5 +35,3 @@
     background-color: $cinza-600-hover;
     cursor: pointer;
 }
-=======
->>>>>>> c3863b5810fa35c686d08b2c1f8346c77e21e71c

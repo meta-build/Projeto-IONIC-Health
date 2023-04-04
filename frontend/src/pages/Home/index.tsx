@@ -7,6 +7,8 @@ import HomeItem from '../../types/HomeItem';
 import { useNavigate } from 'react-router-dom';
 import GoogleIcon from '../../components/GoogleIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import CriarSolicitacao from '../../popUps/CriarSolicitacao';
 
 
 export default function Home () {
@@ -17,6 +19,8 @@ export default function Home () {
         new HomeItem('Solicitações', <FontAwesomeIcon icon={faFile} />, '/solicitacoes'),
     ]
 
+    const [popup, setPopup] = useState(false);
+
     return(
         <div className={styles.container}>
             <Header36 className={styles.children}>Home</Header36>
@@ -24,16 +28,22 @@ export default function Home () {
                 [styles['container-button']]: true,
                 [styles.children]: true
             })}>
-                {itens.map(item => (
-                    <BotaoIcon
+                <BotaoIcon
                     className={styles['children-button']}
-                    handleClick={() => history(item.getUrl())}
-                    icon={item.getIcon()}
+                    handleClick={() => history(itens[1].getUrl())}
+                    icon={itens[1].getIcon()}
                     >
-                        {item.getLabel()}
+                        {itens[1].getLabel()}
+                </BotaoIcon>
+                <BotaoIcon
+                    className={styles['children-button']}
+                    handleClick={() => setPopup(true)}
+                    icon={itens[0].getIcon()}
+                    >
+                        {itens[0].getLabel()}
                     </BotaoIcon>
-                ))}
             </div>
+            <CriarSolicitacao aberto={popup} onClose={() => setPopup(false)}/>
         </div>
     );
 }

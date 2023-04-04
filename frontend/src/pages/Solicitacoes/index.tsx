@@ -12,6 +12,9 @@ import AcaoNotas from '../../components/ItemLista/ItemAcoes/AcaoNotas';
 import AcaoProducao from '../../components/ItemLista/ItemAcoes/AcaoProducao';
 import { useNavigate } from 'react-router-dom';
 import Voltar from '../../components/Voltar';
+import CriarSolicitacao from '../../popUps/CriarSolicitacao';
+import axios from 'axios';
+import EditarSolicitacao from '../../popUps/EditarSolicitacao';
 
 export default function Solicitacoes () {
     const navigate = useNavigate();
@@ -20,6 +23,10 @@ export default function Solicitacoes () {
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
     const [solicitacoes, setSolicitacoes] = useState<Object[]>([]);
+
+    const [popupCriar, setPopupCriar] = useState(false);
+    const [popupEditar, setPopupEditar] = useState(false);
+    const [solictSelected, setSolictSelected] = useState<number>();
 
     const solicitacoesRaiz = [
         { nome: 'solicitação 1a', tipo: 'Feature', status: {nome: 'Recentes'} },
@@ -49,13 +56,22 @@ export default function Solicitacoes () {
     }
 
     useEffect(() => {
-      let sTemp = solicitacoesRaiz.filter(s => {
-        let booleanNome = busca(s.nome);
-        let booleanTipo = s.tipo == tipo;
-        let booleanStatus = s.status.nome == status;
-        return booleanTipo && booleanStatus && booleanNome;
-      }); 
-      setSolicitacoes(sTemp);
+        axios.get('http://localhost:3001/all').then(response => {
+            let solicitacoesBd = response.data;
+            let sTemp = solicitacoesBd.filter(s => {
+                console.log(s);
+                let booleanNome = busca(s.nomeSolicitacao);
+                let booleanTipo = s.tipoSolicitacao == tipo;
+                if (status == 'Recentes') {
+                    return booleanTipo && booleanNome && (Boolean(s.arquivar) == false);
+                } else {
+                    return booleanTipo && booleanNome && (Boolean(s.arquivar) == true);
+                }
+              }); 
+              setSolicitacoes(sTemp);
+        })
+
+      
     }, [filtroNome, tipo, status]);
     
     return (
@@ -90,7 +106,7 @@ export default function Solicitacoes () {
                 <div className={styles.botaoCriarContainer}>
                         <Botao
                         className={styles.botaoCriar}
-                        handleClick={() => navigate('/nova-solicitacao')}
+                        handleClick={() => setPopupCriar(true)}
                         variante='contornado'>
                             Criar Solicitação
                         </Botao>
@@ -98,25 +114,25 @@ export default function Solicitacoes () {
                 <ul className={styles.lista}>
                     {solicitacoes.map((s, index) => (
                         <ItemLista
-                        itemName={s['nome']}
-                        handleClickName={() => navigate(`/editar-solicitacao/${index}`)}
+                        itemName={s['nomeSolicitacao']}
+                        handleClickName={() => {
+                            setSolictSelected(s['id'])
+                            setPopupEditar(true);
+                        }}
                         acao={
-                        s['status']['nome'] == 'Recentes' ?
+                        s['arquivar'] ?
+                        <></>:
                         <AcaoEditarExcluir
                         onDelete={() => console.log('foidelete')}
-                        onEdit={() => console.log('foiedit')} /> :
-                        (s['status']['nome'] == 'Em avaliação' ?
-                        (s['tipo'] == 'Hotfix' ?
-                        <AcaoNotas notaCusto={s['status']['custo']} /> :
-                        <AcaoNotas
-                        notaRisco={s['status']['risco']}
-                        notaImpacto={s['status']['impacto']}
-                        notaCusto={s['status']['custo']} />)
-                        : (s['status']['nome'] == 'Em produção' ?
-                        <AcaoProducao status={s['status']['status']} /> :
-                        <></>))} />
+                        onEdit={() => {
+                            setSolictSelected(s['id'])
+                            setPopupEditar(true);
+                        }} /> } />
                     ))}
                 </ul>
+            <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
+            {popupEditar && 
+                <EditarSolicitacao id={solictSelected} aberto={popupEditar} onClose={() => setPopupEditar(false)}/>}
             </section>
         </>
     );

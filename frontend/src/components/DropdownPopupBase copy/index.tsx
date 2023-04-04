@@ -1,4 +1,4 @@
-import styles from './DropdownPopup.module.scss';
+import styles from './DropdownPopupBase.module.scss';
 import classNames from "classnames";
 import { ReactNode, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ interface Props {
     handleSelected: (selected: string) => void;
 }
 
-export default function DropdownPopup (props: Props) {
+export default function DropdownPopup2 (props: Props) {
     const [aberto, setAberto] = useState(false);
     const [selecionado, setSelecionado] = useState('');
 

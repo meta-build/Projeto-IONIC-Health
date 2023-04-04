@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {Home, Tests} from "./pages";
 import Menu from "./components/Menu";
 import Solicitacoes from "./pages/Solicitacoes";
-import NovaSolicitacao from "./pages/NovaSolicitacao";
 
 export default function AppRouter() {
     return (
@@ -12,7 +11,6 @@ export default function AppRouter() {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/solicitacoes' element={<Solicitacoes />} />
-                    <Route path='/nova-solicitacao' element={<NovaSolicitacao />} />
                     <Route path='/tests' element={<Tests />} />
                 </Routes>
             </BrowserRouter>

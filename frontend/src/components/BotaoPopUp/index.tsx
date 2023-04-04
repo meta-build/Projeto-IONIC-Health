@@ -8,7 +8,8 @@ interface Props {
     children: ReactNode;
     handleClick: () => void;
     corBotao?: 'claro' | 'noturno';
-    tipo?: 'button' | 'submit' | 'reset'; 
+    tipo?: 'button' | 'submit' | 'reset';
+    className?: string | any;
 }
 
 export default function BotaoPopup (props: Props) {
@@ -19,7 +20,8 @@ export default function BotaoPopup (props: Props) {
         onClick={props.handleClick}
         className={classNames({
             [styles.botao]: true,
-            [styles[corBotao]]: true 
+            [styles[corBotao]]: true,
+            [props.className]: true 
         })}
         type={tipo}
         >

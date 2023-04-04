@@ -10,36 +10,22 @@ import DropdownPopup2 from "../../components/DropdownPopupBase copy";
 import DropdownPreenchido from "../../components/DropdownPreenchido";
 
 interface Props {
-    id: number;
     aberto: boolean;
     onClose: () => void;
 }
 
-export default function EditarSolicitacao (props: Props) {
-
-    let item = {
-        "id": 2,
-        "nomeSolicitacao": "Solicitação x",
-        "tipoSolicitacao": "Feature",
-        "solicitante": "Polnareff",
-        "verificaSolicitacao": true,
-        "arquivar": null
-      }
-
-      const [solicitacao, setSolicitacao] = useState(item);
-      const [titulo, setTitulo] = useState(solicitacao.nomeSolicitacao);
-      const [tipo, setTipo] = useState(solicitacao.tipoSolicitacao);
-      const [arquivar, setArquivar] = useState<boolean>(Boolean(solicitacao.arquivar));
+export default function CriarSolicitacao (props: Props) {
+      const [titulo, setTitulo] = useState('');
+      const [tipo, setTipo] = useState('Feature');
       const [aberto, setAberto] = useState(props.aberto);
 
       const concluir = () => {
-        axios.put(`http://localhost:3001/update/${props.id}`,
+        axios.post(`http://localhost:3001/create`,
         {
-            "nomeSolicitacao": titulo,
-            "tipoSolicitaçao": tipo,
+            "nome": titulo,
+            "tipo": tipo,
             "solicitante": "Polnareff",
-            "verificaSolicitacao": true,
-            "arquivar": arquivar
+            "verificaSolicitacao": true
           },
           {headers: {
             'Content-Type': 'application/json'
@@ -51,18 +37,12 @@ export default function EditarSolicitacao (props: Props) {
       }
 
       useEffect(() => {
-        axios.get(`http://localhost:3001/solicitacao/${props.id}`).then(r => {
-            let solicitacaoTemp = r.data;
-            setSolicitacao(solicitacaoTemp);
-            setTitulo(solicitacaoTemp['nomeSolicitacao']);
-            setTipo(solicitacaoTemp['tipoSolicitacao']);
-        });
         setAberto(props.aberto);
       }, [props.aberto])
 
     return(
         <PopUp
-        titulo={`Editar ${solicitacao.tipoSolicitacao} ${solicitacao.nomeSolicitacao}`}
+        titulo={`Criar solicitação`}
         visivel={aberto}
         onClose={() => props.onClose()}
         >
@@ -94,24 +74,12 @@ export default function EditarSolicitacao (props: Props) {
                         selecionadoFst={tipo}
                         />
                     </label>
-                    {/* <label
-                    className={styles.input}
-                    >
-                        <span className={styles.label}>Arquivar</span>
-                        <DropdownPreenchido
-                        itens={['Arquivar', 'Desarquivar']}
-                        handleSelected={(e) => {
-                            setArquivar(e == 'Arquivar')
-                        }}
-                        selecionadoFst={tipo}
-                        />
-                    </label> */}
-                </div>  
+                </div>
                     <BotaoPopup
                     handleClick={() => concluir()}
                     tipo="submit"
                     className={styles.concluir}
-                    >Editar</BotaoPopup>
+                    >Criar</BotaoPopup>
                 
             </div>
         </PopUp>
