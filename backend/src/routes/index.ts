@@ -4,6 +4,7 @@ import UserController from "../controllers/UserController";
 import GetOneSolicitacao from "../services/GetOneSolicitacao";
 import GetAllSolicitacao from "../services/GetAllSolicitacao";
 import ArchiveSolicitacao from "../services/ArchiveSolicitacao";
+import deleteSolicitacao from "../services/deleteSolicitacao";
 
 const routes = Router();
 
@@ -16,5 +17,6 @@ routes.put("/update/:id", UserController.update)
 routes.get("/solicitacao/:id", GetOneSolicitacao.getSolicitacaoById)
 routes.get("/all", GetAllSolicitacao.getAllSolicitacao)
 routes.put("/arquivo/:id", ArchiveSolicitacao.archiveSolicitacao)
+routes.delete("/delete/:id", deleteSolicitacao.deleteSolicitacao)
 
 export default routes;
