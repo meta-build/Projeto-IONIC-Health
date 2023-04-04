@@ -2,26 +2,27 @@
 
 .container{
     position: absolute;
-    width: 1365px;
-    height: 649px;
-    left: 1px;
-    top: 0px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     background: rgba(0, 0, 0, 0.4); 
-    backdrop-filter: blur(18px);
+    backdrop-filter: $blur;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.fechar {
+  display: none;
 }
 
 .containerCinza{
-  left: 157px;
-  top: 100px;
-  position: absolute;
   width: 1057px;
   height: 450px;
   background: $cinza-200;
   border-radius: 15px;
 }
-
-
 
 .solicitacao {
   h1 {

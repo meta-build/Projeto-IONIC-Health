@@ -1,9 +1,21 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import styles from './Header.module.scss';
+import classNames from 'classnames';
 
-export function Header32 ({children}: any) {
+interface Props {
+    className?: string;
+    children: ReactNode;
+}
+
+export function Header32 (props: Props) {
+    const {children, className = ''} = props
+
     return(
-        <h1 className={`${styles.header} ${styles.header32}`}>
+        <h1 className={classNames({
+            [styles.header]: true,
+            [styles.header32]: true,
+            [className]: true
+        })}>
             {children}
         </h1>
     )
