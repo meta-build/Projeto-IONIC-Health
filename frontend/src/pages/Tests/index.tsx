@@ -9,11 +9,17 @@ import AcaoEditarExcluir from "../../components/ItemLista/ItemAcoes/AcaoEditarEx
 import AcaoProducao from "../../components/ItemLista/ItemAcoes/AcaoProducao";
 import PopUp from "../../components/PopUp";
 import { Button } from "react-bootstrap";
+import InputPopup from "../../components/InputPopup";
+import CriarSolicitacao from "../../popUps/EditarSolicitacao";
+import axios from "axios";
 
 export default function Tests () {
     // const [selecionado, setSelecionado] = useState<number>();
     const [popup, setPopup] = useState(false);
 
+    useEffect(() => {
+        console.log(popup)
+    }, [popup])
     return (
         <>
             <button onClick={() => setPopup(true)}>abrir</button>

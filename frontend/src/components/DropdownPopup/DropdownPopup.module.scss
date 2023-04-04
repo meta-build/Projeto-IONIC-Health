@@ -6,8 +6,8 @@
     padding:0px;
     margin: 0px;
     position: absolute;
-    right: 10px;
-    bottom: 80px;//altura do botao
+    left: 170px;
+    bottom: 50px;//altura do botao
     margin-top: 200px;
 }
 
@@ -68,4 +68,8 @@
             cursor: pointer;
         }
     }
+}
+
+.fechar {
+    display: none;
 }

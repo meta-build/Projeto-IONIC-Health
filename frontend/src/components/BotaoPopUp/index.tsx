@@ -7,11 +7,12 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 interface Props {
     children: ReactNode;
     handleClick: () => void;
-    corBotao?: 'claro' | 'noturno'
+    corBotao?: 'claro' | 'noturno';
+    tipo?: 'button' | 'submit' | 'reset'; 
 }
 
 export default function BotaoPopup (props: Props) {
-    const {corBotao = 'claro'} = props;
+    const {corBotao = 'claro', tipo = 'button'} = props;
 
     return(
         <button
@@ -20,6 +21,7 @@ export default function BotaoPopup (props: Props) {
             [styles.botao]: true,
             [styles[corBotao]]: true 
         })}
+        type={tipo}
         >
             <span className={styles.children}>
                 {props.children}
