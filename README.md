@@ -36,13 +36,20 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 </h2>
 <p>Entrega: 13/03/2023 à 02/04/2023</p>
 
-<img src="https://user-images.githubusercontent.com/90328897/229401721-f29b68e8-7fd7-4c1f-8a0c-8146fbab9ce4.png" width="100%">
+### Backlog
+![image](https://user-images.githubusercontent.com/90328897/230113778-575b3eca-3ca5-4c59-bac9-73b559d5703d.png)
 
-<!--
-### Funcionalidade 1
-(gif aqui)
+### Burndown
+![image](https://user-images.githubusercontent.com/90328897/230114391-242604c0-5fda-47a5-be9e-24045335b08d.png)
+
+### Criar Solicitação
+![criar solicitacao](https://user-images.githubusercontent.com/90328897/230112495-4eebc079-b8b1-40ca-960c-ab071aa8c4a8.gif)
 <br>
--->
+### Tela de Solicitações
+![tela solicitacoes](https://user-images.githubusercontent.com/90328897/230112718-2526c47e-2f28-4eff-b14b-464307f0c802.gif)
+<br>
+### Editar Solicitação
+![editar solicitacao](https://user-images.githubusercontent.com/90328897/230112799-a932c2ff-d061-4a5a-9a9f-2df76dbb8cf1.gif)
 
 <h2 style="font -weight: bold; margin=bottom: margin-bottom: 0px">
     2ª Sprint
