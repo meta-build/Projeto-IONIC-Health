@@ -26,8 +26,12 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 
 <!-- backlog -->
 ## :repeat: Backlog
-<!-- remover comentário da imagem abaixo -->
-<img src="https://user-images.githubusercontent.com/90328897/229401867-6c327c67-188d-41d4-a167-153cb717ef4c.png" width="100%">
+Versões anteriores:<br>
+<a href='https://user-images.githubusercontent.com/90328897/229401867-6c327c67-188d-41d4-a167-153cb717ef4c.png'>v1.0</a>
+<br><br>
+Versão atual (v2.0)
+![image](https://user-images.githubusercontent.com/90328897/230677847-62fc7bf3-6233-422a-8e71-c77defbc1f3f.png)
+
 
 <!-- sprints --> 
 ## :gear: Sprints
@@ -41,6 +45,13 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 
 ### Burndown
 ![image](https://user-images.githubusercontent.com/90328897/230114391-242604c0-5fda-47a5-be9e-24045335b08d.png)
+
+### Diagramas de Banco de Dados
+![image](https://user-images.githubusercontent.com/90328897/230676836-29b1e4fc-1445-43d7-9489-841b511c5361.png)
+![image](https://user-images.githubusercontent.com/90328897/230676786-37077384-f43a-4d9a-a4c8-025bfbc46be4.png)
+
+### Diagrama de Classe
+![image](https://user-images.githubusercontent.com/90328897/230676876-d1d3e963-f43c-45d8-a995-0b91921110f1.png)
 
 ### Criar Solicitação
 ![criar solicitacao](https://user-images.githubusercontent.com/90328897/230112495-4eebc079-b8b1-40ca-960c-ab071aa8c4a8.gif)
