@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
 import GoogleIcon from '../../components/GoogleIcon';
 import { Header32 } from '../../components/Header';
-import InputContornado from '../../components/InputContornado';
+import { InputContornado } from '../../components/Inputs';
 import styles from './Solicitacoes.module.scss';
-import DropdownContornado from '../../components/DropdownContornado';
 import DropdownItem from '../../types/DropdownItem';
-import { Botao } from '../../components/Botao';
-import ItemLista from '../../components/ItemLista';
-import AcaoEditarExcluir from '../../components/ItemLista/ItemAcoes/AcaoEditarExcluir';
-import AcaoNotas from '../../components/ItemLista/ItemAcoes/AcaoNotas';
-import AcaoProducao from '../../components/ItemLista/ItemAcoes/AcaoProducao';
+import { DropdownContornado } from '../../components/Dropdowns';
+import { ItemLista } from '../../components/ItemLista';
+import { AcaoEditarExcluir } from '../../components/ItemLista/Acoes';
 import { useNavigate } from 'react-router-dom';
-import Voltar from '../../components/Voltar';
-import CriarSolicitacao from '../../popUps/CriarSolicitacao';
 import axios from 'axios';
-import EditarSolicitacao from '../../popUps/EditarSolicitacao';
+
+
+import { Botao, Voltar } from '../../components/Botoes';
+import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
 
 export default function Solicitacoes () {
     const navigate = useNavigate();

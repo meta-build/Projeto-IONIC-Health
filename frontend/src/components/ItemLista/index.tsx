@@ -1,6 +1,3 @@
-import AcaoEditarExcluir from './ItemAcoes/AcaoEditarExcluir';
-import AcaoNotas from './ItemAcoes/AcaoNotas';
-import AcaoProducao from './ItemAcoes/AcaoProducao';
 import styles from './ItemLista.module.scss';
 
 interface Props {
@@ -9,7 +6,7 @@ interface Props {
     acao?: JSX.Element;
 }
 
-export default function ItemLista (props: Props) {
+export function ItemLista (props: Props) {
     return(
         <>
             <li className={styles.item}>

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BotaoIcon from "../../../BotaoIcon";
+import BotaoIcon from "../../../Botoes/BotaoIcon";
 import { fa0, fa2, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-import IconeClicavel from "../../../IconeClicavel";
+import IconeClicavel from "../../../Botoes/IconeClicavel";
 import styles from './AcaoEdtiar.module.scss';
 
 interface Props {

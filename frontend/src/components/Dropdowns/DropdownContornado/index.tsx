@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { ReactNode, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import DropdownItem from '../../types/DropdownItem';
+import DropdownItem from '../../../types/DropdownItem';
 
 interface Props {
     itens: DropdownItem[];

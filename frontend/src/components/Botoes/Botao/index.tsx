@@ -9,7 +9,7 @@ interface Props {
     className: string | any;
 }
 
-export function Botao (props: Props) {
+export default function Botao (props: Props) {
     const {variante = 'contornado'} = props;
 
     return(

@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import styles from './Anexar.module.scss';
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faA, faAdd, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     children: ReactNode;
@@ -10,7 +10,7 @@ interface Props {
     corBotao?: 'claro' | 'noturno'
 }
 
-export default function BotaoPopu1p (props: Props) {
+export default function Anexar (props: Props) {
     const {corBotao = 'claro'} = props;
 
     return(

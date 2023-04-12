@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import GoogleIcon from "../GoogleIcon";
+import GoogleIcon from "../../GoogleIcon";
 import styles from './Voltar.module.scss';
 
 export default function Voltar () {

@@ -3,7 +3,7 @@ import DropdownPopup from "../../components/DropdownPopup";
 import InputPopup from "../../components/InputPopup";
 import PopUp from "../../components/PopUp";
 import styles from './EditarSolicitacao.module.scss';
-import BotaoPopup from "../../components/BotaoPopup";
+import BotaoPopup from "../../components/Botoes/BotaoPopup";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DropdownPopup2 from "../../components/DropdownPopupBase copy";

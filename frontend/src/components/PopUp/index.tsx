@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Header32 } from '../Header';
 import styles from './PopUp.module.scss';
-import IconeClicavel from '../IconeClicavel';
+import IconeClicavel from '../Botoes/IconeClicavel';
 import GoogleIcon from '../GoogleIcon';
 import classNames from 'classnames';
 
