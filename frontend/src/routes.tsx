@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {Home, Login, PaginaComHeader, Tests} from "./pages";
+import {Home, Login, PaginaComHeader, PaginaNaoEncontrada, Tests} from "./pages";
 import Solicitacoes from "./pages/Solicitacoes";
 
 export default function AppRouter() {
@@ -11,6 +11,7 @@ export default function AppRouter() {
                     <Route path='/home' element={<PaginaComHeader elemento={<Home />}/>}/>
                     <Route path='/solicitacoes' element={<PaginaComHeader elemento={<Solicitacoes />}/>} />
                     <Route path='/tests' element={<Tests />} />
+                    <Route path='*' element={<PaginaNaoEncontrada />} />
                 </Routes>
             </BrowserRouter>
         </>
