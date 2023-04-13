@@ -13,17 +13,12 @@ export class User {
   id: number;
 
   @Column({ nullable: false, unique: false, length: 100 })
-  nomeSolicitacao: string;
+  name: string;
 
   @Column({ nullable: false, unique: false, length: 70 })
-  tipoSolicitacao: string;
+  mail: string;
 
-  @Column({ nullable: true, unique: false, length: 70 })
-  solicitante: string;
+  @Column({ nullable: false, unique: false, length: 250 })
+  password: string;
 
-  @Column({ nullable: true, unique: false, default: null })
-  verificaSolicitacao: boolean;
-
-  @Column({ nullable: true, unique: false, default: null })
-  arquivar: boolean;
 }
