@@ -1,16 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {Home, Tests} from "./pages";
-import Menu from "./components/Menu";
+import {Home, Login, PaginaComHeader, Tests} from "./pages";
 import Solicitacoes from "./pages/Solicitacoes";
 
 export default function AppRouter() {
     return (
         <>
-            <Menu />
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/solicitacoes' element={<Solicitacoes />} />
+                    <Route path='/' element={<Login />} />
+                    <Route path='/home' element={<PaginaComHeader elemento={<Home />}/>}/>
+                    <Route path='/solicitacoes' element={<PaginaComHeader elemento={<Solicitacoes />}/>} />
                     <Route path='/tests' element={<Tests />} />
                 </Routes>
             </BrowserRouter>

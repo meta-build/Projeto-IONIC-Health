@@ -1,4 +1,4 @@
-import BotaoNota from "../../../BotaoNota";
+import {BotaoNota} from "../../../Botoes";
 import styles from './AcaoNotas.module.scss';
 
 interface Props {

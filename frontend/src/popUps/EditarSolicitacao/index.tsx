@@ -1,13 +1,11 @@
 import classNames from "classnames";
-import DropdownPopup from "../../components/DropdownPopup";
-import InputPopup from "../../components/InputPopup";
+import {InputPopup} from "../../components/Inputs";
 import PopUp from "../../components/PopUp";
 import styles from './EditarSolicitacao.module.scss';
-import BotaoPopup from "../../components/Botoes/BotaoPopup";
+import {BotaoPopup} from "../../components/Botoes";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import DropdownPopup2 from "../../components/DropdownPopupBase copy";
-import DropdownPreenchido from "../../components/DropdownPreenchido";
+import {DropdownPreenchido} from "../../components/Dropdowns";
 
 interface Props {
     id: number;

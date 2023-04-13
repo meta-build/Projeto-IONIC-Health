@@ -4,13 +4,14 @@ import classNames from "classnames";
 
 interface Props {
     children: ReactNode;
-    handleClick: () => void;
+    handleClick?: () => void;
     variante?: 'preenchido' | 'contornado';
-    className: string | any;
+    className?: string | any;
+    tipo?: "button" | "submit"
 }
 
 export default function Botao (props: Props) {
-    const {variante = 'contornado'} = props;
+    const {variante = 'contornado', tipo = 'button'} = props;
 
     return(
         <button
@@ -20,7 +21,8 @@ export default function Botao (props: Props) {
             [styles[variante]]: true,
             [props.className]: true
         })}
-        onClick={props.handleClick}>
+        onClick={props.handleClick}
+        type={tipo}>
             {props.children}
         </button>
     );
