@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import user from "./user";
-import notificacao from "./notificacao"
+import notificacao from "./notificacao";
 import UserController from "../controllers/UserController";
 import GetOneSolicitacao from "../services/GetOneSolicitacao";
 import GetAllSolicitacao from "../services/GetAllSolicitacao";
@@ -14,13 +14,12 @@ const routes = Router();
 routes.use("/usuario", user);
 routes.post("/login", UserController.login);
 routes.post("/create", UserController.create);
-routes.put("/update/:id", UserController.update)
+routes.put("/update/:id", UserController.update);
 
 routes.use("/notificacao", authorization, notificacao);
 
-
-routes.post("/create", SolicitacaoController.create);
-routes.put("/update/:id", SolicitacaoController.update);
+routes.post("/create/solicitacao", authorization, SolicitacaoController.create);
+routes.put("/update/solicitacao/:id", authorization, SolicitacaoController.update);
 
 routes.get("/solicitacao/:id", GetOneSolicitacao.getSolicitacaoById);
 routes.get("/all", GetAllSolicitacao.getAllSolicitacao);

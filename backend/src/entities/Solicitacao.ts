@@ -1,24 +1,40 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+} from "typeorm";
+import { User } from "./User";
 
-@Entity({name:"solicitacao"})
+@Entity({ name: "solicitacao" })
 export class Solicitacao {
-    // define a chave primária como auto incremento
-    @PrimaryGeneratedColumn()
-    id: number;
+  // define a chave primária como auto incremento
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({nullable:false, unique:false, length: 100})
-    nomeSolicitacao: string;
+  @Column({ nullable: false, unique: false, length: 100 })
+  titulo: string;
 
-    @Column({nullable: false, unique:false, length: 70})
-    tipoSolicitacao: string;
+  @Column({ nullable: false, unique: false, length: 100 })
+  tipo: string;
 
-    @Column({nullable: true, unique:false, length: 70})
-    solicitante: string;
+  @Column({ nullable: true, unique: false, length: 150 })
+  descricao: string;
 
-    @Column({nullable: true, unique:false, default:null})
-    verificaSolicitacao: boolean;
+  @CreateDateColumn()
+  data_criacao: Date;
 
-    @Column({nullable: true, unique:false, default:null})
-    arquivar: boolean;
-    
+  @CreateDateColumn()
+  data_arquivado;
+
+  @ManyToOne((type) => User, { onDelete: "CASCADE" })
+  @JoinColumn({
+    name: "id_user",
+    referencedColumnName: "id", //id da entidade Usuario
+    foreignKeyConstraintName: "fk_id_user_solicitacao",
+  })
+  criador: User;
 }

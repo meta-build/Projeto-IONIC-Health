@@ -4,12 +4,12 @@ import GetAllSolicitacao from "../services/GetAllSolicitacao";
 import GetOneSolicitacao from "../services/GetOneSolicitacao";
 import ArchiveSolicitacao from "../services/ArchiveSolicitacao";
 import deleteSolicitacao from "../services/deleteSolicitacao";
+import { authorization } from "../middlewares";
 
 const routes = Router();
 
-
-routes.post("/create", SolicitacaoController.create);
-routes.put("/update", SolicitacaoController.update);
+routes.post("/create/solicitacao", authorization, SolicitacaoController.create);
+routes.put("/update/solicitacao/:id", authorization, SolicitacaoController.update);
 routes.get("/solicitacao", GetOneSolicitacao.getSolicitacaoById);
 routes.get("/all", GetAllSolicitacao.getAllSolicitacao);
 routes.put("/arquivo", ArchiveSolicitacao.archiveSolicitacao);
