@@ -9,17 +9,17 @@ import GoogleIcon from '../../components/GoogleIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import CriarSolicitacao from '../../popUps/CriarSolicitacao';
-
+import { useContexto } from '../../context/contexto';
 
 export default function Home () {
     const history = useNavigate();
+
+    const [popup, setPopup] = useState(false);
 
     const itens = [
         new HomeItem('Criar Feature/Hotfix', <GoogleIcon>&#xe89c;</GoogleIcon>, '/nova-solicitacao'),
         new HomeItem('Solicitações', <FontAwesomeIcon icon={faFile} />, '/solicitacoes'),
     ]
-
-    const [popup, setPopup] = useState(false);
 
     return(
         <div className={styles.container}>
