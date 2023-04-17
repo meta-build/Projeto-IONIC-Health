@@ -3,19 +3,21 @@
 .form {
     display: flex;
     flex-direction: column;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .inputs {
     display: flex;
-    width: 480px;
+    width: 680px;
+    
 
     .input {
         display: flex;
         flex-direction: column;
         margin-right: 12px;
     }
+
     .input:last-child {
         margin-right: 0px;
     }
@@ -24,7 +26,10 @@
         color: $cinza-600;
         margin-bottom: 4px;
     }
+
 }
+
+
 
 .preencher {
     flex: 1;

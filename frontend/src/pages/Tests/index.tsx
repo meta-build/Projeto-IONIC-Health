@@ -23,6 +23,8 @@ export default function Tests () {
             <button onClick={() => setPopup(true)}>Abrir</button>
             <CriarSolicitacao aberto={popup} onClose={() => setPopup(false)}/>
             <Anexar handleClick={() => console.log('foi')}>Teste</Anexar>
+            
+            
         </>
     );
 }

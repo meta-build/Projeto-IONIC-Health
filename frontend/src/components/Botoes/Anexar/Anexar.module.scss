@@ -1,20 +1,23 @@
 @import '@/styles/variables.scss';
 
 .botao {
+    width: fit-content;
     padding: 8px;
-    display: flex;
+    display: inline-block;
     border-radius: 12px;
     min-width: 155px;
     border: none;
+    
     .children {
         flex: 0;
-        padding: 0;
-        margin: 0;
+        padding: 10px;
+        margin: 0px;
         text-align: left;
     }
     .icon {
         height: 16px;
         font-weight: bold;
+      
     }
 }
 

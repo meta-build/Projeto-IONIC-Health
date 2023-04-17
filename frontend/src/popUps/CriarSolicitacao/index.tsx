@@ -1,11 +1,14 @@
 import classNames from "classnames";
 import {InputPopup} from "../../components/Inputs";
 import PopUp from "../../components/PopUp";
-import styles from './EditarSolicitacao.module.scss';
+import styles from './CriarSolicitacao.module.scss';
 import BotaoPopup from "../../components/Botoes/BotaoPopup";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {DropdownPreenchido} from "../../components/Dropdowns";
+import Anexar from "../../components/Botoes/Anexar";
+import TextBox from "../../components/Inputs/TextBox";
+
 
 interface Props {
     aberto: boolean;
@@ -40,7 +43,7 @@ export default function CriarSolicitacao (props: Props) {
 
     return(
         <PopUp
-        titulo={`Criar solicitação`}
+        titulo={`Nova solicitação`}
         visivel={aberto}
         onClose={() => props.onClose()}
         >
@@ -61,7 +64,19 @@ export default function CriarSolicitacao (props: Props) {
                         className={styles['input-preencher']}
                         valor={titulo}
                         />
+                        
+
+                        <span className={styles.label}>Descrição</span>
+                        <TextBox 
+                        placeholder="Descrição da solicitação"
+                        />
+                        
+                        <span className={styles.label}>Arquivos</span>
+                        <Anexar  handleClick={() => console.log('foi')}> Anexar Arquivo</Anexar>
+         
+                        
                     </label>
+
                     <label
                     className={styles.input}
                     >
