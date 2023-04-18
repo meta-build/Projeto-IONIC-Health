@@ -10,7 +10,6 @@ export default function TextBox(props: Props) {
   return ( 
     <textarea 
         className={styles.textBox}
-        style={{ wordWrap: "break-word", whiteSpace: "pre-wrap" }}
         placeholder={props.placeholder}
 
     />

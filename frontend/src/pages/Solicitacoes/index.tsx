@@ -45,8 +45,8 @@ export default function Solicitacoes () {
         { nome: 'solicitação 8b', tipo: 'Hotfix', status: {nome: 'Em produção', status: "On Holding"} },
     ];
 
-    // const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
-    const listaStatus = ['Recentes', 'Arquivados']
+    const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
+    //const listaStatus = ['Recentes', 'Arquivados']
 
     const busca = (titulo: string) => {
         const regex = new RegExp(filtroNome, 'i');
@@ -76,6 +76,7 @@ export default function Solicitacoes () {
         <>
             <Voltar />
             <section className={styles.section}>
+                
                 <Header32>Solicitações</Header32>
                 <div className={styles.inputContainer}>
                     <InputContornado

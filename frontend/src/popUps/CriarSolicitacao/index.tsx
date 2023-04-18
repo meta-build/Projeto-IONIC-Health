@@ -64,16 +64,14 @@ export default function CriarSolicitacao (props: Props) {
                         className={styles['input-preencher']}
                         valor={titulo}
                         />
-                        
 
-                        <span className={styles.label}>Descrição</span>
+                        <span className={styles.label}>Descrição</span>             
                         <TextBox 
                         placeholder="Descrição da solicitação"
                         />
                         
                         <span className={styles.label}>Arquivos</span>
                         <Anexar  handleClick={() => console.log('foi')}> Anexar Arquivo</Anexar>
-         
                         
                     </label>
 
@@ -87,12 +85,14 @@ export default function CriarSolicitacao (props: Props) {
                         selecionadoFst={tipo}
                         />
                     </label>
+
                 </div>
                     <BotaoPopup
                     handleClick={() => concluir()}
                     tipo="submit"
                     className={styles.concluir}
                     >Criar</BotaoPopup>
+                    
                 
             </div>
         </PopUp>
