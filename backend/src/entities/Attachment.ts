@@ -18,6 +18,9 @@ export class Attachment {
     @Column()
     storageType: 'local' | 's3';
 
+    @Column()
+    ticketId: number;
+
     @ManyToOne(() => Solicitacao, ticket => ticket.attachments)
     ticket: Solicitacao;
 }
