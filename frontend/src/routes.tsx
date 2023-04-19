@@ -7,6 +7,7 @@ import HomeSolicitante from "./pages/HomeSolicitante";
 import HomeAvaliador from "./pages/HomeAvaliador";
 import HomeAdm from "./pages/HomeAdm";
 import SolicitacoesAdm from "./pages/SolicitacoesAdm";
+import UsuariosAdm from "./pages/UsuariosAdm";
 
 export default function AppRouter() {
 
@@ -41,7 +42,7 @@ export default function AppRouter() {
               {usuario.getGrupo() == 'adm' && (<>
                   <Route path='/home' element={<PaginaComHeader elemento={<HomeAdm />} />} />
                   <Route path='/solicitacoes' element={<PaginaComHeader elemento={<SolicitacoesAdm />} />} />
-                  <Route path='/usuarios' element={<PaginaComHeader elemento={<span>usuarios</span>} />} />
+                  <Route path='/usuarios' element={<PaginaComHeader elemento={<UsuariosAdm />} />} />
               </>)}
               <Route path='/tests' element={<Tests />} />
             </>  
