@@ -1,5 +1,5 @@
 export interface FileData {
+  buffer: Buffer | Blob
   fileName: string
-  fileType: string
-  data: Buffer | Blob
+  mimeType: string
 }
