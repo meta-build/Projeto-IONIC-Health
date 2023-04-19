@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 export default {
   database: process.env.DB_DATABASE ?? 'db_ionic',
   dbPort: parseInt(process.env.DB_PORT) ?? 3306,
