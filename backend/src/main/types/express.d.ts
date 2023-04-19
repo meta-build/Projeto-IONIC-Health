@@ -4,6 +4,6 @@ declare module Express {
       buffer: Buffer,
       fileName: string,
       mimeType: string
-    } | {}
+    }
   }
 }
