@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: db_ionic
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: mysql
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - mysql-db:/var/lib/mysql
+
+  ionic_backend:
+    container_name: ionic_backend
+    build:
+      context: backend/
+      dockerfile: Dockerfile
+    image: ionic_backend
+    command: sh -c "npm run dev"
+    environment:
+      DB_DATABASE: db_ionic
+      DB_PORT: 3306
+      DB_HOST: mysql
+      DB_USER: mysql
+      DB_PASSWORD: mysql
+      JWT_SECRET: jwtUwU
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend/src:/usr/src/backend/src
+      - ./backend/package.json:/usr/src/backend/package.json
+      - ./backend/tsconfig.json:/usr/src/backend/tsconfig.json
+    depends_on:
+      - mysql
+
+
+volumes:
+  mysql-db:
