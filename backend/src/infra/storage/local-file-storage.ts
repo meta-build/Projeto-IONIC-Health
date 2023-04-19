@@ -5,7 +5,7 @@ import path from 'path'
 import fs from 'fs'
 
 export class LocalFileStorage implements SaveFile {
-  private readonly storagePath = 'uploads/'
+  private readonly storagePath = path.join('../../', 'uploads')
 
   async saveFile (fileData: FileData): Promise<string> {
     const { buffer, fileName } = fileData
