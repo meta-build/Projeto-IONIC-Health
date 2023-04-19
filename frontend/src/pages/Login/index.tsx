@@ -34,7 +34,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (sessionStorage.length !== 1) {
+    if (sessionStorage.length > 0) {
       nav('home');
     }
   }, [])

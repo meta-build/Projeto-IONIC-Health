@@ -14,7 +14,7 @@ export default function AppRouter() {
   const {usuario, setUsuario} = useContexto();
 
   useEffect(() => {
-    if (sessionStorage.length !== 0) {
+    if (sessionStorage.length > 0) {
       // em sessionStorage, guardar id e senha
       // aqui, fazer requisição login com sessionstorage id e senha
       // se login der certo, salvar nome token e grupo no context
