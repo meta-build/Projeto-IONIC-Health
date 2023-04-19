@@ -5,6 +5,7 @@ import { Botao } from '../../components/Botoes';
 import { useEffect, useState } from 'react';
 import { useContexto } from '../../context/contexto';
 import { useNavigate } from 'react-router-dom';
+import Usuario from '../../types/Usuario';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,15 +13,20 @@ export default function Login() {
 
   const [erro, setErro] = useState(false);
 
-  const {token, setToken} = useContexto();
+  const {usuario, setUsuario} = useContexto();
 
   const nav = useNavigate();
 
   const logar = () => {
     if (email && senha) {
       console.log('email ', email, 'senha', senha);
-      setToken('lssldfkjsdl');
-      sessionStorage.setItem('token', 'lssldfkjsdl');
+      let token = 'fdsfsd';
+      let nome = 'fulano';
+      let grupo = 'solicitante';
+      setUsuario(new Usuario(nome, token, grupo));
+      sessionStorage.setItem('nome', nome);
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('grupo', grupo);
       nav('/home');
     } else {
       setErro(true);
@@ -28,8 +34,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    const session = sessionStorage.getItem('token');
-    if (session) {
+    if (sessionStorage.length !== 1) {
       nav('home');
     }
   }, [])

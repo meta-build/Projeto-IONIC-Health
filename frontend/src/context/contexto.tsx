@@ -1,17 +1,18 @@
 import { createContext, useContext, useState } from "react";
+import Usuario from "../types/Usuario";
 
 interface UsuarioProps {
-    token: string;
-    setToken: React.Dispatch<React.SetStateAction<string>>;
+    usuario: Usuario;
+    setUsuario: React.Dispatch<React.SetStateAction<Usuario>>;
 }
 
 const UsuarioContext = createContext({} as UsuarioProps);
 
 function ContextoProvider ({children}: any) {
-    const [token, setToken] = useState('');
+    const [usuario, setUsuario] = useState<Usuario>(undefined)
 
     return (
-        <UsuarioContext.Provider value={{token, setToken}}>
+        <UsuarioContext.Provider value={{usuario, setUsuario}}>
             {children}
         </UsuarioContext.Provider>
     );

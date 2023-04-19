@@ -1,7 +1,7 @@
 import Home from "./Home";
 import Tests from "./Tests";
 import Login from "./Login";
-import PaginaComHeader from "./PaginaComHeader";
+import PaginaComHeader from "../components/PaginaComHeader";
 import PaginaNaoEncontrada from "./PaginaNaoEncontrada";
 
 export {

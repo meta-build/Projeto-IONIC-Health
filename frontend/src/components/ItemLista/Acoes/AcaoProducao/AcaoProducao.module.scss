@@ -1,22 +1,31 @@
 @import '@/styles/variables.scss';
 
 .container {
+    display: flex;
+    align-items: center;
+}
+
+.status {
     border-radius: 18px;
-    padding: 2px 8px;
+    padding: 4px 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: black;
 }
 
-.amarelo {
-    background-color: $amarelo;
+.label {
+    margin-right: 8px;
 }
 
-.verde1 {
-    background-color: $verde-claro;
+.new {
+    background-color: $verde-100;
 }
 
-.verde2 {
+.on-holding {
+    background-color: $verde-300;
+}
+
+.done {
     background-color: $verde;
 }
