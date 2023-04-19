@@ -6,37 +6,28 @@ import styles from './HomeSolicitante.module.scss';
 import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
-import { AcaoEditarExcluir, AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-
-import { Botao, Voltar } from '../../components/Botoes';
-import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
+import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
+import { Botao } from '../../components/Botoes';
+import { CriarSolicitacao } from '../../popUps';
 
 export default function HomeSolicitante () {
-    const navigate = useNavigate();
-
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
 
     const [popupCriar, setPopupCriar] = useState(false);
-    const [popupEditar, setPopupEditar] = useState(false);
-    const [solictSelected, setSolictSelected] = useState<number>();
 
-    const solicitacoesRaiz = [
-        
-    ];
+    const [solicitacoes, setSolicitacoes] = useState([0]);
 
-    // const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
     const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
 
     const busca = (titulo: string) => {
         const regex = new RegExp(filtroNome, 'i');
         return regex.test(titulo);
     }
-    
+
+    useEffect(() => {
+    }, [filtroNome, status]);
     return (
         <>
             <section className={styles.section}>
@@ -75,47 +66,36 @@ export default function HomeSolicitante () {
                         </Botao>
                 </div>
                 <ul className={styles.lista}>
-                    {status == 'Recentes' && <>
+                    {status == 'Recentes' && solicitacoes.map((item, index) => (
                         <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
+                        key={index}
+                        itemName={'solicitação'}
+                        handleClickName={() => {}}
                         acao={<span>Criado em 01/01/2023</span>} />
+                    ))}
+                    {status ==  'Em Avaliação' && solicitacoes.map((item, index) => (
                         <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<span>Editado em 01/01/2023</span>} />
-                    </>}
-                    {status ==  'Em Avaliação' && <>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
+                        itemName={'solicitação'}
+                        handleClickName={() => {}}
                         acao={<AcaoNotas
                         notaCusto={3}
                         notaImpacto={3}
                         notaRisco={2}
                         notaPreenchida={true}
                         />}/>
-                    </>}
-                    {status == 'Em Produção' && <>
+                    ))}
+                    {status ==  'Em Produção' && solicitacoes.map((item, index) => (
                         <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoProducao status='new' />} />
+                        itemName={'solicitação'}
+                        handleClickName={() => {}}
+                        acao={<AcaoProducao status='new' />}/>
+                    ))}
+                    {status ==  'Arquivados' && solicitacoes.map((item, index) => (
                         <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoProducao status='on-holding' />} />
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoProducao status='done' />} />
-                    </>}
-                    {status == 'Arquivados' && <>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<span>Arquivado em 01/01/2023</span>} />
-                    </>}
+                        itemName={'solicitação'}
+                        handleClickName={() => {}}
+                        acao={<span>Arquivado em 01/01/2023</span>}/>
+                    ))}
                 </ul>
                 <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
             </section>
