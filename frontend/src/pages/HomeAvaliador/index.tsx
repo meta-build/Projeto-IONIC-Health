@@ -1,36 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import GoogleIcon from '../../components/GoogleIcon';
 import { Header32 } from '../../components/Header';
 import { InputContornado } from '../../components/Inputs';
-import styles from './HomeSolicitante.module.scss';
+import styles from './HomeAvaliador.module.scss';
 import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
-import { AcaoEditarExcluir, AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { AcaoNotas } from '../../components/ItemLista/Acoes';
+import { Botao } from '../../components/Botoes';
 
-
-import { Botao, Voltar } from '../../components/Botoes';
-import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
-
-export default function HomeSolicitante () {
-    const navigate = useNavigate();
-
+export default function HomeAvaliador () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
-    const [status, setStatus] = useState('Recentes');
+    const [status, setStatus] = useState('Sem nota de Risco');
 
-    const [popupCriar, setPopupCriar] = useState(false);
-    const [popupEditar, setPopupEditar] = useState(false);
-    const [solictSelected, setSolictSelected] = useState<number>();
-
-    const solicitacoesRaiz = [
-        
-    ];
-
-    // const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
-    const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
+    const listaStatus = ['Sem nota de Risco', 'Todos']
 
     const busca = (titulo: string) => {
         const regex = new RegExp(filtroNome, 'i');
@@ -40,7 +24,7 @@ export default function HomeSolicitante () {
     return (
         <>
             <section className={styles.section}>
-                <Header32>Minhas Solicitações</Header32>
+                <Header32>Solicitações para avaliar</Header32>
                 <div className={styles.inputContainer}>
                     <InputContornado
                     className={styles.inputPreenchimento}
@@ -66,26 +50,80 @@ export default function HomeSolicitante () {
                         </Botao>
                     ))}
                 </div>
-                <div className={styles.botaoCriarContainer}>
-                        <Botao
-                        className={styles.botaoCriar}
-                        handleClick={() => setPopupCriar(true)}
-                        variante='contornado'>
-                            Criar Solicitação
-                        </Botao>
-                </div>
                 <ul className={styles.lista}>
-                    {status == 'Recentes' && <>
+                    {status ==  'Sem nota de Risco' && <>
                         <ItemLista
                         itemName='teste'
                         handleClickName={() => console.log('aberto')}
-                        acao={<span>Criado em 01/01/2023</span>} />
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
                         <ItemLista
                         itemName='teste'
                         handleClickName={() => console.log('aberto')}
-                        acao={<span>Editado em 01/01/2023</span>} />
-                    </>}
-                    {status ==  'Em Avaliação' && <>
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => console.log('aberto')}
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => console.log('aberto')}
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => console.log('aberto')}
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => console.log('aberto')}
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => console.log('aberto')}
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => console.log('aberto')}
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
                         <ItemLista
                         itemName='teste'
                         handleClickName={() => console.log('aberto')}
@@ -96,28 +134,18 @@ export default function HomeSolicitante () {
                         notaPreenchida={true}
                         />}/>
                     </>}
-                    {status == 'Em Produção' && <>
+                    {status ==  'Todos' && <>
                         <ItemLista
-                        itemName='teste'
+                        itemName='teste2'
                         handleClickName={() => console.log('aberto')}
-                        acao={<AcaoProducao status='new' />} />
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoProducao status='on-holding' />} />
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoProducao status='done' />} />
-                    </>}
-                    {status == 'Arquivados' && <>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<span>Arquivado em 01/01/2023</span>} />
+                        acao={<AcaoNotas
+                        notaCusto={3}
+                        notaImpacto={3}
+                        notaRisco={2}
+                        notaPreenchida={true}
+                        />}/>
                     </>}
                 </ul>
-                <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
             </section>
         </>
     );

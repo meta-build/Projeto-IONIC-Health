@@ -68,14 +68,12 @@
 .lista {
     padding: 12px;
     margin: 0;
-    // width: 500px;
     background-color: $cinza-300;
     border-radius: 12px;
     margin-top: 12px;
     width: 100%;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 275px);
     overflow: auto;
-
 }
 
 ::-webkit-scrollbar {

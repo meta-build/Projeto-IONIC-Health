@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useContexto } from "./context/contexto";
 import Usuario from "./types/Usuario";
 import HomeSolicitante from "./pages/HomeSolicitante";
+import HomeAvaliador from "./pages/HomeAvaliador";
 
 export default function AppRouter() {
 
@@ -33,7 +34,7 @@ export default function AppRouter() {
                   <Route path='/home' element={<PaginaComHeader elemento={<HomeSolicitante />} />} />
               )}
               {usuario.getGrupo() == 'avaliador' && (
-                <Route path='/home' element={<PaginaComHeader elemento={<span>avaliador</span>} />} />
+                <Route path='/home' element={<PaginaComHeader elemento={<HomeAvaliador />} />} />
               )}
               {usuario.getGrupo() == 'adm' && (
                 <Route path='/home' element={<PaginaComHeader elemento={<span>adm</span>} />} />
