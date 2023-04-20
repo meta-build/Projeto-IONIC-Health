@@ -2,9 +2,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  BeforeInsert,
-  BeforeUpdate,
+  OneToOne,
+  JoinColumn,
 } from "typeorm";
+import { Grupo } from "./Grupo";
 
 @Entity({ name: "usuario" })
 export class User {
@@ -21,4 +22,11 @@ export class User {
   @Column({ nullable: false, unique: false, length: 250 })
   password: string;
 
+  @OneToOne((type) => Grupo, { onDelete: "CASCADE" })
+  @JoinColumn({
+    name: "id_grupo",
+    referencedColumnName: "id", //id da entidade Usuario
+    foreignKeyConstraintName: "fk_id_grupo_usuario",
+  })
+  grupo: Grupo;
 }
