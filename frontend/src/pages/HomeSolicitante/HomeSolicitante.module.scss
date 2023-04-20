@@ -1,0 +1,90 @@
+@import '@/styles/variables.scss';
+
+.voltar {
+    position: absolute;
+    top: 76px;
+    left: 6px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    .iconVoltar {
+        margin-right: 6px;
+        font-size: 16px;
+    }
+}
+
+.voltar:hover {
+    cursor: pointer;
+    color: $cinza-300;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 12px auto;
+    width: calc(100% - 128px);
+    // border: 1px solid red;
+}
+
+.inputContainer {
+    // margin-top: 8px;
+    display: flex;
+    width: 100%;
+    align-items: end;
+    .inputPreenchimento {
+        flex: 1;
+        margin-right: 16px;
+    }
+}
+
+.botoes {
+    display: flex;
+    margin-top: 12px;
+    width: 100%;
+    .botao{
+        flex: 1;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+}
+
+.botaoCriarContainer {
+    width: 100%;
+    display: flex;
+    margin-top: 12px;
+
+    .botaoCriar {
+        flex: 1;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+}
+
+.lista {
+    padding: 12px;
+    margin: 0;
+    // width: 500px;
+    background-color: $cinza-300;
+    border-radius: 12px;
+    margin-top: 12px;
+    width: 100%;
+    height: calc(100vh - 300px);
+    overflow: auto;
+
+}
+
+::-webkit-scrollbar {
+    background: none;
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $cinza-400;
+    border-radius: 36px;
+    width: 20px;
+}

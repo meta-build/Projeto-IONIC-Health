@@ -9,8 +9,8 @@ interface Props {
 export function ItemLista (props: Props) {
     return(
         <>
-            <li className={styles.item}>
-                <a className={styles.nome} onClick={props.handleClickName}>{props.itemName}</a>
+            <li className={styles.item} onClick={props.handleClickName}>
+                <a className={styles.nome} >{props.itemName}</a>
                 {props.acao}
             </li>
         </>

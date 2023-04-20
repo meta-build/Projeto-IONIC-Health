@@ -37,10 +37,13 @@ class SolicitacaoController {
     }
   }
 
-  // a solciitação pode atualizar somente os seus dados
   public async update(req: Request, res: Response): Promise<Response> {
-    const { id, criador, titulo, tipo, descricao } = req.body;
-    if (!id || id === "" || !titulo || titulo === "") {
+    const { titulo, tipo, criador, descricao } = req.body;
+    const id = parseInt(req.params.id);
+
+    const teste = res.locals
+
+    if (!id || !titulo || titulo === "") {
       return res.json({ error: "Identificação e criador são necessários" });
     }
     const solicitacao: any = await AppDataSource.manager
@@ -48,19 +51,35 @@ class SolicitacaoController {
       .catch((e) => {
         return { error: "Identificador inválido" };
       });
-    if (solicitacao && solicitacao.id) {
-      solicitacao.titulo = titulo;
-      solicitacao.tipo = tipo;
-      solicitacao.descricao = descricao;
-      const r = await AppDataSource.manager
-        .save(Solicitacao, solicitacao)
-        .catch((e) => e.message);
-      return res.json(r);
-    } else if (solicitacao && solicitacao.error) {
+    const usuario: any = await AppDataSource.manager
+      .findOneBy(User, { id: criador })
+      .catch((e) => {
+        return { error: "Identificador inválido" };
+      });
+
+    const user_repository = await AppDataSource.manager.getRepository(User)
+    const query_user = await user_repository.findOne({ where: { id: teste.id }, relations: ['id_grupo'] });
+    console.log(query_user.id_grupo.name)
+
+    if (query_user.id_grupo.name === "NORMAL") {
+      if (solicitacao && solicitacao.id) {
+        solicitacao.criador = criador;
+        solicitacao.titulo = titulo;
+        solicitacao.tipo = tipo;
+        solicitacao.descricao = descricao;
+
+        const r = await AppDataSource.manager
+          .save(Solicitacao, solicitacao)
+          .catch((e) => e.message);
+
+        return res.json(r);
+      }
+    } else if (solicitacao) {
       return res.json({ solicitacao });
     } else {
       return res.json({ error: "Solicitação não localizada" });
     }
   }
 }
+
 export default new SolicitacaoController();

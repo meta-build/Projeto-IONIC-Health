@@ -1,5 +1,3 @@
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-
 export default class HomeItem {
     private label: string;
     private icon: JSX.Element;

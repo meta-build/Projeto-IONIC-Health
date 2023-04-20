@@ -2,23 +2,33 @@ import classNames from 'classnames';
 import styles from './AcaoProducao.module.scss';
 
 interface Props {
-    status: 'New' | 'On Holding' | 'Done';
+    status: 'new' | 'on-holding' | 'done';
 }
 
 export default function AcaoProducao (props: Props) {
 
-    const cores = {
-        ['New']: 'amarelo',
-        ['On Holding']: 'verde1',
-        ['Done']: 'verde2'
+    const strStatus = (status: string) => {
+        switch(status){
+            case 'new':
+                return 'New';
+            case 'on-holding':
+                return 'On Holding';
+            default:
+                return 'Done'
+        }
     }
 
     return (
-        <span className={classNames({
-            [styles.container]: true,
-            [styles[cores[props.status]]]: true
-        })}>
-            {props.status}
-        </span>
+        <div className={styles.container}>
+            <span className={styles.label}>
+                Status:
+            </span>
+            <span className={classNames({
+                [styles.status]: true,
+                [styles[props.status]]: true
+            })}>
+                {strStatus(props.status)}
+            </span>
+        </div>
     );
 }
