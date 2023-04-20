@@ -10,7 +10,7 @@ $icon-size: 16px;
 }
 
 .botao {
-    padding: 8px;
+    padding: 9px;
     display: flex;
     align-items: center;
     min-width: 155px;
@@ -18,13 +18,16 @@ $icon-size: 16px;
     background-color: $cinza-300;
     border-radius: 12px;
     color: $cinza-600;
+
     .children {
         flex: 1;
         padding: 0;
         margin: 0;
+        margin-right: 12px;
         text-align: left;
         justify-content: center;
     }
+
     .arrow {
         height: 16px;
         font-weight: bold;
@@ -34,7 +37,8 @@ $icon-size: 16px;
 .icon {
     font-size: $icon-size;
     margin-right: 8px;
-    span{
+
+    span {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -44,8 +48,11 @@ $icon-size: 16px;
 }
 
 .botao:hover {
-    background-color: $cinza-300-hover;
     cursor: pointer;
+}
+
+.botao-hover:hover {
+    background-color: $cinza-300-hover;
 }
 
 .list {
@@ -61,21 +68,22 @@ $icon-size: 16px;
     border-radius: 12px;
     width: 100%;
     overflow: hidden;
+
     li {
         padding: 0;
         margin: 0;
-        button {
-            border: none;
-            display: flex;
-            align-items: center;
-            background-color: $cinza-300;
-            padding: 8px;
-            width: 100%;
-            text-align: left;
-        }
-        button:hover{
-            background-color: $cinza-300-hover;
-            cursor: pointer;
-        }
+        border: none;
+        display: flex;
+        align-items: center;
+        background-color: $cinza-300;
+        padding: 8px;
+        width: 100%;
+        text-align: left;
+
     }
+}
+
+li:hover {
+    background-color: $cinza-300-hover;
+    cursor: pointer;
 }

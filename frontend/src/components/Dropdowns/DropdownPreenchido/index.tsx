@@ -9,6 +9,8 @@ interface Props {
     children?: ReactNode;
     handleSelected: (selected: string) => void;
     selecionadoFst?: string;
+    className?: string;
+    onOpen?: () => void;
 }
 
 export default function DropdownPreenchido (props: Props) {
@@ -18,10 +20,18 @@ export default function DropdownPreenchido (props: Props) {
     return(
         <div className={styles.container}>
             <button
-            onClick={() => setAberto(!aberto)}
+            onClick={() => {
+                setAberto(!aberto);
+                if (props.onOpen) {
+                    props.onOpen();
+                }
+            }}
             onBlur={() => setAberto(false)}
+            type='button'
             className={classNames({
-                [styles.botao]: true
+                [styles.botao]: true,
+                [styles['botao-hover']]: !aberto,
+                [props.className]: true
             })}>
                 <span className={styles.children}>
                     {selecionado}
@@ -32,10 +42,16 @@ export default function DropdownPreenchido (props: Props) {
 
             {aberto && 
             <ul className={styles.list} >
-            {props.itens.map(item => (
-                <li><button onClick={() => {setSelecionado(item); setAberto(false); props.handleSelected(item)}} >
+            {props.itens.map((item, index) => (
+                <li
+                key={index}
+                onClick={() => {
+                    setSelecionado(item);
+                    setAberto(false);
+                    props.handleSelected(item)
+                }}>
                     {item}
-                </button></li>
+                </li>
             ))}
             </ul>}
             </button>
