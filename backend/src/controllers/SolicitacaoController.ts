@@ -40,6 +40,9 @@ class SolicitacaoController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { titulo, tipo, criador, descricao } = req.body;
     const id = parseInt(req.params.id);
+
+    const teste = res.locals
+
     if (!id || !titulo || titulo === "") {
       return res.json({ error: "Identificação e criador são necessários" });
     }
@@ -54,18 +57,23 @@ class SolicitacaoController {
         return { error: "Identificador inválido" };
       });
 
+    const user_repository = await AppDataSource.manager.getRepository(User)
+    const query_user = await user_repository.findOne({ where: { id: teste.id }, relations: ['id_grupo'] });
+    console.log(query_user.id_grupo.name)
 
-    if (solicitacao && solicitacao.id) {
-      solicitacao.criador = criador;
-      solicitacao.titulo = titulo;
-      solicitacao.tipo = tipo;
-      solicitacao.descricao = descricao;
+    if (query_user.id_grupo.name === "NORMAL") {
+      if (solicitacao && solicitacao.id) {
+        solicitacao.criador = criador;
+        solicitacao.titulo = titulo;
+        solicitacao.tipo = tipo;
+        solicitacao.descricao = descricao;
 
-      const r = await AppDataSource.manager
-        .save(Solicitacao, solicitacao)
-        .catch((e) => e.message);
+        const r = await AppDataSource.manager
+          .save(Solicitacao, solicitacao)
+          .catch((e) => e.message);
 
-      return res.json(r);
+        return res.json(r);
+      }
     } else if (solicitacao) {
       return res.json({ solicitacao });
     } else {

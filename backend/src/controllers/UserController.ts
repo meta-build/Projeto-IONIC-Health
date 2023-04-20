@@ -2,6 +2,7 @@ import AppDataSource from "../data-source";
 import { Request, Response } from 'express';
 import { User } from '../entities/User';
 import { generateToken } from '../middlewares';
+import { Grupo } from "../entities/Grupo";
 
 class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -70,12 +71,15 @@ class UserController {
 
   // o usuário pode atualizar somente os seus dados
   public async update(req: Request, res: Response): Promise<Response> {
-    const { mail, password, name } = req.body;
+    const { mail, password, name, id_grupo } = req.body;
+
     // obtém o id do usuário que foi salvo na autorização na middleware
     const { id } = res.locals;
-    const usuario: any = await AppDataSource.manager.findOneBy(User, { id }).catch((e) => {
+    const usuario: any = await AppDataSource.manager.findOneBy(User, { id: id }).catch((e) => {
       return { error: "Identificador inválido" };
     })
+    const grupo: any = await AppDataSource.manager.findOneBy(Grupo, { id: id_grupo })
+
     if (usuario && usuario.id) {
       if (mail !== "") {
         usuario.mail = mail;
@@ -86,17 +90,22 @@ class UserController {
       if (name !== "") {
         usuario.name = name;
       }
-      const r = await AppDataSource.manager.save(User, usuario).catch((e) => {
-        // testa se o e-mail é repetido
-        if (/(mail)[\s\S]+(already exists)/.test(e.detail)) {
-          return ({ error: 'e-mail já existe' });
-        }
-        return e;
-      })
-      if (!r.error) {
-        return res.json({ id: usuario.id, mail: usuario.mail, name: usuario.name });
+      if (id_grupo !== "") {
+        usuario.id_grupo = grupo.id
       }
-      return res.json(r);
+      if (grupo.id === id_grupo) {
+        const r = await AppDataSource.manager.save(User, usuario).catch((e) => {
+          // testa se o e-mail é repetido
+          if (/(mail)[\s\S]+(already exists)/.test(e.detail)) {
+            return ({ error: 'e-mail já existe' });
+          }
+          return e;
+        })
+        if (!r.error) {
+          return res.json({ id: usuario.id, mail: usuario.mail, name: usuario.name, id_grupo: grupo.id });
+        }
+        return res.json(r);
+      }
     }
     else if (usuario && usuario.error) {
       return res.json(mail)
