@@ -1,9 +1,9 @@
 declare module Express {
   interface Request {
-    fileData?: {
+    fileDataList?: Array<{
       buffer: Buffer,
       fileName: string,
       mimeType: string
-    }
+    }>
   }
 }
