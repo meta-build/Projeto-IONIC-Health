@@ -48,17 +48,14 @@ class SolicitacaoController {
       .catch((e) => {
         return { error: "Identificador inválido" };
       });
-    console.log(criador);
     const usuario: any = await AppDataSource.manager
       .findOneBy(User, { id: criador })
       .catch((e) => {
         return { error: "Identificador inválido" };
       });
 
-    console.log(usuario);
 
     if (solicitacao && solicitacao.id) {
-      const solicitacao = new Solicitacao();
       solicitacao.criador = criador;
       solicitacao.titulo = titulo;
       solicitacao.tipo = tipo;
@@ -68,7 +65,6 @@ class SolicitacaoController {
         .save(Solicitacao, solicitacao)
         .catch((e) => e.message);
 
-      console.log(r);
       return res.json(r);
     } else if (solicitacao) {
       return res.json({ solicitacao });
