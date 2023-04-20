@@ -19,9 +19,7 @@ class GrupoController {
         return { error: "Identificador inválido" };
       });
 
-    console.log(usuario);
     if (usuario && usuario.id) {
-      console.log("TEM ID USUARIO");
       const grupo = new Grupo();
       grupo.name = name;
       await AppDataSource.manager.save(Grupo, grupo);
@@ -32,7 +30,6 @@ class GrupoController {
     } else {
       return res.json(usuario);
     }
-    console.log("final do código");
   }
 }
 export default new GrupoController();

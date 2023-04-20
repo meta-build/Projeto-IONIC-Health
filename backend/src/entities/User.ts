@@ -25,8 +25,8 @@ export class User {
   @OneToOne((type) => Grupo, { onDelete: "CASCADE" })
   @JoinColumn({
     name: "id_grupo",
-    referencedColumnName: "id", //id da entidade Usuario
+    referencedColumnName: "id", //id da entidade Grupo
     foreignKeyConstraintName: "fk_id_grupo_usuario",
   })
-  grupo: Grupo;
+  id_grupo: Grupo;
 }
