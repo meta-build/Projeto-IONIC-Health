@@ -6,7 +6,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     children: ReactNode;
-    handleClick: () => void;
+    handleClick?: () => void;
     corBotao?: 'claro' | 'noturno';
     tipo?: 'button' | 'submit' | 'reset';
     className?: string | any;
