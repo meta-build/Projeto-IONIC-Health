@@ -4,8 +4,10 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { Grupo } from "./Grupo";
+import { Rating } from './Rating';
 
 @Entity({ name: "usuario" })
 export class User {
@@ -29,4 +31,7 @@ export class User {
     foreignKeyConstraintName: "fk_id_grupo_usuario",
   })
   id_grupo: Grupo;
+
+  @OneToMany(() => Rating, rating => rating.user)
+  ratings: Rating[];
 }
