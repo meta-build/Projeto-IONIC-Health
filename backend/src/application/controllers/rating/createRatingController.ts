@@ -18,8 +18,6 @@ export class CreateRatingController {
 
     const { value, committee, comment, ticketId } = req.body
 
-    console.log(ticketId)
-
     const { id } = res.locals
     const reviewer: any = await AppDataSource.manager
       .findOneByOrFail(User, { id })
@@ -32,8 +30,6 @@ export class CreateRatingController {
       .catch((err) => {
         return res.json({ error: err.message })
       })
-
-    console.log(ticket)
 
     const rating = new Rating()
     rating.comment = comment
