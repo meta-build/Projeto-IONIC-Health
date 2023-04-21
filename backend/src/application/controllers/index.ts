@@ -1,1 +1,1 @@
-export * from './createTicketController'
+export * from './ticket/createTicketController'
