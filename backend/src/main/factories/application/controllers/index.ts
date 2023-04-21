@@ -1,2 +1,2 @@
-export * from './create-ticket'
+export * from './ticket/create-ticket-controller-factory'
 export * from './rating/create-rating-controller-factory'
