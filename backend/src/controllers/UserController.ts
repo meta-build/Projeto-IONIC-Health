@@ -34,6 +34,31 @@ class UserController {
     }
   }
 
+  public async getUserById(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const usuario: any = await AppDataSource.getRepository(User)
+      .createQueryBuilder("usuario")
+      .leftJoinAndSelect("usuario.grupo", "grupo")
+      .where("usuario.id=:id", { id })
+      .getOne();
+
+    if (!usuario) {
+      return res
+        .status(404)
+        .send("Usuário Não encontrado na Base de Dados.");
+    }
+
+    return res.send(usuario);
+  }
+
+  public async getAllUser(req: Request, res: Response) {
+    const solicitacao: any = await AppDataSource.getRepository(
+      User
+    ).find();
+    res.send(solicitacao);
+    return solicitacao;
+  }
+
   public async create(req: Request, res: Response): Promise<Response> {
     const { mail, password, name, grupoId } = req.body;
     //verifica se foram fornecidos os parâmetros

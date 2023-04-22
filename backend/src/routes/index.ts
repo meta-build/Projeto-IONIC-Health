@@ -21,6 +21,8 @@ routes.use("/usuario", user);
 routes.post("/login", UserController.login);
 routes.post("/create/usuario", UserController.create);
 routes.put("/update/usuario/:id", authorization, UserController.update);
+routes.get("/find/usuario/:id", authorization, UserController.getUserById)
+routes.get("/find", authorization, UserController.getAllUser)
 
 routes.use("/notificacao", authorization, notificacao);
 
