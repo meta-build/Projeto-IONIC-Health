@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import { Attachment } from './Attachment';
+import { Rating } from './Rating';
 
 @Entity({ name: "solicitacao" })
 export class Solicitacao {
@@ -41,4 +42,8 @@ export class Solicitacao {
 
   @OneToMany(() => Attachment, attachment => attachment.ticket)
   attachments: Attachment[];
+
+  @JoinColumn()
+  @OneToMany(() => Rating, rating => rating.ticket)
+  ratings: Rating[]
 }
