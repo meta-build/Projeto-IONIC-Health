@@ -76,10 +76,8 @@ class UserController {
     const id_usuario = parseInt(req.params.id)
     // obtém o id do usuário que foi salvo na autorização na middleware
     const { id } = res.locals;
-    console.log(id, 'ID USUÁRIO DO TOKEN')
 
     const usuario: any = await AppDataSource.manager.findOneByOrFail(User, { id: id_usuario })
-    console.log(usuario, 'QUERY USUÁRIO COM O ID DO PARÂMETRO')
 
     const user_repository = await AppDataSource.manager.getRepository(User)
     const query_user = await user_repository
@@ -88,7 +86,6 @@ class UserController {
       .where("usuario.id=:id", { id })
       .getOne();
 
-    console.log(query_user, 'PARAMETRO ID TOKEN')
     if (query_user.grupo.name === "ADMIN") {
       if (usuario && usuario.id) {
         usuario.name = name;

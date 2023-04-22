@@ -4,8 +4,10 @@ import {
   Column,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 import { Grupo } from "./Grupo";
+import { Solicitacao } from "./Solicitacao";
 
 @Entity({ name: "usuario" })
 export class User {

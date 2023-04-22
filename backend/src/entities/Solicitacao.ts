@@ -41,4 +41,7 @@ export class Solicitacao {
 
   @OneToMany(() => Attachment, attachment => attachment.ticket)
   attachments: Attachment[];
+
+  @Column({ default: 'NEW' })
+  status: string
 }
