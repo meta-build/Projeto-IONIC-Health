@@ -14,7 +14,7 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
     // autorização no formato Bearer token
     const [, token] = authorization.split(" ");
     // valida o token
-    const decoded = <{ id: string, mail: string, name: string }>jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = <{ id: string, mail: string, name: string, id_grupo: string }>jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded || !decoded.id) {
       res.status(401).send({ error: "Não autorizado" });
     }

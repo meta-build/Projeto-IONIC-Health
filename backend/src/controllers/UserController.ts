@@ -36,7 +36,7 @@ class UserController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { mail, password, name } = req.body;
+    const { mail, password, name, id_grupo } = req.body;
     //verifica se foram fornecidos os parâmetros
     if (!mail || !password || mail.trim() === "" || password.trim() === "") {
       return res.json({ error: "e-mail e senha necessários" });
@@ -45,6 +45,7 @@ class UserController {
     obj.mail = mail;
     obj.password = password;
     obj.name = name
+    obj.id_grupo = id_grupo
     // o hook BeforeInsert não é disparado com AppDataSource.manager.save(User,JSON),
     // mas é disparado com AppDataSource.manager.save(User,objeto do tipo User)
     // https://github.com/typeorm/typeorm/issues/5493
@@ -57,12 +58,13 @@ class UserController {
     })
     if (usuario.id) {
       // cria um token codificando o objeto {idusuario,mail}
-      const token = await generateToken({ id: usuario.id, mail: usuario.mail, name: usuario.name });
+      const token = await generateToken({ id: usuario.id, mail: usuario.mail, name: usuario.name, id_grupo: usuario.id_grupo });
       // retorna o token para o cliente
       return res.json({
         id: usuario.id,
         mail: usuario.mail,
         name: usuario.name,
+        id_grupo: usuario.id_grupo,
         token
       });
     }
@@ -75,10 +77,10 @@ class UserController {
 
     // obtém o id do usuário que foi salvo na autorização na middleware
     const { id } = res.locals;
-    const usuario: any = await AppDataSource.manager.findOneBy(User, { id: id }).catch((e) => {
+    const usuario: any = await AppDataSource.manager.findOneByOrFail(User, { id: id }).catch((e) => {
       return { error: "Identificador inválido" };
     })
-    const grupo: any = await AppDataSource.manager.findOneBy(Grupo, { id: id_grupo })
+    const grupo: any = await AppDataSource.manager.findOneByOrFail(Grupo, { id: id_grupo })
 
     if (usuario && usuario.id) {
       if (mail !== "") {
