@@ -20,7 +20,7 @@ const routes = Router();
 routes.use("/usuario", user);
 routes.post("/login", UserController.login);
 routes.post("/create/usuario", UserController.create);
-routes.put("/update/usuario/:id", UserController.update);
+routes.put("/update/usuario/:id", authorization, UserController.update);
 
 routes.use("/notificacao", authorization, notificacao);
 
