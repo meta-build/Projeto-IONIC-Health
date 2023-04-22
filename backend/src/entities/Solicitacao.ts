@@ -6,6 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
 import { Attachment } from './Attachment';
@@ -28,8 +29,8 @@ export class Solicitacao {
   @CreateDateColumn()
   data_criacao: Date;
 
-  @CreateDateColumn()
-  data_arquivado;
+  @Column({ nullable: true })
+  data_arquivado: Date;
 
   @ManyToOne((type) => User, { onDelete: "CASCADE" })
   @JoinColumn({

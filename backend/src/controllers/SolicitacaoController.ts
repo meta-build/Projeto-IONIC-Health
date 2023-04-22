@@ -30,6 +30,9 @@ class SolicitacaoController {
         solicitacao.tipo = tipo;
         solicitacao.descricao = descricao;
         solicitacao.status = status
+        if (solicitacao.status.toUpperCase() === "ARCHIVED") {
+          solicitacao.data_arquivado = new Date()
+        }
 
         const r = await AppDataSource.manager
           .save(Solicitacao, solicitacao)
