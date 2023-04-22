@@ -4,10 +4,11 @@ import {
   Column,
   CreateDateColumn,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
+import { Attachment } from './Attachment';
 
 @Entity({ name: "solicitacao" })
 export class Solicitacao {
@@ -37,4 +38,7 @@ export class Solicitacao {
     foreignKeyConstraintName: "fk_id_user_solicitacao",
   })
   criador: User;
+
+  @OneToMany(() => Attachment, attachment => attachment.ticket)
+  attachments: Attachment[];
 }

@@ -1,4 +1,3 @@
-import { Router, Request, Response } from "express";
 import user from "./user";
 import grupo from "./grupo";
 import notificacao from "./notificacao";
@@ -8,19 +7,25 @@ import GetAllSolicitacao from "../services/GetAllSolicitacao";
 import ArchiveSolicitacao from "../services/ArchiveSolicitacao";
 import deleteSolicitacao from "../services/deleteSolicitacao";
 import SolicitacaoController from "../controllers/SolicitacaoController";
-import { authorization } from "../middlewares";
 import GrupoController from "../controllers/GrupoController";
+import { authorization } from "../middlewares";
+import { adaptMulter as upload } from '../main/adapters/multer';
+import { makeTicketController } from '../main/factories/application/controllers';
+import { adaptRoute } from '../main/adapters/express-router';
+
+import { Router } from "express";
 
 const routes = Router();
 
 routes.use("/usuario", user);
 routes.post("/login", UserController.login);
 routes.post("/create/usuario", UserController.create);
-routes.put("/update/:id", UserController.update);
+routes.put("/update/usuario/:id", UserController.update);
 
 routes.use("/notificacao", authorization, notificacao);
 
-routes.post("/create/solicitacao", authorization, SolicitacaoController.create);
+routes.post("/ticket", authorization, upload, adaptRoute(makeTicketController()));
+
 routes.put("/update/solicitacao/:id", authorization, SolicitacaoController.update);
 
 routes.get("/solicitacao/:id", GetOneSolicitacao.getSolicitacaoById);

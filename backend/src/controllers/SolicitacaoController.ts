@@ -61,7 +61,7 @@ class SolicitacaoController {
     const query_user = await user_repository.findOne({ where: { id: teste.id }, relations: ['id_grupo'] });
     console.log(query_user.id_grupo.name)
 
-    if (query_user.id_grupo.name === "NORMAL") {
+    if (query_user.id_grupo.name === "ADMIN") {
       if (solicitacao && solicitacao.id) {
         solicitacao.criador = criador;
         solicitacao.titulo = titulo;
@@ -74,10 +74,10 @@ class SolicitacaoController {
 
         return res.json(r);
       }
-    } else if (solicitacao) {
-      return res.json({ solicitacao });
+    } else if (res.statusCode != 200) {
+      return res.json({ msg: "Solicitação não localizada." });
     } else {
-      return res.json({ error: "Solicitação não localizada" });
+      return res.json({ msg: "Usuário não é ADMINISTRADOR" });
     }
   }
 }
