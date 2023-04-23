@@ -1,15 +1,15 @@
 export default class Usuario {
     constructor(
-        private nome: string,
+        private id: number,
         private token: string,
-        private grupo: string
+        private grupo: number
     ) {}
 
-    public getNome() {return this.nome;}
     public getToken() {return this.token;}
     public getGrupo() {return this.grupo;}
+    public getId() {return this.id;}
     
-    public setNome(nome: string) {this.nome = nome}
     public setToken(token: string) {this.token = token}
-    public setGrupo(grupo: string) {this.grupo = grupo}
+    public setGrupo(grupo: number) {this.grupo = grupo}
+    public setId(id: number) {this.id = id}
 }
