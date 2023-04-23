@@ -8,11 +8,14 @@ import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { Botao } from '../../components/Botoes';
 import CriarUsuario from '../../popUps/CriarUsuario';
+import VisualizarUsuario from '../../popUps/VisualzarUsuario';
 
 export default function UsuariosAdm () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
+
     const [criarPopUp, setCriarPopUp] = useState(false);
+    const [visualizarPopup, setVisualizarPopup] = useState(false);
 
     const busca = (titulo: string) => {
         const regex = new RegExp(filtroNome, 'i');
@@ -51,15 +54,12 @@ export default function UsuariosAdm () {
                     <>
                         <ItemLista
                         itemName='Fulano'
-                        handleClickName={() => console.log('aberto')}
+                        handleClickName={() => setVisualizarPopup(true)}
                         acao={<span>Solicitante</span>} />
-                        <ItemLista
-                        itemName='Ciclano'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<span>Admnistrador</span>} />
                     </>
                 </ul>
                 <CriarUsuario aberto={criarPopUp} onClose={() => setCriarPopUp(false)} />
+                <VisualizarUsuario aberto={visualizarPopup} onClose={() => setVisualizarPopup(false)} />
             </section>
         </>
     );
