@@ -131,6 +131,17 @@ class UserController {
     }
   }
 
+  public async deleteUser(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const user: any = await AppDataSource.getRepository(
+      User
+    ).delete(id);
+    if (!res.status(200)) {
+      return res.status(404).send("Não foi possível deletar!");
+    }
+    return res.status(200).send("Deletado com Sucesso!");
+  }
+
 }
 
 export default new UserController();
