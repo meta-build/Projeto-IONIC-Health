@@ -8,11 +8,14 @@ import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas } from '../../components/ItemLista/Acoes';
 import { Botao } from '../../components/Botoes';
+import AvaliarSolicitacao from '../../popUps/AvaliarSolicitacao';
 
 export default function HomeAvaliador () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Sem nota de Risco');
+
+    const [popup, setPopup] = useState(false);
 
     const listaStatus = ['Sem nota de Risco', 'Todos']
 
@@ -54,90 +57,18 @@ export default function HomeAvaliador () {
                     {status ==  'Sem nota de Risco' && <>
                         <ItemLista
                         itemName='teste'
-                        handleClickName={() => console.log('aberto')}
+                        handleClickName={() => setPopup(true)}
                         acao={<AcaoNotas
                         notaCusto={3}
                         notaImpacto={3}
                         notaRisco={2}
                         notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                        <ItemLista
-                        itemName='teste'
-                        handleClickName={() => console.log('aberto')}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
+                        />} />
                     </>}
                     {status ==  'Todos' && <>
                         <ItemLista
                         itemName='teste2'
-                        handleClickName={() => console.log('aberto')}
+                        handleClickName={() => setPopup(true)}
                         acao={<AcaoNotas
                         notaCusto={3}
                         notaImpacto={3}
@@ -146,6 +77,7 @@ export default function HomeAvaliador () {
                         />}/>
                     </>}
                 </ul>
+                <AvaliarSolicitacao aberto={popup} onClose={() => setPopup(false)} />
             </section>
         </>
     );
