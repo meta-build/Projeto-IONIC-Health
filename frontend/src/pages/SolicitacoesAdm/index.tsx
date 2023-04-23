@@ -91,10 +91,10 @@ export default function SolicitacoesAdm() {
                         acao={<span>Arquivado em 01/01/2023</span>} />
                 </>}
             </ul>
-            <VizualizarSolicitacao aberto={popupRecente} onClose={() => setPopupRecente(false)} />
-            <VisualizarSolicitacaoAvaliacao aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
-            <VizualizarSolicitacaoProducao aberto={popupProducao} onClose={() => setPopupProducao(false)} />
-            <VizualizarSolicitacaoArquivado aberto={popupArquivado} onClose={() => setPopupArquivado(false)} />
+            <VizualizarSolicitacao usuario='adm' aberto={popupRecente} onClose={() => setPopupRecente(false)} />
+            <VisualizarSolicitacaoAvaliacao usuario='adm' aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
+            <VizualizarSolicitacaoProducao usuario='adm' aberto={popupProducao} onClose={() => setPopupProducao(false)} />
+            <VizualizarSolicitacaoArquivado usuario='adm' aberto={popupArquivado} onClose={() => setPopupArquivado(false)} />
         </section>
     );
 }

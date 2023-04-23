@@ -78,7 +78,7 @@ export default function HomeAvaliador () {
                         />}/>
                     </>}
                 </ul>
-                <VisualizarSolicitacaoAvaliacao aberto={popup} onClose={() => setPopup(false)} />
+                <VisualizarSolicitacaoAvaliacao usuario='avaliador' aberto={popup} onClose={() => setPopup(false)} />
             </section>
         </>
     );

@@ -16,6 +16,7 @@ import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
 import VisualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 import VizualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 import VizualizarSolicitacaoProducao from '../../popUps/VizualizarSolicitacaoProducao';
+import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
 
 export default function HomeSolicitante () {
     const [filtroNome, setFiltroNome] = useState('');
@@ -24,6 +25,7 @@ export default function HomeSolicitante () {
 
     const [popupCriar, setPopupCriar] = useState(false);
     const [popupRecente, setPopupRecente] = useState(false);
+    const [popupAvaliacao, setPopupAvaliacao] = useState(false);
     const [popupArquivado, setPopupArquivado] = useState(false);
     const [popupProducao, setPopupProducao] = useState(false);
 
@@ -86,7 +88,7 @@ export default function HomeSolicitante () {
                     {status ==  'Em Avaliação' && solicitacoes.map((item, index) => (
                         <ItemLista
                         itemName={'solicitação'}
-                        handleClickName={() => {}}
+                        handleClickName={() => setPopupAvaliacao(true)}
                         acao={<AcaoNotas
                         notaCusto={3}
                         notaImpacto={3}
@@ -108,9 +110,10 @@ export default function HomeSolicitante () {
                     ))}
                 </ul>
                 <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
-                <VizualizarSolicitacao aberto={popupRecente} onClose={() => setPopupRecente(false)}/>
-                <VizualizarSolicitacaoArquivado aberto={popupArquivado} onClose={() => setPopupArquivado(false)}/>
-                <VizualizarSolicitacaoProducao aberto={popupProducao} onClose={() => setPopupProducao(false)}/>
+                <VizualizarSolicitacao usuario='solicitante' aberto={popupRecente} onClose={() => setPopupRecente(false)}/>
+                <VisualizarSolicitacaoAvaliacao usuario='solicitante' aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
+                <VizualizarSolicitacaoArquivado usuario='solicitante' aberto={popupArquivado} onClose={() => setPopupArquivado(false)}/>
+                <VizualizarSolicitacaoProducao usuario='solicitante' aberto={popupProducao} onClose={() => setPopupProducao(false)}/>
             </section>
         </>
     );
