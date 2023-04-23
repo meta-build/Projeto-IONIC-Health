@@ -3,7 +3,7 @@ import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import { BotaoPopup } from "../../components/Botoes";
 import { InputPopup } from "../../components/Inputs";
-import styles from './VizualizarSolicitacao.module.scss';
+import styles from './VizualizarSolicitacaoProducao.module.scss';
 
 interface Props {
     aberto: boolean;
@@ -50,6 +50,7 @@ export default function VizualizarSolicitacao (props: Props) {
 
                         <span className={styles.label}>Arquivos</span>
 
+                        <span className={styles.label}>Status de Produção</span>
                         
                     </label>
                 

@@ -11,7 +11,7 @@ class SolicitacaoController {
 
     const id_usuario_token = res.locals
 
-    if (!id || !titulo || titulo === "") {
+    if (!id) {
       return res.json({ error: "Identificação e criador são necessários" });
     }
     const solicitacao: any = await AppDataSource.manager
@@ -30,8 +30,12 @@ class SolicitacaoController {
         solicitacao.tipo = tipo;
         solicitacao.descricao = descricao;
         solicitacao.status = status
-        if (solicitacao.status.toUpperCase() === "ARCHIVED") {
+        if (solicitacao.status?.toUpperCase() === "ARCHIVED") {
           solicitacao.data_arquivado = new Date()
+        }
+
+        if (!status) {
+          solicitacao.data_edicao = new Date()
         }
 
         const r = await AppDataSource.manager
