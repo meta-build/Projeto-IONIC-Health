@@ -5,17 +5,23 @@ import styles from './VizualizarSolicitacao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
 import AprovarParaAvaliacao from "../AprovarParaAvaliacao";
+import { BotaoPopup } from "../../components/Botoes";
+import ConfirmarArquivamentoSolicitacao from "../ConfirmarArquivamentoSolicitacao";
+import EditarSolicitacao from "../EditarSolicitacao";
 
 interface Props {
   aberto: boolean;
   onClose: () => void;
+  usuario: 'solicitante' | 'adm';
 }
 
 export default function VizualizarSolicitacao(props: Props) {
   const [titulo, setTitulo] = useState('exemplo');
   const [tipo, setTipo] = useState('Feature');
 
+  const [popupArquivar, setPopupArquivar] = useState(false);
   const [popupExclusao, setPopupExclusao] = useState(false);
+  const [popupEditar, setPopupEditar] = useState(false);
   const [ppopupAprovar, setPopupAprovar] = useState(false);
   
   return (
@@ -23,7 +29,6 @@ export default function VizualizarSolicitacao(props: Props) {
       titulo={`${tipo} ${titulo}`}
       visivel={props.aberto}
       onClose={props.onClose} >
-
       <div className={styles.form}>
         <div className={styles.inputs}>
           <div
@@ -54,19 +59,37 @@ export default function VizualizarSolicitacao(props: Props) {
               </div>
             </div>
             <div className={styles['linha-submit']}>
-              {/* verificar usuário e exibir os botões corretos */}
-              <BotaoPreenchido handleClick={() => setPopupExclusao(true)}>
-                Excluir
-              </BotaoPreenchido>
-              <BotaoPreenchido handleClick={() => setPopupAprovar(true)}>
-                Liberar para avaliação
-              </BotaoPreenchido>
+              {props.usuario == 'adm' && 
+              <>
+                <BotaoPreenchido
+                className={styles.botao}
+                handleClick={() => setPopupArquivar(true)}>
+                  Arquivar
+                </BotaoPreenchido>
+                <BotaoPreenchido
+                className={styles.botao}
+                handleClick={() => setPopupExclusao(true)}>
+                  Excluir
+                </BotaoPreenchido>
+                <BotaoPreenchido
+                className={styles.botao}
+                handleClick={() => setPopupEditar(true)}>
+                  Editar
+                </BotaoPreenchido>
+                <BotaoPreenchido
+                className={styles.botao}
+                handleClick={() => setPopupAprovar(true)}>
+                  Liberar para avaliação
+                </BotaoPreenchido>
+              </>} 
             </div>
           </div>
         </div>
       </div>
-    <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
-    <AprovarParaAvaliacao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
+      <ConfirmarArquivamentoSolicitacao aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
+      <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+      <EditarSolicitacao aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+      <AprovarParaAvaliacao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )
 }

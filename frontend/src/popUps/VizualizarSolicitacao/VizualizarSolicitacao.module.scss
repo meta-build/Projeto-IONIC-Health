@@ -75,3 +75,7 @@
     margin-top: 36px;
     justify-content: flex-end;
 }
+
+.botao:not(:last-child) {
+    margin-right: 12px;
+}
