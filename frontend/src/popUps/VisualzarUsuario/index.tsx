@@ -4,6 +4,7 @@ import styles from './VisualizarUsuario.module.scss';
 import { useState } from "react";
 import { BotaoPopup } from "../../components/Botoes";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
+import EditarUsuario from "../EditarUsuario";
 
 interface Props {
     aberto: boolean;
@@ -15,6 +16,8 @@ export default function VisualizarUsuario (props: Props) {
     const [nome, setNome] = useState('Fulano');
     const [email, setEmail] = useState('fulano@email.com');
     const [grupo, setGrupo] = useState('Solicitante');
+
+    const [popupEditar, setPopupEditar] = useState(false);
 
     return(
         <PopUp
@@ -47,9 +50,16 @@ export default function VisualizarUsuario (props: Props) {
                 <div className={styles['linha-submit']}>
                     {/* botão não tem onclick, pois o submit já faz toda a ação de enviar o formulário. a função chamada está no onsubmit, no começo da tag form */}
                     <BotaoPreenchido className={styles.botao}>Excluir</BotaoPreenchido>                  
-                    <BotaoPreenchido className={styles.botao}>Editar</BotaoPreenchido>                  
+                    <BotaoPreenchido
+                    handleClick={() => {
+                        setPopupEditar(true);
+                    }}
+                    className={styles.botao}>
+                        Editar
+                    </BotaoPreenchido>                  
                 </div>
             </div>
+            <EditarUsuario aberto={popupEditar} onClose={() => setPopupEditar(false)} />
         </PopUp>
     )
 }
