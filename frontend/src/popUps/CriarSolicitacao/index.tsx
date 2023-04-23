@@ -68,6 +68,7 @@ export default function CriarSolicitacao (props: Props) {
                         <span className={styles.label}>Descrição</span>             
                         <TextBox 
                         placeholder="Descrição da solicitação"
+                        onChange={(e) => console.log(e)}
                         />
                         
                         <span className={styles.label}>Arquivos</span>
