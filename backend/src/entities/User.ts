@@ -4,6 +4,7 @@ import {
   Column,
   JoinColumn,
   OneToMany,
+  ManyToOne,
 } from "typeorm";
 import { Grupo } from "./Grupo";
 import { Rating } from './Rating';
@@ -26,6 +27,7 @@ export class User {
   @OneToMany(() => Rating, rating => rating.user)
   ratings: Rating[];
 
+  @ManyToOne(() => Grupo, id_grupo => id_grupo.name)
   @JoinColumn()
   grupo: Grupo;
 
