@@ -17,6 +17,7 @@ export default function BotaoNota (props: Props) {
     return(
         <div className={props.className}>
             <button
+            type='button'
             className={classNames({
                 [styles.botao]: true,
                 [styles[`${cor}-contorno`]]: true,
