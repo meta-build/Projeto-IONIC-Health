@@ -19,7 +19,7 @@
 
 .popup {
     background-color: $cinza-200;
-    padding: 60px 40px;
+    padding: 20px 40px;
     border-radius: 18px;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,6 @@
     z-index: 1;
     text-align: center;
     vertical-align: top;
-    
 }
 
 .fechar {
@@ -39,5 +38,4 @@
 
 .titulo {
     color: $cinza-600;
-
 }
