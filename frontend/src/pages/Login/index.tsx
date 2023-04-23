@@ -5,6 +5,7 @@ import { Botao } from '../../components/Botoes';
 import { useEffect, useState } from 'react';
 import { useContexto } from '../../context/contexto';
 import { useNavigate } from 'react-router-dom';
+import Usuarios from '../../services/Usuarios';
 import Usuario from '../../types/Usuario';
 
 export default function Login() {
@@ -19,15 +20,15 @@ export default function Login() {
 
   const logar = () => {
     if (email && senha) {
-      console.log('email ', email, 'senha', senha);
-      let token = 'fdsfsd';
-      let nome = 'fulano';
-      let grupo = 'solicitante';
-      setUsuario(new Usuario(nome, token, grupo));
-      sessionStorage.setItem('nome', nome);
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('grupo', grupo);
-      nav('/home');
+      Usuarios.login({mail: email, password: senha})
+      .then(data => {
+        const {id, grupoId, token} = data;
+        setUsuario(new Usuario(id, token, grupoId))
+        sessionStorage.setItem('id', `${id}`)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('grupo', `${grupoId}`)
+        nav('/home');
+      })
     } else {
       setErro(true);
     }
@@ -35,6 +36,8 @@ export default function Login() {
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
+      const {id, token, grupo} = sessionStorage;
+      setUsuario(new Usuario(id, token, grupo));
       nav('home');
     }
   }, [])
