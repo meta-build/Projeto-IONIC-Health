@@ -5,11 +5,9 @@ import { Header36 } from '../../components/Header';
 import classNames from 'classnames';
 import HomeItem from '../../types/HomeItem';
 import { useNavigate } from 'react-router-dom';
-import GoogleIcon from '../../components/GoogleIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import CriarSolicitacao from '../../popUps/CriarSolicitacao';
-import { useContexto } from '../../context/contexto';
 
 export default function HomeAdm () {
     const history = useNavigate();
