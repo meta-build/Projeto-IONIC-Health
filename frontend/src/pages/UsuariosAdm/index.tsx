@@ -7,10 +7,12 @@ import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { Botao } from '../../components/Botoes';
+import CriarUsuario from '../../popUps/CriarUsuario';
 
 export default function UsuariosAdm () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
+    const [criarPopUp, setCriarPopUp] = useState(false);
 
     const busca = (titulo: string) => {
         const regex = new RegExp(filtroNome, 'i');
@@ -40,7 +42,7 @@ export default function UsuariosAdm () {
                 <div className={styles.botaoCriarContainer}>
                         <Botao
                         className={styles.botaoCriar}
-                        handleClick={() => console.log('criar usuários')}
+                        handleClick={() => setCriarPopUp(true)}
                         variante='contornado'>
                             Criar Usuário
                         </Botao>
@@ -57,6 +59,7 @@ export default function UsuariosAdm () {
                         acao={<span>Admnistrador</span>} />
                     </>
                 </ul>
+                <CriarUsuario aberto={criarPopUp} onClose={() => setCriarPopUp(false)} />
             </section>
         </>
     );

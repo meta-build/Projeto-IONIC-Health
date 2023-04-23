@@ -3,6 +3,7 @@ import styles from './IconeClicavel.module.scss';
 
 interface Props {
     handleClick: () => void;
+    onBlur?: () => void;
     icone: JSX.Element;
     className?: string | any;
 }
@@ -15,6 +16,7 @@ export default function IconeClicavel (props: Props) {
             [props.className]: true
         })}
         onClick={props.handleClick}
+        onBlur={props.onBlur}
         >
             {props.icone}
         </button>

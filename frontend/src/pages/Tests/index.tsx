@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import CriarSolicitacao from "../../popUps/CriarSolicitacao";
 import Anexar from "../../components/Botoes/Anexar";
@@ -53,6 +54,11 @@ export default function Tests () {
             
             
             
+=======
+export default function Tests () {
+    return (
+        <>
+>>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
         </>
     );
 }

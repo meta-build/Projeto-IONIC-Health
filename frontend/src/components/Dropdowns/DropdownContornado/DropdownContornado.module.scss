@@ -64,18 +64,16 @@ $icon-size: 16px;
     li {
         padding: 0;
         margin: 0;
-        button {
-            border: none;
-            display: flex;
-            align-items: center;
-            background-color: $cinza-300;
-            padding: 8px;
-            width: 100%;
-            text-align: left;
-        }
-        button:hover{
-            background-color: $cinza-300-hover;
-            cursor: pointer;
-        }
+        border: none;
+        display: flex;
+        align-items: center;
+        background-color: $cinza-300;
+        padding: 8px;
+        width: 100%;
+        text-align: left;
+    }
+    li:hover{
+        background-color: $cinza-300-hover;
+        cursor: pointer;
     }
 }

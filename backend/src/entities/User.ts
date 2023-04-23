@@ -2,9 +2,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  BeforeInsert,
-  BeforeUpdate,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
 } from "typeorm";
+import { Grupo } from "./Grupo";
+import { Solicitacao } from "./Solicitacao";
 
 @Entity({ name: "usuario" })
 export class User {
@@ -21,4 +24,10 @@ export class User {
   @Column({ nullable: false, unique: false, length: 250 })
   password: string;
 
+  @ManyToOne(() => Grupo, id_grupo => id_grupo.name)
+  @JoinColumn()
+  grupo: Grupo;
+
+  @Column()
+  grupoId: number;
 }

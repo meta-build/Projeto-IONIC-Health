@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
+  UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
+import { Attachment } from './Attachment';
 
 @Entity({ name: "solicitacao" })
 export class Solicitacao {
@@ -27,8 +29,11 @@ export class Solicitacao {
   @CreateDateColumn()
   data_criacao: Date;
 
-  @CreateDateColumn()
-  data_arquivado;
+  @Column({ nullable: true })
+  data_edicao: Date;
+
+  @Column({ nullable: true })
+  data_arquivado: Date;
 
   @ManyToOne((type) => User, { onDelete: "CASCADE" })
   @JoinColumn({
@@ -37,4 +42,10 @@ export class Solicitacao {
     foreignKeyConstraintName: "fk_id_user_solicitacao",
   })
   criador: User;
+
+  @OneToMany(() => Attachment, attachment => attachment.ticket)
+  attachments: Attachment[];
+
+  @Column({ default: 'NEW' })
+  status: string
 }

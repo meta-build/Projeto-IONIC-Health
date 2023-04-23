@@ -4,63 +4,52 @@ import { Solicitacao } from "../entities/Solicitacao";
 import { User } from "../entities/User";
 
 class SolicitacaoController {
-  public async create(req: Request, res: Response): Promise<Response> {
-    const { titulo, tipo, descricao } = req.body;
-    //verifica se foram fornecidos os parâmetros
-    if (!titulo || titulo === "" || !tipo || tipo === "") {
-      return res.json({ error: "O titulo e tipo são necessários" });
-    }
-    // obtém o id do usuário que foi salvo na autorização na middleware
-    const { id } = res.locals;
-    const criador: any = await AppDataSource.manager
-      .findOneBy(User, { id })
-      .catch((e) => {
-        return { error: "Identificador inválido" };
-      });
 
-    if (criador && criador.id) {
-      const solicitacao = new Solicitacao();
-      solicitacao.criador = criador;
-      solicitacao.titulo = titulo;
-      solicitacao.tipo = tipo;
-      solicitacao.descricao = descricao;
-      await AppDataSource.manager.save(Solicitacao, solicitacao);
-      res.json({
-        id: solicitacao.id,
-        titulo: solicitacao.titulo,
-        tipo: solicitacao.tipo,
-        criador: solicitacao.criador,
-        descricao: solicitacao.descricao,
-      });
-    } else {
-      return res.json(criador);
-    }
-  }
-
-  // a solciitação pode atualizar somente os seus dados
   public async update(req: Request, res: Response): Promise<Response> {
-    const { id, criador, titulo, tipo, descricao } = req.body;
-    if (!id || id === "" || !titulo || titulo === "") {
+    const { titulo, tipo, descricao, status } = req.body;
+    const id = parseInt(req.params.id);
+
+    const id_usuario_token = res.locals
+
+    if (!id) {
       return res.json({ error: "Identificação e criador são necessários" });
     }
     const solicitacao: any = await AppDataSource.manager
-      .findOneBy(Solicitacao, { id })
+      .findOneByOrFail(Solicitacao, { id })
       .catch((e) => {
         return { error: "Identificador inválido" };
       });
-    if (solicitacao && solicitacao.id) {
-      solicitacao.titulo = titulo;
-      solicitacao.tipo = tipo;
-      solicitacao.descricao = descricao;
-      const r = await AppDataSource.manager
-        .save(Solicitacao, solicitacao)
-        .catch((e) => e.message);
-      return res.json(r);
-    } else if (solicitacao && solicitacao.error) {
-      return res.json({ solicitacao });
+
+    const user_repository = await AppDataSource.manager.getRepository(User)
+    const query_user = await user_repository.findOneOrFail({ where: { id: id_usuario_token.id }, relations: ['grupo'] });
+    console.log(query_user.grupo.name)
+
+    if (query_user.grupo.name === "ADMIN") {
+      if (solicitacao && solicitacao.id) {
+        solicitacao.titulo = titulo;
+        solicitacao.tipo = tipo;
+        solicitacao.descricao = descricao;
+        solicitacao.status = status
+        if (solicitacao.status?.toUpperCase() === "ARCHIVED") {
+          solicitacao.data_arquivado = new Date()
+        }
+
+        if (!status) {
+          solicitacao.data_edicao = new Date()
+        }
+
+        const r = await AppDataSource.manager
+          .save(Solicitacao, solicitacao)
+          .catch((e) => e.message);
+
+        return res.json(r);
+      }
+    } else if (res.statusCode != 200) {
+      return res.json({ msg: "Solicitação não localizada." });
     } else {
-      return res.json({ error: "Solicitação não localizada" });
+      return res.json({ msg: "Usuário não é ADMINISTRADOR" });
     }
   }
 }
+
 export default new SolicitacaoController();

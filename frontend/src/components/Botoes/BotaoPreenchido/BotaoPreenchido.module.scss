@@ -1,0 +1,29 @@
+@import '@/styles/variables.scss';
+
+.botao {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: center;
+    border-radius: 12px;
+    border: none;
+}
+
+.claro {
+    background-color: $cinza-300;
+    color: $cinza-600;
+}
+
+.claro:hover {
+    background-color: $cinza-300-hover;
+    cursor: pointer;
+}
+
+.noturno {
+    background-color: $cinza-600;
+    color: $cinza-300
+}
+
+.noturno:hover {
+    background-color: $cinza-600-hover;
+    cursor: pointer;
+}
