@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BotaoPopup } from "../../components/Botoes";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import EditarUsuario from "../EditarUsuario";
+import ConfirmarExclusaoUsuario from "../ConfirmarExclusaoUsuario";
 
 interface Props {
     aberto: boolean;
@@ -18,6 +19,7 @@ export default function VisualizarUsuario (props: Props) {
     const [grupo, setGrupo] = useState('Solicitante');
 
     const [popupEditar, setPopupEditar] = useState(false);
+    const [popupExcluir, setPopupExcluir] = useState(false);
 
     return(
         <PopUp
@@ -49,7 +51,13 @@ export default function VisualizarUsuario (props: Props) {
                 {/* linha especial somente para os botões, podendo ser usado para todos os popups */}
                 <div className={styles['linha-submit']}>
                     {/* botão não tem onclick, pois o submit já faz toda a ação de enviar o formulário. a função chamada está no onsubmit, no começo da tag form */}
-                    <BotaoPreenchido className={styles.botao}>Excluir</BotaoPreenchido>                  
+                    <BotaoPreenchido
+                    handleClick={() => {
+                        setPopupExcluir(true);
+                    }}
+                    className={styles.botao}>
+                        Excluir
+                    </BotaoPreenchido>                  
                     <BotaoPreenchido
                     handleClick={() => {
                         setPopupEditar(true);
@@ -60,6 +68,7 @@ export default function VisualizarUsuario (props: Props) {
                 </div>
             </div>
             <EditarUsuario aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+            <ConfirmarExclusaoUsuario aberto={popupExcluir} onClose={() => setPopupExcluir(false)} />
         </PopUp>
     )
 }
