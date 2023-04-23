@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { BotaoNota } from "../../components/Botoes";
 import styles from './VizualizarSolicitacaoAvaliacao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
+import AvaliarSolicitacao from "../AvaliarSolicitacao";
 
 interface Props {
   aberto: boolean;
@@ -24,6 +25,8 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
     { comite: 'Impacto', nota: 3, comentario: 'ghi', avaliador: '3' }
   ])
   const [avSelecionado, setAvSelecionado] = useState<AvaliacaoProps>(avs[0]);
+
+  const [popupAvaliar, setPopupAvaliar] =useState(false);
 
   const paletaCoresNota: ("cinza" | "verde" | "amarelo" | "vermelho" | "azul1" | "azul2")[] = [
     'cinza', 'verde', 'amarelo', 'vermelho'
@@ -99,7 +102,8 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
               </div>
               <div className={styles['linha-submit']}>
                 {/* verificar usuário e exibir os botões corretos */}
-                <BotaoPreenchido>
+                <BotaoPreenchido
+                handleClick={() => setPopupAvaliar(true)}>
                   Avaliar
                 </BotaoPreenchido>                  
               </div>
@@ -107,6 +111,7 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
           </div>
         </div>
       </div>
+      <AvaliarSolicitacao aberto={popupAvaliar} onClose={() => setPopupAvaliar(false)} />
     </PopUp>
   )
 }
