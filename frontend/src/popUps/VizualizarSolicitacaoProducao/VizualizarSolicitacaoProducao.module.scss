@@ -91,3 +91,7 @@
     margin-top: 10px;
     margin-left: 4px;
 }
+
+.botao:not(:last-child) {
+    margin-right: 12px;
+}
