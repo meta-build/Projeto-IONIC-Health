@@ -1,0 +1,32 @@
+@import '@/styles/variables.scss';
+
+.form {
+    color: $cinza-600;
+    width: 700px;
+    height: fit-content;
+}
+
+.row, .row-comentario, .row-botao {
+    display: flex;
+    flex: 1;
+    margin-top: 12px;
+}
+
+.item {
+    margin-right: 4px;
+}
+
+.row-comentario {
+    flex-direction: column;
+    text-align: left;
+    height: 200px;
+}
+
+.comentario-input {
+    flex: 1;
+    margin-top: 6px;
+}
+.row-botao {
+    flex-direction: row-reverse;
+    margin-top: 16px;
+}
