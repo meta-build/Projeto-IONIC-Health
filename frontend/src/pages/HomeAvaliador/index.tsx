@@ -9,6 +9,7 @@ import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas } from '../../components/ItemLista/Acoes';
 import { Botao } from '../../components/Botoes';
 import AvaliarSolicitacao from '../../popUps/AvaliarSolicitacao';
+import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
 
 export default function HomeAvaliador () {
     const [filtroNome, setFiltroNome] = useState('');
@@ -77,7 +78,7 @@ export default function HomeAvaliador () {
                         />}/>
                     </>}
                 </ul>
-                <AvaliarSolicitacao aberto={popup} onClose={() => setPopup(false)} />
+                <VisualizarSolicitacaoAvaliacao aberto={popup} onClose={() => setPopup(false)} />
             </section>
         </>
     );
