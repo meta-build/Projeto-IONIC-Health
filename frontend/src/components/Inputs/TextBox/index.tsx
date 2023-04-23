@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import styles from "./TextBox.module.scss";
+import { useState } from "react";
 
 
 interface Props {
@@ -7,10 +8,12 @@ interface Props {
     onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
     className?: string;
     ajustavel?: boolean;
+    valor?: string;
 }
 
 export default function TextBox(props: Props) {
   const {ajustavel = true} = props;
+  const [valor, setValor] = useState(props.valor || '');
 
   return ( 
     <textarea 
@@ -20,7 +23,11 @@ export default function TextBox(props: Props) {
           [props.className]: true
         })}
         placeholder={props.placeholder}
-        onChange={props.onChange}
+        onChange={(e) => {
+          setValor(e.target.value);
+          props.onChange(e);
+        }}
+        value={valor}
     />
   );
 };
