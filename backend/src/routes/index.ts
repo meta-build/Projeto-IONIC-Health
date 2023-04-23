@@ -26,6 +26,7 @@ routes.post('/create/usuario', UserController.create)
 routes.put('/update/usuario/:id', authorization, UserController.update)
 routes.get('/find/usuario/:id', authorization, UserController.getUserById)
 routes.get('/find/usuario', authorization, UserController.getAllUser)
+routes.delete('/delete/usuario/:id', authorization, UserController.deleteUser)
 
 routes.use('/notificacao', authorization, notificacao)
 
