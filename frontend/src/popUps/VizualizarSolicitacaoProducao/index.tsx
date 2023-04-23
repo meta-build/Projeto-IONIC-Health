@@ -4,6 +4,7 @@ import classNames from "classnames";
 import styles from './VizualizarSolicitacaoProducao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import { AcaoProducao } from "../../components/ItemLista/Acoes";
+import AlterarStatusProducao from "../AlterarStatusProducao";
 
 interface Props {
   aberto: boolean;
@@ -13,7 +14,9 @@ interface Props {
 export default function VizualizarSolicitacaoProducao(props: Props) {
   const [titulo, setTitulo] = useState('exemplo');
   const [tipo, setTipo] = useState('Feature');
-  const [status, setStatus] = useState<"new" | "on-holding" | "done">('on-holding')
+  const [status, setStatus] = useState<"new" | "on-holding" | "done">('on-holding');
+
+  const [popup, setPopup] = useState(false);
   
   return (
     <PopUp
@@ -56,15 +59,17 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
                     <AcaoProducao status={status} />
                 </span>
             </div>
-            {/* <div className={styles['linha-submit']}>
-              verificar usuário e exibir os botões corretos
-              <BotaoPreenchido>
-                Avaliar
+            <div className={styles['linha-submit']}>
+              {/* verificar usuário e exibir os botões corretos */}
+              <BotaoPreenchido
+              handleClick={() => setPopup(true)}>
+                Alterar status produção
               </BotaoPreenchido>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
+      <AlterarStatusProducao aberto={popup} onClose={() => setPopup(false)} />
     </PopUp>
   )
 }
