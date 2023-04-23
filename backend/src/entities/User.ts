@@ -3,11 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   JoinColumn,
-  ManyToOne,
   OneToMany,
+  ManyToOne,
 } from "typeorm";
 import { Grupo } from "./Grupo";
-import { Solicitacao } from "./Solicitacao";
+import { Rating } from './Rating';
 
 @Entity({ name: "usuario" })
 export class User {
@@ -23,6 +23,9 @@ export class User {
 
   @Column({ nullable: false, unique: false, length: 250 })
   password: string;
+
+  @OneToMany(() => Rating, rating => rating.user)
+  ratings: Rating[];
 
   @ManyToOne(() => Grupo, id_grupo => id_grupo.name)
   @JoinColumn()

@@ -1,8 +1,8 @@
-import AppDataSource from '../../data-source'
-import { SaveFile } from '../../domain/contracts'
-import { User } from '../../entities/User'
-import { Solicitacao } from '../../entities/Solicitacao'
-import { Attachment } from '../../entities/Attachment'
+import AppDataSource from '../../../data-source'
+import { SaveFile } from '../../../domain/contracts'
+import { User } from '../../../entities/User'
+import { Solicitacao } from '../../../entities/Solicitacao'
+import { Attachment } from '../../../entities/Attachment'
 
 import { Request, Response } from 'express'
 
