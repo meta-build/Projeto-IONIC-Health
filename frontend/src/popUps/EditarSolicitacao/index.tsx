@@ -13,13 +13,29 @@ interface Props {
 }
 
 export default function EditarSolicitacao (props: Props) {
-    const [titulo, setTitulo] = useState('');
-    const [tipo, setTipo] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [tituloAntigo, setTituloAntigo] = useState('exemplo');
+    const [titulo, setTitulo] = useState(tituloAntigo);
+    const [tipoAntigo, setTipoAntigo] = useState('Feature');
+    const [tipo, setTipo] = useState(tipoAntigo);
+    const [descricao, setDescricao] = useState('lorem ipsum');
+
+    function enviar () {
+        let obj: any = {};
+        if (titulo !== '') {
+            obj.titulo = titulo;
+        }
+        if (tipo !== '') {
+            obj.tipo = tipo;
+        }
+        if (descricao !== '') {
+            obj.descricao = descricao;
+        }
+        console.log(obj);
+    }
 
     return(
         <PopUp
-        titulo="Editar Feature tal"
+        titulo={`Editar ${tipoAntigo} ${tituloAntigo}`}
         visivel={props.aberto}
         onClose={props.onClose}
         >   
@@ -27,6 +43,7 @@ export default function EditarSolicitacao (props: Props) {
             className={styles.form}
             onSubmit={(e) => {
                 e.preventDefault();
+                enviar();
             }}>
                 <div className={styles.linha}>
                     <span className={classNames({
@@ -48,7 +65,7 @@ export default function EditarSolicitacao (props: Props) {
                         </label>
                         <DropdownPreenchido
                         itens={['Feature', 'Hotfix']}
-                        selecionadoFst=" "
+                        selecionadoFst={tipo}
                         handleSelected={(s) => setTipo(s)} />
                     </span>
                 </div>
@@ -61,6 +78,7 @@ export default function EditarSolicitacao (props: Props) {
                             Descrição
                         </label>
                         <TextBox
+                        valor={descricao}
                         ajustavel={false}
                         className={styles['descricao-input']}
                         onChange={(e) => setDescricao(e.target.value)}/>
