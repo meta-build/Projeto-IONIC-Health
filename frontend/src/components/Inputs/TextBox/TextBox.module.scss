@@ -13,11 +13,14 @@
     outline: none;
     font-family: sans-serif;  
     display: flex;
-    width: 128%;
+    // width: 128%;
     height: 100px;
     word-wrap: break-word;
     white-space: pre-wrap;
 }
 
+.nao-ajustavel {
+    resize: none;
+}
 
 
