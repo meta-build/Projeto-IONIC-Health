@@ -8,11 +8,14 @@ import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
 import { Botao } from '../../components/Botoes';
+import { EditarSolicitacao } from '../../popUps';
 
 export default function SolicitacoesAdm () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
+
+    const [popup, setPopup] = useState(false);
 
     // const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
     const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
@@ -55,7 +58,7 @@ export default function SolicitacoesAdm () {
                     {status == 'Recentes' && <>
                         <ItemLista
                         itemName='teste'
-                        handleClickName={() => console.log('aberto')}
+                        handleClickName={() => setPopup(true)}
                         acao={<span>Criado em 01/01/2023</span>} />
                         <ItemLista
                         itemName='teste'
@@ -94,6 +97,7 @@ export default function SolicitacoesAdm () {
                         acao={<span>Arquivado em 01/01/2023</span>} />
                     </>}
                 </ul>
+                <EditarSolicitacao aberto={popup} onClose={() => setPopup(false)} />
             </section>
         </>
     );
