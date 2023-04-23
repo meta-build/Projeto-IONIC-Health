@@ -5,57 +5,62 @@ import { faBell, faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import EditarConta from '../../popUps/EditarConta';
 
 export default function Menu () {
     const [notificacao, setNotificacao] = useState(true);
+    const [popupEditar, setPopupEditar] = useState(false);
 
     return(
-        <nav className={styles.container}>
+        <>
+            <nav className={styles.container}>
 
-            {/* logo */}
-            <img src='https://uploads-ssl.webflow.com/60dcc4691817e11aa93685ab/636cfbef568f863947dd4951_logo-color.svg' />
+                {/* logo */}
+                <img src='https://uploads-ssl.webflow.com/60dcc4691817e11aa93685ab/636cfbef568f863947dd4951_logo-color.svg' />
 
-            {/* espaçador */}
-            <div className={styles.espacador} />
+                {/* espaçador */}
+                <div className={styles.espacador} />
 
-            {/* notificação, aparecer somente para solicitante */}
-            <MenuSuspenso
-            className={styles.icon}
-            onOpen={() => setNotificacao(false)}
-            icon={
-                notificacao ?
-                <span className={styles['icon-bolinha']}>
-                        <FontAwesomeIcon icon={faBell} />
-                        <span className={styles.bolinha} />
-                </span> :
-                <FontAwesomeIcon icon={faBell} />
-            }>
-                <ul className={styles['notificacao-lista']}>
-                    <NotificacaoItem
-                    titulo='notificação'
-                    data='15/04/2023 às 15h53'
-                    handleCheckClick={() => console.log('clicado')}
-                    />
-                </ul>
-            </MenuSuspenso>
+                {/* notificação, aparecer somente para solicitante */}
+                <MenuSuspenso
+                className={styles.icon}
+                onOpen={() => setNotificacao(false)}
+                icon={
+                    notificacao ?
+                    <span className={styles['icon-bolinha']}>
+                            <FontAwesomeIcon icon={faBell} />
+                            <span className={styles.bolinha} />
+                    </span> :
+                    <FontAwesomeIcon icon={faBell} />
+                }>
+                    <ul className={styles['notificacao-lista']}>
+                        <NotificacaoItem
+                        titulo='notificação'
+                        data='15/04/2023 às 15h53'
+                        handleCheckClick={() => console.log('clicado')}
+                        />
+                    </ul>
+                </MenuSuspenso>
 
-            {/* usuário */}
-            <MenuSuspenso
-            icon={<FontAwesomeIcon icon={faUser} />}>
-                <ul className={styles['conta-lista']}>
-                    <li
-                    onClick={() => console.log('editar')}
-                    className={styles['conta-item']}>
-                        Editar conta
-                    </li>
-                    <li
-                    onClick={() => console.log('sair')}
-                    className={styles['conta-item']}>
-                        Sair
-                    </li>
-                </ul>
-            </MenuSuspenso>
-        </nav>
+                {/* usuário */}
+                <MenuSuspenso
+                icon={<FontAwesomeIcon icon={faUser} />}>
+                    <ul className={styles['conta-lista']}>
+                        <li
+                        onClick={() => setPopupEditar(true)}
+                        className={styles['conta-item']}>
+                            Editar conta
+                        </li>
+                        <li
+                        onClick={() => console.log('sair')}
+                        className={styles['conta-item']}>
+                            Sair
+                        </li>
+                    </ul>
+                </MenuSuspenso>
+            </nav>
+            <EditarConta aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+        </>
     );
 }
 

@@ -1,77 +1,96 @@
-import { useEffect, useState } from "react";
-import PopUp from "../../components/PopUp";
 import classNames from "classnames";
-import { BotaoPopup } from "../../components/Botoes";
 import { InputPopup } from "../../components/Inputs";
+import PopUp from "../../components/PopUp";
 import styles from './EditarConta.module.scss';
+import { useState } from "react";
+import { BotaoPopup } from "../../components/Botoes";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
 }
 
-export default function VizualizarSolicitacao (props: Props) {
+export default function EditarConta (props: Props) {
+    // pegar valor de cada campo
+    const [nomeAntigo, setNomeAntigo] = useState('Fulano');
+    const [email, setEmail] = useState('fulano@email');
+    const [senha, setSenha] = useState('123123');
+    
+    // se true > destacar campo em vermelho
+    const [erroNome, setErroNome] = useState(false);
+    const [erroGrupo, setErroGrupo] = useState(false);
+    const [erroEmail, setErroEmail] = useState(false);
+    const [erroSenha, setErroSenha] = useState(false);
 
-    const [titulo, setTitulo] = useState('');
-    const [tipo, setTipo] = useState('Feature');
-    const [aberto, setAberto] = useState(props.aberto);
+    // função chamada ao clicar em "enviar" ou apertar enter (submeter formulário)
+    const submit = () => {
+        const obj: any = {};
+        if (email !== '') {
+            obj.email = email;
+        }
+        if (senha !== '') {
+            obj.senha = senha;
+        }
 
-    useEffect(() => {
-        setAberto(props.aberto);
-      }, [props.aberto])
-
-      
-    function concluir() {
-        throw new Error("Function not implemented.");
+        console.log(obj);
     }
 
     return(
-        <PopUp 
-            titulo={`Editar Conta`}
-            visivel={aberto}
-            onClose={() => props.onClose()} >
-
-            <form className={styles.form} onSubmit={(e) => {
+        <PopUp
+        titulo={`Editar conta`}
+        visivel={props.aberto}
+        onClose={props.onClose}>
+            <form
+            className={styles.form}
+            // ao clicar em criar ou dar enter, é submetido o formulário executando a função abaixo
+            onSubmit={(e) => {
                 e.preventDefault();
-                concluir();
-                }}>
-                <div className={styles.inputs}>
-                    <label
-                    className={classNames({
-                        [styles.input]: true,
-                        [styles.preencher]: true
-                    })}
-                    >
-                        <span className={styles.label}>Título</span>
+                submit();
+            }}>
+                <div className={styles.linha}>
+                    <span className={classNames({
+                        [styles.campo]: true,
+                        [styles['campo-preenchido']]: true,
+                    })}>
+                        <label>Email:</label>
                         <InputPopup
-                        handleChange={(e) => setTitulo(e.target.value)}
-                        placeholder="Email"
-                        className={styles['input-preencher']}
-                        valor={titulo}
+                        className={classNames({
+                            [styles['input-preenchido']]: true,
+                            [styles.erro]: erroEmail
+                        })}
+                        handleChange={(s) => setEmail(s.target.value)}
+                        onFocus={() => setErroEmail(false)}
+                        valor={email}
+                        // o tipo email exige uma formatação específica para email como presença do @ e sem caracteres especiais ou acentos
+                        tipo="email"
                         />
-
+                    </span>
+                    <span className={classNames({
+                        [styles.campo]: true,
+                        [styles['campo-preenchido']]: true
+                    })}>
+                        <label>Senha:</label>
                         <InputPopup
-                        handleChange={(e) => setTitulo(e.target.value)}
-                        placeholder="Senha"
-                        className={styles['input-preencher']}
-                        valor={titulo}
+                        className={classNames({
+                            [styles['input-preenchido']]: true,
+                            [styles.erro]: erroSenha
+                        })}
+                        handleChange={(s) => setSenha(s.target.value)}
+                        onFocus={() => setErroSenha(false)}
+                        valor={senha}
+                        // tipo password censura o campo inserido
+                        tipo="password"
                         />
-
-                        
-                    </label>
-                
+                    </span>
                 </div>
-
-                <div className={styles['container-concluir']}>
-                    <BotaoPopup
-                    handleClick={() => console.log('foi botao')}
-                    tipo="submit"
-                    className={styles.concluir}
-                    >Criar</BotaoPopup>
-                    
-                </div>       
-            </form>   
+                {/* linha especial somente para os botões, podendo ser usado para todos os popups */}
+                <div className={styles['linha-submit']}>
+                    {/* botão não tem onclick, pois o submit já faz toda a ação de enviar o formulário. a função chamada está no onsubmit, no começo da tag form */}
+                    <BotaoPopup tipo="submit">
+                        Editar
+                    </BotaoPopup>                  
+                </div>
+            </form>
         </PopUp>
-        
     )
 }
