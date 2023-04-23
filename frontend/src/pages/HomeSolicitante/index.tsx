@@ -13,6 +13,8 @@ import axios from 'axios';
 
 import { Botao, Voltar } from '../../components/Botoes';
 import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
+import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
+import VisualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 
 export default function HomeSolicitante () {
     const navigate = useNavigate();
@@ -20,14 +22,13 @@ export default function HomeSolicitante () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
-
-    const [popupCriar, setPopupCriar] = useState(false);
+    
+    const [popupSolicitacao, setPopupSolicitacao] = useState(true);
+    const [popupCriar, setPopupCriar] = useState(true);
     const [popupEditar, setPopupEditar] = useState(false);
     const [solictSelected, setSolictSelected] = useState<number>();
 
-    const solicitacoesRaiz = [
-        
-    ];
+    const solicitacoesRaiz = [];
 
     // const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
     const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
@@ -75,11 +76,13 @@ export default function HomeSolicitante () {
                         </Botao>
                 </div>
                 <ul className={styles.lista}>
+                    
                     {status == 'Recentes' && <>
                         <ItemLista
                         itemName='teste'
-                        handleClickName={() => console.log('aberto')}
+                        handleClickName={() => setPopupSolicitacao(true)}
                         acao={<span>Criado em 01/01/2023</span>} />
+                        
                         <ItemLista
                         itemName='teste'
                         handleClickName={() => console.log('aberto')}
@@ -118,6 +121,9 @@ export default function HomeSolicitante () {
                     </>}
                 </ul>
                 <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
+
+                <VizualizarSolicitacao aberto={popupSolicitacao} onClose={() => setPopupSolicitacao(false)}/>
+
             </section>
         </>
     );

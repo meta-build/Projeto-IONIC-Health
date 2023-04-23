@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { ReactNode, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import DropdownItem from '../../types/DropdownItem';
+// import DropdownItem from '../../types/DropdownItem';
 
 interface Props {
     itens: string[];
@@ -26,6 +26,7 @@ export default function DropdownPreenchido (props: Props) {
         <div className={styles.container}>
             <button
             onClick={() => setAberto(!aberto)}
+            type='button'
             className={classNames({
                 [styles.botao]: true
             })}>
@@ -39,8 +40,8 @@ export default function DropdownPreenchido (props: Props) {
 
             {aberto && 
             <ul className={styles.list} >
-            {props.itens.map(item => (
-                <li><button onClick={() => {setSelecionado(item); setAberto(false); props.handleSelected(item)}} >
+            {props.itens.map((item, index) => (
+                <li key={index}><button onClick={() => {setSelecionado(item); setAberto(false); props.handleSelected(item)}} >
                     {item}
                 </button></li>
             ))}

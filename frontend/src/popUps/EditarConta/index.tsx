@@ -1,67 +1,40 @@
-import classNames from "classnames";
-import {InputPopup} from "../../components/Inputs";
-import PopUp from "../../components/PopUp";
-import styles from './EditarSolicitacao.module.scss';
-import {BotaoPopup} from "../../components/Botoes";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import PopUp from "../../components/PopUp";
+import classNames from "classnames";
+import { BotaoPopup } from "../../components/Botoes";
+import { InputPopup } from "../../components/Inputs";
+import styles from './EditarConta.module.scss';
 
 interface Props {
-    id: number;
     aberto: boolean;
     onClose: () => void;
 }
 
-export default function EditarConta (props: Props) {
+export default function VizualizarSolicitacao (props: Props) {
 
-    let item = {
-        "id": 2,
-        "email": "fa@fatec.com",
-        "senha": "123456",
-        "verificaSolicitacao": true,
-      }
+    const [titulo, setTitulo] = useState('');
+    const [tipo, setTipo] = useState('Feature');
+    const [aberto, setAberto] = useState(props.aberto);
 
-      const [conta, setConta] = useState(item);
-      const [email, setEmail] = useState(conta.email);
-      const [senha, setSenha] = useState(conta.senha);
-      const [aberto, setAberto] = useState(props.aberto);
-
-      const concluir = () => {
-        axios.put(`http://localhost:3001/update/${props.id}`,
-        {
-            "email": email,
-            "senha": senha,
-            "verificaSolicitacao": true,
-
-          },
-          {headers: {
-            'Content-Type': 'application/json'
-          }}
-        ).then(() => {
-            props.onClose();
-            setAberto(false);
-        })
-      }
-
-      useEffect(() => {
-        axios.get(`http://localhost:3001/solicitacao/${props.id}`).then(r => {
-            let mudarConta = r.data;
-            setConta(mudarConta);
-            setEmail(mudarConta['email']);
-            setSenha(mudarConta['senha']);
-        });
+    useEffect(() => {
         setAberto(props.aberto);
       }, [props.aberto])
 
+      
+    function concluir() {
+        throw new Error("Function not implemented.");
+    }
+
     return(
-        <PopUp
-        titulo={`Editar Conta ${conta.email} ${conta.senha}`}
-        visivel={aberto}
-        onClose={() => props.onClose()}
-        >
-            <div
-            className={styles.form}
-            >
+        <PopUp 
+            titulo={`Editar Conta`}
+            visivel={aberto}
+            onClose={() => props.onClose()} >
+
+            <form className={styles.form} onSubmit={(e) => {
+                e.preventDefault();
+                concluir();
+                }}>
                 <div className={styles.inputs}>
                     <label
                     className={classNames({
@@ -69,29 +42,36 @@ export default function EditarConta (props: Props) {
                         [styles.preencher]: true
                     })}
                     >
-                        <span className={styles.label}>Email</span>
+                        <span className={styles.label}>Título</span>
                         <InputPopup
-                        handleChange={(e) => setEmail(e.target.value)}
-                        placeholder="Lorem-ipsum"
+                        handleChange={(e) => setTitulo(e.target.value)}
+                        placeholder="Email"
                         className={styles['input-preencher']}
-                        valor={email}
+                        valor={titulo}
                         />
 
-                        <span className={styles.label}>Senha</span>
                         <InputPopup
-                        handleChange={(e) => setSenha(e.target.value)}
-                        placeholder="Lorem-ipsum"
+                        handleChange={(e) => setTitulo(e.target.value)}
+                        placeholder="Senha"
                         className={styles['input-preencher']}
-                        valor={senha}
+                        valor={titulo}
                         />
+
+                        
                     </label>
-                </div>  
+                
+                </div>
+
+                <div className={styles['container-concluir']}>
                     <BotaoPopup
-                    handleClick={() => concluir()}
+                    handleClick={() => console.log('foi botao')}
                     tipo="submit"
                     className={styles.concluir}
-                    >Criar</BotaoPopup>              
-            </div>
+                    >Criar</BotaoPopup>
+                    
+                </div>       
+            </form>   
         </PopUp>
+        
     )
 }

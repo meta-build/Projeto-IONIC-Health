@@ -4,6 +4,9 @@ import Anexar from "../../components/Botoes/Anexar";
 import { BotaoIcon, IconeClicavel } from "../../components/Botoes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
+import BellIconDropdown from "../../popUps/VizualizarNotificacao";
+import AddArquivo from "../../components/Botoes/AddArquivo";
+import VizualizarSolicitacao from "../../popUps/VizualizarSolicitacao";
 
 export default function Tests () {
     // const [selecionado, setSelecionado] = useState<number>();
@@ -13,6 +16,11 @@ export default function Tests () {
         console.log(popup)
     }, [popup])
     function handleButtonClick(): void {
+        throw new Error("Function not implemented.");
+    }
+
+
+    function setPopupSolicitacao(arg0: boolean): void {
         throw new Error("Function not implemented.");
     }
 
@@ -29,15 +37,19 @@ export default function Tests () {
             {/* <NovaSolicitacao /> */}
             <button onClick={() => setPopup(true)}>Abrir</button>
             <CriarSolicitacao aberto={popup} onClose={() => setPopup(false)}/>
-            <Anexar handleClick={() => console.log('foi')}>Teste</Anexar>
+            {/* <Anexar handleClick={() => console.log('foi')}>Teste</Anexar> */}
 
-      
+            
                 <FontAwesomeIcon icon={faBell}/>
             
-            
-            
-           
-            
+                <BellIconDropdown />
+                <AddArquivo children={"arq.jpg"} onClose={function (): void {
+                throw new Error("Function not implemented.");
+                } } />
+
+                
+
+                <VizualizarSolicitacao aberto={popup} onClose={() => setPopupSolicitacao(false)}/>
             
             
             

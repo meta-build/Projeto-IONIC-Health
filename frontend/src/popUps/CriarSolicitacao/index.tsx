@@ -8,6 +8,7 @@ import axios from "axios";
 import {DropdownPreenchido} from "../../components/Dropdowns";
 import Anexar from "../../components/Botoes/Anexar";
 import TextBox from "../../components/Inputs/TextBox";
+import AddArquivo from "../../components/Botoes/AddArquivo";
 
 
 interface Props {
@@ -21,20 +22,21 @@ export default function CriarSolicitacao (props: Props) {
       const [aberto, setAberto] = useState(props.aberto);
 
       const concluir = () => {
-        axios.post(`http://localhost:3001/create`,
-        {
-            "nome": titulo,
-            "tipo": tipo,
-            "solicitante": "Polnareff",
-            "verificaSolicitacao": true
-          },
-          {headers: {
-            'Content-Type': 'application/json'
-          }}
-        ).then(() => {
-            props.onClose();
-            setAberto(false);
-        })
+        // axios.post(`http://localhost:3001/create`,
+        // {
+        //     "nome": titulo,
+        //     "tipo": tipo,
+        //     "solicitante": "Polnareff",
+        //     "verificaSolicitacao": true
+        //   },
+        //   {headers: {
+        //     'Content-Type': 'application/json'
+        //   }}
+        // ).then(() => {
+        //     props.onClose();
+        //     setAberto(false);
+        // })
+        console.log("foi")
       }
 
       useEffect(() => {
@@ -47,9 +49,10 @@ export default function CriarSolicitacao (props: Props) {
         visivel={aberto}
         onClose={() => props.onClose()}
         >
-            <div
-            className={styles.form}
-            >
+            <form className={styles.form} onSubmit={(e) => {
+                e.preventDefault();
+                concluir();
+            }}>
                 <div className={styles.inputs}>
                     <label
                     className={classNames({
@@ -71,9 +74,18 @@ export default function CriarSolicitacao (props: Props) {
                         />
                         
                         <span className={styles.label}>Arquivos</span>
-                        <Anexar  handleClick={() => console.log('foi')}> Anexar Arquivo</Anexar>
+                
+                        <div className={styles.lista}>
+                            <AddArquivo children={"arq.jpg"} onClose={function (): void {
+                            throw new Error("Function not implemented.");
+                            } } />
+                        </div>
+                        
+                        
+                        
                         
                     </label>
+                    
 
                     <label
                     className={styles.input}
@@ -85,16 +97,17 @@ export default function CriarSolicitacao (props: Props) {
                         selecionadoFst={tipo}
                         />
                     </label>
-
                 </div>
+
+                <div className={styles['container-concluir']}>
                     <BotaoPopup
-                    handleClick={() => concluir()}
+                    handleClick={() => console.log('foi botao')}
                     tipo="submit"
                     className={styles.concluir}
                     >Criar</BotaoPopup>
                     
-                
-            </div>
+                </div>       
+            </form>
         </PopUp>
     )
 }

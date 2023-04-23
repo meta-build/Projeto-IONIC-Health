@@ -46,10 +46,3 @@
     margin-left: 0;
 }
 
-.lista {
-    flex-direction: row; // alinha os componentes em linha
-    justify-content: flex-start; // alinha os componentes à esquerda
-    align-items: center; // centraliza verticalmente os componentes
-    justify-content: space-between; // alinha os componentes nas extremidades
-    gap: 16px;
-}
