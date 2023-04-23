@@ -6,8 +6,8 @@ interface Usuario {
 }
 
 interface Login {
-    email: string;
-    senha: string;
+    mail: string;
+    password: string;
 }
 
 class Usuarios {
@@ -32,7 +32,8 @@ class Usuarios {
     }
 
     async login(login: Login) {
-        console.log(`login: email ${login.email} senha ${login.senha}`);
+        const {data} = await api.post('login', login)
+        return data;
     }
 }
 
