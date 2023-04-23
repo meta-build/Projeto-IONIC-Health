@@ -8,7 +8,6 @@ import { authorization } from "../middlewares";
 
 const routes = Router();
 
-routes.post("/create/solicitacao", authorization, SolicitacaoController.create);
 routes.put("/update/solicitacao/:id", authorization, SolicitacaoController.update);
 routes.get("/solicitacao", GetOneSolicitacao.getSolicitacaoById);
 routes.get("/all", GetAllSolicitacao.getAllSolicitacao);

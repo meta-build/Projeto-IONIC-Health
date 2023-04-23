@@ -29,8 +29,11 @@ export class Solicitacao {
   @CreateDateColumn()
   data_criacao: Date;
 
-  @CreateDateColumn()
-  data_arquivado;
+  @Column({ nullable: true })
+  data_edicao: Date;
+
+  @Column({ nullable: true })
+  data_arquivado: Date;
 
   @ManyToOne((type) => User, { onDelete: "CASCADE" })
   @JoinColumn({
@@ -46,4 +49,7 @@ export class Solicitacao {
   @JoinColumn()
   @OneToMany(() => Rating, rating => rating.ticket)
   ratings: Rating[]
+
+  @Column({ default: 'NEW' })
+  status: string
 }

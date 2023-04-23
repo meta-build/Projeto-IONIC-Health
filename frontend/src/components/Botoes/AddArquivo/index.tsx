@@ -1,21 +1,59 @@
+import React, { useState } from 'react';
+import styles from './AddArquivo.module.scss';
+import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-type FileInputProps = {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+
+import Anexar from '../Anexar';
+
+interface Props {
+  children: React.ReactNode;
+  onClose: () => void;
+  
+}
+
+const Componente = ({ children, onClose }: Props) => {
+  
+  const [hovered, setHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
+
+  const handleClick = () => {
+    onClose();
+  };
+
+  return (
+    <div className={styles.componente}>
+      <Anexar
+        handleFileChange={() => {}}
+        corBotao="claro"
+        
+      >
+        Anexar arquivo
+      </Anexar>
+      <div
+        className={classNames({
+          [styles.botao]: true,
+          [styles.hovered]: hovered,
+        })}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+      >
+        <span className={styles.children}>{children}</span>
+        {hovered && (
+          <FontAwesomeIcon icon={faTimes} className={styles.closeIcon} />
+        )}
+      </div>
+    </div>
+  );
 };
 
-const FileInput: React.FC<FileInputProps> = ({ onChange }) => {
-    return (
-      <div className="file-input-container">
-        <label htmlFor="file-input" className="file-input-label">
-          <FontAwesomeIcon icon={faFile} className="file-input-icon" />
-          Adicionar Arquivo
-        </label>
-        <input id="file-input" type="file" onChange={onChange} />
-      </div>
-    );
-  };
-  
-export default FileInput;
+export default Componente;

@@ -2,7 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
   JoinColumn,
   OneToMany,
 } from "typeorm";
@@ -24,14 +23,12 @@ export class User {
   @Column({ nullable: false, unique: false, length: 250 })
   password: string;
 
-  @OneToOne((type) => Grupo, { onDelete: "CASCADE" })
-  @JoinColumn({
-    name: "id_grupo",
-    referencedColumnName: "id", //id da entidade Grupo
-    foreignKeyConstraintName: "fk_id_grupo_usuario",
-  })
-  id_grupo: Grupo;
-
   @OneToMany(() => Rating, rating => rating.user)
   ratings: Rating[];
+
+  @JoinColumn()
+  grupo: Grupo;
+
+  @Column()
+  grupoId: number;
 }

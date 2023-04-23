@@ -7,10 +7,10 @@ import { Attachment } from '../../../entities/Attachment'
 import { Request, Response } from 'express'
 
 export class CreateTicketController {
-  constructor(private readonly fileStorage: SaveFile) {}
+  constructor(private readonly fileStorage: SaveFile) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { titulo, tipo, descricao } = req.body
+    const { titulo, tipo, descricao, status } = req.body
 
     if (!titulo || !tipo) {
       return res.json({ error: 'O titulo e tipo são necessários' })
@@ -44,6 +44,7 @@ export class CreateTicketController {
     ticket.tipo = tipo
     ticket.descricao = descricao
     ticket.attachments = attachments
+    ticket.status = status
 
     const savedTicket = await AppDataSource.manager.save(Solicitacao, ticket)
 

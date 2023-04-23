@@ -50,6 +50,8 @@ export default function VizualizarSolicitacao (props: Props) {
 
                         <span className={styles.label}>Arquivos</span>
 
+                        <span className={styles.label}>Avaliações</span>
+
                         
                     </label>
                 

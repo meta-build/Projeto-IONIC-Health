@@ -1,23 +1,11 @@
 @import '@/styles/variables.scss';
 
 .botao {
-    padding: 7px;
+    padding: 8px 12px;
     display: flex;
+    justify-content: center;
     border-radius: 12px;
-    min-width: 120px;
     border: none;
-    height: flex;
-    width: flex;
-    .children {
-        flex: 1;
-        text-align: left;
-        display: flex;
-        
-    }
-    .icon {
-        height: 16px;
-        font-weight: bold;
-    }
 }
 
 .claro {

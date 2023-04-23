@@ -2,7 +2,6 @@ import AppDataSource from "../data-source";
 import { Request, Response } from 'express';
 import { User } from '../entities/User';
 import { generateToken } from '../middlewares';
-import { Grupo } from "../entities/Grupo";
 
 class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -35,8 +34,33 @@ class UserController {
     }
   }
 
+  public async getUserById(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const usuario: any = await AppDataSource.getRepository(User)
+      .createQueryBuilder("usuario")
+      .leftJoinAndSelect("usuario.grupo", "grupo")
+      .where("usuario.id=:id", { id })
+      .getOne();
+
+    if (!usuario) {
+      return res
+        .status(404)
+        .send("Usuário Não encontrado na Base de Dados.");
+    }
+
+    return res.send(usuario);
+  }
+
+  public async getAllUser(req: Request, res: Response) {
+    const solicitacao: any = await AppDataSource.getRepository(
+      User
+    ).find();
+    res.send(solicitacao);
+    return solicitacao;
+  }
+
   public async create(req: Request, res: Response): Promise<Response> {
-    const { mail, password, name } = req.body;
+    const { mail, password, name, grupoId } = req.body;
     //verifica se foram fornecidos os parâmetros
     if (!mail || !password || mail.trim() === "" || password.trim() === "") {
       return res.json({ error: "e-mail e senha necessários" });
@@ -45,6 +69,7 @@ class UserController {
     obj.mail = mail;
     obj.password = password;
     obj.name = name
+    obj.grupoId = grupoId
     // o hook BeforeInsert não é disparado com AppDataSource.manager.save(User,JSON),
     // mas é disparado com AppDataSource.manager.save(User,objeto do tipo User)
     // https://github.com/typeorm/typeorm/issues/5493
@@ -57,12 +82,13 @@ class UserController {
     })
     if (usuario.id) {
       // cria um token codificando o objeto {idusuario,mail}
-      const token = await generateToken({ id: usuario.id, mail: usuario.mail, name: usuario.name });
+      const token = await generateToken({ id: usuario.id, mail: usuario.mail, name: usuario.name, id_grupo: usuario.grupoId });
       // retorna o token para o cliente
       return res.json({
         id: usuario.id,
         mail: usuario.mail,
         name: usuario.name,
+        id_grupo: usuario.grupoId,
         token
       });
     }
@@ -71,47 +97,37 @@ class UserController {
 
   // o usuário pode atualizar somente os seus dados
   public async update(req: Request, res: Response): Promise<Response> {
-    const { mail, password, name, id_grupo } = req.body;
-
+    const { mail, password, name, grupoId } = req.body;
+    const id_usuario = parseInt(req.params.id)
     // obtém o id do usuário que foi salvo na autorização na middleware
     const { id } = res.locals;
-    const usuario: any = await AppDataSource.manager.findOneBy(User, { id: id }).catch((e) => {
-      return { error: "Identificador inválido" };
-    })
-    const grupo: any = await AppDataSource.manager.findOneBy(Grupo, { id: id_grupo })
 
-    if (usuario && usuario.id) {
-      if (mail !== "") {
-        usuario.mail = mail;
-      }
-      if (password !== "") {
-        usuario.password = password;
-      }
-      if (name !== "") {
+    const usuario: any = await AppDataSource.manager.findOneByOrFail(User, { id: id_usuario })
+
+    const user_repository = await AppDataSource.manager.getRepository(User)
+    const query_user = await user_repository
+      .createQueryBuilder("usuario")
+      .leftJoinAndSelect("usuario.grupo", "grupo")
+      .where("usuario.id=:id", { id })
+      .getOne();
+
+    if (query_user.grupo.name === "ADMIN") {
+      if (usuario && usuario.id) {
         usuario.name = name;
-      }
-      if (id_grupo !== "") {
-        usuario.id_grupo = grupo.id
-      }
-      if (grupo.id === id_grupo) {
-        const r = await AppDataSource.manager.save(User, usuario).catch((e) => {
-          // testa se o e-mail é repetido
-          if (/(mail)[\s\S]+(already exists)/.test(e.detail)) {
-            return ({ error: 'e-mail já existe' });
-          }
-          return e;
-        })
-        if (!r.error) {
-          return res.json({ id: usuario.id, mail: usuario.mail, name: usuario.name, id_grupo: grupo.id });
-        }
+        usuario.mail = mail;
+        usuario.password = password;
+        usuario.grupoId = grupoId
+
+        const r = await AppDataSource.manager
+          .save(User, usuario)
+          .catch((e) => e.message);
+
         return res.json(r);
       }
-    }
-    else if (usuario && usuario.error) {
-      return res.json(mail)
-    }
-    else {
-      return res.json({ error: "Usuário não localizado" });
+    } else if (res.statusCode != 200) {
+      return res.json({ msg: "Usuário não localizado." });
+    } else {
+      return res.json({ msg: "Usuário não é ADMINISTRADOR" });
     }
   }
 

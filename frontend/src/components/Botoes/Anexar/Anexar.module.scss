@@ -1,23 +1,21 @@
 @import '@/styles/variables.scss';
 
 .botao {
-    width: fit-content;
-    padding: 8px;
-    display: inline-block;
-    border-radius: 12px;
-    min-width: 155px;
+    padding: 7px;
+    display: flex;
+    border-radius: 10px;
     border: none;
-    
+
     .children {
-        flex: 0;
-        padding: 10px;
-        margin: 0px;
-        text-align: left;
+        text-align: right;
+        display: flex;
+        white-space: nowrap;   
     }
+    
     .icon {
         height: 16px;
         font-weight: bold;
-      
+        margin-right: 20px;
     }
 }
 
@@ -28,15 +26,5 @@
 
 .claro:hover {
     background-color: $cinza-300-hover;
-    cursor: pointer;
-}
-
-.noturno {
-    background-color: $cinza-600;
-    color: $cinza-300
-}
-
-.noturno:hover {
-    background-color: $cinza-600-hover;
     cursor: pointer;
 }

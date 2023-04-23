@@ -6,9 +6,8 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     children: ReactNode;
-    handleClick: () => void;
-    corBotao?: 'claro' | 'noturno'
-
+    corBotao?: 'claro' | 'noturno';
+    handleFileChange: (file:File) => void;
 }
 
 export default function Anexar (props: Props) {
@@ -17,7 +16,7 @@ export default function Anexar (props: Props) {
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
-        console.log('Arquivo selecionado:', file);
+        props.handleFileChange(file);
     }
 
 
@@ -25,6 +24,7 @@ export default function Anexar (props: Props) {
         <div>
             <button
                 onClick={()=> inputRef.current?.click()}
+                type="button"
                 className={classNames({
                 [styles.botao]: true,
                 [styles[corBotao]]: true 

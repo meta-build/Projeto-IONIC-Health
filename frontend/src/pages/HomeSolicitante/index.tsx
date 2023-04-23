@@ -6,18 +6,40 @@ import styles from './HomeSolicitante.module.scss';
 import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
+<<<<<<< HEAD
+import { AcaoEditarExcluir, AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+
+import { Botao, Voltar } from '../../components/Botoes';
+import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
+import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
+import VisualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
+=======
 import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
 import { Botao } from '../../components/Botoes';
 import { CriarSolicitacao } from '../../popUps';
+>>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
 
 export default function HomeSolicitante () {
     const [filtroNome, setFiltroNome] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
+<<<<<<< HEAD
+    
+    const [popupSolicitacao, setPopupSolicitacao] = useState(true);
+    const [popupCriar, setPopupCriar] = useState(true);
+    const [popupEditar, setPopupEditar] = useState(false);
+    const [solictSelected, setSolictSelected] = useState<number>();
+
+    const solicitacoesRaiz = [];
+=======
 
     const [popupCriar, setPopupCriar] = useState(false);
 
     const [solicitacoes, setSolicitacoes] = useState([0]);
+>>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
 
     const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
 
@@ -66,6 +88,15 @@ export default function HomeSolicitante () {
                         </Botao>
                 </div>
                 <ul className={styles.lista}>
+<<<<<<< HEAD
+                    
+                    {status == 'Recentes' && <>
+                        <ItemLista
+                        itemName='teste'
+                        handleClickName={() => setPopupSolicitacao(true)}
+                        acao={<span>Criado em 01/01/2023</span>} />
+                        
+=======
                     {status == 'Recentes' && solicitacoes.map((item, index) => (
                         <ItemLista
                         key={index}
@@ -74,6 +105,7 @@ export default function HomeSolicitante () {
                         acao={<span>Criado em 01/01/2023</span>} />
                     ))}
                     {status ==  'Em Avaliação' && solicitacoes.map((item, index) => (
+>>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
                         <ItemLista
                         itemName={'solicitação'}
                         handleClickName={() => {}}
@@ -98,6 +130,9 @@ export default function HomeSolicitante () {
                     ))}
                 </ul>
                 <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
+
+                <VizualizarSolicitacao aberto={popupSolicitacao} onClose={() => setPopupSolicitacao(false)}/>
+
             </section>
         </>
     );
