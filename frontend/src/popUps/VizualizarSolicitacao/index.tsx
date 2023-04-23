@@ -3,6 +3,7 @@ import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import styles from './VizualizarSolicitacao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
+import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
 
 interface Props {
   aberto: boolean;
@@ -12,6 +13,8 @@ interface Props {
 export default function VizualizarSolicitacao(props: Props) {
   const [titulo, setTitulo] = useState('exemplo');
   const [tipo, setTipo] = useState('Feature');
+
+  const [popupExclusao, setPopupExclusao] = useState(false);
   
   return (
     <PopUp
@@ -48,15 +51,16 @@ export default function VizualizarSolicitacao(props: Props) {
                 Editado em 01/01/2023 por Ciclano de tal
               </div>
             </div>
-            {/* <div className={styles['linha-submit']}>
-              verificar usuário e exibir os botões corretos
-              <BotaoPreenchido>
-                Avaliar
+            <div className={styles['linha-submit']}>
+              {/* verificar usuário e exibir os botões corretos */}
+              <BotaoPreenchido handleClick={() => setPopupExclusao(true)}>
+                Excluir
               </BotaoPreenchido>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
+    <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
     </PopUp>
   )
 }
