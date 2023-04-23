@@ -30,6 +30,9 @@ export class Solicitacao {
   data_criacao: Date;
 
   @Column({ nullable: true })
+  data_edicao: Date;
+
+  @Column({ nullable: true })
   data_arquivado: Date;
 
   @ManyToOne((type) => User, { onDelete: "CASCADE" })

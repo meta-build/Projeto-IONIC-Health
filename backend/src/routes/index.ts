@@ -22,7 +22,7 @@ routes.post("/login", UserController.login);
 routes.post("/create/usuario", UserController.create);
 routes.put("/update/usuario/:id", authorization, UserController.update);
 routes.get("/find/usuario/:id", authorization, UserController.getUserById)
-routes.get("/find", authorization, UserController.getAllUser)
+routes.get("/find/usuario", authorization, UserController.getAllUser)
 
 routes.use("/notificacao", authorization, notificacao);
 
@@ -31,9 +31,9 @@ routes.post("/ticket", authorization, upload, adaptRoute(makeTicketController())
 routes.put("/update/solicitacao/:id", authorization, SolicitacaoController.update);
 
 routes.get("/solicitacao/:id", GetOneSolicitacao.getSolicitacaoById);
-routes.get("/all", GetAllSolicitacao.getAllSolicitacao);
-routes.put("/arquivo/:id", ArchiveSolicitacao.archiveSolicitacao);
-routes.delete("/delete/:id", deleteSolicitacao.deleteSolicitacao);
+routes.get("/find/solicitacao", GetAllSolicitacao.getAllSolicitacao);
+routes.put("/solicitacao/arquivo/:id", ArchiveSolicitacao.archiveSolicitacao);
+routes.delete("/solicitacao/delete/:id", deleteSolicitacao.deleteSolicitacao);
 
 routes.use("/grupo", authorization, grupo);
 routes.post("/create/grupo", authorization, GrupoController.create);
