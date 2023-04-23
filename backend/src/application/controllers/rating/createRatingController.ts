@@ -16,9 +16,20 @@ export class CreateRatingController {
       return res.status(400).json(error.message)
     }
 
+    const { id } = res.locals
+    const user_repository = await AppDataSource.manager.getRepository(User)
+    const currentUser = await user_repository
+      .createQueryBuilder("usuario")
+      .leftJoinAndSelect("usuario.grupo", "grupo")
+      .where("usuario.id=:id", { id })
+      .getOne();
+
+    if (currentUser.grupo.name !== 'ADMIN') {
+      return res.json({ error: "Usuário não é ADMINISTRADOR" })
+    }
+
     const { value, committee, comment, ticketId } = req.body
 
-    const { id } = res.locals
     const reviewer: any = await AppDataSource.manager
       .findOneByOrFail(User, { id })
       .catch((err) => {
