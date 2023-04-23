@@ -3,10 +3,6 @@ import classNames from "classnames";
 import { ReactNode, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-<<<<<<< HEAD
-// import DropdownItem from '../../types/DropdownItem';
-=======
->>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
 
 interface Props {
     itens: string[];
@@ -24,9 +20,6 @@ export default function DropdownPreenchido (props: Props) {
     return(
         <div className={styles.container}>
             <button
-<<<<<<< HEAD
-            onClick={() => setAberto(!aberto)}
-=======
             onClick={() => {
                 setAberto(!aberto);
                 if (props.onOpen) {
@@ -34,7 +27,6 @@ export default function DropdownPreenchido (props: Props) {
                 }
             }}
             onBlur={() => setAberto(false)}
->>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
             type='button'
             className={classNames({
                 [styles.botao]: true,
@@ -51,9 +43,6 @@ export default function DropdownPreenchido (props: Props) {
             {aberto && 
             <ul className={styles.list} >
             {props.itens.map((item, index) => (
-<<<<<<< HEAD
-                <li key={index}><button onClick={() => {setSelecionado(item); setAberto(false); props.handleSelected(item)}} >
-=======
                 <li
                 key={index}
                 onClick={() => {
@@ -61,7 +50,6 @@ export default function DropdownPreenchido (props: Props) {
                     setAberto(false);
                     props.handleSelected(item)
                 }}>
->>>>>>> dfd2ff03740720490063e964ed7f389a8e2298dd
                     {item}
                 </li>
             ))}
