@@ -18,12 +18,6 @@ export default function EditarUsuario (props: Props) {
     const [grupo, setGrupo] = useState('Solicitante');
     const [email, setEmail] = useState('fulano@email');
     const [senha, setSenha] = useState('123123');
-    
-    // se true > destacar campo em vermelho
-    const [erroNome, setErroNome] = useState(false);
-    const [erroGrupo, setErroGrupo] = useState(false);
-    const [erroEmail, setErroEmail] = useState(false);
-    const [erroSenha, setErroSenha] = useState(false);
 
     // função chamada ao clicar em "enviar" ou apertar enter (submeter formulário)
     const submit = () => {
@@ -68,12 +62,9 @@ export default function EditarUsuario (props: Props) {
                         {/* input possui estilização de erro caso o usuário tente enviar um formulário sem um dos campos preenchidos */}
                         <InputPopup
                         className={classNames({
-                            [styles['input-preenchido']]: true,
-                            [styles.erro]: erroNome
+                            [styles['input-preenchido']]: true
                         })}
                         handleChange={(s) => setNome(s.target.value)}
-                        // quando com erro e o usuário clica no campo, é limpado o destaque de erro
-                        onFocus={() => setErroNome(false)}
                         valor={nome}
                         />
                     </span>
@@ -81,14 +72,9 @@ export default function EditarUsuario (props: Props) {
                     className={styles.campo}>
                         <label>Grupo:</label>
                         <DropdownPreenchido
-                        className={classNames({
-                            [styles.erro]: erroGrupo
-                        })}
                         itens={['Solicitante', 'Avaliador de Risco', 'Avaliador de Impacto', 'Avaliador de Custo', 'Administrador']}
                         selecionadoFst={grupo}
-                        handleSelected={(s) => setGrupo(s)}
-                        // dropdown implementado com onopen, onde tem a mesma funcionalidade que o onclick do botão e com a mesma finalidade que o onfocus dos outros campos
-                        onOpen={() => setErroGrupo(false)} />
+                        handleSelected={(s) => setGrupo(s)} />
                     </span>
                 </div>
                 <div className={styles.linha}>
@@ -99,11 +85,9 @@ export default function EditarUsuario (props: Props) {
                         <label>Email:</label>
                         <InputPopup
                         className={classNames({
-                            [styles['input-preenchido']]: true,
-                            [styles.erro]: erroEmail
+                            [styles['input-preenchido']]: true
                         })}
                         handleChange={(s) => setEmail(s.target.value)}
-                        onFocus={() => setErroEmail(false)}
                         valor={email}
                         // o tipo email exige uma formatação específica para email como presença do @ e sem caracteres especiais ou acentos
                         tipo="email"
@@ -116,11 +100,9 @@ export default function EditarUsuario (props: Props) {
                         <label>Senha:</label>
                         <InputPopup
                         className={classNames({
-                            [styles['input-preenchido']]: true,
-                            [styles.erro]: erroSenha
+                            [styles['input-preenchido']]: true
                         })}
                         handleChange={(s) => setSenha(s.target.value)}
-                        onFocus={() => setErroSenha(false)}
                         valor={senha}
                         // tipo password censura o campo inserido
                         tipo="password"

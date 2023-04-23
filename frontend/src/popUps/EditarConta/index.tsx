@@ -15,12 +15,6 @@ export default function EditarConta (props: Props) {
     const [nomeAntigo, setNomeAntigo] = useState('Fulano');
     const [email, setEmail] = useState('fulano@email');
     const [senha, setSenha] = useState('123123');
-    
-    // se true > destacar campo em vermelho
-    const [erroNome, setErroNome] = useState(false);
-    const [erroGrupo, setErroGrupo] = useState(false);
-    const [erroEmail, setErroEmail] = useState(false);
-    const [erroSenha, setErroSenha] = useState(false);
 
     // função chamada ao clicar em "enviar" ou apertar enter (submeter formulário)
     const submit = () => {
@@ -55,11 +49,9 @@ export default function EditarConta (props: Props) {
                         <label>Email:</label>
                         <InputPopup
                         className={classNames({
-                            [styles['input-preenchido']]: true,
-                            [styles.erro]: erroEmail
+                            [styles['input-preenchido']]: true
                         })}
                         handleChange={(s) => setEmail(s.target.value)}
-                        onFocus={() => setErroEmail(false)}
                         valor={email}
                         // o tipo email exige uma formatação específica para email como presença do @ e sem caracteres especiais ou acentos
                         tipo="email"
@@ -72,11 +64,9 @@ export default function EditarConta (props: Props) {
                         <label>Senha:</label>
                         <InputPopup
                         className={classNames({
-                            [styles['input-preenchido']]: true,
-                            [styles.erro]: erroSenha
+                            [styles['input-preenchido']]: true
                         })}
                         handleChange={(s) => setSenha(s.target.value)}
-                        onFocus={() => setErroSenha(false)}
                         valor={senha}
                         // tipo password censura o campo inserido
                         tipo="password"
