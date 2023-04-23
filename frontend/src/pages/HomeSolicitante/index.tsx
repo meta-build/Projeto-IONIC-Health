@@ -6,9 +6,8 @@ import styles from './HomeSolicitante.module.scss';
 import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
-import { AcaoEditarExcluir, AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
+
 
 
 import { Botao, Voltar } from '../../components/Botoes';
@@ -16,6 +15,7 @@ import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
 import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
 import VisualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 import VizualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
+import VizualizarSolicitacaoProducao from '../../popUps/VizualizarSolicitacaoProducao';
 
 export default function HomeSolicitante () {
     const [filtroNome, setFiltroNome] = useState('');
@@ -25,6 +25,7 @@ export default function HomeSolicitante () {
     const [popupCriar, setPopupCriar] = useState(false);
     const [popupRecente, setPopupRecente] = useState(false);
     const [popupArquivado, setPopupArquivado] = useState(false);
+    const [popupProducao, setPopupProducao] = useState(false);
 
     const [solicitacoes, setSolicitacoes] = useState([0]);
 
@@ -96,7 +97,7 @@ export default function HomeSolicitante () {
                     {status ==  'Em Produção' && solicitacoes.map((item, index) => (
                         <ItemLista
                         itemName={'solicitação'}
-                        handleClickName={() => {}}
+                        handleClickName={() => setPopupProducao(true)}
                         acao={<AcaoProducao status='new' />}/>
                     ))}
                     {status ==  'Arquivados' && solicitacoes.map((item, index) => (
@@ -109,6 +110,7 @@ export default function HomeSolicitante () {
                 <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
                 <VizualizarSolicitacao aberto={popupRecente} onClose={() => setPopupRecente(false)}/>
                 <VizualizarSolicitacaoArquivado aberto={popupArquivado} onClose={() => setPopupArquivado(false)}/>
+                <VizualizarSolicitacaoProducao aberto={popupProducao} onClose={() => setPopupProducao(false)}/>
             </section>
         </>
     );
