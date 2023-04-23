@@ -1,37 +1,59 @@
 @import '@/styles/variables.scss';
 
 .form {
+    width: 600px;
+    color: $cinza-600;
+}
+
+.linha {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.linha:first-child {
+    margin-top: 20px;
+}
+
+.campo {
     display: flex;
     flex-direction: column;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    text-align: left;
 }
 
-.inputs {
-    display: flex;
-    width: 480px;
-
-    .input {
-        display: flex;
-        flex-direction: column;
-        margin-right: 12px;
-    }
-    .input:last-child {
-        margin-right: 0px;
-    }
-    .label {
-        text-align: left;
-        color: $cinza-600;
-        margin-bottom: 4px;
-    }
+.campo:first-child {
+    margin-right: 12px;
 }
 
-.preencher {
+.campo:only-child {
+    margin-right: 0;
+}
+
+.campo-preenchido {
     flex: 1;
 }
 
-.concluir {
-    position: absolute;
-    right: 38px;
-    bottom: 12px;
+.label {
+    color: $cinza-600;
+    margin-left: 6px;
+    margin-bottom: 4px;
+}
+
+.input {
+    flex: 1;
+}
+
+.arquivos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.arquivo {
+    margin-right: 8px;
+    margin-top: 8px;
+}
+
+.linha-submit {
+    display: flex;
+    margin-top: 36px;
+    justify-content: flex-end;
 }
