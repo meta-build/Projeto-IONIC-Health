@@ -4,6 +4,7 @@ import classNames from "classnames";
 import styles from './VizualizarSolicitacao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
+import AprovarParaAvaliacao from "../AprovarParaAvaliacao";
 
 interface Props {
   aberto: boolean;
@@ -15,6 +16,7 @@ export default function VizualizarSolicitacao(props: Props) {
   const [tipo, setTipo] = useState('Feature');
 
   const [popupExclusao, setPopupExclusao] = useState(false);
+  const [ppopupAprovar, setPopupAprovar] = useState(false);
   
   return (
     <PopUp
@@ -56,11 +58,15 @@ export default function VizualizarSolicitacao(props: Props) {
               <BotaoPreenchido handleClick={() => setPopupExclusao(true)}>
                 Excluir
               </BotaoPreenchido>
+              <BotaoPreenchido handleClick={() => setPopupAprovar(true)}>
+                Liberar para avaliação
+              </BotaoPreenchido>
             </div>
           </div>
         </div>
       </div>
     <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+    <AprovarParaAvaliacao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )
 }

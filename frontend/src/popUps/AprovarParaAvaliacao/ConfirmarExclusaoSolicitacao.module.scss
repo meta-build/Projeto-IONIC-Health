@@ -1,0 +1,26 @@
+@import '@/styles/variables.scss';
+
+.aviso {
+    color: $cinza-600;
+    margin: 20px 0px;
+}
+
+.botoes {
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.botao {
+    flex: 1;
+}
+
+.confirmar {
+    margin-left: 12px;
+    background-color: $verde;
+    color: white;
+}
+
+.confirmar:hover {
+    background-color: $verde-claro
+}
