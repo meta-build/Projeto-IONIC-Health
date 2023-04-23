@@ -33,13 +33,13 @@ export default function AppRouter() {
 
           {usuario && (
             <>
-              {usuario.getGrupo() == 'solicitante' && (
+              {usuario.getGrupo() == 2 && (
                   <Route path='/home' element={<PaginaComHeader elemento={<HomeSolicitante />} />} />
               )}
-              {usuario.getGrupo() == 'avaliador' && (
+              {usuario.getGrupo() > 3 && (
                 <Route path='/home' element={<PaginaComHeader elemento={<HomeAvaliador />} />} />
               )}
-              {usuario.getGrupo() == 'adm' && (<>
+              {usuario.getGrupo() == 1 && (<>
                   <Route path='/home' element={<PaginaComHeader elemento={<HomeAdm />} />} />
                   <Route path='/solicitacoes' element={<PaginaComHeader elemento={<SolicitacoesAdm />} />} />
                   <Route path='/usuarios' element={<PaginaComHeader elemento={<UsuariosAdm />} />} />
