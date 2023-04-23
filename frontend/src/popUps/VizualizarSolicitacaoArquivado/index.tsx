@@ -9,7 +9,7 @@ import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
 interface Props {
   aberto: boolean;
   onClose: () => void;
-  usuario: 'soliciante' | 'adm';
+  usuario: 'solicitante' | 'adm';
 }
 
 export default function VizualizarSolicitacaoArquivado(props: Props) {
