@@ -1,4 +1,5 @@
 interface SolicitacaoProps {
+    id: number;
     titulo: string,
     tipo: string,
     descricao: string,
