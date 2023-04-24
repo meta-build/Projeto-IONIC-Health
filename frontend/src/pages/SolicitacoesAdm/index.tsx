@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GoogleIcon from '../../components/GoogleIcon';
 import { Header32 } from '../../components/Header';
 import { InputContornado } from '../../components/Inputs';
@@ -8,16 +8,20 @@ import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
 import { Botao } from '../../components/Botoes';
-import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
 import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
 import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
 import VizualizarSolicitacaoProducao from '../../popUps/VizualizarSolicitacaoProducao';
 import VizualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
+import Solicitacoes from '../../services/Solicitacoes';
 
 export default function SolicitacoesAdm() {
-    const [filtroNome, setFiltroNome] = useState('');
+    const [busca, setBusca] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
+
+    const [solicitacoes, setSolicitacoes] = useState([]);
+
+    const [solicSelecionado, setSolicSelecionado] = useState<number>();
 
     const [popupRecente, setPopupRecente] = useState(false);
     const [popupAvaliacao, setPopupAvaliacao] = useState(false);
@@ -25,13 +29,33 @@ export default function SolicitacoesAdm() {
     const [popupArquivado, setPopupArquivado] = useState(false);
 
     // const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados'];
-    const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
+    const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados']
 
-    const busca = (titulo: string) => {
-        const regex = new RegExp(filtroNome, 'i');
+    const producaoMask = {
+        'New': 'new',
+        'On Holding': 'on-holding',
+        'Done': 'done'
+    }
+
+    const filtrarNome = (titulo: string) => {
+        const regex = new RegExp(busca, 'i');
         return regex.test(titulo);
     }
 
+    useEffect(() => {
+        Solicitacoes.getAll()
+        .then(data => {
+            setSolicitacoes(data.filter(item => {
+                const filtroNome = filtrarNome(item.titulo);
+                const filtroTipo = item.tipo == tipo;
+                let filtroSituacao = item.status == status || item.status.split('.')[0] == status;
+                if (status == 'Arquivados') {
+                    filtroSituacao = item.status == 'archived'
+                }
+                return filtroNome && filtroTipo && filtroSituacao;
+            }))
+        })
+    }, [busca, tipo, status])
     return (
         <section className={styles.section}>
             <Header32>Solicitações</Header32>
@@ -40,7 +64,7 @@ export default function SolicitacoesAdm() {
                     className={styles.inputPreenchimento}
                     placeholder='Pesquisar Solicitação...'
                     icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
-                    handleChange={(e) => setFiltroNome(e.target.value)} />
+                    handleChange={(e) => setBusca(e.target.value)} />
                 <DropdownContornado
                     itens={[
                         new DropdownItem('Feature', <GoogleIcon>&#xE8B8;</GoogleIcon>),
@@ -61,37 +85,76 @@ export default function SolicitacoesAdm() {
                 ))}
             </div>
             <ul className={styles.lista}>
-                {status == 'Recentes' && <>
+                {status == 'Recentes' && <> {solicitacoes.map(item => (
                     <ItemLista
-                        itemName='teste'
-                        handleClickName={() => setPopupRecente(true)}
-                        acao={<span>Criado em 01/01/2023</span>} />
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => {
+                        setSolicSelecionado(item.id);
+                        setPopupRecente(true);
+                    }}
+                    acao={<span>
+                        {item.data_edicao ? <span> <span className={styles['data-texto']}>Criado em</span>
+                            {new Date(item.data_edicao).toLocaleDateString('pt-br', {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false
+                            })}
+                        </span> : <span> <span className={styles['data-texto']}>Criado em</span>
+                            {new Date(item.data_criacao).toLocaleDateString('pt-br', {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false
+                            })}
+                        </span>}
+                    </span>} />
+                ))}
                 </>}
-                {status == 'Em Avaliação' && <>
+                {status == 'Em avaliação' && <> {solicitacoes.map(item => (
                     <ItemLista
-                        itemName='teste'
-                        handleClickName={() => setPopupAvaliacao(true)}
-                        acao={<AcaoNotas
-                            notaCusto={3}
-                            notaImpacto={3}
-                            notaRisco={2}
-                            notaPreenchida={true}
-                        />} />
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => setPopupAvaliacao(true)}
+                    acao={<AcaoNotas
+                        notas={item.ratings.map(av => ({
+                            nota: av.value,
+                            comite: av.committee
+                        }))}
+                        notaPreenchida={true}
+                    />} />
+                ))}
                 </>}
-                {status == 'Em Produção' && <>
+                {status == 'Em produção' && <> {solicitacoes.map(item => (
                     <ItemLista
-                        itemName='teste'
-                        handleClickName={() => setPopupProducao(true)}
-                        acao={<AcaoProducao status='new' />} />
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => setPopupAvaliacao(true)}
+                    acao={<AcaoProducao status={producaoMask[item.status.split('.')[1]]} />} />
+                ))}
                 </>}
-                {status == 'Arquivados' && <>
+                {status == 'Arquivados' && <> {solicitacoes.map(item => (
                     <ItemLista
-                        itemName='teste'
-                        handleClickName={() => setPopupArquivado(true)}
-                        acao={<span>Arquivado em 01/01/2023</span>} />
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => setPopupAvaliacao(true)}
+                    acao={<span>Arquivado em {new Date(item.data_arquivado).toLocaleDateString('pt-br', {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false
+                    })}</span>} />
+                ))}
                 </>}
             </ul>
-            <VizualizarSolicitacao usuario='adm' aberto={popupRecente} onClose={() => setPopupRecente(false)} />
+            <VizualizarSolicitacao idSolic={solicSelecionado} usuario='adm' aberto={popupRecente} onClose={() => setPopupRecente(false)} />
             <VisualizarSolicitacaoAvaliacao usuario='adm' aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
             <VizualizarSolicitacaoProducao usuario='adm' aberto={popupProducao} onClose={() => setPopupProducao(false)} />
             <VizualizarSolicitacaoArquivado usuario='adm' aberto={popupArquivado} onClose={() => setPopupArquivado(false)} />
