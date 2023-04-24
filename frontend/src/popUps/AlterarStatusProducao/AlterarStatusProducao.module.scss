@@ -77,6 +77,9 @@
     margin-top: 36px;
     justify-content: flex-end;
 }
+.botao:not(:first-child) {
+    margin-left: 12px;
+}
 
 .producao {
     color: $cinza-600;

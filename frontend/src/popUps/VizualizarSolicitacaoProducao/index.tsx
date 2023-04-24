@@ -20,14 +20,11 @@ interface Props {
 export default function VizualizarSolicitacaoProducao(props: Props) {
   const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
 
-  const [titulo, setTitulo] = useState('exemplo');
-  const [tipo, setTipo] = useState('Feature');
-  const [status, setStatus] = useState<"new" | "on-holding" | "done">('on-holding');
-  const [desc, setDesc] = useState('lorem ipsum');
-
   const [popupAlterar, setPopupAlterar] = useState(false);
   const [popupArquivar, setPopupArquivar] = useState(false);
   const [popupExclusao, setPopupExclusao] = useState(false);
+
+  const[status, setStatus] = useState('');
 
   const producaoMask = {
     'New': 'new',
@@ -39,6 +36,7 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
     if (props.idSolic) {
       Solicitacoes.getByID(props.idSolic).then(data => {
         setSolicitacao(data);
+        setStatus(data.status.split('.')[1]);
       });
     }
   }, [props.idSolic]);
@@ -96,7 +94,7 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
             <div className={styles.producao}>
               <span className={styles.label}>Status de produção</span>
               {solicitacao.status && <span className={styles['producao-status']}>
-                <AcaoProducao status={producaoMask[solicitacao.status.split('.')[1]]} />
+                <AcaoProducao status={producaoMask[status]} />
               </span>}
             </div>
             <div className={styles['linha-submit']}>
@@ -121,7 +119,7 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
           </div>
         </div>
       </div>
-      <AlterarStatusProducao aberto={popupAlterar} onClose={() => setPopupAlterar(false)} />
+      <AlterarStatusProducao onChange={(s) => setStatus(s)} idSolic={solicitacao.id} aberto={popupAlterar} onClose={() => setPopupAlterar(false)} />
       <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
       <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
     </PopUp>

@@ -1,31 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import styles from './AlterarStatusProducao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import { AcaoProducao } from "../../components/ItemLista/Acoes";
 import { DropdownPreenchido } from "../../components/Dropdowns";
+import Solicitacoes from "../../services/Solicitacoes";
+import { SolicitacaoProps } from "../../types";
 
 interface Props {
   aberto: boolean;
   onClose: () => void;
+  idSolic: number;
+  onChange?: (string) => void;
 }
 
 export default function AlterarStatusProducao(props: Props) {
-  const [titulo, setTitulo] = useState('exemplo');
-  const [tipo, setTipo] = useState('Feature');
-  const [status, setStatus] = useState<"new" | "on-holding" | "done">('on-holding')
+  const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
+  const [status, setStatus] = useState('');
   
+  useEffect(() => {
+    if (props.idSolic) {
+      Solicitacoes.getByID(props.idSolic).then(data => {
+        setSolicitacao(data);
+        setStatus(data.status.split('.')[1]);
+      });
+    }
+  }, [props.idSolic]);
   return (
     <PopUp
-      titulo={`Alterar status de produção da ${tipo} ${titulo}`}
+      titulo={`Alterar status de produção da ${solicitacao.tipo} ${solicitacao.titulo}`}
       visivel={props.aberto}
       onClose={props.onClose} >
 
       <form
       onSubmit={(e) => {
         e.preventDefault();
-
+        Solicitacoes.atualizarProducao(solicitacao.id, status);
+        props.onChange(status);
         props.onClose();
       }}
       className={styles.form}>
@@ -42,11 +54,19 @@ export default function AlterarStatusProducao(props: Props) {
                     <label>Status:</label>
                     <DropdownPreenchido
                     itens={['New', 'On Holding', 'Done']}
-                    handleSelected={(s) => console.log(s)} />  
+                    selecionadoFst={status}
+                    handleSelected={(s) => setStatus(s)} />  
                 </span>
             </div>
             <div className={styles['linha-submit']}>
-              <BotaoPreenchido tipo="submit">
+              <BotaoPreenchido
+              className={styles.botao}
+              handleClick={() => props.onClose()}>
+                Cancelar
+              </BotaoPreenchido>
+              <BotaoPreenchido
+              className={styles.botao}
+              tipo="submit">
                 Alterar
               </BotaoPreenchido>
             </div>
