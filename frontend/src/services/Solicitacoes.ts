@@ -1,4 +1,4 @@
-import { EditarSolicitacaoProps } from "../types";
+import { EditarSolicitacaoProps, SolicitacaoProps } from "../types";
 import api from "./api";
 
 // alterar depois
@@ -32,7 +32,7 @@ class Solicitacoes {
         return data;
     }
 
-    async getByID(id: number) {
+    async getByID(id: number): Promise<SolicitacaoProps> {
         const {data} = await api.get(`solicitacao/${id}`);
         return data;
     }
