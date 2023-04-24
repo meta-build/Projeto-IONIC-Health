@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import { BotaoNota } from "../../components/Botoes";
@@ -9,31 +9,21 @@ import AprovarParaAvaliacao from "../AprovarParaAvaliacao";
 import ConfirmarArquivamentoSolicitacao from "../ConfirmarArquivamentoSolicitacao";
 import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
 import AprovarParaProducao from "../AprovarParaProducao";
+import { RatingProps, SolicitacaoProps } from "../../types";
+import Solicitacoes from "../../services/Solicitacoes";
 
 interface Props {
   aberto: boolean;
   onClose: () => void;
   usuario: 'solicitante' | 'adm' | 'avaliador';
-}
-
-interface AvaliacaoProps {
-  comite: string,
-  nota: number,
-  comentario: string,
-  avaliador: string
+  idSolic: number;
 }
 
 export default function VisualizarSolicitacaoAvaliacao(props: Props) {
-  const [avs, setAvs] = useState<(AvaliacaoProps)[]>([
-    { comite: 'Risco', nota: 3, comentario: 'abc', avaliador: '1' },
-    { comite: 'Custo', nota: 2, comentario: 'def', avaliador: '2' },
-    { comite: 'Impacto', nota: 3, comentario: 'ghi', avaliador: '3' }
-  ])
-  const [avSelecionado, setAvSelecionado] = useState<AvaliacaoProps>(avs[0]);
+  const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
 
-  const [tipo, setTipo] = useState('Hotfix');
-  const [titulo, setTitulo] = useState('Exemplo');
-  const [desc, setDesc] = useState('lorem ipsum');
+  const [avs, setAvs] = useState<(RatingProps)[]>([])
+  const [avSelecionado, setAvSelecionado] = useState<RatingProps>();
 
   const [popupAvaliar, setPopupAvaliar] =useState(false);
   const [popupArquivar, setPopupArquivar] = useState(false);
@@ -48,9 +38,19 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
     'cinza', 'verde', 'azul1', 'azul2'
   ]
 
+  useEffect(() => {
+    if (props.idSolic) {
+      Solicitacoes.getByID(props.idSolic).then(data => {
+        setSolicitacao(data);
+        setAvSelecionado(data.ratings[0]);
+        console.log(data);
+      });
+    }
+  }, [props.idSolic]);
+
   return (
     <PopUp
-      titulo={`${tipo} ${titulo}`}
+      titulo={`${solicitacao.tipo} ${solicitacao.titulo}`}
       visivel={props.aberto}
       onClose={props.onClose} >
 
@@ -65,53 +65,59 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
             <span className={styles.label}>Descrição</span>
 
             <span className={styles.conteudo}>
-              {desc}
+              {solicitacao.descricao}
             </span>
 
             <span className={styles.label}>Arquivos</span>
-
             <span className={styles.arquivos}>
-              <BotaoPreenchido
-                className={styles.arquivo}
-                handleClick={() => console.log('foi')}>
-                arquivo.png
-              </BotaoPreenchido>
+              {solicitacao.attachments && solicitacao.attachments.map(arquivo => (
+                <BotaoPreenchido
+                  key={arquivo.id}
+                  className={styles.arquivo}
+                  handleClick={() => window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
+                  {arquivo.fileName}
+                </BotaoPreenchido>
+              ))}
             </span>
 
             <span className={styles['avaliacao-titulo']}>Avaliações</span>
 
             <div className={styles.avs}>
-              {avs.map(av => (
+              {Boolean(solicitacao.ratings) && solicitacao.ratings.length ? solicitacao.ratings.map(av => (
                 <BotaoPreenchido
-                  corBotao={avSelecionado.comite == av.comite ? 'noturno' : 'claro'}
+                  corBotao={avSelecionado.committee == av.committee ? 'noturno' : 'claro'}
                   className={styles.av}
                   handleClick={() => setAvSelecionado(av)}>
-                  {av.comite}
+                  {av.committee}
                 </BotaoPreenchido>
-              ))}
+                )) :
+                <span className={styles.label}>Sem avaliações</span>
+              }
             </div>
             <div className={styles['av-completa']}>
-              <div className={styles.nota}>
-                <span className={styles.label}>Nota:</span>
-                <BotaoNota
-                  clicavel={false}
-                  selecionado={true}
-                  cor={
-                    avSelecionado.comite == 'Impacto' ?
-                      paletaCoresNotaImpacto[avSelecionado.nota] :
-                      paletaCoresNota[avSelecionado.nota]}
-                  valor={avSelecionado.nota} />
-              </div>
-              <div className={styles.nota}>
-                <span className={styles.label}>Avaliador: <b>{avSelecionado.avaliador}</b></span>
-              </div>
-              <div className={styles.comentario}>
-                <span className={styles.label}>Comentário</span>
+              {avSelecionado && <>
+                <div className={styles.nota}>
+                  <span className={styles.label}>Nota:</span>
+                  <BotaoNota
+                    clicavel={false}
+                    selecionado={true}
+                    cor={
+                      avSelecionado.committee == 'Impacto' ?
+                        paletaCoresNotaImpacto[avSelecionado.value] :
+                        paletaCoresNota[avSelecionado.value]}
+                    valor={avSelecionado.value} />
+                </div>
+                <div className={styles.nota}>
+                  {/* <span className={styles.label}>Avaliador: <b>{avSelecionado.avaliador}</b></span> */}
+                </div>
+                <div className={styles.comentario}>
+                  <span className={styles.label}>Comentário</span>
 
-                <span className={styles.conteudo}>
-                  {avSelecionado.comentario}
-                </span>
-              </div>
+                  <span className={styles.conteudo}>
+                    {avSelecionado.comment}
+                  </span>
+                </div>
+              </>}
               <div className={styles['linha-submit']}>
                 {/* verificar usuário e exibir os botões corretos */}
                 {props.usuario == 'avaliador' && 
@@ -143,8 +149,8 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
         </div>
       </div>
       <AvaliarSolicitacao aberto={popupAvaliar} onClose={() => setPopupAvaliar(false)} />
-      <ConfirmarArquivamentoSolicitacao aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
-      <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+      <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
+      <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
       <AprovarParaProducao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )
