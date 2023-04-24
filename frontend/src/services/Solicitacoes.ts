@@ -30,7 +30,8 @@ class Solicitacoes {
     }
 
     async getByID(id: number) {
-        console.log(`pegando solicitação do id ${id}`);
+        const {data} = await api.get(`solicitacao/${id}`);
+        return data;
     }
 
     async getByCriador(criador: number) {
