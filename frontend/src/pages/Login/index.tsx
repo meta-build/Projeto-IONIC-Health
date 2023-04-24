@@ -7,6 +7,7 @@ import { useContexto } from '../../context/contexto';
 import { useNavigate } from 'react-router-dom';
 import Usuarios from '../../services/Usuarios';
 import Usuario from '../../types/Usuario';
+import api from '../../services/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -23,6 +24,7 @@ export default function Login() {
       Usuarios.login({mail: email, password: senha})
       .then(data => {
         const {id, grupoId, token} = data;
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         setUsuario(new Usuario(id, token, grupoId))
         sessionStorage.setItem('id', `${id}`)
         sessionStorage.setItem('token', token)
@@ -38,6 +40,7 @@ export default function Login() {
     if (sessionStorage.length > 0) {
       const {id, token, grupo} = sessionStorage;
       setUsuario(new Usuario(id, token, grupo));
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       nav('home');
     }
   }, [])
