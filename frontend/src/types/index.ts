@@ -6,6 +6,7 @@ interface SolicitacaoProps {
     descricao: string,
     data_criacao: string,
     data_edicao: string | null;
+    data_arquivado: string | null;
     attachments: ArquivoProps[];
     ratings: RatingProps[];
 }
