@@ -111,10 +111,12 @@ export default function VizualizarSolicitacao(props: Props) {
           </div>
         </div>
       </div>
-      <ConfirmarArquivamentoSolicitacao aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
-      <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
-      <EditarSolicitacao aberto={popupEditar} onClose={() => setPopupEditar(false)} />
-      <AprovarParaAvaliacao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
+      <>
+        <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
+        <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+        <EditarSolicitacao aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+        <AprovarParaAvaliacao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
+      </>
     </PopUp>
   )
 }
