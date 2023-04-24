@@ -44,6 +44,7 @@ export default function Login() {
   useEffect(() => {
     if (sessionStorage.length > 0) {
       const {id, token, grupo} = sessionStorage;
+      console.log(id, token, grupo);
       setUsuario(new Usuario(id, token, grupo));
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       nav('home');

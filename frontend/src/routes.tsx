@@ -8,6 +8,7 @@ import HomeAvaliador from "./pages/HomeAvaliador";
 import HomeAdm from "./pages/HomeAdm";
 import SolicitacoesAdm from "./pages/SolicitacoesAdm";
 import UsuariosAdm from "./pages/UsuariosAdm";
+import api from "./services/api";
 
 export default function AppRouter() {
 
@@ -15,15 +16,12 @@ export default function AppRouter() {
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      // em sessionStorage, guardar id e senha
-      // aqui, fazer requisição login com sessionstorage id e senha
-      // se login der certo, salvar nome token e grupo no context
-      // se não, redirecionar para login
-      // fazer tudo isso depois que conectado com back-end
-      const {nome, token, grupo} = sessionStorage;
-      setUsuario(new Usuario(nome, token, grupo));
+      const {id, token, grupo} = sessionStorage;
+      console.log(id, token, grupo);
+      setUsuario(new Usuario(id, token, grupo));
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-  }, []);
+  }, [])
 
   return (
     <>
