@@ -6,6 +6,16 @@ interface SolicitacaoProps {
     data_criacao: string,
     data_edicao: string | null;
     attachments: ArquivoProps[];
+    ratings: RatingProps[];
+}
+
+interface RatingProps {
+    id: number,
+    value: number,
+    committee: string,
+    comment: string,
+    userId: number,
+    ticketId: number
 }
 
 interface ArquivoProps {
@@ -26,5 +36,6 @@ interface EditarSolicitacaoProps {
 export type {
     SolicitacaoProps,
     ArquivoProps,
-    EditarSolicitacaoProps
+    EditarSolicitacaoProps,
+    RatingProps
 }
