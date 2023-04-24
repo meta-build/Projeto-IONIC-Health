@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import styles from "./TextBox.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 interface Props {
@@ -15,6 +15,11 @@ export default function TextBox(props: Props) {
   const {ajustavel = true} = props;
   const [valor, setValor] = useState(props.valor || '');
 
+  useEffect(() => {
+    if(props.valor) {
+      setValor(props.valor)
+    }
+  }, [props.valor]);
   return ( 
     <textarea 
         className={classNames({
