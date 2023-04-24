@@ -1,3 +1,4 @@
+import { EditarSolicitacaoProps } from "../types";
 import api from "./api";
 
 // alterar depois
@@ -16,8 +17,8 @@ class Solicitacoes {
         console.log(`criando solicitação`)
     }
 
-    async atualizar(id: number, ) {
-        const {data} = await api.put(`update/solicitacao/${id}`, {status: 'archived'});
+    async atualizar(id: number, solicitacao: EditarSolicitacaoProps) {
+        const {data} = await api.put(`update/solicitacao/${id}`, solicitacao);
         return data;
     }
 
