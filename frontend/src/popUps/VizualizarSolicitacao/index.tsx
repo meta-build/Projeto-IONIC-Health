@@ -1,32 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import styles from './VizualizarSolicitacao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
 import AprovarParaAvaliacao from "../AprovarParaAvaliacao";
-import { BotaoPopup } from "../../components/Botoes";
 import ConfirmarArquivamentoSolicitacao from "../ConfirmarArquivamentoSolicitacao";
 import EditarSolicitacao from "../EditarSolicitacao";
+import Solicitacoes from "../../services/Solicitacoes";
+import { SolicitacaoProps } from "../../types";
 
 interface Props {
   aberto: boolean;
   onClose: () => void;
   usuario: 'solicitante' | 'adm';
+  idSolic: number;
 }
 
 export default function VizualizarSolicitacao(props: Props) {
-  const [titulo, setTitulo] = useState('exemplo');
-  const [tipo, setTipo] = useState('Feature');
+  const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
 
   const [popupArquivar, setPopupArquivar] = useState(false);
   const [popupExclusao, setPopupExclusao] = useState(false);
   const [popupEditar, setPopupEditar] = useState(false);
   const [ppopupAprovar, setPopupAprovar] = useState(false);
-  
+
+  useEffect(() => {
+    if (props.idSolic) {
+      Solicitacoes.getByID(props.idSolic).then(data => {
+        setSolicitacao(data);
+      });
+    }
+  }, [props.idSolic]);
   return (
     <PopUp
-      titulo={`${tipo} ${titulo}`}
+      titulo={`${solicitacao.tipo} ${solicitacao.titulo}`}
       visivel={props.aberto}
       onClose={props.onClose} >
       <div className={styles.form}>
@@ -40,48 +48,65 @@ export default function VizualizarSolicitacao(props: Props) {
             <span className={styles.label}>Descrição</span>
 
             <span className={styles.conteudo}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vestibulum libero mauris, a posuere lacus elementum quis. Vestibulum in lorem at nibh semper facilisis a ut augue. Praesent sed magna sed dui condimentum elementum. Donec nec tortor tincidunt urna bibendum semper. Duis sed malesuada ipsum. Nunc ullamcorper sodales libero, a varius metus facilisis sit amet. Praesent ac mi sit amet ligula commodo sollicitudin nec sit amet nibh. Aenean ultricies lorem et ex ullamcorper, vel volutpat odio semper. Praesent efficitur, nisi eu tristique lacinia, enim arcu vestibulum felis, at semper erat urna vitae orci. Duis imperdiet ante non ullamcorper laoreet. Integer luctus sed nisl quis fermentum. In ut nisl nec libero tristique maximus. Suspendisse sagittis nisl at velit laoreet suscipit.
+              {solicitacao.descricao}
             </span>
             <span className={styles.label}>Arquivos</span>
             <span className={styles.arquivos}>
-              <BotaoPreenchido
-                className={styles.arquivo}
-                handleClick={() => console.log('foi')}>
-                arquivo.png
-              </BotaoPreenchido>
+              {solicitacao.attachments && solicitacao.attachments.map(arquivo => (
+                <BotaoPreenchido
+                  key={arquivo.id}
+                  className={styles.arquivo}
+                  handleClick={() =>window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
+                  {arquivo.fileName}
+                </BotaoPreenchido>
+              ))}
             </span>
             <div className={styles.subtitulo}>
               <div>
-                Criado em 01/01/2023 por Fulano de tal
+                Criado em {new Date(solicitacao.data_criacao).toLocaleDateString('pt-br', {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false
+                })}
               </div>
-              <div>
-                Editado em 01/01/2023 por Ciclano de tal
-              </div>
+              {solicitacao.data_edicao && <div>
+                Editado em {new Date(solicitacao.data_edicao).toLocaleDateString('pt-br', {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false
+                })}
+              </div>}
             </div>
             <div className={styles['linha-submit']}>
-              {props.usuario == 'adm' && 
-              <>
-                <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupArquivar(true)}>
-                  Arquivar
-                </BotaoPreenchido>
-                <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupExclusao(true)}>
-                  Excluir
-                </BotaoPreenchido>
-                <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupEditar(true)}>
-                  Editar
-                </BotaoPreenchido>
-                <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupAprovar(true)}>
-                  Liberar para avaliação
-                </BotaoPreenchido>
-              </>} 
+              {props.usuario == 'adm' &&
+                <>
+                  <BotaoPreenchido
+                    className={styles.botao}
+                    handleClick={() => setPopupArquivar(true)}>
+                    Arquivar
+                  </BotaoPreenchido>
+                  <BotaoPreenchido
+                    className={styles.botao}
+                    handleClick={() => setPopupExclusao(true)}>
+                    Excluir
+                  </BotaoPreenchido>
+                  <BotaoPreenchido
+                    className={styles.botao}
+                    handleClick={() => setPopupEditar(true)}>
+                    Editar
+                  </BotaoPreenchido>
+                  <BotaoPreenchido
+                    className={styles.botao}
+                    handleClick={() => setPopupAprovar(true)}>
+                    Liberar para avaliação
+                  </BotaoPreenchido>
+                </>}
             </div>
           </div>
         </div>
