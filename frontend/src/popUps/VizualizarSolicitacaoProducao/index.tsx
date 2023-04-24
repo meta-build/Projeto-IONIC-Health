@@ -120,8 +120,8 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
         </div>
       </div>
       <AlterarStatusProducao onChange={(s) => setStatus(s)} idSolic={solicitacao.id} aberto={popupAlterar} onClose={() => setPopupAlterar(false)} />
-      <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
-      <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+      <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} onConfirm={props.onClose} />
+      <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} onConfirm={props.onClose} />
     </PopUp>
   )
 }

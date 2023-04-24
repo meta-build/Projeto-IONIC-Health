@@ -10,6 +10,7 @@ interface Props {
     aberto: boolean;
     onClose: () => void;
     idSolic: number;
+    onConfirm?: () => void;
 }
 
 export default function ConfirmarArquivamentoSolicitacao (props: Props) {
@@ -37,7 +38,7 @@ export default function ConfirmarArquivamentoSolicitacao (props: Props) {
                 handleClick={() => {
                     Solicitacoes.arquivar(solicitacao.id)
                     .then((data) => {
-                        console.log(data);
+                        props.onConfirm();
                         props.onClose();
                     })
                 }}
