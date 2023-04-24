@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import styles from './AprovarParaProducao.module.scss';
 import classNames from "classnames";
+import { SolicitacaoProps } from "../../types";
+import Solicitacoes from "../../services/Solicitacoes";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
+    onConfirm: () => void;
+    idSolic: number;
 }
 
 export default function AprovarParaProducao (props: Props) {
+    const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
+    
     const [tipo, setTipo] = useState('Feature');
     const [nome, setNome] = useState('exemplo')
 
+    useEffect(() => {
+        if (props.idSolic) {
+          Solicitacoes.getByID(props.idSolic).then(data => {
+            setSolicitacao(data);
+            console.log(data);
+          });
+        }
+      }, [props.idSolic]);
     return(
         <PopUp
         visivel={props.aberto}
@@ -20,7 +34,7 @@ export default function AprovarParaProducao (props: Props) {
         titulo={`Liberação para produção`}>
             <span className={styles.aviso}>
                 <div>
-                    Liberar a {tipo} {nome} para producão?
+                    Liberar a {solicitacao.tipo} {solicitacao.titulo} para producão?
                 </div>
             </span>
             <div className={styles.botoes}>
@@ -29,7 +43,14 @@ export default function AprovarParaProducao (props: Props) {
                 className={styles.botao}>
                     CANCELAR
                 </BotaoPreenchido>
-                <BotaoPreenchido className={classNames({
+                <BotaoPreenchido
+                handleClick={() => {
+                    Solicitacoes.liberarParaProducao(solicitacao.id).then(() => {
+                        props.onConfirm();
+                        props.onClose();
+                    })
+                }}
+                className={classNames({
                     [styles.botao]: true,
                     [styles.confirmar]: true
                 })}>

@@ -151,7 +151,7 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
       <AvaliarSolicitacao aberto={popupAvaliar} onClose={() => setPopupAvaliar(false)} />
       <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
       <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
-      <AprovarParaProducao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
+      <AprovarParaProducao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )
 }
