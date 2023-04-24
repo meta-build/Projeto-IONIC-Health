@@ -56,7 +56,7 @@ export default function VizualizarSolicitacao(props: Props) {
                 <BotaoPreenchido
                   key={arquivo.id}
                   className={styles.arquivo}
-                  handleClick={() =>window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
+                  handleClick={() => window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
                   {arquivo.fileName}
                 </BotaoPreenchido>
               ))}
@@ -113,8 +113,11 @@ export default function VizualizarSolicitacao(props: Props) {
       </div>
       <>
         <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
-        <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
-        <EditarSolicitacao aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+        <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => {
+          setPopupExclusao(false);
+          props.onClose();
+        }} />
+        <EditarSolicitacao idSolic={solicitacao.id} aberto={popupEditar} onClose={() => setPopupEditar(false)} />
         <AprovarParaAvaliacao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
       </>
     </PopUp>
