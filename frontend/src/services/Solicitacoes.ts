@@ -16,12 +16,14 @@ class Solicitacoes {
         console.log(`criando solicitação`)
     }
 
-    async atualizar(id: number, solicitacaoAtualizada: Solicitacao) {
-        console.log(`editando solicitação ${id}`);
+    async atualizar(id: number, ) {
+        const {data} = await api.put(`update/solicitacao/${id}`, {status: 'archived'});
+        return data;
     }
 
     async deletar(id: number) {
-        console.log('excluindo solicitação do id ', id);
+        const {data} = await api.delete(`solicitacao/delete/${id}`);
+        return data;
     }
 
     async getAll() {
