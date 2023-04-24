@@ -51,7 +51,8 @@ class Solicitacoes {
     }
 
     async liberarParaProducao(id: number) {
-        console.log('liberando para produção a solicitação ', id);
+        const {data} = await api.put(`update/solicitacao/${id}`, {status: 'Em produção.New'});
+        return data;
     }
 
     async arquivar(id: number) {
