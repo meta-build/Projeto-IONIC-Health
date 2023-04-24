@@ -2,8 +2,7 @@ import api from "./api";
 
 // alterar depois
 interface Solicitacao {
-    name: string;
-    job: string;
+    
 }
 
 interface Avaliacao {
@@ -25,8 +24,9 @@ class Solicitacoes {
         console.log('excluindo solicitação do id ', id);
     }
 
-    async getBySituacao(situacao: string) {
-        console.log(`lendo solicitações de situação ${situacao}`);
+    async getAll() {
+        const {data} = await api.get('find/solicitacao')
+        return data;
     }
 
     async getByID(id: number) {
