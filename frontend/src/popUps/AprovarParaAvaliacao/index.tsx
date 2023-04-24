@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import styles from './ConfirmarExclusaoSolicitacao.module.scss';
 import classNames from "classnames";
+import Solicitacoes from "../../services/Solicitacoes";
+import { SolicitacaoProps } from "../../types";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
+    idSolic: number;
+    onConfirm?: () => void;
 }
 
 export default function AprovarParaAvaliacao (props: Props) {
-    const [tipo, setTipo] = useState('Feature');
-    const [nome, setNome] = useState('exemplo')
+    const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
+
+    useEffect(() => {
+        if (props.idSolic) {
+          Solicitacoes.getByID(props.idSolic).then(data => {
+            setSolicitacao(data);
+          });
+        }
+      }, [props.idSolic]);
 
     return(
         <PopUp
@@ -20,7 +31,7 @@ export default function AprovarParaAvaliacao (props: Props) {
         titulo={`Liberação para avaliação`}>
             <span className={styles.aviso}>
                 <div>
-                    Liberar a {tipo} {nome} para avaliação?
+                    Liberar a {solicitacao.tipo} {solicitacao.titulo} para avaliação?
                 </div>
                 <div>
                     Após confirmação, não será possível edita-lo
@@ -32,7 +43,13 @@ export default function AprovarParaAvaliacao (props: Props) {
                 className={styles.botao}>
                     CANCELAR
                 </BotaoPreenchido>
-                <BotaoPreenchido className={classNames({
+                <BotaoPreenchido
+                handleClick={() => {
+                    Solicitacoes.liberarParaAvaliacao(solicitacao.id);
+                    if (props.onConfirm) props.onConfirm(); 
+                    props.onClose();
+                }}
+                className={classNames({
                     [styles.botao]: true,
                     [styles.confirmar]: true
                 })}>
@@ -40,5 +57,5 @@ export default function AprovarParaAvaliacao (props: Props) {
                 </BotaoPreenchido>
             </div>
         </PopUp>
-    )
+    );
 }
