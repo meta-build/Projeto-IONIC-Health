@@ -151,7 +151,10 @@ export default function SolicitacoesAdm() {
                     <ItemLista
                     key={item.id}
                     itemName={item.titulo}
-                    handleClickName={() => setPopupAvaliacao(true)}
+                    handleClickName={() => {
+                        setSolicSelecionado(item.id);
+                        setPopupArquivado(true);
+                    }}
                     acao={<span>Arquivado em {new Date(item.data_arquivado).toLocaleDateString('pt-br', {
                         day: "2-digit",
                         month: "2-digit",
@@ -166,7 +169,7 @@ export default function SolicitacoesAdm() {
             <VizualizarSolicitacao idSolic={solicSelecionado} usuario='adm' aberto={popupRecente} onClose={() => setPopupRecente(false)} />
             <VisualizarSolicitacaoAvaliacao idSolic={solicSelecionado} usuario='adm' aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
             <VizualizarSolicitacaoProducao idSolic={solicSelecionado} usuario='adm' aberto={popupProducao} onClose={() => setPopupProducao(false)} />
-            <VizualizarSolicitacaoArquivado usuario='adm' aberto={popupArquivado} onClose={() => setPopupArquivado(false)} />
+            <VizualizarSolicitacaoArquivado idSolic={solicSelecionado} usuario='adm' aberto={popupArquivado} onClose={() => setPopupArquivado(false)} />
         </section>
     );
 }

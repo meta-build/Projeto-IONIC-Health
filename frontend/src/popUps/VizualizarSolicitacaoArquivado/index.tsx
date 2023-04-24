@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import styles from './VizualizarSolicitacaoArquivado.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import AprovarParaProducao from "../AprovarParaProducao";
 import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
+import Solicitacoes from "../../services/Solicitacoes";
+import { SolicitacaoProps } from "../../types";
 
 interface Props {
   aberto: boolean;
   onClose: () => void;
   usuario: 'solicitante' | 'adm';
+  idSolic: number;
 }
 
 export default function VizualizarSolicitacaoArquivado(props: Props) {
-  const [titulo, setTitulo] = useState('exemplo');
-  const [tipo, setTipo] = useState('Feature');
-  const [desc, setDesc] = useState('lorem ipsum')
-
   const [popupExclusao, setPopupExclusao] = useState(false);
   const [ppopupAprovar, setPopupAprovar] = useState(false);
-  
+
+  const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
+
+  useEffect(() => {
+    if (props.idSolic) {
+      Solicitacoes.getByID(props.idSolic).then(data => {
+        setSolicitacao(data);
+      });
+    }
+  }, [props.idSolic]);
   return (
     <PopUp
-      titulo={`${tipo} ${titulo}`}
+      titulo={`${solicitacao.tipo} ${solicitacao.titulo}`}
       visivel={props.aberto}
       onClose={props.onClose} >
 
@@ -37,37 +45,61 @@ export default function VizualizarSolicitacaoArquivado(props: Props) {
             <span className={styles.label}>Descrição</span>
 
             <span className={styles.conteudo}>
-              {desc}
+              {solicitacao.descricao}
             </span>
             <span className={styles.label}>Arquivos</span>
             <span className={styles.arquivos}>
-              <BotaoPreenchido
-                className={styles.arquivo}
-                handleClick={() => console.log('foi')}>
-                arquivo.png
-              </BotaoPreenchido>
+              {solicitacao.attachments && solicitacao.attachments.map(arquivo => (
+                <BotaoPreenchido
+                  key={arquivo.id}
+                  className={styles.arquivo}
+                  handleClick={() => window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
+                  {arquivo.fileName}
+                </BotaoPreenchido>
+              ))}
             </span>
             <div className={styles.subtitulo}>
               <div>
-                Criado em 01/01/2023 por Fulano de tal
+                Criado em {new Date(solicitacao.data_criacao).toLocaleDateString('pt-br', {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false
+                })}
               </div>
-              <div>
-                Editado em 01/01/2023 por Ciclano de tal
-              </div>
+              {solicitacao.data_edicao && <div>
+                Editado em {new Date(solicitacao.data_edicao).toLocaleDateString('pt-br', {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false
+                })}
+              </div>}
               <div className={styles.arquivado}><b>
-                Arquivado em 01/01/2023 por Ciclano de tal
+                Arquivado em {new Date(solicitacao.data_arquivado).toLocaleDateString('pt-br', {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false
+                })}
               </b></div>
             </div>
             <div className={styles['linha-submit']}>
               {props.usuario == 'adm' && <>
                 <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupExclusao(true)}>
+                  className={styles.botao}
+                  handleClick={() => setPopupExclusao(true)}>
                   Excluir
                 </BotaoPreenchido>
                 <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupAprovar(true)}>
+                  className={styles.botao}
+                  handleClick={() => setPopupAprovar(true)}>
                   Aprovar para produção
                 </BotaoPreenchido>
               </>}
@@ -75,8 +107,8 @@ export default function VizualizarSolicitacaoArquivado(props: Props) {
           </div>
         </div>
       </div>
-      <ConfirmarExclusaoSolicitacao aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
-      <AprovarParaProducao aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
+      <ConfirmarExclusaoSolicitacao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+      <AprovarParaProducao onConfirm={() => props.onClose} idSolic={solicitacao.id} aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )
 }
