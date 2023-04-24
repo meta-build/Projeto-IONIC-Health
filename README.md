@@ -161,6 +161,14 @@ modelo:
 
 <span>
 <!--link github aqui -->
+ <a href="[https://github.com/fabiaalv3s](https://github.com/gabriel-fabian)">
+ <!-- card aqui -->
+  <img src="https://user-images.githubusercontent.com/90328897/233986842-f379728a-c06d-467c-a2ba-ecff96096794.png" width="350px">
+ </a>
+</span>
+
+<span>
+<!--link github aqui -->
  <a href="https://github.com/fNetoCardoso">
  <!-- card aqui -->
   <img src="https://user-images.githubusercontent.com/111146527/227824223-aaf11938-289d-46be-b324-dd9bc133c339.png" width="350px">
