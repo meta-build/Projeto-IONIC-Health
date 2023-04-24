@@ -23,13 +23,18 @@ export default function Login() {
     if (email && senha) {
       Usuarios.login({mail: email, password: senha})
       .then(data => {
-        const {id, grupoId, token} = data;
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        setUsuario(new Usuario(id, token, grupoId))
-        sessionStorage.setItem('id', `${id}`)
-        sessionStorage.setItem('token', token)
-        sessionStorage.setItem('grupo', `${grupoId}`)
-        nav('/home');
+        console.log(data)
+        if(data.error) {
+          setErro(true);
+        } else {
+          const {id, grupoId, token} = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          setUsuario(new Usuario(id, token, grupoId))
+          sessionStorage.setItem('id', `${id}`)
+          sessionStorage.setItem('token', token)
+          sessionStorage.setItem('grupo', `${grupoId}`)
+          nav('/home');
+        }
       })
     } else {
       setErro(true);
