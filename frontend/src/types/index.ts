@@ -17,7 +17,14 @@ interface ArquivoProps {
     url: string;
 }
 
+interface EditarSolicitacaoProps {
+    titulo?: string;
+    tipo: string;
+    descricao?: string;
+}
+
 export type {
     SolicitacaoProps,
-    ArquivoProps
+    ArquivoProps,
+    EditarSolicitacaoProps
 }
