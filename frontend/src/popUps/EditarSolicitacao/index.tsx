@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPopup, TextBox } from "../../components/Inputs";
 import PopUp from "../../components/PopUp";
 import styles from './EditarSolicitacao.module.scss';
@@ -6,45 +6,58 @@ import classNames from "classnames";
 import { DropdownPreenchido } from "../../components/Dropdowns";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import { BotaoPopup } from "../../components/Botoes";
+import Solicitacoes from "../../services/Solicitacoes";
+import { EditarSolicitacaoProps, SolicitacaoProps } from "../../types";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
+    idSolic: number;
 }
 
-export default function EditarSolicitacao (props: Props) {
-    const [tituloAntigo, setTituloAntigo] = useState('exemplo');
-    const [titulo, setTitulo] = useState(tituloAntigo);
-    const [tipoAntigo, setTipoAntigo] = useState('Feature');
-    const [tipo, setTipo] = useState(tipoAntigo);
-    const [descricao, setDescricao] = useState('lorem ipsum');
+export default function EditarSolicitacao(props: Props) {
+    const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
 
-    function enviar () {
-        let obj: any = {};
+    const [titulo, setTitulo] = useState<string>();
+    const [tipo, setTipo] = useState<string>();
+    const [descricao, setDescricao] = useState<string>();
+
+    function enviar() {
+        let obj: EditarSolicitacaoProps = {tipo};
         if (titulo !== '') {
             obj.titulo = titulo;
-        }
-        if (tipo !== '') {
-            obj.tipo = tipo;
         }
         if (descricao !== '') {
             obj.descricao = descricao;
         }
-        console.log(obj);
+        Solicitacoes.atualizar(solicitacao.id, obj).then(() => {
+            props.onClose();
+        })
     }
 
-    return(
+    useEffect(() => {
+        if (props.idSolic) {
+            Solicitacoes.getByID(props.idSolic).then(data => {
+                setSolicitacao(data);
+                setTitulo(data.titulo);
+                setTipo(data.tipo);
+                setDescricao(data.descricao);
+            });
+        }
+    }, [props.idSolic]);
+
+    return (
         <PopUp
-        titulo={`Editar ${tipoAntigo} ${tituloAntigo}`}
-        visivel={props.aberto}
-        onClose={props.onClose}
-        >   
+            titulo={`Editar ${solicitacao.tipo} ${solicitacao.titulo}`}
+            visivel={props.aberto}
+            onClose={props.onClose}
+        >
             <form
-            className={styles.form}
-            onSubmit={(e) => {
-                e.preventDefault();
-                enviar();
-            }}>
+                className={styles.form}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    enviar();
+                }}>
                 <div className={styles.linha}>
                     <span className={classNames({
                         [styles.campo]: true,
@@ -54,19 +67,19 @@ export default function EditarSolicitacao (props: Props) {
                             Título
                         </label>
                         <InputPopup
-                        className={styles.input}
-                        handleChange={(e) => setTitulo(e.target.value)}
-                        valor={titulo} />
+                            className={styles.input}
+                            handleChange={(e) => setTitulo(e.target.value)}
+                            valor={titulo} />
                     </span>
                     <span
-                    className={styles.campo}>
+                        className={styles.campo}>
                         <label className={styles.label}>
                             Tipo
                         </label>
                         <DropdownPreenchido
-                        itens={['Feature', 'Hotfix']}
-                        selecionadoFst={tipo}
-                        handleSelected={(s) => setTipo(s)} />
+                            itens={['Feature', 'Hotfix']}
+                            selecionadoFst={tipo}
+                            handleSelected={(s) => setTipo(s)} />
                     </span>
                 </div>
                 <div className={styles.linha}>
@@ -78,10 +91,10 @@ export default function EditarSolicitacao (props: Props) {
                             Descrição
                         </label>
                         <TextBox
-                        valor={descricao}
-                        ajustavel={false}
-                        className={styles['descricao-input']}
-                        onChange={(e) => setDescricao(e.target.value)}/>
+                            valor={descricao}
+                            ajustavel={false}
+                            className={styles['descricao-input']}
+                            onChange={(e) => setDescricao(e.target.value)} />
                     </span>
                 </div>
                 <div className={styles.linha}>
@@ -93,11 +106,14 @@ export default function EditarSolicitacao (props: Props) {
                             Arquivos
                         </label>
                         <span className={styles.arquivos}>
-                            <BotaoPreenchido
-                            className={styles.arquivo}
-                            handleClick={() => console.log('foi')}>
-                                arquivo.png
-                            </BotaoPreenchido>
+                            {solicitacao.attachments && solicitacao.attachments.map(arquivo => (
+                                <BotaoPreenchido
+                                    key={arquivo.id}
+                                    className={styles.arquivo}
+                                    handleClick={() => window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
+                                    {arquivo.fileName}
+                                </BotaoPreenchido>
+                            ))}
                         </span>
                     </span>
                 </div>
@@ -105,7 +121,7 @@ export default function EditarSolicitacao (props: Props) {
                     {/* botão não tem onclick, pois o submit já faz toda a ação de enviar o formulário. a função chamada está no onsubmit, no começo da tag form */}
                     <BotaoPopup tipo="submit">
                         Editar
-                    </BotaoPopup>                  
+                    </BotaoPopup>
                 </div>
             </form>
         </PopUp>
