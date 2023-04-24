@@ -1,10 +1,12 @@
 import {BotaoNota} from "../../../Botoes";
 import styles from './AcaoNotas.module.scss';
 
+interface NotaProps {
+    nota: number,
+    comite: string
+}
 interface Props {
-    notaRisco?: number;
-    notaImpacto?: number;
-    notaCusto?: number;
+    notas: NotaProps[];
     notaPreenchida?: boolean
 }
 
@@ -22,7 +24,7 @@ export default function AcaoNotas (props: Props) {
 
     return (
         <span className={styles.container}>
-            {props.notaRisco !== undefined && <span className={styles.nota}>
+            {/* {props.notaRisco !== undefined && <span className={styles.nota}>
                 Risco:
                 <BotaoNota
                 valor={props.notaRisco}
@@ -30,25 +32,18 @@ export default function AcaoNotas (props: Props) {
                 selecionado={notaPreenchida}
                 className={styles.numero}
                 />
-            </span>}
-            {props.notaImpacto !== undefined && <span className={styles.nota}>
-                Impacto:
+            </span>} */}
+            {props.notas.map(nota => (
+                <span className={styles.nota}>
+                {nota.comite}:
                 <BotaoNota
-                valor={props.notaImpacto}
-                cor={corImpacto[props.notaImpacto]}
+                valor={nota.nota}
+                cor={corRiscoCusto[nota.nota]}
                 selecionado={notaPreenchida}
                 className={styles.numero}
                 />
-            </span>}
-            {props.notaCusto !== undefined && <span className={styles.nota}>
-                Custo:
-                <BotaoNota
-                valor={props.notaCusto}
-                cor={corRiscoCusto[props.notaCusto]}
-                selecionado={notaPreenchida}
-                className={styles.numero}
-                />
-            </span>}
+            </span>
+            ))}
         </span>
     );
 }
