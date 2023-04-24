@@ -31,7 +31,7 @@ export default function VizualizarSolicitacao(props: Props) {
         setSolicitacao(data);
       });
     }
-  }, [props.idSolic]);
+  }, [props.idSolic, popupEditar]);
   return (
     <PopUp
       titulo={`${solicitacao.tipo} ${solicitacao.titulo}`}
