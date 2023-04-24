@@ -55,7 +55,7 @@ export default function SolicitacoesAdm() {
                 return filtroNome && filtroTipo && filtroSituacao;
             }))
         })
-    }, [busca, tipo, status])
+    }, [busca, tipo, status, , popupAvaliacao, popupProducao, popupArquivado])
     return (
         <section className={styles.section}>
             <Header32>Solicitações</Header32>
@@ -94,7 +94,7 @@ export default function SolicitacoesAdm() {
                         setPopupRecente(true);
                     }}
                     acao={<span>
-                        {item.data_edicao ? <span> <span className={styles['data-texto']}>Criado em</span>
+                        {item.data_edicao ? <span> <span className={styles['data-texto']}>Editado em</span>
                             {new Date(item.data_edicao).toLocaleDateString('pt-br', {
                                 day: "2-digit",
                                 month: "2-digit",
