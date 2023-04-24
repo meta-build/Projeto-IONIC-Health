@@ -6,10 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import EditarConta from '../../popUps/EditarConta';
+import { useContexto } from '../../context/contexto';
+import { useNavigate } from 'react-router-dom';
+import api from '../../services/api';
 
 export default function Menu () {
     const [notificacao, setNotificacao] = useState(true);
     const [popupEditar, setPopupEditar] = useState(false);
+    const {usuario, setUsuario}  = useContexto();
+    const nav = useNavigate();
 
     return(
         <>
@@ -22,7 +27,7 @@ export default function Menu () {
                 <div className={styles.espacador} />
 
                 {/* notificação, aparecer somente para solicitante */}
-                <MenuSuspenso
+                {/* <MenuSuspenso
                 className={styles.icon}
                 onOpen={() => setNotificacao(false)}
                 icon={
@@ -40,7 +45,7 @@ export default function Menu () {
                         handleCheckClick={() => console.log('clicado')}
                         />
                     </ul>
-                </MenuSuspenso>
+                </MenuSuspenso> */}
 
                 {/* usuário */}
                 <MenuSuspenso
@@ -52,7 +57,12 @@ export default function Menu () {
                             Editar conta
                         </li>
                         <li
-                        onClick={() => console.log('sair')}
+                        onClick={() => {
+                            sessionStorage.clear();
+                            setUsuario(undefined);
+                            delete api.defaults.headers.common['Authorization'];
+                            nav('/');
+                        }}
                         className={styles['conta-item']}>
                             Sair
                         </li>
