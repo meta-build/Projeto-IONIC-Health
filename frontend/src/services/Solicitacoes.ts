@@ -61,8 +61,8 @@ class Solicitacoes {
     }
 
     async atualizarProducao(id: number, status: string) {
-        const statusJSON = {status}
-        console.log(`atualizando produção da solicitação ${id} para ${statusJSON.status}`)
+        const {data} = await api.put(`update/solicitacao/${id}`, {status: `Em produção.${status}`});
+        return data;
     }
 }
 
