@@ -10,6 +10,7 @@ interface Props {
     aberto: boolean;
     onClose: () => void;
     idSolic: number;
+    onConfirm?: () => void;
 }
 
 export default function ConfirmarExclusaoSolicitacao (props: Props) {
@@ -33,6 +34,7 @@ export default function ConfirmarExclusaoSolicitacao (props: Props) {
                 handleClick={() => {
                     Solicitacoes.deletar(solicitacao.id).then(() => {
                         props.onClose();
+                        if (props.onConfirm) props.onConfirm();
                     })}}
                 className={classNames({
                     [styles.botao]: true,
