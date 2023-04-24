@@ -2,6 +2,7 @@ interface SolicitacaoProps {
     id: number;
     titulo: string,
     tipo: string,
+    status: string,
     descricao: string,
     data_criacao: string,
     data_edicao: string | null;
