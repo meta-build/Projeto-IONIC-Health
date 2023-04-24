@@ -1,6 +1,6 @@
 import styles from './DropdownContornado.module.scss';
 import classNames from "classnames";
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,6 +17,11 @@ export default function DropdownPreenchido (props: Props) {
     const [aberto, setAberto] = useState(false);
     const [selecionado, setSelecionado] = useState(props.selecionadoFst || props.itens[0]);
 
+    useEffect(() => {
+        if(props.selecionadoFst) {
+            setSelecionado(props.selecionadoFst)
+        }
+    }, [props.selecionadoFst])
     return(
         <div className={styles.container}>
             <button
