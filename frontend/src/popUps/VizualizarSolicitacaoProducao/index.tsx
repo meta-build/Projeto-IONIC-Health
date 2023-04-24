@@ -29,6 +29,12 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
   const [popupArquivar, setPopupArquivar] = useState(false);
   const [popupExclusao, setPopupExclusao] = useState(false);
 
+  const producaoMask = {
+    'New': 'new',
+    'On Holding': 'on-holding',
+    'Done': 'done'
+}
+
   useEffect(() => {
     if (props.idSolic) {
       Solicitacoes.getByID(props.idSolic).then(data => {
@@ -89,9 +95,9 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
             </div>
             <div className={styles.producao}>
               <span className={styles.label}>Status de produção</span>
-              <span className={styles['producao-status']}>
-                <AcaoProducao status={status} />
-              </span>
+              {solicitacao.status && <span className={styles['producao-status']}>
+                <AcaoProducao status={producaoMask[solicitacao.status.split('.')[1]]} />
+              </span>}
             </div>
             <div className={styles['linha-submit']}>
               {props.usuario == 'adm' && <>
