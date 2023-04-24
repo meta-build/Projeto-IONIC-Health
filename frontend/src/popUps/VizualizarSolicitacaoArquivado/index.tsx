@@ -108,7 +108,7 @@ export default function VizualizarSolicitacaoArquivado(props: Props) {
         </div>
       </div>
       <ConfirmarExclusaoSolicitacao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
-      <AprovarParaProducao onConfirm={() => props.onClose} idSolic={solicitacao.id} aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
+      <AprovarParaProducao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )
 }

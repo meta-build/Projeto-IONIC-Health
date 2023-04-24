@@ -15,9 +15,6 @@ interface Props {
 
 export default function AprovarParaProducao (props: Props) {
     const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
-    
-    const [tipo, setTipo] = useState('Feature');
-    const [nome, setNome] = useState('exemplo')
 
     useEffect(() => {
         if (props.idSolic) {
@@ -48,8 +45,7 @@ export default function AprovarParaProducao (props: Props) {
                     Solicitacoes.liberarParaProducao(solicitacao.id).then(() => {
                         props.onConfirm();
                         props.onClose();
-                    })
-                }}
+                })}}
                 className={classNames({
                     [styles.botao]: true,
                     [styles.confirmar]: true
