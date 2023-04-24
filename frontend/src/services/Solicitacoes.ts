@@ -51,7 +51,8 @@ class Solicitacoes {
     }
 
     async arquivar(id: number) {
-        console.log('arquivar ', id);
+        const {data} = await api.put(`update/solicitacao/${id}`, {status: 'archived'});
+        return data;
     }
 
     async atualizarProducao(id: number, status: string) {
