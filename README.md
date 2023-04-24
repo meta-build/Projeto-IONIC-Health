@@ -67,6 +67,16 @@ Versão atual (v2.0)
 </h2>
 <p>Entrega: 03/04/2023 à 23/04/2023</p>
 
+### Backlog
+![image](https://user-images.githubusercontent.com/90328897/233985310-c53e4c11-694f-4bd8-bb6a-456fe7962699.png)
+
+### Diagrama de Banco de dados
+![modelo_bd_relacional](https://user-images.githubusercontent.com/90328897/233985485-544b6f85-04f6-4f22-827d-0e7ad125975a.jpg)
+![modelo_bd_logico_4](https://user-images.githubusercontent.com/90328897/233985526-c18d64aa-8b86-4f0a-b2ad-5d35cb60fcfe.jpg)
+
+### Diagrama de classes
+![diagrama-classes](https://user-images.githubusercontent.com/90328897/233985587-e9372f1b-ba42-4d21-a306-7d969f105762.jpg)
+
 <!--
 ### Funcionalidade 1
 (gif aqui)
