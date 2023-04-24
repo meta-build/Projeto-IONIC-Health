@@ -46,7 +46,8 @@ class Solicitacoes {
     }
 
     async liberarParaAvaliacao(id: number) {
-        console.log('liberando para avaliacao a solicitação ', id);
+        const {data} = await api.put(`update/solicitacao/${id}`, {status: 'Em avaliação'});
+        return data;
     }
 
     async liberarParaProducao(id: number) {
