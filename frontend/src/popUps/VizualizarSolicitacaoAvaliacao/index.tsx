@@ -11,6 +11,7 @@ import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
 import AprovarParaProducao from "../AprovarParaProducao";
 import { RatingProps, SolicitacaoProps } from "../../types";
 import Solicitacoes from "../../services/Solicitacoes";
+import { useContexto } from "../../context/contexto";
 
 interface Props {
   aberto: boolean;
@@ -25,10 +26,14 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
   const [avs, setAvs] = useState<(RatingProps)[]>([])
   const [avSelecionado, setAvSelecionado] = useState<RatingProps>();
 
-  const [popupAvaliar, setPopupAvaliar] =useState(false);
+  const [popupAvaliar, setPopupAvaliar] = useState(false);
   const [popupArquivar, setPopupArquivar] = useState(false);
   const [popupExclusao, setPopupExclusao] = useState(false);
   const [ppopupAprovar, setPopupAprovar] = useState(false);
+
+  const [semNota, setSemNota] = useState(false);
+
+  const { usuario } = useContexto();
 
   const paletaCoresNota: ("cinza" | "verde" | "amarelo" | "vermelho" | "azul1" | "azul2")[] = [
     'cinza', 'verde', 'amarelo', 'vermelho'
@@ -38,15 +43,38 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
     'cinza', 'verde', 'azul1', 'azul2'
   ]
 
+  const strAvaliador = (grupoId: number) => {
+    switch (grupoId) {
+      case 3:
+        return 'Risco';
+      case 4:
+        return 'Custo';
+      default:
+        return 'Impacto';
+    }
+  }
+
+  const isSemNota = (solicitacao: SolicitacaoProps) => {
+    const notas = solicitacao.ratings
+    let result = true;
+    notas.forEach(nota => {
+      if (nota.committee == strAvaliador(usuario.getGrupo())) {
+        result = false;
+      }
+    });
+    return result;
+  }
+
   useEffect(() => {
     if (props.idSolic) {
       Solicitacoes.getByID(props.idSolic).then(data => {
         setSolicitacao(data);
         setAvSelecionado(data.ratings[0]);
+        setSemNota(isSemNota(data))
         console.log(data);
       });
     }
-  }, [props.idSolic]);
+  }, [props.idSolic, popupAvaliar]);
 
   return (
     <PopUp
@@ -90,7 +118,7 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
                   handleClick={() => setAvSelecionado(av)}>
                   {av.committee}
                 </BotaoPreenchido>
-                )) :
+              )) :
                 <span className={styles.label}>Sem avaliações</span>
               }
             </div>
@@ -120,37 +148,37 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
               </>}
               <div className={styles['linha-submit']}>
                 {/* verificar usuário e exibir os botões corretos */}
-                {props.usuario == 'avaliador' && 
-                <BotaoPreenchido
-                className={styles.botao}
-                handleClick={() => setPopupAvaliar(true)}>
-                  Avaliar
-                </BotaoPreenchido> }
+                {props.usuario == 'avaliador' && isSemNota(solicitacao) &&
+                  <BotaoPreenchido
+                    className={styles.botao}
+                    handleClick={() => setPopupAvaliar(true)}>
+                    Avaliar
+                  </BotaoPreenchido>}
                 {props.usuario == 'adm' && <>
                   <BotaoPreenchido
-                  className={styles.botao}
-                  handleClick={() => setPopupArquivar(true)}>
+                    className={styles.botao}
+                    handleClick={() => setPopupArquivar(true)}>
                     Arquivar
                   </BotaoPreenchido>
                   <BotaoPreenchido
-                  className={styles.botao}
-                  handleClick={() => setPopupExclusao(true)}>
+                    className={styles.botao}
+                    handleClick={() => setPopupExclusao(true)}>
                     Excluir
                   </BotaoPreenchido>
                   <BotaoPreenchido
-                  className={styles.botao}
-                  handleClick={() => setPopupAprovar(true)}>
+                    className={styles.botao}
+                    handleClick={() => setPopupAprovar(true)}>
                     Aprovar para produção
                   </BotaoPreenchido>
-                </>}                
+                </>}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <AvaliarSolicitacao aberto={popupAvaliar} onClose={() => setPopupAvaliar(false)} />
-      <ConfirmarArquivamentoSolicitacao idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
-      <ConfirmarExclusaoSolicitacao idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
+      <AvaliarSolicitacao idSolic={props.idSolic} aberto={popupAvaliar} onClose={() => setPopupAvaliar(false)} />
+      <ConfirmarArquivamentoSolicitacao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={popupArquivar} onClose={() => setPopupArquivar(false)} />
+      <ConfirmarExclusaoSolicitacao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={popupExclusao} onClose={() => setPopupExclusao(false)} />
       <AprovarParaProducao onConfirm={() => props.onClose()} idSolic={solicitacao.id} aberto={ppopupAprovar} onClose={() => setPopupAprovar(false)} />
     </PopUp>
   )

@@ -12,9 +12,10 @@ interface SolicitacaoCreate {
 }
 
 interface Avaliacao {
-    comite: string;
-    nota: number;
-    comentario: string;
+    value: number,
+    committee: string,
+    comment: string,
+    ticketId: number;
 }
 
 class Solicitacoes {
@@ -62,8 +63,9 @@ class Solicitacoes {
         console.log(`pegando solicitações do criador ${criador}`)
     }
 
-    async avaliar(id: number, avaliacao: Avaliacao) {
-        console.log('avaliando solicitação ', id);
+    async avaliar(avaliacao: Avaliacao) {
+        const {data} = await api.post('/rating', avaliacao)
+        return data;
     }
 
     async liberarParaAvaliacao(id: number) {

@@ -13,7 +13,7 @@ interface Props {
 
 export default function TextBox(props: Props) {
   const {ajustavel = true} = props;
-  const [valor, setValor] = useState(props.valor || '');
+  const [valor, setValor] = useState(props.valor);
 
   useEffect(() => {
     if(props.valor) {

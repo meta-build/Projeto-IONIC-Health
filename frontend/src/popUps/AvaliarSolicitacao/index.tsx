@@ -1,34 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BotaoNota, BotaoPopup } from "../../components/Botoes";
 import PopUp from "../../components/PopUp";
 import { TextBox } from "../../components/Inputs";
 import styles from './AvaliarSolicitacao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import classNames from "classnames";
+import Solicitacoes from "../../services/Solicitacoes";
+import { SolicitacaoProps } from "../../types";
+import { useContexto } from "../../context/contexto";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
+    idSolic: number;
 }
 
 export default function AvaliarSolicitacao(props: Props) {
+    const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
+
     const [nota, setNota] = useState<number>();
     const [comentario, setComentario] = useState('');
 
-    const [titulo, setTitulo] = useState('');
-    const [tipo, setTipo] = useState('');
-    const [desc, setDesc] = useState('');
+    const {usuario} = useContexto();
 
+    const strAvaliador = (grupoId: number) => {
+        switch (grupoId) {
+          case 3:
+            return 'Risco';
+          case 4:
+            return 'Custo';
+          default:
+            return 'Impacto';
+        }
+      }
+
+    useEffect(() => {
+        if (props.idSolic) {
+            Solicitacoes.getByID(props.idSolic).then(data => {
+                setSolicitacao(data);
+            });
+        }
+    }, [props.idSolic]);
     return (
         <PopUp
             visivel={props.aberto}
             onClose={props.onClose}
-            titulo={`Avaliação da ${tipo} ${titulo}`}>
+            titulo={`Avaliação da ${solicitacao.tipo} ${solicitacao.titulo} em ${strAvaliador(usuario.getGrupo())}`}>
             <form
                 className={styles.form}
                 onSubmit={(e) => {
                     e.preventDefault();
-                    console.log('foi');
+                    Solicitacoes.avaliar({
+                        comment: comentario,
+                        committee: strAvaliador(usuario.getGrupo()),
+                        ticketId: props.idSolic,
+                        value: nota
+                    }).then(() => {
+                        setNota(undefined);
+                        setComentario('');
+                        props.onClose();
+                    })
                 }}>
                 <div className={styles.inputs}>
                     <div className={classNames({
@@ -37,24 +68,19 @@ export default function AvaliarSolicitacao(props: Props) {
                     })}>
                         <span className={styles.label}>Descrição</span>
                         <span className={styles.conteudo}>
-                            {desc}
+                            {solicitacao.descricao}
                         </span>
-                    <span className={styles.label}>Arquivos</span>
-                    <span className={styles.arquivos}>
-                        <BotaoPreenchido
-                            className={styles.arquivo}
-                            handleClick={() => console.log('foi')}>
-                            arquivo.png
-                        </BotaoPreenchido>
-                    </span>
-                    <div className={styles.subtitulo}>
-                        <div>
-                            Criado em 01/01/2023 por Fulano de tal
-                        </div>
-                        <div>
-                            Editado em 01/01/2023 por Ciclano de tal
-                        </div>
-                    </div>
+                        <span className={styles.label}>Arquivos</span>
+                        <span className={styles.arquivos}>
+                            {solicitacao.attachments && solicitacao.attachments.map(arquivo => (
+                                <BotaoPreenchido
+                                    key={arquivo.id}
+                                    className={styles.arquivo}
+                                    handleClick={() => window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
+                                    {arquivo.fileName}
+                                </BotaoPreenchido>
+                            ))}
+                        </span>
                     </div>
                 </div>
 
@@ -94,11 +120,11 @@ export default function AvaliarSolicitacao(props: Props) {
                     <TextBox
                         ajustavel={false}
                         className={styles['comentario-input']}
-                        onChange={(e) => setComentario(e.target.value)} />
+                        onChange={(e) => setComentario(e.target.value)}
+                        valor={comentario} />
                 </div>
                 <div className={styles['row-botao']}>
-                    <BotaoPopup
-                        tipo="submit">
+                    <BotaoPopup tipo="submit">
                         Avaliar
                     </BotaoPopup>
                 </div>

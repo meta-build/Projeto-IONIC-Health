@@ -68,7 +68,7 @@ export default function HomeAvaliador() {
                     return filtroNome && filtroTipo && filtroSituacao;
                 }))
             })
-    }, [busca, tipo, status])
+    }, [busca, tipo, status, popup])
 
     return (
         <>
