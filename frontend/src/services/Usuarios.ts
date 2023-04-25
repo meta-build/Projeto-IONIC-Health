@@ -1,3 +1,4 @@
+import { UsuarioProps } from "../types";
 import api from "./api";
 
 interface Usuario {
@@ -27,8 +28,9 @@ class Usuarios {
         console.log(`lendo usuário do id ${id}`);
     }
 
-    async get() {
-        console.log('pegando todos os usuários');
+    async getAll(): Promise<UsuarioProps[]> {
+        const {data} = await api.get('find/usuario')
+        return data;
     }
 
     async login(login: Login) {
