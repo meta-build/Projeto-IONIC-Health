@@ -1,4 +1,4 @@
-import { UsuarioProps } from "../types";
+import { EditarUsuarioProps, UsuarioProps } from "../types";
 import api from "./api";
 
 interface Usuario {
@@ -19,8 +19,9 @@ class Usuarios {
         return data;
     }
 
-    async atualizar(id: number, usuarioAtualizado: Usuario) {
-        console.log(`atualizando usuário do id ${id}`);
+    async editar(id: number, usuarioAtualizado: EditarUsuarioProps) {
+        const {data} = await api.put(`update/usuario/${id}`, usuarioAtualizado);
+        return data;
     }
 
     async deletar(id: number) {
