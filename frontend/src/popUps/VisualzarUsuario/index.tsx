@@ -2,7 +2,6 @@ import classNames from "classnames";
 import PopUp from "../../components/PopUp";
 import styles from './VisualizarUsuario.module.scss';
 import { useEffect, useState } from "react";
-import { BotaoPopup } from "../../components/Botoes";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import EditarUsuario from "../EditarUsuario";
 import ConfirmarExclusaoUsuario from "../ConfirmarExclusaoUsuario";
@@ -42,7 +41,7 @@ export default function VisualizarUsuario (props: Props) {
                 setUsuario(data);
             })
         }
-    }, [props.idUser])
+    }, [props.idUser, popupEditar]);
     return(
         <PopUp
         titulo={`Usuário ${usuario && usuario.name}`}
@@ -89,7 +88,7 @@ export default function VisualizarUsuario (props: Props) {
                     </BotaoPreenchido>                  
                 </div>
             </div>
-            <EditarUsuario aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+            <EditarUsuario idUser={props.idUser} aberto={popupEditar} onClose={() => setPopupEditar(false)} />
             <ConfirmarExclusaoUsuario idUser={props.idUser} onConfirm={props.onClose} aberto={popupExcluir} onClose={() => setPopupExcluir(false)} />
         </PopUp>
     )
