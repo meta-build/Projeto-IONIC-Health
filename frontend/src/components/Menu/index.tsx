@@ -48,6 +48,7 @@ export default function Menu () {
                 </MenuSuspenso> */}
 
                 {/* usuário */}
+                <span className={styles.nome}>{usuario.getNome()}</span>
                 <MenuSuspenso
                 icon={<FontAwesomeIcon icon={faUser} />}>
                     <ul className={styles['conta-lista']}>

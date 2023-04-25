@@ -2,6 +2,7 @@
 
 .container {
     display: flex;
+    align-items: center;
     background-color: $black-40;
     backdrop-filter: $blur;
     padding: 16px 20px;
@@ -109,4 +110,9 @@
 .notificacao-fechar:hover{
     cursor: pointer;
     background-color: $cinza-400;
+}
+
+.nome {
+    margin-right: 12px;
+    color: $ciano-300;
 }

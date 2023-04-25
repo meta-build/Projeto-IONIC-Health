@@ -27,12 +27,13 @@ export default function Login() {
         if(data.error) {
           setErro(true);
         } else {
-          const {id, grupoId, token} = data;
+          const {id, grupoId, token, name} = data;
           api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          setUsuario(new Usuario(id, token, grupoId))
+          setUsuario(new Usuario(id, token, grupoId, name))
           sessionStorage.setItem('id', `${id}`)
           sessionStorage.setItem('token', token)
           sessionStorage.setItem('grupo', `${grupoId}`)
+          sessionStorage.setItem('nome', `${name}`)
           nav('/home');
         }
       })
@@ -43,9 +44,8 @@ export default function Login() {
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      const {id, token, grupo} = sessionStorage;
-      console.log(id, token, grupo);
-      setUsuario(new Usuario(id, token, grupo));
+      const {id, token, grupo, nome} = sessionStorage;
+      setUsuario(new Usuario(id, token, grupo, nome));
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       nav('home');
     }
