@@ -70,12 +70,24 @@ Versão atual (v2.0)
 ### Backlog
 ![image](https://user-images.githubusercontent.com/90328897/233985310-c53e4c11-694f-4bd8-bb6a-456fe7962699.png)
 
+### Burndown
+![burndown](https://user-images.githubusercontent.com/90328897/234175665-8389bdda-96e4-48b6-97e5-cad72b176cba.png)
+
 ### Diagrama de Banco de dados
 ![modelo_bd_relacional](https://user-images.githubusercontent.com/90328897/233985485-544b6f85-04f6-4f22-827d-0e7ad125975a.jpg)
 ![modelo_bd_logico_4](https://user-images.githubusercontent.com/90328897/233985526-c18d64aa-8b86-4f0a-b2ad-5d35cb60fcfe.jpg)
 
 ### Diagrama de classes
-![diagrama-classes](https://user-images.githubusercontent.com/90328897/233985587-e9372f1b-ba42-4d21-a306-7d969f105762.jpg)
+![Imagem do WhatsApp de 2023-04-24 à(s) 10 42 28](https://user-images.githubusercontent.com/90328897/234175342-0f4a0194-8e39-4343-b7ea-08d6f102e34e.jpg)
+
+### Usuário administrador
+![adm](https://user-images.githubusercontent.com/90328897/234175366-dfdb1ed4-0033-40e1-af04-25c7a712f53f.gif)
+
+### Usuário solicitante
+![solicitante](https://user-images.githubusercontent.com/90328897/234175407-fc6e9a8c-ef96-4911-ab6f-51ad3187702c.gif)
+
+### Usuário avaliador
+![avaliador](https://user-images.githubusercontent.com/90328897/234175426-8a7be0a9-00c5-4108-8a78-67c049e780fc.gif)
 
 <!--
 ### Funcionalidade 1
