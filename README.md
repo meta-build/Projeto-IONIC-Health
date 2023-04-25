@@ -70,6 +70,9 @@ Versão atual (v2.0)
 ### Backlog
 ![image](https://user-images.githubusercontent.com/90328897/233985310-c53e4c11-694f-4bd8-bb6a-456fe7962699.png)
 
+### Burndown
+![burndown](https://user-images.githubusercontent.com/90328897/234175665-8389bdda-96e4-48b6-97e5-cad72b176cba.png)
+
 ### Diagrama de Banco de dados
 ![modelo_bd_relacional](https://user-images.githubusercontent.com/90328897/233985485-544b6f85-04f6-4f22-827d-0e7ad125975a.jpg)
 ![modelo_bd_logico_4](https://user-images.githubusercontent.com/90328897/233985526-c18d64aa-8b86-4f0a-b2ad-5d35cb60fcfe.jpg)
