@@ -16,11 +16,6 @@ interface Props {
 }
 
 export default function VisualizarUsuario (props: Props) {
-    // pegar valor de cada campo
-    const [nome, setNome] = useState('Fulano');
-    const [email, setEmail] = useState('fulano@email.com');
-    const [grupo, setGrupo] = useState('Solicitante');
-
     const [popupEditar, setPopupEditar] = useState(false);
     const [popupExcluir, setPopupExcluir] = useState(false);
 
@@ -95,7 +90,7 @@ export default function VisualizarUsuario (props: Props) {
                 </div>
             </div>
             <EditarUsuario aberto={popupEditar} onClose={() => setPopupEditar(false)} />
-            <ConfirmarExclusaoUsuario aberto={popupExcluir} onClose={() => setPopupExcluir(false)} />
+            <ConfirmarExclusaoUsuario idUser={props.idUser} onConfirm={props.onClose} aberto={popupExcluir} onClose={() => setPopupExcluir(false)} />
         </PopUp>
     )
 }
