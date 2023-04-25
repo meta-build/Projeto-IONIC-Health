@@ -69,7 +69,7 @@ export default function Menu () {
                     </ul>
                 </MenuSuspenso>
             </nav>
-            <EditarConta aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+            <EditarConta idUser={usuario.getId()} aberto={popupEditar} onClose={() => setPopupEditar(false)} />
         </>
     );
 }

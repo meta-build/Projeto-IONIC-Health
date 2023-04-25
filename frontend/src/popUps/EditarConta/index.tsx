@@ -2,33 +2,45 @@ import classNames from "classnames";
 import { InputPopup } from "../../components/Inputs";
 import PopUp from "../../components/PopUp";
 import styles from './EditarConta.module.scss';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BotaoPopup } from "../../components/Botoes";
+import Usuarios from "../../services/Usuarios";
+import { EditarUsuarioProps, UsuarioProps } from "../../types";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
+    idUser: number;
 }
 
 export default function EditarConta (props: Props) {
     // pegar valor de cada campo
-    const [nomeAntigo, setNomeAntigo] = useState('Fulano');
-    const [email, setEmail] = useState('fulano@email');
-    const [senha, setSenha] = useState('123123');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
 
     // função chamada ao clicar em "enviar" ou apertar enter (submeter formulário)
     const submit = () => {
-        const obj: any = {};
+        const obj: EditarUsuarioProps = {};
         if (email !== '') {
-            obj.email = email;
+            obj.mail = email;
         }
         if (senha !== '') {
-            obj.senha = senha;
+            obj.password = senha;
         }
 
-        console.log(obj);
+        Usuarios.editar(props.idUser, obj).then(() => {
+            props.onClose();
+        })
     }
 
+    useEffect(() => {
+        if(props.idUser) {
+            Usuarios.getByID(props.idUser).then(data => {
+                setEmail(data.mail);
+                setSenha(data.password);
+            })
+        }
+    }, [props.idUser]);
     return(
         <PopUp
         titulo={`Editar conta`}
