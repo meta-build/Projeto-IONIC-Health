@@ -43,11 +43,14 @@ export class Solicitacao {
   })
   criador: User;
 
-  @OneToMany(() => Attachment, attachment => attachment.ticket)
+  @Column()
+  id_user: number;
+
+  @OneToMany(() => Attachment, attachment => attachment.ticket, { onDelete: 'CASCADE'})
   attachments: Attachment[];
 
   @JoinColumn()
-  @OneToMany(() => Rating, rating => rating.ticket)
+  @OneToMany(() => Rating, rating => rating.ticket, { onDelete: 'CASCADE'})
   ratings: Rating[]
 
   @Column({ default: 'NEW' })

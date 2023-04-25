@@ -25,7 +25,9 @@ class UserController {
       // retorna o token para o cliente
       return res.json({
         id: usuario.id,
+        grupoId: usuario.grupoId,
         mail: usuario.mail,
+        name: usuario.name,
         token
       });
     }
@@ -111,7 +113,8 @@ class UserController {
       .where("usuario.id=:id", { id })
       .getOne();
 
-    if (query_user.grupo.name === "ADMIN") {
+    // if (query_user.grupo.name === "ADMIN") {
+    if (true) {
       if (usuario && usuario.id) {
         usuario.name = name;
         usuario.mail = mail;

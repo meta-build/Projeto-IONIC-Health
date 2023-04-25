@@ -20,12 +20,12 @@ export class Rating {
     @Column()
     userId: number
 
-    @ManyToOne(() => User, user => user.ratings)
+    @ManyToOne(() => User, user => user.ratings, { onDelete: 'CASCADE'})
     user: User
 
     @Column()
     ticketId: number;
 
-    @ManyToOne(() => Solicitacao, ticket => ticket.attachments)
+    @ManyToOne(() => Solicitacao, ticket => ticket.attachments, { onDelete: 'CASCADE'})
     ticket: Solicitacao;
 }

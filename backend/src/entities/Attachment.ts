@@ -21,6 +21,6 @@ export class Attachment {
     @Column()
     ticketId: number;
 
-    @ManyToOne(() => Solicitacao, ticket => ticket.attachments)
+    @ManyToOne(() => Solicitacao, ticket => ticket.attachments, { onDelete: 'CASCADE'})
     ticket: Solicitacao;
 }

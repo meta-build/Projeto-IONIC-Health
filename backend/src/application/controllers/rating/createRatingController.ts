@@ -24,9 +24,9 @@ export class CreateRatingController {
       .where("usuario.id=:id", { id })
       .getOne();
 
-    if (currentUser.grupo.name !== 'ADMIN') {
-      return res.json({ error: "Usuário não é ADMINISTRADOR" })
-    }
+    // if (currentUser.grupo.name !== 'ADMIN') {
+    //   return res.json({ error: "Usuário não é ADMINISTRADOR" })
+    // }
 
     const { value, committee, comment, ticketId } = req.body
 
