@@ -7,13 +7,9 @@ import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
-
-
-
-import { Botao, Voltar } from '../../components/Botoes';
-import { CriarSolicitacao, EditarSolicitacao } from '../../popUps';
+import { Botao } from '../../components/Botoes';
+import { CriarSolicitacao } from '../../popUps';
 import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
-import VisualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 import VizualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 import VizualizarSolicitacaoProducao from '../../popUps/VizualizarSolicitacaoProducao';
 import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
