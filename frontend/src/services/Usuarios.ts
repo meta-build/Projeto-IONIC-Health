@@ -24,7 +24,8 @@ class Usuarios {
     }
 
     async deletar(id: number) {
-        console.log('excluindo solicitação do id ', id);
+        const {data} = await api.delete(`delete/usuario/${id}`)
+        return data;
     }
     
     async getByID(id: number): Promise<UsuarioProps> {
