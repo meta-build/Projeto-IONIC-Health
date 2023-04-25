@@ -35,6 +35,13 @@ interface EditarSolicitacaoProps {
     descricao?: string;
 }
 
+interface EditarUsuarioProps {
+    name?: string;
+    mail?: string;
+    password?: string;
+    grupoId?: number;
+}
+
 interface UsuarioProps {
     id: number,
     name: string,
@@ -48,5 +55,6 @@ export type {
     ArquivoProps,
     EditarSolicitacaoProps,
     RatingProps,
-    UsuarioProps
+    UsuarioProps,
+    EditarUsuarioProps
 }
