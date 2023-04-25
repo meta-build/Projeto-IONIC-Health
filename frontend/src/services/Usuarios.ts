@@ -3,7 +3,9 @@ import api from "./api";
 
 interface Usuario {
     name: string;
-    job: string;
+    mail: string;
+    password: string;
+    grupoId: number;
 }
 
 interface Login {
@@ -13,7 +15,8 @@ interface Login {
 
 class Usuarios {
     async criar(usuario: Usuario) {
-        console.log('criando usuário');
+        const {data} = await api.post('/create/usuario', usuario);
+        return data;
     }
 
     async atualizar(id: number, usuarioAtualizado: Usuario) {
