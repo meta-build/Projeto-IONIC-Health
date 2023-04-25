@@ -27,8 +27,9 @@ class Usuarios {
         console.log('excluindo solicitação do id ', id);
     }
     
-    async getByID(id: number) {
-        console.log(`lendo usuário do id ${id}`);
+    async getByID(id: number): Promise<UsuarioProps> {
+        const {data} = await api.get(`find/usuario/${id}`)
+        return data;
     }
 
     async getAll(): Promise<UsuarioProps[]> {
