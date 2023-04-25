@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GoogleIcon from '../../components/GoogleIcon';
 import { Header32 } from '../../components/Header';
 import { InputContornado } from '../../components/Inputs';
@@ -9,19 +9,65 @@ import { ItemLista } from '../../components/ItemLista';
 import { Botao } from '../../components/Botoes';
 import CriarUsuario from '../../popUps/CriarUsuario';
 import VisualizarUsuario from '../../popUps/VisualzarUsuario';
+import Usuarios from '../../services/Usuarios';
+import { UsuarioProps } from '../../types';
 
 export default function UsuariosAdm () {
-    const [filtroNome, setFiltroNome] = useState('');
-    const [tipo, setTipo] = useState('Feature');
+    const [usuarios, setUsuarios] = useState<UsuarioProps[]>();
+
+    const [busca, setBusca] = useState('');
+    const [tipo, setTipo] = useState('Todos');
 
     const [criarPopUp, setCriarPopUp] = useState(false);
     const [visualizarPopup, setVisualizarPopup] = useState(false);
 
-    const busca = (titulo: string) => {
-        const regex = new RegExp(filtroNome, 'i');
+    const filtrarNome = (titulo: string) => {
+        const regex = new RegExp(busca, 'i');
         return regex.test(titulo);
     }
+
+    const filtrarGrupo = (grupoId: number) => {
+        switch(tipo){
+            case 'Admnistrador':
+                return grupoId == 1;
+            case 'Solicitante':
+                return grupoId == 2;
+            case 'Avaliador (Geral)':
+                return grupoId >= 3;
+            case 'Avaliador (Risco)':
+                return grupoId == 3;
+            case 'Avaliador (Custo)':
+                return grupoId == 4;
+            case 'Avaliador (Impacto)':
+                return grupoId == 5;
+            default:
+                return true;
+        }
+    }
+
+    const groupStringify = (id: number) => {
+        switch(id){
+            case 1:
+                return 'Administrador';
+            case 2:
+                return 'Solicitante';
+            case 3:
+                return 'Avaliador (Risco)';
+            case 4:
+                return 'Avaliador (Custo)';
+            default:
+                return 'Avaliador (Impacto)';
+        }
+    }
     
+    useEffect(() => {
+        Usuarios.getAll().then(data => {
+            const usuariosFiltrados = data.filter(user => {
+                return filtrarNome(user.name) && filtrarGrupo(user.grupoId);
+            })
+            setUsuarios(usuariosFiltrados);
+        });
+    }, [busca, tipo])
     return (
         <>
             <section className={styles.section}>
@@ -31,13 +77,16 @@ export default function UsuariosAdm () {
                     className={styles.inputPreenchimento}
                     placeholder='Pesquisar usuário...'
                     icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
-                    handleChange={(e) => setFiltroNome(e.target.value)} />
+                    handleChange={(e) => setBusca(e.target.value)} />
                     <DropdownContornado
                     itens={[
                         new DropdownItem('Todos', <></>),
+                        new DropdownItem('Admnistrador', <></>),
                         new DropdownItem('Solicitante', <></>),
-                        new DropdownItem('Avaliador', <></>),
-                        new DropdownItem('Admnistrador', <></>)
+                        new DropdownItem('Avaliador (Geral)', <></>),
+                        new DropdownItem('Avaliador (Custo)', <></>),
+                        new DropdownItem('Avaliador (Risco)', <></>),
+                        new DropdownItem('Avaliador (Impacto)', <></>),
                     ]}
                     handleSelected={(s: string) => setTipo(s)}
                     />
@@ -52,10 +101,12 @@ export default function UsuariosAdm () {
                 </div>
                 <ul className={styles.lista}>
                     <>
-                        <ItemLista
-                        itemName='Fulano'
-                        handleClickName={() => setVisualizarPopup(true)}
-                        acao={<span>Solicitante</span>} />
+                        {usuarios && usuarios.map(user => (
+                            <ItemLista
+                            itemName={user.name}
+                            handleClickName={() => setVisualizarPopup(true)}
+                            acao={<span>{groupStringify(user.grupoId)}</span>} />
+                        ))}
                     </>
                 </ul>
                 <CriarUsuario aberto={criarPopUp} onClose={() => setCriarPopUp(false)} />
