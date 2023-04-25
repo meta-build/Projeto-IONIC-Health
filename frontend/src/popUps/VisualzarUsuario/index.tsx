@@ -1,15 +1,18 @@
 import classNames from "classnames";
 import PopUp from "../../components/PopUp";
 import styles from './VisualizarUsuario.module.scss';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BotaoPopup } from "../../components/Botoes";
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
 import EditarUsuario from "../EditarUsuario";
 import ConfirmarExclusaoUsuario from "../ConfirmarExclusaoUsuario";
+import { UsuarioProps } from "../../types";
+import Usuarios from "../../services/Usuarios";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
+    idUser: number;
 }
 
 export default function VisualizarUsuario (props: Props) {
@@ -21,9 +24,33 @@ export default function VisualizarUsuario (props: Props) {
     const [popupEditar, setPopupEditar] = useState(false);
     const [popupExcluir, setPopupExcluir] = useState(false);
 
+    const [usuario, setUsuario] = useState<UsuarioProps>();
+    
+    const groupStringify = (id: number) => {
+        switch(id){
+            case 1:
+                return 'Administrador';
+            case 2:
+                return 'Solicitante';
+            case 3:
+                return 'Avaliador (Risco)';
+            case 4:
+                return 'Avaliador (Custo)';
+            default:
+                return 'Avaliador (Impacto)';
+        }
+    }
+
+    useEffect(() => {
+        if(props.idUser) {
+            Usuarios.getByID(props.idUser).then(data => {
+                setUsuario(data);
+            })
+        }
+    }, [props.idUser])
     return(
         <PopUp
-        titulo={`Usuário ${nome}`}
+        titulo={`Usuário ${usuario && usuario.name}`}
         visivel={props.aberto}
         onClose={props.onClose}>
             <div className={styles.form}>
@@ -37,7 +64,7 @@ export default function VisualizarUsuario (props: Props) {
                         <label>Email:</label>
 
                         {/* input possui estilização de erro caso o usuário tente enviar um formulário sem um dos campos preenchidos */}
-                        <span>{email}</span>
+                        <span>{usuario && usuario.mail}</span>
                     </span>
                     <span className={classNames({
                         [styles.campo]: true
@@ -45,7 +72,7 @@ export default function VisualizarUsuario (props: Props) {
                         <label>Grupo</label>
 
                         {/* input possui estilização de erro caso o usuário tente enviar um formulário sem um dos campos preenchidos */}
-                        <span>{grupo}</span>
+                        {usuario && <span>{groupStringify(usuario.grupoId)}</span>}
                     </span>
                 </div>
                 {/* linha especial somente para os botões, podendo ser usado para todos os popups */}

@@ -14,6 +14,7 @@ import { UsuarioProps } from '../../types';
 
 export default function UsuariosAdm () {
     const [usuarios, setUsuarios] = useState<UsuarioProps[]>();
+    const [userSelecionado, setUserSelecionado] = useState<number>();
 
     const [busca, setBusca] = useState('');
     const [tipo, setTipo] = useState('Todos');
@@ -104,13 +105,16 @@ export default function UsuariosAdm () {
                         {usuarios && usuarios.map(user => (
                             <ItemLista
                             itemName={user.name}
-                            handleClickName={() => setVisualizarPopup(true)}
+                            handleClickName={() => {
+                                setUserSelecionado(user.id)
+                                setVisualizarPopup(true);
+                            }}
                             acao={<span>{groupStringify(user.grupoId)}</span>} />
                         ))}
                     </>
                 </ul>
                 <CriarUsuario aberto={criarPopUp} onClose={() => setCriarPopUp(false)} />
-                <VisualizarUsuario aberto={visualizarPopup} onClose={() => setVisualizarPopup(false)} />
+                <VisualizarUsuario idUser={userSelecionado} aberto={visualizarPopup} onClose={() => setVisualizarPopup(false)} />
             </section>
         </>
     );
