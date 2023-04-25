@@ -63,7 +63,7 @@ export default function HomeSolicitante () {
                 return filtroUsuario && filtroNome && filtroTipo && filtroSituacao;
             }))
         })
-    }, [busca, tipo, status, , popupAvaliacao, popupProducao, popupArquivado])
+    }, [busca, tipo, status, popupCriar, popupAvaliacao, popupProducao, popupArquivado])
     return (
         <>
             <section className={styles.section}>

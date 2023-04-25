@@ -1,55 +1,92 @@
 @import '@/styles/variables.scss';
 
 .form {
+    width: 600px;
+    color: $cinza-600;
+}
+
+.linha {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.linha:first-child {
+    margin-top: 20px;
+}
+
+.campo {
     display: flex;
     flex-direction: column;
-    margin-top: 2px;
-    margin-bottom: 25px;
-    
+    text-align: left;
 }
 
-.inputs {
-    display: flex;
-    width: 660px;
-    
-
-    .input {
-        display: flex;
-        flex-direction: column;
-        margin-right: 12px;
-    }
-
-    .input:last-child {
-        margin-right: 0px;
-    }
-    .label {
-        text-align: left;
-        color: $cinza-600;
-        margin-bottom: 4px;
-    }
-
+.campo:first-child {
+    margin-right: 12px;
 }
 
-.preencher {
+.campo:only-child {
+    margin-right: 0;
+}
+
+.campo-preenchido {
     flex: 1;
 }
 
-.container-concluir {
-    margin-top: 12px;
+.label, .label-arquivo {
+    color: $cinza-600;
+    margin-left: 6px;
+    margin-bottom: 4px;
+}
+
+.label-arquivo {
     display: flex;
+    align-items: flex-start;
+}
+
+.arquivo-label {
+    margin-right: 12px;
+    margin-top: 12px;
+}
+
+.input {
+    flex: 1;
+}
+
+.arquivos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .arquivo {
+        position: relative;
+    }
+}
+
+.close-file-icon {
+    font-size: 10px;
+    position: absolute;
+    display: none;
+    right: 8px;
+    top: 11px;
+}
+
+.arquivo:hover {
+    padding-right: 24px;
+    .close-file-icon{
+        display: block;
+    }
+}
+
+
+
+
+.arquivo {
+    margin-right: 8px;
+    margin-top: 8px;
+}
+
+.linha-submit {
+    display: flex;
+    margin-top: 36px;
     justify-content: flex-end;
-    // border: 1px solid red;
-
-}
-
-.concluir {
-    margin-left: 0;
-}
-
-.lista {
-    flex-direction: row; // alinha os componentes em linha
-    justify-content: flex-start; // alinha os componentes à esquerda
-    align-items: center; // centraliza verticalmente os componentes
-    justify-content: space-between; // alinha os componentes nas extremidades
-    gap: 16px;
 }

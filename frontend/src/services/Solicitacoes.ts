@@ -1,9 +1,14 @@
+import axios from "axios";
+import { useContexto } from "../context/contexto";
 import { EditarSolicitacaoProps, SolicitacaoProps } from "../types";
 import api from "./api";
 
 // alterar depois
-interface Solicitacao {
-    
+interface SolicitacaoCreate {
+    titulo: string;
+    tipo: string;
+    descricao: string;
+    arquivos: File[];
 }
 
 interface Avaliacao {
@@ -13,8 +18,24 @@ interface Avaliacao {
 }
 
 class Solicitacoes {
-    async criar(solicitacao: Solicitacao) {
-        console.log(`criando solicitação`)
+    async criar(solicitacao: SolicitacaoCreate, token: string) {
+        const config = {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Authorization": `Bearer ${token}`
+            }
+        };
+        const url = 'http://localhost:3001/ticket';
+        const formData = new FormData();
+        formData.append('titulo', solicitacao.titulo);
+        formData.append('tipo', solicitacao.tipo);
+        formData.append('descricao', solicitacao.descricao);
+        formData.append('status', 'Recentes');
+        solicitacao.arquivos.forEach(file => {
+            formData.append('attachments', file);
+        });
+        const {data} = await axios.post(url, formData, config)
+        return data;
     }
 
     async atualizar(id: number, solicitacao: EditarSolicitacaoProps) {

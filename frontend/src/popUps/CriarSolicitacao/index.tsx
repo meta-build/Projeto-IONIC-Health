@@ -1,113 +1,139 @@
-import classNames from "classnames";
-import {InputPopup} from "../../components/Inputs";
+import { useEffect, useState } from "react";
+import { InputPopup, TextBox } from "../../components/Inputs";
 import PopUp from "../../components/PopUp";
 import styles from './CriarSolicitacao.module.scss';
-import BotaoPopup from "../../components/Botoes/BotaoPopup";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import {DropdownPreenchido} from "../../components/Dropdowns";
-import Anexar from "../../components/Botoes/Anexar";
-import TextBox from "../../components/Inputs/TextBox";
-import AddArquivo from "../../components/Botoes/AddArquivo";
-
+import classNames from "classnames";
+import { DropdownPreenchido } from "../../components/Dropdowns";
+import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
+import { Anexar, BotaoPopup } from "../../components/Botoes";
+import { EditarSolicitacaoProps } from "../../types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import Solicitacoes from "../../services/Solicitacoes";
+import { useContexto } from "../../context/contexto";
 
 interface Props {
     aberto: boolean;
     onClose: () => void;
 }
 
-export default function CriarSolicitacao (props: Props) {
-      const [titulo, setTitulo] = useState('');
-      const [tipo, setTipo] = useState('Feature');
-      const [aberto, setAberto] = useState(props.aberto);
+export default function CriarSolicitacao(props: Props) {
 
-      const concluir = () => {
-        // axios.post(`http://localhost:3001/create`,
-        // {
-        //     "nome": titulo,
-        //     "tipo": tipo,
-        //     "solicitante": "Polnareff",
-        //     "verificaSolicitacao": true
-        //   },
-        //   {headers: {
-        //     'Content-Type': 'application/json'
-        //   }}
-        // ).then(() => {
-        //     props.onClose();
-        //     setAberto(false);
-        // })
-        console.log("foi")
-      }
+    const [titulo, setTitulo] = useState<string>();
+    const [tipo, setTipo] = useState<string>('Feature');
+    const [descricao, setDescricao] = useState<string>();
+    const [arquivos, setArquivos] = useState({arquivos: []});
 
-      useEffect(() => {
-        setAberto(props.aberto);
-      }, [props.aberto])
+    const [erro, setErro] = useState(false);
 
-    return(
+    const {usuario} = useContexto();
+
+    function enviar() {
+        if (titulo && tipo && descricao && arquivos.arquivos.length) {
+            Solicitacoes.criar({
+                arquivos: arquivos.arquivos,
+                descricao,
+                tipo: tipo,
+                titulo: titulo
+            }, usuario.getToken()).then(() => props.onClose())
+        } else {
+            setErro(true)
+        }
+    }
+    return (
         <PopUp
-        titulo={`Nova solicitação`}
-        visivel={aberto}
-        onClose={() => props.onClose()}
+            titulo={`Criar solicitação`}
+            visivel={props.aberto}
+            onClose={props.onClose}
         >
-            <form className={styles.form} onSubmit={(e) => {
-                e.preventDefault();
-                concluir();
-            }}>
-                <div className={styles.inputs}>
-                    <label
-                    className={classNames({
-                        [styles.input]: true,
-                        [styles.preencher]: true
-                    })}
-                    >
-                        <span className={styles.label}>Título</span>
+            <form
+                className={styles.form}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    enviar();
+                }}>
+                <div className={styles.linha}>
+                    <span className={classNames({
+                        [styles.campo]: true,
+                        [styles['campo-preenchido']]: true
+                    })}>
+                        <label className={styles.label}>
+                            Título
+                        </label>
                         <InputPopup
-                        handleChange={(e) => setTitulo(e.target.value)}
-                        placeholder="Titulo da solicitação"
-                        className={styles['input-preencher']}
-                        valor={titulo}
-                        />
-
-                        <span className={styles.label}>Descrição</span>             
-                        <TextBox 
-                        placeholder="Descrição da solicitação"
-                        onChange={(e) => console.log(e)}
-                        />
-                        
-                        <span className={styles.label}>Arquivos</span>
-                
-                        <div className={styles.lista}>
-                            <AddArquivo children={"arq.jpg"} onClose={function (): void {
-                            throw new Error("Function not implemented.");
-                            } } />
-                        </div>
-                        
-                        
-                        
-                        
-                    </label>
-                    
-
-                    <label
-                    className={styles.input}
-                    >
-                        <span className={styles.label}>Tipo</span>
+                            className={styles.input}
+                            handleChange={(e) => setTitulo(e.target.value)}
+                            valor={titulo} />
+                    </span>
+                    <span
+                        className={styles.campo}>
+                        <label className={styles.label}>
+                            Tipo
+                        </label>
                         <DropdownPreenchido
-                        itens={['Feature', 'Hotfix']}
-                        handleSelected={(e) => setTipo(e)}
-                        selecionadoFst={tipo}
-                        />
-                    </label>
+                            itens={['Feature', 'Hotfix']}
+                            selecionadoFst={tipo}
+                            handleSelected={(s) => setTipo(s)} />
+                    </span>
                 </div>
-
-                <div className={styles['container-concluir']}>
-                    <BotaoPopup
-                    handleClick={() => console.log('foi botao')}
-                    tipo="submit"
-                    className={styles.concluir}
-                    >Criar</BotaoPopup>
-                    
-                </div>       
+                <div className={styles.linha}>
+                    <span className={classNames({
+                        [styles.campo]: true,
+                        [styles['campo-preenchido']]: true
+                    })}>
+                        <label className={styles.label}>
+                            Descrição
+                        </label>
+                        <TextBox
+                            valor={descricao}
+                            ajustavel={false}
+                            className={styles['descricao-input']}
+                            onChange={(e) => setDescricao(e.target.value)} />
+                    </span>
+                </div>
+                <div className={styles.linha}>
+                    <span className={classNames({
+                        [styles.campo]: true,
+                        [styles['campo-preenchido']]: true
+                    })}>
+                        <label className={styles['label-arquivo']}>
+                            <span className={styles['arquivo-label']}>Arquivos</span>
+                            <Anexar
+                            className={styles.arquivo}
+                            handleFileChange={(e) => {
+                                setArquivos((prevState) => {
+                                    return {
+                                        ...prevState,
+                                        arquivos: [...prevState.arquivos, e] 
+                                    }
+                                })
+                            }} />
+                        </label>
+                        <span className={styles.arquivos}>
+                            {arquivos.arquivos.map((arquivo, index) =>
+                            <BotaoPreenchido
+                            className={styles.arquivo}
+                            handleClick={() => {
+                                setArquivos((prevState) => {
+                                    return {
+                                        ...prevState,
+                                        arquivos: prevState.arquivos.filter(f => f !== arquivo)
+                                    }
+                                })
+                            }}>
+                                {arquivo.name}
+                                <FontAwesomeIcon icon={faX} className={styles['close-file-icon']}/>
+                            </BotaoPreenchido>)}
+                        </span>
+                    </span>
+                </div>
+                <div className={styles['linha-submit']}>
+                    {/* botão não tem onclick, pois o submit já faz toda a ação de enviar o formulário. a função chamada está no onsubmit, no começo da tag form */}
+                    {erro && <span style={{color: 'red', marginRight: '12px'}}>Campos incompletos</span>}
+                    <BotaoPopup tipo="submit">
+                        Criar
+                    </BotaoPopup>
+                </div>
             </form>
         </PopUp>
     )
