@@ -17,9 +17,11 @@ import VisualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoAr
 import VizualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
 import VizualizarSolicitacaoProducao from '../../popUps/VizualizarSolicitacaoProducao';
 import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
+import Solicitacoes from '../../services/Solicitacoes';
+import { useContexto } from '../../context/contexto';
 
 export default function HomeSolicitante () {
-    const [filtroNome, setFiltroNome] = useState('');
+    const [busca, setBusca] = useState('');
     const [tipo, setTipo] = useState('Feature');
     const [status, setStatus] = useState('Recentes');
 
@@ -29,17 +31,39 @@ export default function HomeSolicitante () {
     const [popupArquivado, setPopupArquivado] = useState(false);
     const [popupProducao, setPopupProducao] = useState(false);
 
-    const [solicitacoes, setSolicitacoes] = useState([0]);
+    const [solicitacoes, setSolicitacoes] = useState([]);
+    const [solicSelecionado, setSolicSelecionado] = useState<number>();
 
-    const listaStatus = ['Recentes', 'Em Avaliação', 'Em Produção', 'Arquivados']
+    const {usuario} = useContexto();
 
-    const busca = (titulo: string) => {
-        const regex = new RegExp(filtroNome, 'i');
+    const listaStatus = ['Recentes', 'Em avaliação', 'Em produção', 'Arquivados']
+
+    const producaoMask = {
+        'New': 'new',
+        'On Holding': 'on-holding',
+        'Done': 'done'
+    }
+
+    const filtrarNome = (titulo: string) => {
+        const regex = new RegExp(busca, 'i');
         return regex.test(titulo);
     }
 
     useEffect(() => {
-    }, [filtroNome, status]);
+        Solicitacoes.getAll()
+        .then(data => {
+            setSolicitacoes(data.filter(item => {
+                const filtroUsuario = usuario.getId() == item['id_user']
+                const filtroNome = filtrarNome(item.titulo);
+                const filtroTipo = item.tipo == tipo;
+                let filtroSituacao = item.status == status || item.status.split('.')[0] == status;
+                if (status == 'Arquivados') {
+                    filtroSituacao = item.status == 'archived'
+                }
+                return filtroUsuario && filtroNome && filtroTipo && filtroSituacao;
+            }))
+        })
+    }, [busca, tipo, status, , popupAvaliacao, popupProducao, popupArquivado])
     return (
         <>
             <section className={styles.section}>
@@ -49,7 +73,7 @@ export default function HomeSolicitante () {
                     className={styles.inputPreenchimento}
                     placeholder='Pesquisar Solicitação...'
                     icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
-                    handleChange={(e) => setFiltroNome(e.target.value)} />
+                    handleChange={(e) => setBusca(e.target.value)} />
                     <DropdownContornado
                     itens={[
                         new DropdownItem('Feature', <GoogleIcon>&#xE8B8;</GoogleIcon>),
@@ -78,42 +102,92 @@ export default function HomeSolicitante () {
                         </Botao>
                 </div>
                 <ul className={styles.lista}>
-                    {status == 'Recentes' && solicitacoes.map((item, index) => (
-                        <ItemLista
-                        key={index}
-                        itemName={'solicitação'}
-                        handleClickName={() => setPopupRecente(true)}
-                        acao={<span>Criado em 01/01/2023</span>} />
-                    ))}
-                    {status ==  'Em Avaliação' && solicitacoes.map((item, index) => (
-                        <ItemLista
-                        itemName={'solicitação'}
-                        handleClickName={() => setPopupAvaliacao(true)}
-                        acao={<AcaoNotas
-                        notaCusto={3}
-                        notaImpacto={3}
-                        notaRisco={2}
-                        notaPreenchida={true}
-                        />}/>
-                    ))}
-                    {status ==  'Em Produção' && solicitacoes.map((item, index) => (
-                        <ItemLista
-                        itemName={'solicitação'}
-                        handleClickName={() => setPopupProducao(true)}
-                        acao={<AcaoProducao status='new' />}/>
-                    ))}
-                    {status ==  'Arquivados' && solicitacoes.map((item, index) => (
-                        <ItemLista
-                        itemName={'solicitação'}
-                        handleClickName={() => setPopupArquivado(true)}
-                        acao={<span>Arquivado em 01/01/2023</span>}/>
-                    ))}
-                </ul>
+                {status == 'Recentes' && <> {solicitacoes.map(item => (
+                    <ItemLista
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => {
+                        setSolicSelecionado(item.id);
+                        setPopupRecente(true);
+                    }}
+                    acao={<span>
+                        {item.data_edicao ? <span> <span className={styles['data-texto']}>Editado em</span>
+                            {new Date(item.data_edicao).toLocaleDateString('pt-br', {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false
+                            })}
+                        </span> : <span> <span className={styles['data-texto']}>Criado em</span>
+                            {new Date(item.data_criacao).toLocaleDateString('pt-br', {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false
+                            })}
+                        </span>}
+                    </span>} />
+                ))}
+                </>}
+                {status == 'Em avaliação' && <> {solicitacoes.map(item => (
+                    <ItemLista
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => {
+                        setSolicSelecionado(item.id);
+                        setPopupAvaliacao(true);
+                    }}
+                    acao={
+                        item.ratings.length ? <AcaoNotas
+                            notas={item.ratings.map(av => ({
+                                nota: av.value,
+                                comite: av.committee
+                            }))}
+                            notaPreenchida={true}
+                        /> : 
+                        <span>Sem avaliações</span>
+                    } />
+                ))}
+                </>}
+                {status == 'Em produção' && <> {solicitacoes.map(item => (
+                    <ItemLista
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => {
+                        setSolicSelecionado(item.id);
+                        setPopupProducao(true);
+                    }}
+                    acao={<AcaoProducao status={producaoMask[item.status.split('.')[1]]} />} />
+                ))}
+                </>}
+                {status == 'Arquivados' && <> {solicitacoes.map(item => (
+                    <ItemLista
+                    key={item.id}
+                    itemName={item.titulo}
+                    handleClickName={() => {
+                        setSolicSelecionado(item.id);
+                        setPopupArquivado(true);
+                    }}
+                    acao={<span>Arquivado em {new Date(item.data_arquivado).toLocaleDateString('pt-br', {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false
+                    })}</span>} />
+                ))}
+                </>}
+            </ul>
                 <CriarSolicitacao aberto={popupCriar} onClose={() => setPopupCriar(false)}/>
-                <VizualizarSolicitacao usuario='solicitante' aberto={popupRecente} onClose={() => setPopupRecente(false)}/>
-                <VisualizarSolicitacaoAvaliacao usuario='solicitante' aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
-                <VizualizarSolicitacaoArquivado usuario='solicitante' aberto={popupArquivado} onClose={() => setPopupArquivado(false)}/>
-                <VizualizarSolicitacaoProducao usuario='solicitante' aberto={popupProducao} onClose={() => setPopupProducao(false)}/>
+                <VizualizarSolicitacao idSolic={solicSelecionado} usuario='solicitante' aberto={popupRecente} onClose={() => setPopupRecente(false)}/>
+                <VisualizarSolicitacaoAvaliacao idSolic={solicSelecionado} usuario='solicitante' aberto={popupAvaliacao} onClose={() => setPopupAvaliacao(false)} />
+                <VizualizarSolicitacaoArquivado idSolic={solicSelecionado} usuario='solicitante' aberto={popupArquivado} onClose={() => setPopupArquivado(false)}/>
+                <VizualizarSolicitacaoProducao idSolic={solicSelecionado} usuario='solicitante' aberto={popupProducao} onClose={() => setPopupProducao(false)}/>
             </section>
         </>
     );
