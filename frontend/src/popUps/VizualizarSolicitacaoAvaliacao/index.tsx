@@ -57,11 +57,11 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
   const isSemNota = (solicitacao: SolicitacaoProps) => {
     const notas = solicitacao.ratings
     let result = true;
-    notas.forEach(nota => {
+    if (notas) {notas.forEach(nota => {
       if (nota.committee == strAvaliador(usuario.getGrupo())) {
         result = false;
       }
-    });
+    });}
     return result;
   }
 

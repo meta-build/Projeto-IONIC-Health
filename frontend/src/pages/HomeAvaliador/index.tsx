@@ -26,8 +26,6 @@ export default function HomeAvaliador() {
 
     const { usuario } = useContexto();
 
-    const listaStatus = ['Sem nota de Risco', 'Todos']
-
     const filtrarNome = (titulo: string) => {
         const regex = new RegExp(busca, 'i');
         return regex.test(titulo);
@@ -89,15 +87,18 @@ export default function HomeAvaliador() {
                     />
                 </div>
                 <div className={styles.botoes}>
-                    {listaStatus.map((s, index) => (
                         <Botao
-                            key={index}
                             className={styles.botao}
-                            handleClick={() => setStatus(s)}
-                            variante={s == status ? 'preenchido' : 'contornado'}>
-                            {s}
+                            handleClick={() => setStatus(`Sem nota de ${strAvaliador(usuario.getGrupo())}`)}
+                            variante={`Sem nota de ${strAvaliador(usuario.getGrupo())}` == status ? 'preenchido' : 'contornado'}>
+                            {`Sem nota de ${strAvaliador(usuario.getGrupo())}`}
                         </Botao>
-                    ))}
+                        <Botao
+                            className={styles.botao}
+                            handleClick={() => setStatus(`Todos`)}
+                            variante={`Todos` == status ? 'preenchido' : 'contornado'}>
+                            {`Todos`}
+                        </Botao>
                 </div>
                 <ul className={styles.lista}>
                     {solicitacoes && solicitacoes.map(item => (
