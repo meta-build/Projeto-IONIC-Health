@@ -67,7 +67,7 @@ export default function UsuariosAdm () {
             })
             setUsuarios(usuariosFiltrados);
         });
-    }, [busca, tipo])
+    }, [busca, tipo, criarPopUp])
     return (
         <>
             <section className={styles.section}>

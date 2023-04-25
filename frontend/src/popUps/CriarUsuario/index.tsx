@@ -5,6 +5,7 @@ import styles from './CriarUsuario.module.scss';
 import { useState } from "react";
 import { DropdownPreenchido } from "../../components/Dropdowns";
 import { BotaoPopup } from "../../components/Botoes";
+import Usuarios from "../../services/Usuarios";
 
 interface Props {
     aberto: boolean;
@@ -24,6 +25,21 @@ export default function CriarUsuario (props: Props) {
     const [erroEmail, setErroEmail] = useState(false);
     const [erroSenha, setErroSenha] = useState(false);
 
+    const intGrupo = (grupo: string) => {
+        switch(grupo){
+            case 'Administrador':
+                return 1;
+            case 'Solicitante':
+                return 2;
+            case 'Avaliador (Risco)':
+                return 3;
+            case 'Avaliador (Custo)':
+                return 4;
+            case 'Avaliador (Impacto)':
+                return 5;
+        }
+    }
+
     // função chamada ao clicar em "enviar" ou apertar enter (submeter formulário)
     const submit = () => {
         if (!nome || !grupo || !email || !senha ) {
@@ -32,8 +48,14 @@ export default function CriarUsuario (props: Props) {
             setErroEmail(!email)
             setErroSenha(!senha)
         } else {
-            const usuario = {nome, grupo, email, senha}
-            console.log(usuario)
+            Usuarios.criar({
+                grupoId: intGrupo(grupo),
+                mail: email,
+                name: nome,
+                password: senha
+            }).then(() => {
+                props.onClose();
+            })
         }
     }
 
@@ -77,7 +99,7 @@ export default function CriarUsuario (props: Props) {
                         className={classNames({
                             [styles.erro]: erroGrupo
                         })}
-                        itens={['Solicitante', 'Avaliador de Risco', 'Avaliador de Impacto', 'Avaliador de Custo', 'Administrador']}
+                        itens={['Solicitante', 'Administrador', 'Avaliador (Risco)', 'Avaliador (Impacto)', 'Avaliador (Custo)']}
                         selecionadoFst=" "
                         handleSelected={(s) => setGrupo(s)}
                         // dropdown implementado com onopen, onde tem a mesma funcionalidade que o onclick do botão e com a mesma finalidade que o onfocus dos outros campos
