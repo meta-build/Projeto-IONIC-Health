@@ -1,5 +1,5 @@
-import AppDataSource from '../../../data-source'
-import { User, Rating, Solicitacao } from '../../../entities'
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { Rating, Solicitacao, User } from '../../../infra/repositories/mysql/entities'
 import { Validation } from '../../validation/validation'
 
 import { Request, Response } from 'express'

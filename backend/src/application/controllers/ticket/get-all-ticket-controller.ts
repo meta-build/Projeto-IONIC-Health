@@ -3,7 +3,7 @@ import { Solicitacao } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express"
 
-class GetAllSolicitacao {
+export class GetAllSolicitacao {
   public async getAllSolicitacao(req: Request, res: Response) {
     const ticket: any = await AppDataSource.getRepository(Solicitacao)
       .createQueryBuilder('solicitacao')
@@ -13,4 +13,3 @@ class GetAllSolicitacao {
     res.send(ticket);
   }
 }
-export default new GetAllSolicitacao();

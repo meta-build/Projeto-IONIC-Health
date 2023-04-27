@@ -3,7 +3,7 @@ import { User, Grupo } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express"
 
-class GrupoController {
+export class GrupoController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { name } = req.body;
     //verifica se foram fornecidos os parâmetros
@@ -32,4 +32,3 @@ class GrupoController {
     }
   }
 }
-export default new GrupoController();

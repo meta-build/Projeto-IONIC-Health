@@ -1,8 +1,6 @@
-import AppDataSource from '../../../data-source'
 import { SaveFile } from '../../../domain/contracts'
-import { User } from '../../../entities/User'
-import { Solicitacao } from '../../../entities/Solicitacao'
-import { Attachment } from '../../../entities/Attachment'
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { Attachment, Solicitacao, User } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from 'express'
 

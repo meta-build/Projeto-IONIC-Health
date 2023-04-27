@@ -1,14 +1,14 @@
-export * from './group/GrupoController'
+export * from './group/group-controller'
 
-export * from './notification/NotificacaoController'
+export * from './notification/notification-controller'
 
-export * from './rating/createRatingController'
+export * from './rating/create-rating-controller'
 
-export * from './ticket/createTicketController'
-export * from './ticket/SolicitacaoController'
-export * from './ticket/ArchiveSolicitacao'
-export * from './ticket/deleteSolicitacao'
-export * from './ticket/getAllSolicitacao'
-export * from './ticket/getOneSolicitacao'
+export * from './ticket/create-ticket-controller'
+export * from './ticket/ticket-controller'
+export * from './ticket/archive-ticket-controller'
+export * from './ticket/delete-ticket-controller'
+export * from './ticket/get-all-ticket-controller'
+export * from './ticket/get-one-ticket-controller'
 
-export * from './user/UserController'
+export * from './user/user-controller'

@@ -3,8 +3,7 @@ import { User, Solicitacao } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express";
 
-class SolicitacaoController {
-
+export class SolicitacaoController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { titulo, tipo, descricao, status } = req.body;
     const id = parseInt(req.params.id);
@@ -51,5 +50,3 @@ class SolicitacaoController {
     }
   }
 }
-
-export default new SolicitacaoController();

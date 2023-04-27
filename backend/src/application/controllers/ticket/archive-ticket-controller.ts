@@ -3,7 +3,7 @@ import { Solicitacao } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express"
 
-class ArchiveSolicitacao {
+export class ArchiveSolicitacao {
   public async archiveSolicitacao(req: Request, res: Response) {
     const id = parseInt(req.params.id);
     const arquivar = req.body.arquivar;
@@ -22,4 +22,3 @@ class ArchiveSolicitacao {
     return res.status(200).send(r);
   }
 }
-export default new ArchiveSolicitacao();

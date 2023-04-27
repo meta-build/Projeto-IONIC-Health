@@ -3,7 +3,7 @@ import { Solicitacao } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express"
 
-class deleteSolicitacao {
+export class DeleteSolicitacao {
   public async deleteSolicitacao(req: Request, res: Response) {
     const id = parseInt(req.params.id);
     const solicitacao: any = await AppDataSource.getRepository(
@@ -15,5 +15,3 @@ class deleteSolicitacao {
     return res.status(200).send("Deletado com Sucesso!");
   }
 }
-
-export default new deleteSolicitacao();

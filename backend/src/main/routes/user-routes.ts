@@ -1,4 +1,4 @@
-import UserController from '../../application/controllers/user/UserController'
+import UserController from '../../application/controllers/user/user-controller'
 import { authorization } from '../../middlewares'
 
 import { Router } from 'express'
