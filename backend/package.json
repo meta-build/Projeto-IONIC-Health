@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --files src/index.ts",
-    "start": "ts-node --files src/index.ts",
+    "dev": "ts-node-dev --files src/main/server.ts",
+    "start": "ts-node --files src/main/server.ts",
     "migration:generate": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:generate ./src/migrations/default",
     "migration:run": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:run",
     "migration:revert": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:revert"
