@@ -10,8 +10,8 @@ const AppDataSource = new DataSource({
     password: env.dbPassword,
     synchronize: true,
     logging: false,
-    entities: ['src/entities/*.ts'],
-    migrations: ['src/migrations/*.ts'],
+    entities: [__dirname + '/entities/*.ts'],
+    migrations: [__dirname + './migrations/*.ts'],
     subscribers: [],
     maxQueryExecutionTime: 2000
 })
