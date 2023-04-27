@@ -1,4 +1,4 @@
-import AppDataSource from "../data-source";
+import AppDataSource from '../infra/repositories/mysql/data-source'
 import { Request, Response } from 'express';
 import { User } from '../entities/User';
 import { generateToken } from '../middlewares';

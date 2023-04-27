@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AppDataSource from "../data-source";
+import AppDataSource from '../infra/repositories/mysql/data-source'
 import { Solicitacao } from "../entities/Solicitacao";
 
 class GetAllSolicitacao {
