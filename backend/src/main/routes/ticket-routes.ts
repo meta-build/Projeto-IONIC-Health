@@ -1,4 +1,4 @@
-import {ArchiveSolicitacao, SolicitacaoController, DeleteSolicitacao, GetAllSolicitacao, GetOneSolicitacao} from '../../application/controllers'
+import { SolicitacaoController, DeleteSolicitacao, GetAllSolicitacao, GetOneSolicitacao } from '../../application/controllers'
 import { authorization } from '../../middlewares'
 import { adaptRoute } from '../adapters/express-router'
 import { adaptMulter as upload } from '../adapters/multer'
