@@ -1,7 +1,7 @@
-import AppDataSource from '../infra/repositories/mysql/data-source'
-import { Request, Response } from "express";
-import { User } from "../entities/User";
-import { Grupo } from "../entities/Grupo";
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { User, Grupo } from '../../../infra/repositories/mysql/entities'
+
+import { Request, Response } from "express"
 
 class GrupoController {
   public async create(req: Request, res: Response): Promise<Response> {

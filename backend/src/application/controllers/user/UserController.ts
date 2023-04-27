@@ -1,7 +1,8 @@
-import AppDataSource from '../infra/repositories/mysql/data-source'
-import { Request, Response } from 'express';
-import { User } from '../entities/User';
-import { generateToken } from '../middlewares';
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { User } from '../../../infra/repositories/mysql/entities'
+import { generateToken } from '../../../middlewares'
+
+import { Request, Response } from 'express'
 
 class UserController {
   public async login(req: Request, res: Response): Promise<Response> {

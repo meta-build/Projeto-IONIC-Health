@@ -1,7 +1,7 @@
-import AppDataSource from '../infra/repositories/mysql/data-source'
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { User, Notificacao } from '../../../infra/repositories/mysql/entities'
+
 import { Request, Response } from "express";
-import { Notificacao } from "../entities/Notificacao";
-import { User } from "../entities/User";
 
 class NotificacaoController {
   public async create(req: Request, res: Response): Promise<Response> {

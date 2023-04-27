@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
-import AppDataSource from '../infra/repositories/mysql/data-source'
-import { Solicitacao } from "../entities/Solicitacao";
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { Solicitacao } from '../../../infra/repositories/mysql/entities'
+
+import { Request, Response } from "express"
 
 class ArchiveSolicitacao {
   public async archiveSolicitacao(req: Request, res: Response) {

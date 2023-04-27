@@ -1,2 +1,6 @@
 export * from './ticket/createTicketController'
+export * from './ticket/SolicitacaoController'
 export * from './rating/createRatingController'
+export * from './group/GrupoController'
+export * from './notification/NotificacaoController'
+export * from './user/UserController'

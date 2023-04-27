@@ -1,6 +1,7 @@
-import AppDataSource from '../infra/repositories/mysql/data-source'
-import { Request, Response } from "express";
-import { Solicitacao } from "../entities/Solicitacao";
+import AppDataSource from '../../../infra/repositories/mysql/data-source'
+import { Solicitacao } from '../../../infra/repositories/mysql/entities'
+
+import { Request, Response } from "express"
 
 class deleteSolicitacao {
   public async deleteSolicitacao(req: Request, res: Response) {
