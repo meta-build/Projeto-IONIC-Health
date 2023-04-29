@@ -6,10 +6,10 @@ import {
   OneToMany,
   ManyToOne,
 } from "typeorm";
-import { Grupo } from "./Grupo";
-import { Rating } from './Rating';
+import { Role } from "./role";
+import { Rating } from './rating';
 
-@Entity({ name: "usuario" })
+@Entity({ name: "user" })
 export class User {
   // define a chave primária como auto incremento
   @PrimaryGeneratedColumn()
@@ -19,7 +19,7 @@ export class User {
   name: string;
 
   @Column({ nullable: false, unique: false, length: 70 })
-  mail: string;
+  email: string;
 
   @Column({ nullable: false, unique: false, length: 250 })
   password: string;
@@ -27,10 +27,10 @@ export class User {
   @OneToMany(() => Rating, rating => rating.user)
   ratings: Rating[];
 
-  @ManyToOne(() => Grupo, id_grupo => id_grupo.name)
+  @ManyToOne(() => Role, role => role.name)
   @JoinColumn()
-  grupo: Grupo;
+  role: Role;
 
   @Column()
-  grupoId: number;
+  roleId: number;
 }

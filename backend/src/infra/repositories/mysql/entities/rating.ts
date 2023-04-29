@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Solicitacao } from './Solicitacao';
-import { User } from "./User";
+import { Ticket } from './ticket';
+import { User } from "./user";
 
 
 @Entity({ name: 'rating' })
@@ -26,6 +26,6 @@ export class Rating {
     @Column()
     ticketId: number;
 
-    @ManyToOne(() => Solicitacao, ticket => ticket.attachments, { onDelete: 'CASCADE'})
-    ticket: Solicitacao;
+    @ManyToOne(() => Ticket, ticket => ticket.attachments, { onDelete: 'CASCADE'})
+    ticket: Ticket;
 }

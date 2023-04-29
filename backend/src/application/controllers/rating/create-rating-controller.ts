@@ -1,5 +1,5 @@
 import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { Rating, Solicitacao, User } from '../../../infra/repositories/mysql/entities'
+import { Rating, Ticket, User } from '../../../infra/repositories/mysql/entities'
 import { Validation } from '../../validation/validation'
 
 import { Request, Response } from 'express'
@@ -19,9 +19,9 @@ export class CreateRatingController {
     const { id } = res.locals
     const user_repository = await AppDataSource.manager.getRepository(User)
     const currentUser = await user_repository
-      .createQueryBuilder("usuario")
-      .leftJoinAndSelect("usuario.grupo", "grupo")
-      .where("usuario.id=:id", { id })
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.role", "role")
+      .where("user.id=:id", { id })
       .getOne();
 
     // if (currentUser.grupo.name !== 'ADMIN') {
@@ -37,7 +37,7 @@ export class CreateRatingController {
       })
 
     const ticket: any = await AppDataSource.manager
-      .findOneByOrFail(Solicitacao, { id: ticketId })
+      .findOneByOrFail(Ticket, { id: ticketId })
       .catch((err) => {
         return res.json({ error: err.message })
       })

@@ -6,9 +6,9 @@ import { Request, Response } from 'express'
 
 class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
-    const { mail, password } = req.body;
+    const { email, password } = req.body;
     //verifica se foram fornecidos os parâmetros
-    if (!mail || !password || mail.trim() === "" || password.trim() === "") {
+    if (!email || !password || email.trim() === "" || password.trim() === "") {
       return res.json({ error: "e-mail e senha necessários" });
     }
 
@@ -17,17 +17,17 @@ class UserController {
       .createQueryBuilder("user")
       .select()
       .addSelect('user.password')
-      .where("user.mail=:mail", { mail })
+      .where("user.email=:email", { email })
       .getOne();
 
     if (usuario && usuario.id) {
       // cria um token codificando o objeto {id,mail}
-      const token = await generateToken({ id: usuario.id, mail: usuario.mail });
+      const token = await generateToken({ id: usuario.id, email: usuario.email });
       // retorna o token para o cliente
       return res.json({
         id: usuario.id,
-        grupoId: usuario.grupoId,
-        mail: usuario.mail,
+        roleId: usuario.roleId,
+        email: usuario.email,
         name: usuario.name,
         token
       });
@@ -41,7 +41,7 @@ class UserController {
     const id = parseInt(req.params.id);
     const usuario: any = await AppDataSource.getRepository(User)
       .createQueryBuilder("usuario")
-      .leftJoinAndSelect("usuario.grupo", "grupo")
+      .leftJoinAndSelect("usuario.role", "role")
       .where("usuario.id=:id", { id })
       .getOne();
 
@@ -54,25 +54,24 @@ class UserController {
     return res.send(usuario);
   }
 
-  public async getAllUser(req: Request, res: Response) {
-    const solicitacao: any = await AppDataSource.getRepository(
+  public async getAllUser(_req: Request, res: Response) {
+    const users: any = await AppDataSource.getRepository(
       User
     ).find();
-    res.send(solicitacao);
-    return solicitacao;
+    res.send(users);
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { mail, password, name, grupoId } = req.body;
+    const { mail, password, name, roleId } = req.body;
     //verifica se foram fornecidos os parâmetros
     if (!mail || !password || mail.trim() === "" || password.trim() === "") {
       return res.json({ error: "e-mail e senha necessários" });
     }
     const obj = new User();
-    obj.mail = mail;
+    obj.email = mail;
     obj.password = password;
     obj.name = name
-    obj.grupoId = grupoId
+    obj.roleId = roleId
     // o hook BeforeInsert não é disparado com AppDataSource.manager.save(User,JSON),
     // mas é disparado com AppDataSource.manager.save(User,objeto do tipo User)
     // https://github.com/typeorm/typeorm/issues/5493
@@ -85,13 +84,13 @@ class UserController {
     })
     if (usuario.id) {
       // cria um token codificando o objeto {idusuario,mail}
-      const token = await generateToken({ id: usuario.id, mail: usuario.mail, name: usuario.name, id_grupo: usuario.grupoId });
+      const token = await generateToken({ id: usuario.id, email: usuario.email, name: usuario.name, roleId: usuario.roleId });
       // retorna o token para o cliente
       return res.json({
         id: usuario.id,
-        mail: usuario.mail,
+        mail: usuario.email,
         name: usuario.name,
-        id_grupo: usuario.grupoId,
+        roleId: usuario.roleId,
         token
       });
     }
@@ -100,7 +99,7 @@ class UserController {
 
   // o usuário pode atualizar somente os seus dados
   public async update(req: Request, res: Response): Promise<Response> {
-    const { mail, password, name, grupoId } = req.body;
+    const { email, password, name, roleId } = req.body;
     const id_usuario = parseInt(req.params.id)
     // obtém o id do usuário que foi salvo na autorização na middleware
     const { id } = res.locals;
@@ -110,7 +109,7 @@ class UserController {
     const user_repository = await AppDataSource.manager.getRepository(User)
     const query_user = await user_repository
       .createQueryBuilder("usuario")
-      .leftJoinAndSelect("usuario.grupo", "grupo")
+      .leftJoinAndSelect("usuario.role", "role")
       .where("usuario.id=:id", { id })
       .getOne();
 
@@ -118,9 +117,9 @@ class UserController {
     if (true) {
       if (usuario && usuario.id) {
         usuario.name = name;
-        usuario.mail = mail;
+        usuario.email = email;
         usuario.password = password;
-        usuario.grupoId = grupoId
+        usuario.roleId = roleId
 
         const r = await AppDataSource.manager
           .save(User, usuario)

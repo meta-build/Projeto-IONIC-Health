@@ -1,6 +1,6 @@
 import { SaveFile } from '../../../domain/contracts'
 import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { Attachment, Solicitacao, User } from '../../../infra/repositories/mysql/entities'
+import { Attachment, Ticket, User } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from 'express'
 
@@ -30,21 +30,21 @@ export class CreateTicketController {
     fileDataList?.forEach(async (fileData) => {
       const attachment = new Attachment()
       attachment.fileName = fileData.fileName
-      attachment.fileType = fileData.mimeType
+      attachment.mimeType = fileData.mimeType
       attachment.storageType = this.fileStorage.type
       attachment.url = await this.fileStorage.saveFile(fileData)
       attachments.push(attachment)
     })
 
-    const ticket = new Solicitacao()
-    ticket.criador = criador
-    ticket.titulo = titulo
-    ticket.tipo = tipo
-    ticket.descricao = descricao
+    const ticket = new Ticket()
+    ticket.requester = criador
+    ticket.title = titulo
+    ticket.type = tipo
+    ticket.description = descricao
     ticket.attachments = attachments
     ticket.status = status
 
-    const savedTicket = await AppDataSource.manager.save(Solicitacao, ticket)
+    const savedTicket = await AppDataSource.manager.save(Ticket, ticket)
 
     attachments?.forEach(async (attachment) => {
       attachment.ticketId = savedTicket.id
