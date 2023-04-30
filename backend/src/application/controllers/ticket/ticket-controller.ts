@@ -1,9 +1,9 @@
 import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { User, Solicitacao } from '../../../infra/repositories/mysql/entities'
+import { User, Ticket } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express";
 
-export class SolicitacaoController {
+export class TicketController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { titulo, tipo, descricao, status } = req.body;
     const id = parseInt(req.params.id);
@@ -13,32 +13,32 @@ export class SolicitacaoController {
     if (!id) {
       return res.json({ error: "Identificação e criador são necessários" });
     }
-    const solicitacao: any = await AppDataSource.manager
-      .findOneByOrFail(Solicitacao, { id })
-      .catch((e) => {
-        return { error: "Identificador inválido" };
+
+    const ticket: any = await AppDataSource.manager
+      .findOneByOrFail(Ticket, { id })
+      .catch(() => {
+        return { error: `Solicitação com ${id} não encontrado` };
       });
 
     const user_repository = await AppDataSource.manager.getRepository(User)
     const query_user = await user_repository.findOneOrFail({ where: { id: id_usuario_token.id }, relations: ['grupo'] });
-    console.log(query_user.grupo.name)
 
-    if (query_user.grupo.name === "ADMIN") {
-      if (solicitacao && solicitacao.id) {
-        solicitacao.titulo = titulo;
-        solicitacao.tipo = tipo;
-        solicitacao.descricao = descricao;
-        solicitacao.status = status
-        if (solicitacao.status?.toUpperCase() === "ARCHIVED") {
-          solicitacao.data_arquivado = new Date()
+    if (query_user.role.name === "ADMIN") {
+      if (ticket?.id) {
+        ticket.title = titulo;
+        ticket.type = tipo;
+        ticket.description = descricao;
+        ticket.status = status
+        if (ticket.status?.toUpperCase() === "ARCHIVED") {
+          ticket.archivedAt = new Date()
         }
 
         if (!status) {
-          solicitacao.data_edicao = new Date()
+          ticket.updatedAt = new Date()
         }
 
         const r = await AppDataSource.manager
-          .save(Solicitacao, solicitacao)
+          .save(Ticket, ticket)
           .catch((e) => e.message);
 
         return res.json(r);

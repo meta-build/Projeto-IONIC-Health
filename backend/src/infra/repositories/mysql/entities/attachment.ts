@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Solicitacao } from './Solicitacao';
+import { Ticket } from './ticket';
 
 @Entity({ name: 'attachment' })
 export class Attachment {
@@ -10,7 +10,7 @@ export class Attachment {
     fileName: string;
 
     @Column()
-    fileType: string;
+    mimeType: string;
 
     @Column()
     url: string;
@@ -21,6 +21,6 @@ export class Attachment {
     @Column()
     ticketId: number;
 
-    @ManyToOne(() => Solicitacao, ticket => ticket.attachments, { onDelete: 'CASCADE'})
-    ticket: Solicitacao;
+    @ManyToOne(() => Ticket, ticket => ticket.attachments, { onDelete: 'CASCADE'})
+    ticket: Ticket;
 }

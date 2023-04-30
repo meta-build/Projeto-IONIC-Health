@@ -1,9 +1,9 @@
 import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { User, Grupo } from '../../../infra/repositories/mysql/entities'
+import { User, Role } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express"
 
-export class GrupoController {
+export class GroupController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { name } = req.body;
     //verifica se foram fornecidos os parâmetros
@@ -20,9 +20,9 @@ export class GrupoController {
       });
 
     if (usuario && usuario.id) {
-      const grupo = new Grupo();
+      const grupo = new Role();
       grupo.name = name;
-      await AppDataSource.manager.save(Grupo, grupo);
+      await AppDataSource.manager.save(Role, grupo);
       res.json({
         id: grupo.id,
         name: grupo.name,

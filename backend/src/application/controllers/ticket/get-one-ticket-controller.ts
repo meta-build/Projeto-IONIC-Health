@@ -1,16 +1,16 @@
 import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { Solicitacao } from '../../../infra/repositories/mysql/entities'
+import { Ticket } from '../../../infra/repositories/mysql/entities'
 
 import { Request, Response } from "express"
 
-export class GetOneSolicitacao {
-  public async getSolicitacaoById(req: Request, res: Response) {
+export class GetOneTicket {
+  public async getTicketById(req: Request, res: Response) {
     const id = parseInt(req.params.id);
-    const ticket: any = await AppDataSource.getRepository(Solicitacao)
-      .createQueryBuilder('solicitacao')
-      .leftJoinAndSelect('solicitacao.ratings', 'rating')
-      .leftJoinAndSelect('solicitacao.attachments', 'attachment')
-      .where("solicitacao.id=:id", { id })
+    const ticket: any = await AppDataSource.getRepository(Ticket)
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.ratings', 'rating')
+      .leftJoinAndSelect('ticket.attachments', 'attachment')
+      .where("ticket.id=:id", { id })
       .getOne();
 
     if (!ticket) {
