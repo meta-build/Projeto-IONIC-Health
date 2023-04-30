@@ -1,3 +1,5 @@
+export * from './controller'
+
 export * from './group/group-controller'
 
 export * from './notification/notification-controller'
