@@ -1,6 +1,7 @@
-import { CreateTicketController } from '../../../../../application/controllers'
-import { makeLocalFileStorage } from '../../../infra/storage'
+import { makeCreateTicketValidation } from './create-ticket-validation'
+import { Controller, CreateTicketController } from '@/application/controllers'
+import { makeLocalFileStorage } from '@/main/factories/infra/storage'
 
-export const makeTicketController = (): CreateTicketController => {
-  return new CreateTicketController(makeLocalFileStorage())
+export const makeTicketController = (): Controller => {
+  return new CreateTicketController(makeCreateTicketValidation(), makeLocalFileStorage())
 }
