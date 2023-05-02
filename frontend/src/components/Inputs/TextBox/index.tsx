@@ -2,7 +2,6 @@ import classNames from "classnames";
 import styles from "./TextBox.module.scss";
 import { useEffect, useState } from "react";
 
-
 interface Props {
     placeholder?:string;
     onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
@@ -36,6 +35,3 @@ export default function TextBox(props: Props) {
     />
   );
 };
-
-
-
