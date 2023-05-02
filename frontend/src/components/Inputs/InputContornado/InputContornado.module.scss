@@ -1,20 +1,23 @@
 .label {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid white;
-    padding: 8px;
-    .icon {
-        margin-right: 8px;
-    }
-    .input {
-        background: none;
-        border: none;
-        font-size: 16px;
-        color: white;
-        flex: 1;
-    }
-    .input:focus {
-        border: none;
-        outline: none;
-    }
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid white;
+  padding: 8px;
+
+  .icon {
+    margin-right: 8px;
+  }
+
+  .input {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: white;
+    flex: 1;
+  }
+
+  .input:focus {
+    border: none;
+    outline: none;
+  }
 }
