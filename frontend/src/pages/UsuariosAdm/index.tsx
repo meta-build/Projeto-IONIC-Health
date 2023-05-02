@@ -81,13 +81,13 @@ export default function UsuariosAdm () {
                     handleChange={(e) => setBusca(e.target.value)} />
                     <DropdownContornado
                     itens={[
-                        new DropdownItem('Todos', <></>),
-                        new DropdownItem('Admnistrador', <></>),
-                        new DropdownItem('Solicitante', <></>),
-                        new DropdownItem('Avaliador (Geral)', <></>),
-                        new DropdownItem('Avaliador (Custo)', <></>),
-                        new DropdownItem('Avaliador (Risco)', <></>),
-                        new DropdownItem('Avaliador (Impacto)', <></>),
+                        {label:'Todos', icon:<></>},
+                        {label:'Admnistrador', icon:<></>},
+                        {label:'Solicitante', icon:<></>},
+                        {label:'Avaliador (Geral)', icon:<></>},
+                        {label:'Avaliador (Custo)', icon:<></>},
+                        {label:'Avaliador (Risco)', icon:<></>},
+                        {label:'Avaliador (Impacto)', icon:<></>}
                     ]}
                     handleSelected={(s: string) => setTipo(s)}
                     />

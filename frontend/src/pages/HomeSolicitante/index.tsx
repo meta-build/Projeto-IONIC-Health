@@ -72,8 +72,8 @@ export default function HomeSolicitante () {
                     handleChange={(e) => setBusca(e.target.value)} />
                     <DropdownContornado
                     itens={[
-                        new DropdownItem('Feature', <GoogleIcon>&#xE8B8;</GoogleIcon>),
-                        new DropdownItem('Hotfix', <GoogleIcon>&#xf10b;</GoogleIcon>)
+                        {label: 'Feature', icon: <GoogleIcon>&#xE8B8;</GoogleIcon>},
+                        {label: 'Hotfix', icon: <GoogleIcon>&#xf10b;</GoogleIcon>}
                     ]}
                     handleSelected={(s: string) => setTipo(s)}
                     />

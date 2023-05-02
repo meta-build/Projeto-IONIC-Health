@@ -1,70 +1,74 @@
 @import '@/styles/variables.scss';
 
 .container {
-    width: fit-content;
-    padding:0px;
-    margin: 0px;
+  width: fit-content;
+  padding: 0px;
+  margin: 0px;
 }
 
 .botao {
-    padding: 8px;
-    display: flex;
-    border-radius: 12px;
-    min-width: 155px;
-    border: none;
-    background-color: $cinza-300;
-    color: $cinza-600;
-    display: flex;
-   
-    
-    .children {
-        flex: 1;
-        padding: 0;
-        margin: 0;
-        text-align: left;
-    }
-    .icon {
-        height: 16px;
-        font-weight: bold;
-    }
+  padding: 8px;
+  display: flex;
+  border-radius: 12px;
+  min-width: 155px;
+  border: none;
+  background-color: $cinza-300;
+  color: $cinza-600;
+  display: flex;
+
+
+  .children {
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .icon {
+    height: 16px;
+    font-weight: bold;
+  }
 }
 
 .botao:hover {
-    background-color: $cinza-300-hover;
-    cursor: pointer;
+  background-color: $cinza-300-hover;
+  cursor: pointer;
 }
 
 .list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  margin-top: 8px;
+  list-style: none;
+  color: $cinza-600;
+  border-radius: 12px;
+  width: 100%;
+  overflow: hidden;
+
+  li {
     padding: 0;
-    z-index: 1;
-    margin-top: 8px;
-    list-style: none;
-    color: $cinza-600;
-    border-radius: 12px;
-    width: 100%;
-    overflow: hidden;
-    li {
-        padding: 0;
-        margin: 0;
-        button {
-            border: none;
-            background-color: $cinza-300;
-            padding: 8px;
-            width: 100%;
-            text-align: left;
-            
-        }
-        button:hover{
-            background-color: $cinza-300-hover;
-            cursor: pointer;
-        }
+    margin: 0;
+
+    button {
+      border: none;
+      background-color: $cinza-300;
+      padding: 8px;
+      width: 100%;
+      text-align: left;
+
     }
+
+    button:hover {
+      background-color: $cinza-300-hover;
+      cursor: pointer;
+    }
+  }
 }
 
 .fechar {
-    display: none;
+  display: none;
 }
