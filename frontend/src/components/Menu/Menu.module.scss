@@ -1,118 +1,118 @@
 @import '@/styles/variables.scss';
 
 .container {
-    display: flex;
-    align-items: center;
-    background-color: $black-40;
-    backdrop-filter: $blur;
-    padding: 16px 20px;
-    width: calc(100% - 40px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
+  display: flex;
+  align-items: center;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  padding: 16px 20px;
+  width: calc(100% - 40px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 
-    li:hover {
-        background: none;
-        cursor: default;
-    }
+  li:hover {
+    background: none;
+    cursor: default;
+  }
 }
 
 .espacador {
-    flex: 1;
+  flex: 1;
 }
 
 .icon {
-    margin-right: 16px;
+  margin-right: 16px;
 }
 
 .icon-bolinha {
-    position: relative;
+  position: relative;
 }
 
 .bolinha {
-    background-color: red;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    position: absolute;
-    top: 0px;
-    right: -2px;
+  background-color: red;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  right: -2px;
 }
 
 .conta-lista {
-    list-style: none;
-    padding: 4px;
-    margin: 0;
-    width: max-content;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+  list-style: none;
+  padding: 4px;
+  margin: 0;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .conta-item {
-    padding: 8px 15px;
-    padding-right: 8px;
-    width: 100px;
-    margin: 0;
-    text-align: right;
-    border-bottom: 1px solid $cinza-300;
+  padding: 8px 15px;
+  padding-right: 8px;
+  width: 100px;
+  margin: 0;
+  text-align: right;
+  border-bottom: 1px solid $cinza-300;
 }
 
 .conta-item:last-child {
-    border: none;
+  border: none;
 }
 
-.conta-item:hover{
-    font-weight: bold;
-    cursor: pointer !important;
+.conta-item:hover {
+  font-weight: bold;
+  cursor: pointer !important;
 }
 
 .notificacao-lista {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .notificacao-item {
-    list-style: none;
-    width: 200px;
-    padding: 8px 6px;
-    text-align: right;
-    position: relative;
-    border-bottom: 1px solid $cinza-300;
+  list-style: none;
+  width: 200px;
+  padding: 8px 6px;
+  text-align: right;
+  position: relative;
+  border-bottom: 1px solid $cinza-300;
 }
 
 .notificacao-item:last-child {
-    border: none;
+  border: none;
 }
 
 .notificacao-titulo {
-    margin-bottom: 6px;
-    font-weight: bold;
+  margin-bottom: 6px;
+  font-weight: bold;
 }
 
 .notificacao-data {
-    font-size: 12px;
-    color: $ciano-300;
+  font-size: 12px;
+  color: $ciano-300;
 }
 
 .notificacao-fechar {
-    position: absolute;
-    left: 8px;
-    top: 12px;
-    font-size: 18px;
-    width: 16px;
-    height: 16px;
-    padding: 4px;
-    border-radius: 50%;
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  font-size: 18px;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+  border-radius: 50%;
 }
 
-.notificacao-fechar:hover{
-    cursor: pointer;
-    background-color: $cinza-400;
+.notificacao-fechar:hover {
+  cursor: pointer;
+  background-color: $cinza-400;
 }
 
 .nome {
-    margin-right: 12px;
-    color: $ciano-300;
+  margin-right: 12px;
+  color: $ciano-300;
 }
