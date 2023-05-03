@@ -34,3 +34,20 @@ export namespace LoadUserByEmail {
     roleId: number
   }
 }
+
+export interface LoadUserById {
+  loadById: (input: LoadUserById.Input) => Promise<LoadUserById.Output>
+}
+
+export namespace LoadUserById {
+  export type Input = {
+    id: number
+  }
+  export type Output = {
+    id: number
+    name: string
+    email: string
+    password: string
+    roleId: number
+  }
+}
