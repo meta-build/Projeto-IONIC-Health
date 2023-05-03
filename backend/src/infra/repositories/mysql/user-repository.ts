@@ -1,15 +1,20 @@
-import { DbCreateUser } from '@/domain/contracts/repos/user'
+import { CreateUser, LoadUserByEmail } from '@/domain/contracts/repos/user'
 import { User } from './entities'
 import DataSource from './data-source'
 
 import { ObjectType, Repository } from 'typeorm'
 
-export class UserRepository implements DbCreateUser {
-  getRepository (entity: ObjectType<User>): Repository<User> {
+export class UserRepository implements CreateUser, LoadUserByEmail {
+  getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
 
-  async create ({ name, email, password, roleId }: DbCreateUser.Input): Promise<DbCreateUser.Output> {
+  async create({
+    name,
+    email,
+    password,
+    roleId
+  }: CreateUser.Input): Promise<CreateUser.Output> {
     const userRepo = this.getRepository(User)
     const user = userRepo.create({
       name,
@@ -27,5 +32,19 @@ export class UserRepository implements DbCreateUser {
       password: user.password,
       roleId: user.roleId
     }
+  }
+
+  async loadByEmail({
+    email
+  }: LoadUserByEmail.Input): Promise<LoadUserByEmail.Output> {
+    const userRepo = this.getRepository(User)
+
+    const user = await userRepo.findOne({ where: { email } })
+
+    if (user) {
+      return user
+    }
+
+    return null
   }
 }
