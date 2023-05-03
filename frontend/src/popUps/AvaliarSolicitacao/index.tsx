@@ -36,7 +36,7 @@ export default function AvaliarSolicitacao(props: Props) {
   const avaliar = () => {
     Solicitacoes.avaliar({
       comment: comentario,
-      committee: strAvaliador(usuario.getGrupo()),
+      committee: strAvaliador(usuario.grupo),
       ticketId: props.idSolic,
       value: nota
     }).then(() => {
@@ -57,7 +57,7 @@ export default function AvaliarSolicitacao(props: Props) {
     <PopUp
       visivel={props.aberto}
       onClose={props.onClose}
-      titulo={`Avaliação da ${solicitacao.tipo} ${solicitacao.titulo} em ${strAvaliador(usuario.getGrupo())}`}>
+      titulo={`Avaliação da ${solicitacao.tipo} ${solicitacao.titulo} em ${strAvaliador(usuario.grupo)}`}>
       <form
         className={styles.form}
         onSubmit={(e) => {

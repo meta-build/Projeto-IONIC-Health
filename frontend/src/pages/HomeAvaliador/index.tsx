@@ -44,7 +44,7 @@ export default function HomeAvaliador() {
     const notas = solicitacao.ratings;
     let result = true;
     notas.forEach(nota => {
-      if (nota.committee == strAvaliador(usuario.getGrupo())) {
+      if (nota.committee == strAvaliador(usuario.grupo)) {
         result = false;
       }
     });
@@ -86,9 +86,9 @@ export default function HomeAvaliador() {
         <div className={styles.botoes}>
           <Botao
             className={styles.botao}
-            handleClick={() => setStatus(`Sem nota de ${strAvaliador(usuario.getGrupo())}`)}
-            variante={`Sem nota de ${strAvaliador(usuario.getGrupo())}` == status ? 'preenchido' : 'contornado'}>
-            {`Sem nota de ${strAvaliador(usuario.getGrupo())}`}
+            handleClick={() => setStatus(`Sem nota de ${strAvaliador(usuario.grupo)}`)}
+            variante={`Sem nota de ${strAvaliador(usuario.grupo)}` == status ? 'preenchido' : 'contornado'}>
+            {`Sem nota de ${strAvaliador(usuario.grupo)}`}
           </Botao>
           <Botao
             className={styles.botao}

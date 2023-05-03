@@ -50,7 +50,7 @@ export default function HomeSolicitante() {
     Solicitacoes.getAll()
       .then(data => {
         setSolicitacoes(data.filter(item => {
-          const filtroUsuario = usuario.getId() == item['id_user'];
+          const filtroUsuario = usuario.id == item['id_user'];
           const filtroNome = filtrarNome(item.titulo);
           const filtroTipo = item.tipo == tipo;
           let filtroSituacao = item.status == status || item.status.split('.')[0] == status;

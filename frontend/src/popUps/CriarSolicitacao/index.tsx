@@ -36,7 +36,7 @@ export default function CriarSolicitacao(props: Props) {
         descricao,
         tipo: tipo,
         titulo: titulo
-      }, usuario.getToken()).then(() => props.onClose());
+      }, usuario.token).then(() => props.onClose());
     } else {
       setErro(true);
     }

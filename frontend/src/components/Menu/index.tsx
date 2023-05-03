@@ -47,7 +47,7 @@ export default function Menu() {
                 </MenuSuspenso> */}
 
         {/* usuário */}
-        <span className={styles.nome}>{usuario.getNome()}</span>
+        <span className={styles.nome}>{usuario.nome}</span>
         <MenuSuspenso
           icon={<FontAwesomeIcon icon={faUser} />}>
           <ul className={styles['conta-lista']}>
@@ -69,7 +69,7 @@ export default function Menu() {
           </ul>
         </MenuSuspenso>
       </nav>
-      <EditarConta idUser={usuario.getId()} aberto={popupEditar} onClose={() => setPopupEditar(false)} />
+      <EditarConta idUser={usuario.id} aberto={popupEditar} onClose={() => setPopupEditar(false)} />
     </>
   );
 }

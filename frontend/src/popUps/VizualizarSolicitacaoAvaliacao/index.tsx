@@ -57,7 +57,7 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
     let result = true;
     if (notas) {
       notas.forEach(nota => {
-        if (nota.committee == strAvaliador(usuario.getGrupo())) {
+        if (nota.committee == strAvaliador(usuario.grupo)) {
           result = false;
         }
       });

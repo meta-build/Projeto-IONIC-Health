@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { useContexto } from '../../context/contexto';
 import { useNavigate } from 'react-router-dom';
 import Usuarios from '../../services/Usuarios';
-import Usuario from '../../types/Usuario';
 import api from '../../services/api';
 
 export default function Login() {
@@ -28,7 +27,7 @@ export default function Login() {
           } else {
             const { id, grupoId, token, name } = data;
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setUsuario(new Usuario(id, token, grupoId, name));
+            setUsuario({id, token, grupo: grupoId, nome: name});
             sessionStorage.setItem('id', `${id}`);
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('grupo', `${grupoId}`);
@@ -44,7 +43,7 @@ export default function Login() {
   useEffect(() => {
     if (sessionStorage.length > 0) {
       const { id, token, grupo, nome } = sessionStorage;
-      setUsuario(new Usuario(id, token, grupo, nome));
+      setUsuario({id, token, grupo, nome});
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       nav('home');
     }

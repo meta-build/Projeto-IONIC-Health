@@ -25,19 +25,19 @@ export default function AppRouter() {
         <Route path='/' element={<Login />} />
         {usuario && (
           <>
-            {usuario.getGrupo() == 2 && (
+            {usuario.grupo == 2 && (
               <Route
                 path='/home'
                 element={<PaginaComHeader elemento={<HomeSolicitante />} />}
               />
             )}
-            {usuario.getGrupo() >= 3 && (
+            {usuario.grupo >= 3 && (
               <Route
                 path='/home'
                 element={<PaginaComHeader elemento={<HomeAvaliador />} />}
               />
             )}
-            {usuario.getGrupo() == 1 && (<>
+            {usuario.grupo == 1 && (<>
               <Route
                 path='/home'
                 element={<PaginaComHeader elemento={<HomeAdm />} />}
