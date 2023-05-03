@@ -11,3 +11,9 @@ export class InvalidInput extends Error {
     this.name = 'InvalidInput'
   }
 }
+
+export class InvalidParamError extends Error {
+  constructor(paramName: string) {
+    super(`O parâmetro: ${paramName} não é válido`)
+  }
+}
