@@ -1,6 +1,6 @@
-import { adaptRoute } from '../adapters/express-router'
-import { makeCreateRatingController } from '../factories/application/controllers'
-import { authorization } from '../../middlewares'
+import { makeCreateRatingController } from '@/main/factories/application/controllers'
+import { adaptRoute } from '@/main/adapters'
+import { authorization } from '@/main/middlewares'
 
 import { Router } from 'express'
 

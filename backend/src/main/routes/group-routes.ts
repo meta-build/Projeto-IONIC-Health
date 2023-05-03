@@ -1,5 +1,5 @@
-import { authorization } from '../../middlewares'
-import { GroupController } from '../../application/controllers'
+import { authorization } from '@/main/middlewares'
+import { GroupController } from '@/application/controllers'
 
 import { Router } from 'express'
 

@@ -1,6 +1,6 @@
 import AppDataSource from '../../../infra/repositories/mysql/data-source'
 import { User } from '../../../infra/repositories/mysql/entities'
-import { generateToken } from '../../../middlewares'
+import { generateToken } from '../../../main/middlewares'
 
 import { Request, Response } from 'express'
 

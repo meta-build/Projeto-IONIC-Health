@@ -1,12 +1,13 @@
-import UserController from '../../application/controllers/user/user-controller'
-import { authorization } from '../../middlewares'
+import userController from '@/application/controllers/user/user-controller'
+import { authorization } from '@/main/middlewares'
 
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.post('/user', UserController.create)
-  router.put('/user/:id', authorization, UserController.update)
-  router.get('/user/:id', authorization, UserController.getUserById)
-  router.get('/user', authorization, UserController.getAllUser)
-  router.delete('/user/:id', authorization, UserController.deleteUser)
+  router.post('/login', userController.login)
+  router.post('/user', userController.create)
+  router.put('/user/:id', authorization, userController.update)
+  router.get('/user/:id', authorization, userController.getUserById)
+  router.get('/user', authorization, userController.getAllUser)
+  router.delete('/user/:id', authorization, userController.deleteUser)
 }
