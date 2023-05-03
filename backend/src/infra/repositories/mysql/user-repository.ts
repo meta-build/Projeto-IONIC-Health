@@ -1,10 +1,16 @@
-import { CreateUser, LoadUserByEmail } from '@/domain/contracts/repos/user'
+import {
+  CreateUser,
+  LoadUserByEmail,
+  LoadUserById
+} from '@/domain/contracts/repos/user'
 import { User } from './entities'
 import DataSource from './data-source'
 
 import { ObjectType, Repository } from 'typeorm'
 
-export class UserRepository implements CreateUser, LoadUserByEmail {
+export class UserRepository
+  implements CreateUser, LoadUserByEmail, LoadUserById
+{
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
@@ -40,6 +46,18 @@ export class UserRepository implements CreateUser, LoadUserByEmail {
     const userRepo = this.getRepository(User)
 
     const user = await userRepo.findOne({ where: { email } })
+
+    if (user) {
+      return user
+    }
+
+    return null
+  }
+
+  async loadById({ id }: LoadUserById.Input): Promise<LoadUserById.Output> {
+    const userRepo = this.getRepository(User)
+
+    const user = await userRepo.findOneBy({ id })
 
     if (user) {
       return user
