@@ -53,9 +53,9 @@ export default function SolicitacoesAdm() {
             filtroSituacao = item.status == 'archived';
           }
           return filtroNome && filtroTipo && filtroSituacao;
-        }))
-      })
-  }, [busca, tipo, status, , popupAvaliacao, popupProducao, popupArquivado])
+        }));
+      });
+  }, [busca, tipo, status, , popupAvaliacao, popupProducao, popupArquivado]);
   return (
     <section className={styles.section}>
       <Header32>Solicitações</Header32>

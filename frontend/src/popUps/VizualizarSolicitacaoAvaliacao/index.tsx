@@ -110,7 +110,7 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
               Avaliações
             </span>
             <div className={styles.avs}>
-              {solicitacao.ratings.length ?
+              {solicitacao.ratings && solicitacao.ratings.length ?
                 solicitacao.ratings.map(av => (
                   <BotaoPreenchido
                     corBotao={avSelecionado.committee == av.committee ? 'noturno' : 'claro'}
