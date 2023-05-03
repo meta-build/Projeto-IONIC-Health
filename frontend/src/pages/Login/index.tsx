@@ -15,28 +15,27 @@ export default function Login() {
 
   const [erro, setErro] = useState(false);
 
-  const {usuario, setUsuario} = useContexto();
+  const { setUsuario } = useContexto();
 
   const nav = useNavigate();
 
   const logar = () => {
     if (email && senha) {
-      Usuarios.login({mail: email, password: senha})
-      .then(data => {
-        console.log(data)
-        if(data.error) {
-          setErro(true);
-        } else {
-          const {id, grupoId, token, name} = data;
-          api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          setUsuario(new Usuario(id, token, grupoId, name))
-          sessionStorage.setItem('id', `${id}`)
-          sessionStorage.setItem('token', token)
-          sessionStorage.setItem('grupo', `${grupoId}`)
-          sessionStorage.setItem('nome', `${name}`)
-          nav('/home');
-        }
-      })
+      Usuarios.login({ mail: email, password: senha })
+        .then(data => {
+          if (data.error) {
+            setErro(true);
+          } else {
+            const { id, grupoId, token, name } = data;
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setUsuario(new Usuario(id, token, grupoId, name));
+            sessionStorage.setItem('id', `${id}`);
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('grupo', `${grupoId}`);
+            sessionStorage.setItem('nome', `${name}`);
+            nav('/home');
+          }
+        })
     } else {
       setErro(true);
     }
@@ -44,45 +43,45 @@ export default function Login() {
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      const {id, token, grupo, nome} = sessionStorage;
+      const { id, token, grupo, nome } = sessionStorage;
       setUsuario(new Usuario(id, token, grupo, nome));
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       nav('home');
     }
-  }, [])
-  
+  }, []);
   return (
     <div className={styles.container}>
-
       <img src='https://uploads-ssl.webflow.com/60dcc4691817e11aa93685ab/636cfbef568f863947dd4951_logo-color.svg' />
       <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        logar();
-      }}
-      className={styles.form}>
-        <Header32 className={styles.titulo}>Login</Header32>
-
+        onSubmit={(e) => {
+          e.preventDefault();
+          logar();
+        }}
+        className={styles.form}>
+        <Header32 className={styles.titulo}>
+          Login
+        </Header32>
         <InputContornado
-        placeholder="Email"
-        tipo='email'
-        handleChange={(e) => setEmail(e.target.value)}
-        className={styles.input} />
-
+          placeholder="Email"
+          tipo='email'
+          handleChange={(e) => setEmail(e.target.value)}
+          className={styles.input}
+        />
         <InputContornado
-        placeholder="Senha"
-        tipo='password'
-        handleChange={(e) => setSenha(e.target.value)}
-        className={styles.input} />
-
+          placeholder="Senha"
+          tipo='password'
+          handleChange={(e) => setSenha(e.target.value)}
+          className={styles.input}
+        />
         {erro &&
-          <span className={styles.aviso}>Email ou senha inválidos!</span>
+          <span className={styles.aviso}>
+            Email ou senha inválidos!
+          </span>
         }
-
-        <Botao      
-        variante='preenchido'
-        className={styles.botao}
-        tipo='submit'>
+        <Botao
+          variante='preenchido'
+          className={styles.botao}
+          tipo='submit'>
           Entrar
         </Botao>
       </form>
