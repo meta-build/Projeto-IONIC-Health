@@ -6,7 +6,7 @@ import styles from './HomeAvaliador.module.scss';
 import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
-import { AcaoNotas } from '../../components/ItemLista/Acoes';
+import { AcaoNotas } from '../../components/Acoes';
 import { Botao } from '../../components/Botoes';
 import AvaliarSolicitacao from '../../popUps/AvaliarSolicitacao';
 import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';

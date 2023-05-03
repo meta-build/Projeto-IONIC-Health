@@ -6,7 +6,7 @@ import styles from './SolicitacoesAdm.module.scss';
 import DropdownItem from '../../types/DropdownItem';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
-import { AcaoNotas, AcaoProducao } from '../../components/ItemLista/Acoes';
+import { AcaoNotas, AcaoProducao } from '../../components/Acoes';
 import { Botao } from '../../components/Botoes';
 import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
 import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
