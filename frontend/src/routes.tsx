@@ -15,10 +15,22 @@ import {
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
+import { useEffect, useState } from "react";
+import api from "./services/api";
+import Carregando from "./pages/Carregando";
 
 export default function AppRouter() {
-  const { usuario } = useContexto();
+  const { usuario, setUsuario } = useContexto();
+  const [carregando, setCarregando] = useState(true);
 
+  useEffect(() => {
+    if (sessionStorage.length > 0) {
+      const { id, token, grupo, nome } = sessionStorage;
+      setUsuario({ id, token, grupo, nome });
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+    setCarregando(false);
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -59,8 +71,10 @@ export default function AppRouter() {
         )}
         <Route
           path='*'
-          element={<PaginaNaoEncontrada />}
-        />
+          element={ carregando ?
+          <Carregando /> :
+          <PaginaNaoEncontrada />
+        } />
       </Routes>
     </BrowserRouter>
   );
