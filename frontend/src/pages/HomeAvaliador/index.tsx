@@ -7,7 +7,7 @@ import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas } from '../../components/Acoes';
 import { Botao } from '../../components/Botoes';
-import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
+import { VisualizarSolicitacaoAvaliacao } from '../../popUps';
 import Solicitacoes from '../../services/Solicitacoes';
 import { useContexto } from '../../context/contexto';
 import { SolicitacaoProps } from '../../types';

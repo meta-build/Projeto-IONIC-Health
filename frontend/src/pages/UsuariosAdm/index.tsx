@@ -6,8 +6,10 @@ import { InputContornado } from '../../components/Inputs';
 import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { Botao } from '../../components/Botoes';
-import CriarUsuario from '../../popUps/CriarUsuario';
-import VisualizarUsuario from '../../popUps/VisualzarUsuario';
+import {
+  CriarUsuario,
+  VisualizarUsuario
+} from '../../popUps';
 import Usuarios from '../../services/Usuarios';
 import { UsuarioProps } from '../../types';
 

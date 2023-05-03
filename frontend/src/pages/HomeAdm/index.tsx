@@ -1,12 +1,12 @@
 import styles from './HomeAdm.module.scss';
 import { faFile, faUser } from "@fortawesome/free-regular-svg-icons";
-import BotaoIcon from "../../components/Botoes/BotaoIcon";
+import { BotaoIcon } from "../../components/Botoes";
 import { Header36 } from '../../components/Header';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import CriarSolicitacao from '../../popUps/CriarSolicitacao';
+import { CriarSolicitacao } from '../../popUps';
 
 interface HomeItemProps {
   label: string;

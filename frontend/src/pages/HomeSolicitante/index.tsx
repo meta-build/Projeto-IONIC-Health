@@ -7,11 +7,13 @@ import { DropdownContornado } from '../../components/Dropdowns';
 import { ItemLista } from '../../components/ItemLista';
 import { AcaoNotas, AcaoProducao } from '../../components/Acoes';
 import { Botao } from '../../components/Botoes';
-import { CriarSolicitacao } from '../../popUps';
-import VizualizarSolicitacao from '../../popUps/VizualizarSolicitacao';
-import VizualizarSolicitacaoArquivado from '../../popUps/VizualizarSolicitacaoArquivado';
-import VizualizarSolicitacaoProducao from '../../popUps/VizualizarSolicitacaoProducao';
-import VisualizarSolicitacaoAvaliacao from '../../popUps/VizualizarSolicitacaoAvaliacao';
+import {
+  CriarSolicitacao,
+  VizualizarSolicitacao,
+  VizualizarSolicitacaoArquivado,
+  VizualizarSolicitacaoProducao,
+  VisualizarSolicitacaoAvaliacao
+} from '../../popUps';
 import Solicitacoes from '../../services/Solicitacoes';
 import { useContexto } from '../../context/contexto';
 
