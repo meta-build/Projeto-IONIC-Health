@@ -13,3 +13,4 @@ export * from './ticket/get-all-ticket-controller'
 export * from './ticket/get-one-ticket-controller'
 
 export * from './user/user-controller'
+export * from './user/create-user-controller'
