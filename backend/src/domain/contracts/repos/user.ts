@@ -10,7 +10,7 @@ export namespace DbCreateUser {
     roleId: number
   }
   export type Output = {
-    id: string
+    id: number
     name: string
     email: string
     password: string
