@@ -1,76 +1,76 @@
 @import '@/styles/variables.scss';
 
 .botao {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $cinza-200;
-    border-radius: 6px;
-    border: 4px solid red;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $cinza-200;
+  border-radius: 6px;
+  border: 4px solid red;
 
 }
 
 .clicavel:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .tamanho-24 {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .tamanho-36 {
-    width: 36px;
-    height: 36px;
-    font-size: 24px;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
 }
 
 .cinza-contorno {
-    border-color: $cinza-400;
+  border-color: $cinza-400;
 }
 
 .cinza-preenchimento {
-    background-color: $cinza-400;
+  background-color: $cinza-400;
 }
 
 .verde-contorno {
-    border-color: $verde;
+  border-color: $verde;
 }
 
 .verde-preenchimento {
-    background-color: $verde;
+  background-color: $verde;
 }
 
 .amarelo-contorno {
-    border-color: $amarelo;
+  border-color: $amarelo;
 }
 
 .amarelo-preenchimento {
-    background-color: $amarelo;
+  background-color: $amarelo;
 }
 
 .vermelho-contorno {
-    border-color: $vermelho;
+  border-color: $vermelho;
 }
 
 .vermelho-preenchimento {
-    background-color: $vermelho;
+  background-color: $vermelho;
 }
 
 .azul1-contorno {
-    border-color: $azul1;
+  border-color: $azul1;
 }
 
 .azul1-preenchimento {
-    background-color: $azul1;
+  background-color: $azul1;
 }
 
 .azul2-contorno {
-    border-color: $azul2;
+  border-color: $azul2;
 }
 
 .azul2-preenchimento {
-    background-color: $azul2;
+  background-color: $azul2;
 }

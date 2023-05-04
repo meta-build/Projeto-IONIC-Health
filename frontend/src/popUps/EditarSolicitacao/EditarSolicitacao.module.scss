@@ -1,59 +1,59 @@
 @import '@/styles/variables.scss';
 
 .form {
-    width: 600px;
-    color: $cinza-600;
+  width: 600px;
+  color: $cinza-600;
 }
 
 .linha {
-    display: flex;
-    margin-bottom: 16px;
+  display: flex;
+  margin-bottom: 16px;
 }
 
 .linha:first-child {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .campo {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 
 .campo:first-child {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 .campo:only-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .campo-preenchido {
-    flex: 1;
+  flex: 1;
 }
 
 .label {
-    color: $cinza-600;
-    margin-left: 6px;
-    margin-bottom: 4px;
+  color: $cinza-600;
+  margin-left: 6px;
+  margin-bottom: 4px;
 }
 
 .input {
-    flex: 1;
+  flex: 1;
 }
 
 .arquivos {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .arquivo {
-    margin-right: 8px;
-    margin-top: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
 }
 
 .linha-submit {
-    display: flex;
-    margin-top: 36px;
-    justify-content: flex-end;
+  display: flex;
+  margin-top: 36px;
+  justify-content: flex-end;
 }

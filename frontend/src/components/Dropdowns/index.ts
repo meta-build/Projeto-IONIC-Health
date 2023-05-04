@@ -3,7 +3,7 @@ import DropdownPopup from "./DropdownPopup";
 import DropdownPreenchido from "./DropdownPreenchido";
 
 export {
-    DropdownContornado,
-    DropdownPopup,
-    DropdownPreenchido
+  DropdownContornado,
+  DropdownPopup,
+  DropdownPreenchido
 }

@@ -1,104 +1,105 @@
 @import '@/styles/variables.scss';
 
 .form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2px;
-    margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+  margin-bottom: 25px;
 }
 
 .inputs {
+  display: flex;
+  width: 660px;
+
+  .input {
     display: flex;
-    width: 660px;
-    
-    .input {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-right: 12px;
-    }
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+  }
 
-    .input:last-child {
-        margin-right: 0px;
-    }
+  .input:last-child {
+    margin-right: 0px;
+  }
 
-    .label {
-        text-align: left;
-        color: $cinza-600;
-        margin-bottom: 4px;
-        margin-top: 20px;
-    }
+  .label {
+    text-align: left;
+    color: $cinza-600;
+    margin-bottom: 4px;
+    margin-top: 20px;
+  }
 }
 
 .preencher {
-    flex: 1;
+  flex: 1;
 }
 
 .container-concluir {
-    margin-top: 12px;
-    display: flex;
-    justify-content: flex-end;
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .concluir {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .conteudo {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: $cinza-600;
-    font-size: 12px;
-    text-align: justify;
-    text-indent: 12px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: $cinza-600;
+  font-size: 12px;
+  text-align: justify;
+  text-indent: 12px;
 }
 
 .arquivos {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .arquivo {
-    margin-right: 8px;
-    margin-top: 2px;
+  margin-right: 8px;
+  margin-top: 2px;
 }
 
 .subtitulo {
-    text-align: left;
-    color: $cinza-600-hover;
-    font-size: 14px;
-    margin-top: 18px;
+  text-align: left;
+  color: $cinza-600-hover;
+  font-size: 14px;
+  margin-top: 18px;
 }
 
 .linha-submit {
-    display: flex;
-    width: 100%;
-    margin-top: 36px;
-    justify-content: flex-end;
+  display: flex;
+  width: 100%;
+  margin-top: 36px;
+  justify-content: flex-end;
 }
+
 .botao:not(:first-child) {
-    margin-left: 12px;
+  margin-left: 12px;
 }
 
 .producao {
-    color: $cinza-600;
-    display: flex;
-    flex-direction: column;
+  color: $cinza-600;
+  display: flex;
+  flex-direction: column;
 
-    .label {
-        font-size: 20px;
-        text-align: center;
-    }
+  .label {
+    font-size: 20px;
+    text-align: center;
+  }
 }
 
 .producao-status {
-    margin-top: 10px;
-    margin-left: 4px;
-    display: flex;
-    align-items: center;
+  margin-top: 10px;
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
 
-    label {
-        margin-right: 12px;
-    }
+  label {
+    margin-right: 12px;
+  }
 }

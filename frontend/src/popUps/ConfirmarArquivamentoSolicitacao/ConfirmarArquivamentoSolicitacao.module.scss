@@ -1,20 +1,20 @@
 @import '@/styles/variables.scss';
 
 .aviso {
-    color: $cinza-600;
-    margin: 20px 0px;
+  color: $cinza-600;
+  margin: 20px 0px;
 }
 
 .botoes {
-    display: flex;
-    margin-top: 28px;
-    width: 100%;
+  display: flex;
+  margin-top: 28px;
+  width: 100%;
 }
 
 .botao {
-    flex: 1;
+  flex: 1;
 }
 
 .botao:first-child {
-    margin-right: 12px;
+  margin-right: 12px;
 }
