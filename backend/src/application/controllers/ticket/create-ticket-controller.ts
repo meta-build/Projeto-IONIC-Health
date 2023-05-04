@@ -1,48 +1,60 @@
-import { SaveFile } from '../../../domain/contracts'
-import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { Attachment, Ticket, User } from '../../../infra/repositories/mysql/entities'
+import { HttpResponse, badRequest, ok } from '@/application/helpers'
+import { Controller } from '@/application/controllers'
+import { Validation } from '@/application/validation'
+import { SaveFile } from '@/domain/contracts'
+import { Attachment, Ticket, User } from '@/infra/repositories/mysql/entities'
+import AppDataSource from '@/infra/repositories/mysql/data-source'
 
-import { Request, Response } from 'express'
 
-export class CreateTicketController {
-  constructor(private readonly fileStorage: SaveFile) { }
+type HttpRequest = {
+  requesterId: number
+  title: string,
+  type: string,
+  description: string,
+  status?: string,
+  fileDataList?: Array<{
+    buffer: Buffer,
+    fileName: string,
+    mimeType: string
+  }>
+}
 
-  async handle(req: Request, res: Response): Promise<Response> {
-    const { titulo, tipo, descricao, status } = req.body
+export class CreateTicketController implements Controller {
+  constructor(
+    private readonly validation: Validation,
+    private readonly fileStorage: SaveFile
+  ) {}
 
-    if (!titulo || !tipo) {
-      return res.json({ error: 'O titulo e tipo são necessários' })
+  async handle(req: HttpRequest): Promise<HttpResponse> {
+    const error = this.validation.validate(req)
+
+    if (error) {
+      return badRequest(error)
     }
 
-    const { id } = res.locals
-    const criador: any = await AppDataSource.manager
-      .findOneByOrFail(User, { id })
-      .catch((err) => {
-        return res.json({ error: err.message })
-      })
+    const { requesterId, title, type, description, status, fileDataList } = req
 
-    const fileDataList = req.fileDataList
-
-    // In need of a transaction here
+    const requester: any = await AppDataSource.manager
+      .findOneByOrFail(User, { id: requesterId })
 
     const attachments: Attachment[] = []
 
-    fileDataList?.forEach(async (fileData) => {
+    for (const fileData of fileDataList) {
       const attachment = new Attachment()
       attachment.fileName = fileData.fileName
       attachment.mimeType = fileData.mimeType
       attachment.storageType = this.fileStorage.type
       attachment.url = await this.fileStorage.saveFile(fileData)
       attachments.push(attachment)
-    })
+    }
 
     const ticket = new Ticket()
-    ticket.requester = criador
-    ticket.title = titulo
-    ticket.type = tipo
-    ticket.description = descricao
+    ticket.requester = requester
+    ticket.title = title
+    ticket.type = type.toUpperCase()
+    ticket.description = description
     ticket.attachments = attachments
-    ticket.status = status
+    ticket.status = status?.toUpperCase() ?? 'NEW'
 
     const savedTicket = await AppDataSource.manager.save(Ticket, ticket)
 
@@ -51,6 +63,6 @@ export class CreateTicketController {
       await AppDataSource.manager.save(Attachment, attachment)
     })
 
-    return res.status(201).json(ticket)
+    return ok(ticket)
   }
 }

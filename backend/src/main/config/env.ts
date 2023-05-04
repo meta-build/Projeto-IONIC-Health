@@ -3,6 +3,7 @@ dotenv.config();
 
 export default {
   port: process.env.PORT || 3000,
+  jwtSecret: process.env.JWT_SECRET ?? 'jwtUwU==',
   database: process.env.DB_DATABASE ?? 'db_ionic',
   dbPort: parseInt(process.env.DB_PORT) ?? 3306,
   dbHost: process.env.DB_HOST ?? 'localhost',

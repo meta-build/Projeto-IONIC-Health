@@ -20,7 +20,10 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
     }
     else {
       // passa os dados pelo res.locals para ser acessado nos controllers
-      res.locals = { id: decoded.id };
+      // Aqui faz sentido injetar a informação na requisição ao invés da resposta.
+      // Usei deconstrução de objeto para manter os valores presentes no locals e adicionar o id
+      res.locals = { ...res.locals, id: decoded.id };
+      req.locals = { ...req.locals, requesterId: decoded.id }
     }
   } catch (error) {
     // o toke não é válido, a resposta com HTTP Method 401 (unauthorized)

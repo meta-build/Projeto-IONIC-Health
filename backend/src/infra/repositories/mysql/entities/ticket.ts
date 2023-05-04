@@ -20,7 +20,7 @@ export class Ticket {
   title: string;
 
   @Column({ nullable: false, unique: false, length: 100 })
-  type: 'HOTFIX' | 'FEATURE';
+  type: string;
 
   @Column({ nullable: true, unique: false, length: 150 })
   description: string;

@@ -1,46 +1,37 @@
-import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { Rating, Ticket, User } from '../../../infra/repositories/mysql/entities'
-import { Validation } from '../../validation/validation'
+import { Controller } from '@/application/controllers'
+import AppDataSource from '@/infra/repositories/mysql/data-source'
+import { Rating, Ticket, User } from '@/infra/repositories/mysql/entities'
+import { Validation } from '@/application/validation'
+import { HttpResponse, badRequest, ok } from '@/application/helpers'
 
-import { Request, Response } from 'express'
+type HttpRequest = {
+  requesterId: number,
+  value: number,
+  committee: string,
+  comment: string,
+  ticketId: number
+}
 
-export class CreateRatingController {
+export class CreateRatingController implements Controller {
   constructor (
     private readonly validation: Validation
   ) {}
 
-  async handle(req: Request, res: Response): Promise<Response> {
-    const error = this.validation.validate(req.body)
+  async handle(req: HttpRequest): Promise<HttpResponse> {
+    const error = this.validation.validate(req)
 
     if (error) {
-      return res.status(400).json(error.message)
+      return badRequest(error)
     }
 
-    const { id } = res.locals
-    const user_repository = await AppDataSource.manager.getRepository(User)
-    const currentUser = await user_repository
-      .createQueryBuilder("user")
-      .leftJoinAndSelect("user.role", "role")
-      .where("user.id=:id", { id })
-      .getOne();
+    const { requesterId, value, committee, comment, ticketId } = req
 
-    // if (currentUser.grupo.name !== 'ADMIN') {
-    //   return res.json({ error: "Usuário não é ADMINISTRADOR" })
-    // }
-
-    const { value, committee, comment, ticketId } = req.body
 
     const reviewer: any = await AppDataSource.manager
-      .findOneByOrFail(User, { id })
-      .catch((err) => {
-        return res.json({ error: err.message })
-      })
+      .findOneByOrFail(User, { id: requesterId })
 
     const ticket: any = await AppDataSource.manager
       .findOneByOrFail(Ticket, { id: ticketId })
-      .catch((err) => {
-        return res.json({ error: err.message })
-      })
 
     const rating = new Rating()
     rating.comment = comment
@@ -51,6 +42,6 @@ export class CreateRatingController {
 
     await AppDataSource.manager.save(Rating, rating)
 
-    return res.status(201).json(rating)
+    return ok(rating)
   }
 }
