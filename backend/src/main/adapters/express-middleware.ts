@@ -8,9 +8,13 @@ export const adaptMiddleware = (middleware: Middleware) => {
       headers: req.headers
     }
 
+    if (!req.locals) {
+      req.locals = {}
+    }
+
     const httpResponse = await middleware.handle(httpRequest)
     if (httpResponse.statusCode === 200) {
-      Object.assign(req, httpResponse.data)
+      Object.assign(req.locals, httpResponse.data)
       next()
     } else {
       res.status(httpResponse.statusCode).json({
