@@ -41,6 +41,6 @@ export class LoginController implements Controller {
       }
     }
 
-    return forbidden(new UnauthorizedError())
+    return forbidden()
   }
 }
