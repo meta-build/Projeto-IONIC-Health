@@ -1,10 +1,10 @@
 import { UnauthorizedError } from '@/application/errors/http'
-import { HttpResponse, forbidden, ok } from '@/application/helpers'
+import { HttpResponse, forbidden, ok, serverError } from '@/application/helpers'
 import { Middleware } from '@/application/middlewares'
 import { LoadUserById } from '@/domain/contracts/repos/user'
 import env from '@/main/config/env'
 
-import jwt from 'jsonwebtoken'
+import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 
 export class AuthMiddleware implements Middleware {
   constructor (
@@ -14,12 +14,16 @@ export class AuthMiddleware implements Middleware {
   async handle (httpRequest: any): Promise<HttpResponse> {
     const authorization = httpRequest.headers.authorization
 
+    if (!authorization) {
+      return forbidden()
+    }
+
     try {
       const [, token] = authorization.split(' ')
       const decoded = <{id: number}>jwt.verify(token, env.jwtSecret)
 
       if (!decoded?.id) {
-        return forbidden(new UnauthorizedError())
+        return forbidden()
       } else {
 
         const user = this.loadUserById.loadById({ id: decoded.id })
@@ -28,13 +32,14 @@ export class AuthMiddleware implements Middleware {
           return ok({ requesterId: decoded.id })
         }
 
-        return forbidden(new UnauthorizedError())
+        return forbidden()
       }
     } catch (error) {
-      return {
-        statusCode: 500,
-        data: new Error('InternalServerError')
+      if (error instanceof JsonWebTokenError) {
+        return forbidden()
       }
+
+      return serverError(error)
     }
   }
 }
