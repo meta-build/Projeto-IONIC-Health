@@ -20,7 +20,7 @@ export const adaptMulter: RequestHandler = (req, res, next) => {
         const fileData: FileData = {
           buffer: file.buffer,
           mimeType: file.mimetype,
-          fileName: file.originalname
+          fileName: file.originalname.replace(/\s/g, '_')
         }
         req.fileDataList.push(fileData)
       })
