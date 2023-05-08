@@ -32,7 +32,7 @@ async create({
 
     return {
         id: rating.id,
-        requesterId: rating.requesterId,
+        userId: rating.userId,
         value: rating.value,
         committee: rating.committee,
         comment: rating.comment,
@@ -42,7 +42,7 @@ async create({
 async loadByReqId({ requesterId }: LoadRatingByReqId.Input): Promise<LoadRatingByReqId.Output> {
     const ratingRepo = this.getRepository(Rating)
 
-    const rating = await ratingRepo.findOneBy({ requesterId })
+    const rating = await ratingRepo.findOneBy({ id: requesterId })
 
     if (rating) {
         return rating

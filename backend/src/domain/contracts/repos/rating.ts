@@ -12,7 +12,7 @@ export namespace CreateRating {
     }
     export type Output = {
         id: number,
-        requesterId: number,
+        userId: number,
         value: number,
         committee: string,
         comment: string,
@@ -29,7 +29,7 @@ export namespace LoadRatingByReqId {
     }
     export type Output = {
         id: number,
-        requesterId: number,
+        userId: number,
         value: number,
         committee: string,
         comment: string,
