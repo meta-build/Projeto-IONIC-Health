@@ -17,3 +17,22 @@ export namespace CreatePermission {
     humanizedEntity: string
   }
 }
+
+export interface GetPermissionsById {
+  getAllById: (input: GetPermissionsById.Input) => Promise<GetPermissionsById.Output>
+}
+
+export namespace GetPermissionsById {
+  export type Input = {
+    ids: number[]
+  }
+
+  export type Output = Array<{
+    id: number
+    permissionName: string
+    humanizedPermissionName: string
+    entity: string
+    humanizedEntity: string
+  }>
+}
+
