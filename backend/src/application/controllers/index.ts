@@ -16,3 +16,5 @@ export * from './user/user-controller'
 export * from './user/create-user-controller'
 
 export * from './account/login-controller'
+
+export * from './permission/create-permission-controller'
