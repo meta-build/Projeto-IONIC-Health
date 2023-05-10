@@ -7,7 +7,7 @@ import { RoleRepository } from '@/infra/repositories/mysql/role-repository'
 type HttpRequest = {
   name: string
   isAdmin: boolean
-  permissions: number[]
+  permissions?: number[]
 }
 
 export class CreateRoleController implements Controller {
