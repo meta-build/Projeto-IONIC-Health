@@ -57,7 +57,12 @@ export class UserRepository
   async loadById({ id }: LoadUserById.Input): Promise<LoadUserById.Output> {
     const userRepo = this.getRepository(User)
 
-    const user = await userRepo.findOneBy({ id })
+    const user = await userRepo
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .where('user.id = :id', { id })
+      .getOne()
 
     if (user) {
       return user
