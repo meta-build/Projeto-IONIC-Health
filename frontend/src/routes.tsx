@@ -63,18 +63,18 @@ export default function AppRouter() {
                 element={<PaginaComHeader elemento={<UsuariosAdm />} />}
               />
             </>)}
-            <Route
-              path='/tests'
-              element={<Tests />}
-            />
           </>
         )}
         <Route
           path='*'
           element={ carregando ?
-          <Carregando /> :
-          <PaginaNaoEncontrada />
-        } />
+            <Carregando /> :
+            <PaginaNaoEncontrada />
+          } />
+          <Route
+            path='/tests'
+            element={<Tests />}
+          />
       </Routes>
     </BrowserRouter>
   );

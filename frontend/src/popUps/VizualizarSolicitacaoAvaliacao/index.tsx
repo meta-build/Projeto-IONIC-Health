@@ -13,6 +13,7 @@ import {
   ConfirmarExclusaoSolicitacao,
   AprovarParaProducao
 } from '../';
+import PopupAlerta from "../PopupAlerta";
 
 interface Props {
   aberto: boolean;
@@ -184,12 +185,20 @@ export default function VisualizarSolicitacaoAvaliacao(props: Props) {
         aberto={popupAvaliar}
         onClose={() => setPopupAvaliar(false)}
       />
-      <ConfirmarArquivamentoSolicitacao
+     {/* <ConfirmarArquivamentoSolicitacao
         onConfirm={() => props.onClose()}
         idSolic={solicitacao.id}
         aberto={popupArquivar}
         onClose={() => setPopupArquivar(false)}
-      />
+                    /> */}
+
+      <PopupAlerta
+      titulo="Alerta EXCLUSÃO de Solicitação"
+      descricao="Confirmar exclusão de solicitação?"
+      onClose={() => setPopupExclusao(false)}
+      visivel={popupExclusao}
+      onConfirm={() => console.log('excluir')}
+      />             
       <ConfirmarExclusaoSolicitacao
         onConfirm={() => props.onClose()}
         idSolic={solicitacao.id}
