@@ -1,14 +1,15 @@
-import { UnauthorizedError } from '@/application/errors/http'
 import { HttpResponse, forbidden, ok, serverError } from '@/application/helpers'
 import { Middleware } from '@/application/middlewares'
 import { LoadUserById } from '@/domain/contracts/repos/user'
+import { Role } from '@/infra/repositories/mysql/entities'
 import env from '@/main/config/env'
 
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 
 export class AuthMiddleware implements Middleware {
   constructor (
-    private readonly loadUserById: LoadUserById
+    private readonly loadUserById: LoadUserById,
+    private readonly requiredPermissions: string[]
   ) {}
 
   async handle (httpRequest: any): Promise<HttpResponse> {
@@ -26,9 +27,11 @@ export class AuthMiddleware implements Middleware {
         return forbidden()
       } else {
 
-        const user = this.loadUserById.loadById({ id: decoded.id })
+        const user = await this.loadUserById.loadById({ id: decoded.id })
 
-        if (user) {
+        const hasPermission = this.hasPermission(user.role)
+
+        if (hasPermission) {
           return ok({ requesterId: decoded.id })
         }
 
@@ -41,5 +44,19 @@ export class AuthMiddleware implements Middleware {
 
       return serverError(error)
     }
+  }
+
+  private hasPermission(role: Role) {
+    if (!this.requiredPermissions) {
+      return true
+    }
+
+    if (role.isAdmin) {
+      return true
+    }
+
+    return this.requiredPermissions.every((requiredPermission) =>
+      role.permissions.some((permission) => permission.permissionName === requiredPermission)
+    )
   }
 }
