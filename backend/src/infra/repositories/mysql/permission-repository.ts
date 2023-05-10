@@ -1,13 +1,11 @@
-import {
-  CreatePermission
-} from '@/domain/contracts/repos'
+import { CreatePermission, GetPermissionsById } from '@/domain/contracts/repos'
 import { Permission } from './entities'
 import DataSource from './data-source'
 
 import { ObjectType, Repository } from 'typeorm'
 
 export class PermissionRepository
-  implements CreatePermission
+  implements CreatePermission, GetPermissionsById
 {
   getRepository(entity: ObjectType<Permission>): Repository<Permission> {
     return DataSource.getRepository(entity)
@@ -36,5 +34,18 @@ export class PermissionRepository
       entity: permission.entity,
       humanizedEntity: permission.humanizedEntity
     }
+  }
+
+  async getAllById(
+    input: GetPermissionsById.Input
+  ): Promise<GetPermissionsById.Output> {
+    const permissionRepo = this.getRepository(Permission)
+
+    const permissions = permissionRepo
+      .createQueryBuilder('permissions')
+      .where('permission.id IN (:...ids)', { ids: input.ids })
+      .getMany()
+
+    return permissions
   }
 }
