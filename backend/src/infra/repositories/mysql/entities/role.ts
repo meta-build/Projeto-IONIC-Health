@@ -3,7 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  ManyToMany
+  ManyToMany,
+  JoinTable
 } from 'typeorm'
 import { User } from './user'
 import { Permission } from './permission'
@@ -23,5 +24,6 @@ export class Role {
   users: User[]
 
   @ManyToMany(() => Permission)
+  @JoinTable()
   permissions: Permission[]
 }

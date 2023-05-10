@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm'
 import { Role } from './role'
 
 @Entity({ name: 'permission' })
@@ -19,5 +19,6 @@ export class Permission {
   humanizedEntity: string
 
   @ManyToMany(() => Role)
+  @JoinTable()
   roles: Role[]
 }
