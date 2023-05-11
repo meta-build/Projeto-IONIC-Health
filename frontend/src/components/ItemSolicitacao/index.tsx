@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import GoogleIcon from '../GoogleIcon';
 import styles from './ItemSolicitacao.module.scss';
 import { SolicitacaoProps } from '../../types';
+import BadgeStatus from '../BadgeStatus';
 
 interface Props {
   solicitacao: SolicitacaoProps;
@@ -38,15 +39,7 @@ export default function ItemSolicitacao({ solicitacao, handleClick, isSelecionad
         <span className={styles.titulo}>
           [{solicitacao.tipo}] {solicitacao.titulo}
         </span>
-        <span className={classNames({
-          [styles.status]: true,
-          [styles.recente]: solicitacao.status == 'Recentes',
-          [styles['em-avaliacao']]: solicitacao.status == 'Em avaliação',
-          [styles['em-producao']]: solicitacao.status.split('.')[0] == 'Em produção',
-          [styles.arquivado]: solicitacao.status == 'archived',
-        })}>
-          {strStatus(solicitacao.status)}
-        </span>
+        <BadgeStatus status={solicitacao.status} />
       </div>
       <div className={styles.bottom}>
 

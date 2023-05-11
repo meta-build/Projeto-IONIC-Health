@@ -51,33 +51,6 @@
   flex: 1;
 }
 
-.status {
-  padding: 6px 8px;
-  border-radius: 8px;
-  font-size: 14px;
-  height: fit-content;
-}
-
-.top .recente {
-  color: $azul2;
-  border: 1px solid $azul2;
-}
-
-.top .em-avaliacao {
-  color: $amarelo-300;
-  border: 1px solid $amarelo-300;
-}
-
-.top .em-producao {
-  color: $verde;
-  border: 1px solid $verde;
-}
-
-.top .arquivado {
-  color: $vermelho;
-  border: 1px solid $vermelho;
-}
-
 .bottom .recente {
   color: $azul2;
 }
