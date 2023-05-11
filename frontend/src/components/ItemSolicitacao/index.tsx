@@ -35,7 +35,10 @@ export default function ItemSolicitacao({ solicitacao, handleClick, isSelecionad
     })}
     onClick={handleClick}>
       <div className={styles.top}>
-        <GoogleIcon className={styles.icon}>&#xe8b8;</GoogleIcon>
+        {solicitacao.tipo == 'Feature' ?
+          <GoogleIcon className={styles.icon}>&#xe8b8;</GoogleIcon> :
+          <GoogleIcon className={styles.icon}>&#xf10b;</GoogleIcon>
+        }
         <span className={styles.titulo}>
           [{solicitacao.tipo}] {solicitacao.titulo}
         </span>
