@@ -3,9 +3,10 @@ import styles from './BadgeStatus.module.scss';
 
 interface Props {
   status: string;
+  className?: string;
 }
 
-export default function ({status}: Props) {
+export default function ({status, className}: Props) {
   const strStatus = (status: string) => {
     switch (status) {
       case 'Recentes':
@@ -26,6 +27,7 @@ export default function ({status}: Props) {
       [styles['em-avaliacao']]: status == 'Em avaliação',
       [styles['em-producao']]: status.split('.')[0] == 'Em produção',
       [styles.arquivado]: status == 'archived',
+      [className]: true
     })}>
       {strStatus(status)}
     </span>
