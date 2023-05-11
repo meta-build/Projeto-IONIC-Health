@@ -7,6 +7,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 interface DropdownItem {
   label: string;
   icon: JSX.Element;
+  value?: string;
 }
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
   children?: ReactNode;
   handleSelected: (selected: string) => void;
   icon?: JSX.Element;
+  className?: string
 }
 
 export default function DropdownContornado(props: Props) {
@@ -21,12 +23,15 @@ export default function DropdownContornado(props: Props) {
   const [selecionado, setSelecionado] = useState(props.itens[0]);
 
   return (
-    <div className={styles.container}>
+    <div className={classNames({
+      [styles.container]: true,
+      [props.className]: true
+      })}>
       <button
         onClick={() => setAberto(!aberto)}
         onBlur={() => setAberto(false)}
         className={classNames({
-          [styles.botao]: true
+          [styles.botao]: true,
         })}>
         <span className={styles.icon}>
           {selecionado.icon}
@@ -46,7 +51,7 @@ export default function DropdownContornado(props: Props) {
                 onClick={() => {
                   setSelecionado(item);
                   setAberto(false);
-                  props.handleSelected(item.label)
+                  props.handleSelected(item.value ? item.value : item.label)
                 }}>
                 <span className={styles.icon}>
                   {item.icon}

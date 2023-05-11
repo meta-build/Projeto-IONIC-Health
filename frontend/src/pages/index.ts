@@ -7,6 +7,8 @@ import PaginaNaoEncontrada from "./PaginaNaoEncontrada";
 import SolicitacoesAdm from "./SolicitacoesAdm";
 import UsuariosAdm from "./UsuariosAdm";
 
+import ListaSolicitacoes from "./ListaSolicitacoes";
+
 export {
   HomeAdm,
   HomeAvaliador,
@@ -15,5 +17,6 @@ export {
   PaginaNaoEncontrada,
   SolicitacoesAdm,
   UsuariosAdm,
-  Tests
+  Tests,
+  ListaSolicitacoes
 }
