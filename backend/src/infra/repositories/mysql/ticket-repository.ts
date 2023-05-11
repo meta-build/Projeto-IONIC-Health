@@ -10,6 +10,7 @@ import {
   export class TicketRepository
     implements CreateTicket, LoadTicketById
   {
+    loadById: (input: LoadTicketById.Input) => Promise<LoadTicketById.Output>
     getRepository(entity: ObjectType<Ticket>): Repository<Ticket> {
       return DataSource.getRepository(entity)
     }
@@ -35,20 +36,24 @@ import {
         title: ticket.title,
         type: ticket.type,
         description: ticket.description,
-        status: ticket.status
+        status: ticket.status,
+        ratings: ticket.ratings,
+        attachments: ticket.attachments
+        }
       }
     }
   
-    async loadById({ id }: LoadTicketById.Input): Promise<LoadTicketById.Output> {
+    async function loadById ({id}: LoadTicketById.Input): Promise<LoadTicketById.Output> {
       const ticketRepo = this.getRepository(Ticket)
-  
-      const ticket = await ticketRepo.findOneBy({ id })
-  
+      const ticket = await ticketRepo
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.ratings', 'rating')
+      .leftJoinAndSelect('ticket.attachments', 'attachment')
+      .where('ticket.id=:id', { id })
+      .getOne()
       if (ticket) {
         return ticket
       }
   
       return null
     }
-  }
-  
