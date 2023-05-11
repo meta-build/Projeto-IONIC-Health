@@ -2,7 +2,7 @@ import { UnauthorizedError } from '@/application/errors'
 import { HttpResponse, forbidden, ok, serverError } from '@/application/helpers'
 import { Middleware } from '@/application/middlewares'
 import { LoadUserById } from '@/domain/contracts/repos/user'
-import { Role } from '@/infra/repositories/mysql/entities'
+import { Permission, Role } from '@/infra/repositories/mysql/entities'
 import env from '@/main/config/env'
 
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
@@ -10,7 +10,8 @@ import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 export class AuthMiddleware implements Middleware {
   constructor (
     private readonly loadUserById: LoadUserById,
-    private readonly requiredPermissions: string[]
+    private readonly requiredPermissions: string[],
+    private readonly everyPermission: boolean
   ) {}
 
   async handle (httpRequest: any): Promise<HttpResponse> {
@@ -48,7 +49,7 @@ export class AuthMiddleware implements Middleware {
   }
 
   private hasPermission(role: Role) {
-    if (!this.requiredPermissions) {
+    if (this.requiredPermissions.length === 0) {
       return true
     }
 
@@ -56,8 +57,22 @@ export class AuthMiddleware implements Middleware {
       return true
     }
 
+    if (this.everyPermission) {
+      return this.hasEveryPermission(role.permissions)
+    } else {
+      return this.hasSomePermission(role.permissions)
+    }
+  }
+
+  private hasEveryPermission(permissions: Permission[]) {
     return this.requiredPermissions.every((requiredPermission) =>
-      role.permissions.some((permission) => permission.permissionName === requiredPermission)
+      permissions.some((permission) => permission.permissionName === requiredPermission)
+    )
+  }
+
+  private hasSomePermission(permissions: Permission[]) {
+    return this.requiredPermissions.some((requiredPermission) =>
+      permissions.some((permission) => permission.permissionName === requiredPermission)
     )
   }
 }
