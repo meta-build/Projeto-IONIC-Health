@@ -1,11 +1,15 @@
-import PopupAlerta from "../../popUps/PopupAlerta";
+
+import PopupErro from "../../popUps/PopupErro";
 
 export default function Tests () {
     return (
-        <PopupAlerta visivel={true} onClose={function (): void {
+    <PopupErro visivel={true} onClose={function (): void {
             throw new Error("Function not implemented.");
         } } onConfirm={function (): void {
             throw new Error("Function not implemented.");
-        } } titulo={"Alerta"} descricao={"Excluir solicitação?"} />
+        } } titulo={"Erro ao efetuar tarefa"} descricao={"Tente novamente mais tarde"}
+    />
+
+       
     );
 }
