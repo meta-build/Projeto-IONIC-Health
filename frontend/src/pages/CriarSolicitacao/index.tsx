@@ -7,6 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anexar, Botao, BotaoPopup, BotaoPreenchido } from '../../components/Botoes';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import InputEscuro from '../../components/Inputs/InputEscuro';
+import DropdownEscuro from '../../components/Dropdowns/DropdownEscuro';
+import TextBoxEscuro from '../../components/Inputs/TextBoxEscuro';
+import AnexarEscuro from '../../components/Botoes/AnexarEscuro';
 
 
 
@@ -36,7 +40,7 @@ export default function CriarSolicitacao() {
               [styles.preencher]: true,
             })}>
             Título
-            <InputPopup
+            <InputEscuro
               valor={titulo}
               handleChange={(e) => setTitulo(e.target.value)}
             />
@@ -44,7 +48,7 @@ export default function CriarSolicitacao() {
           </label>
           <div className={styles.lb}>
             Tipo
-            <DropdownPreenchido itens={['Feature', 'Hotfix']}
+            <DropdownEscuro itens={['Feature', 'Hotfix']}
               selecionadoFst={tipo}
               handleSelected={(s) => setTipo(s)}
             />
@@ -53,7 +57,7 @@ export default function CriarSolicitacao() {
         <label className={styles.label}>
           Descrição
         </label>
-        <TextBox
+        <TextBoxEscuro
           valor={descricao}
           ajustavel={false}
           className={styles['descricao-input']}
@@ -68,7 +72,7 @@ export default function CriarSolicitacao() {
               <span className={styles['arquivo-label']}>
                 Arquivos
               </span>
-              <Anexar
+              <AnexarEscuro
                 className={styles.arquivo}
                 handleFileChange={(e) => {
                   setArquivos((prevState) => {
