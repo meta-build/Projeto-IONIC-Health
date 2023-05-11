@@ -7,6 +7,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 interface DropdownItem {
   label: string;
   icon: JSX.Element;
+  value?: string;
 }
 
 interface Props {
@@ -50,7 +51,7 @@ export default function DropdownContornado(props: Props) {
                 onClick={() => {
                   setSelecionado(item);
                   setAberto(false);
-                  props.handleSelected(item.label)
+                  props.handleSelected(item.value ? item.value : item.label)
                 }}>
                 <span className={styles.icon}>
                   {item.icon}
