@@ -1,0 +1,37 @@
+@import '@/styles/variables.scss';
+
+.botao {
+  padding: 8px 12px;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+  border: 2px solid #333333;
+}
+
+.claro {
+  background-color: #232325;
+  color: $cinza-300;
+}
+
+.claro:hover {
+  cursor: pointer;
+  border: 2px solid $cinza-400;
+}
+
+.noturno {
+  background-color: $cinza-600;
+  color: $cinza-300
+}
+
+.noturno:hover {
+  border: 2px solid $cinza-400;
+  outline: none;
+}
+
+
+//Quando for utilizar este botão, colocar a estilização abaixo para 
+// regular o espaçamento entre as linhas
+// .icon {
+//   margin-right: 8px;
+// }

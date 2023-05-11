@@ -1,0 +1,22 @@
+@import '@/styles/variables.scss';
+
+.input {
+  background: none;
+  border: 2px solid #333333;
+  font-size: 16px;
+  background-color: #232325;
+  color: $cinza-300;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.input::placeholder {
+  color: white;
+  font-size: 12px;
+}
+
+.input:focus {
+  border: 2px solid $cinza-400;
+  outline: none;
+}
