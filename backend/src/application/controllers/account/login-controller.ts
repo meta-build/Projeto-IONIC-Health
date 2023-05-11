@@ -3,7 +3,7 @@ import { Validation } from '@/application/validation'
 import { HttpResponse, badRequest, forbidden, ok } from '@/application/helpers'
 import { Encrypter, HashComparer } from '@/domain/contracts/cryptography'
 import { UserRepository } from '@/infra/repositories/mysql/user-repository'
-import { UnauthorizedError } from '@/application/errors/http'
+import { AuthenticationError } from '@/application/errors/http'
 
 type HttpRequest = {
   email: string
@@ -42,6 +42,6 @@ export class LoginController implements Controller {
       }
     }
 
-    return forbidden()
+    return forbidden(new AuthenticationError())
   }
 }
