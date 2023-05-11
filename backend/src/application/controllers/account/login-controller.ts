@@ -36,7 +36,8 @@ export class LoginController implements Controller {
         const accessToken = await this.encrypter.encrypt({ id: user.id })
         return ok({
           accessToken,
-          name: user.name
+          name: user.name,
+          role: user.role
         })
       }
     }
