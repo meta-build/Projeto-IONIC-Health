@@ -1,0 +1,28 @@
+@import '@/styles/variables.scss';
+
+
+.desc {
+    color: $cinza-600;
+
+}
+
+.botao-container {
+    display: flex;
+    width: 100%;
+}
+
+.botao {
+    flex: 1;
+}
+
+.excluir {
+    margin-right: 8px;
+    background-color: $vermelho;
+    color: white;
+
+}
+
+.excluir:hover {
+    background-color: red;
+
+} 

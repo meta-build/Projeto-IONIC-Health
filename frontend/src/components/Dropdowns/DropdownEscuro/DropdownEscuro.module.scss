@@ -4,26 +4,28 @@ $icon-size: 16px;
 
 .container {
   position: relative;
-  // width: fit-content;
+  width: fit-content;
   padding: 0;
   margin: 0;
+  color: white
 }
 
 .botao {
-  padding: 8px;
+  padding: 9px;
   display: flex;
   align-items: center;
   min-width: 155px;
-  width: 100%;
-  border: none;
-  background: none;
-  border-bottom: 1px solid white;
-  color: white;
+  
+  background-color: #232325;
+  border-radius: 12px;
+  color: $cinza-300;
+  border: 2px solid #333333;
 
   .children {
     flex: 1;
     padding: 0;
     margin: 0;
+    margin-right: 12px;
     text-align: left;
     justify-content: center;
   }
@@ -37,6 +39,7 @@ $icon-size: 16px;
 .icon {
   font-size: $icon-size;
   margin-right: 8px;
+  color: $cinza-300;
 
   span {
     display: flex;
@@ -48,8 +51,12 @@ $icon-size: 16px;
 }
 
 .botao:hover {
-  background-color: $cinza-300-hover;
   cursor: pointer;
+}
+
+.botao-hover:hover {
+  
+  border: 2px solid $cinza-400;
 }
 
 .list {
@@ -72,14 +79,17 @@ $icon-size: 16px;
     border: none;
     display: flex;
     align-items: center;
-    background-color: $cinza-300;
+    background-color: $cinza-600;
+    color: $cinza-300;
     padding: 8px;
     width: 100%;
     text-align: left;
-  }
 
-  li:hover {
-    background-color: $cinza-300-hover;
-    cursor: pointer;
   }
+}
+
+li:hover {
+  background-color: $cinza-400;
+  cursor: pointer;
+  border: 2px solid $cinza-400;
 }

@@ -1,43 +1,45 @@
-import styles from './DropdownContornado.module.scss';
+import styles from './DropdownEscuro.module.scss';
 import classNames from "classnames";
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
-interface DropdownItem {
-  label: string;
-  icon: JSX.Element;
-  value?: string;
-}
-
 interface Props {
-  itens: DropdownItem[];
+  itens: string[];
   children?: ReactNode;
   handleSelected: (selected: string) => void;
-  icon?: JSX.Element;
-  className?: string
+  selecionadoFst?: string;
+  className?: string;
+  onOpen?: () => void;
 }
 
-export default function DropdownContornado(props: Props) {
+export default function DropdownPreenchido(props: Props) {
   const [aberto, setAberto] = useState(false);
-  const [selecionado, setSelecionado] = useState(props.itens[0]);
+  const [selecionado, setSelecionado] = useState(props.selecionadoFst || props.itens[0]);
 
+  useEffect(() => {
+    if (props.selecionadoFst) {
+      setSelecionado(props.selecionadoFst);
+    }
+  }, [props.selecionadoFst]);
   return (
-    <div className={classNames({
-      [styles.container]: true,
-      [props.className]: true
-      })}>
+    <div className={styles.container}>
       <button
-        onClick={() => setAberto(!aberto)}
+        onClick={() => {
+          setAberto(!aberto);
+          if (props.onOpen) {
+            props.onOpen();
+          }
+        }}
         onBlur={() => setAberto(false)}
+        type='button'
         className={classNames({
           [styles.botao]: true,
+          [styles['botao-hover']]: !aberto,
+          [props.className]: true
         })}>
-        <span className={styles.icon}>
-          {selecionado.icon}
-        </span>
         <span className={styles.children}>
-          {selecionado.label}
+          {selecionado}
         </span>
         {aberto ?
           <FontAwesomeIcon icon={faChevronUp} className={styles.arrow} /> :
@@ -51,12 +53,9 @@ export default function DropdownContornado(props: Props) {
                 onClick={() => {
                   setSelecionado(item);
                   setAberto(false);
-                  props.handleSelected(item.value ? item.value : item.label)
+                  props.handleSelected(item)
                 }}>
-                <span className={styles.icon}>
-                  {item.icon}
-                </span>
-                {item.label}
+                {item}
               </li>
             ))}
           </ul>}
