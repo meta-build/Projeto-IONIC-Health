@@ -45,7 +45,12 @@ export class UserRepository
   }: LoadUserByEmail.Input): Promise<LoadUserByEmail.Output> {
     const userRepo = this.getRepository(User)
 
-    const user = await userRepo.findOne({ where: { email } })
+    const user = await userRepo
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .where('user.email = :email', { email })
+      .getOne()
 
     if (user) {
       return user

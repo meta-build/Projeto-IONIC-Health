@@ -34,6 +34,7 @@ export namespace LoadUserByEmail {
     email: string
     password: string
     roleId: number
+    role: Role
   }
 }
 
