@@ -26,14 +26,14 @@ export default function ItemSolicitacao({ solicitacao, handleClick, isSelecionad
 
   return (
     <li
-    className={classNames({
-      [styles.container]: true,
-      [styles[`selecionado-recente`]]: isSelecionado && solicitacao.status == 'Recentes',
-      [styles[`selecionado-em-av`]]: isSelecionado && solicitacao.status == 'Em avaliação',
-      [styles[`selecionado-em-prod`]]: isSelecionado && solicitacao.status.split('.')[0] == 'Em produção',
-      [styles[`selecionado-arq`]]: isSelecionado && solicitacao.status == 'archived',
-    })}
-    onClick={handleClick}>
+      className={classNames({
+        [styles.container]: true,
+        [styles[`selecionado-recente`]]: isSelecionado && solicitacao.status == 'Recentes',
+        [styles[`selecionado-em-av`]]: isSelecionado && solicitacao.status == 'Em avaliação',
+        [styles[`selecionado-em-prod`]]: isSelecionado && solicitacao.status.split('.')[0] == 'Em produção',
+        [styles[`selecionado-arq`]]: isSelecionado && solicitacao.status == 'archived',
+      })}
+      onClick={handleClick}>
       <div className={styles.top}>
         {solicitacao.tipo == 'Feature' ?
           <GoogleIcon className={styles.icon}>&#xe8b8;</GoogleIcon> :
@@ -97,15 +97,16 @@ export default function ItemSolicitacao({ solicitacao, handleClick, isSelecionad
                   <span>{nota.committee}:</span>
                   <span className={classNames(
                     nota.committee == 'Impacto' ? {
-                      [styles.arquivado]: nota.value == 0,
-                      [styles['em-avaliacao']]: nota.value == 1,
-                      [styles['em-producao']]: nota.value == 2,
-                      [styles.recente]: nota.value == 3,
+                      [styles['impacto-0']]: nota.value == 0,
+                      [styles['impacto-1']]: nota.value == 1,
+                      [styles['impacto-2']]: nota.value == 2,
+                      [styles['impacto-3']]: nota.value == 3,
                     } :
                       {
-                        [styles['em-avaliacao']]: nota.value == 1,
-                        [styles['em-producao']]: nota.value == 2,
-                        [styles.arquivado]: nota.value == 3,
+                        [styles['av-0']]: nota.value == 0,
+                        [styles['av-1']]: nota.value == 1,
+                        [styles['av-2']]: nota.value == 2,
+                        [styles['av-3']]: nota.value == 3,
                       })}>{nota.value}</span>
                 </>
               )) :

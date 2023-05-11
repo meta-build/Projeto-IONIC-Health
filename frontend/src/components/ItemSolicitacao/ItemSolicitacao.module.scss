@@ -75,3 +75,19 @@
   display: flex;
   gap: 4px
 }
+
+.impacto-3, .av-0 {
+  color: $azul2;
+}
+
+.impacto-1, .av-2 {
+  color: $amarelo;
+}
+
+.impacto-2, .av-1 {
+  color: $verde;
+}
+
+.impacto-0, .av-3 {
+  color: $vermelho;
+}
