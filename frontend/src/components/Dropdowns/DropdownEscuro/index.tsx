@@ -13,7 +13,7 @@ interface Props {
   onOpen?: () => void;
 }
 
-export default function DropdownPreenchido(props: Props) {
+export default function DropdownEscuro(props: Props) {
   const [aberto, setAberto] = useState(false);
   const [selecionado, setSelecionado] = useState(props.selecionadoFst || props.itens[0]);
 
