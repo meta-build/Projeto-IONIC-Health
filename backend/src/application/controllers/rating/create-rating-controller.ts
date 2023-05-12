@@ -38,9 +38,9 @@ export class CreateRatingController implements Controller {
     if (!reviewer) {
       return badRequest(new UnauthorizedError)
     }
-    
+
     const ticket = await this.ticketRepository.loadTicketById({ id: ticketId })
-    
+
     if (!ticket) {
       return badRequest(new UnauthorizedError)
     }
