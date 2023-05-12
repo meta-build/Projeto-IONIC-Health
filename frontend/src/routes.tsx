@@ -12,7 +12,8 @@ import {
   UsuariosAdm,
   PaginaNaoEncontrada,
   Tests,
-  ListaSolicitacoes
+  ListaSolicitacoes,
+  ListaUsuarios
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
@@ -61,7 +62,7 @@ export default function AppRouter() {
               />
               <Route
                 path='/usuarios'
-                element={<PaginaComHeader elemento={<UsuariosAdm />} />}
+                element={<PaginaComHeader elemento={<ListaUsuarios />} />}
               />
             </>)}
           </>

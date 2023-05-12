@@ -8,6 +8,7 @@ import SolicitacoesAdm from "./SolicitacoesAdm";
 import UsuariosAdm from "./UsuariosAdm";
 
 import ListaSolicitacoes from "./ListaSolicitacoes";
+import ListaUsuarios from "./ListaUsuarios";
 
 export {
   HomeAdm,
@@ -18,5 +19,6 @@ export {
   SolicitacoesAdm,
   UsuariosAdm,
   Tests,
-  ListaSolicitacoes
+  ListaSolicitacoes,
+  ListaUsuarios
 }
