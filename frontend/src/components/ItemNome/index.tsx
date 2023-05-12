@@ -11,7 +11,10 @@ interface Props {
 export default function ItemNome (props: Props) {
   return(
     <li
-    onClick={props.handleClick}
+    onClick={(e) => {
+      e.stopPropagation();
+      props.handleClick();
+    }}
     className={classNames({
       [styles.container]: true,
       [styles.selected]: props.isSelected
