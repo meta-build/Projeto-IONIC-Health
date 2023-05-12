@@ -53,7 +53,6 @@ export class CreateRatingController implements Controller {
       requesterId
     })
 
-    await AppDataSource.manager.save(Rating, rating)
 
     return ok(rating)
   }
