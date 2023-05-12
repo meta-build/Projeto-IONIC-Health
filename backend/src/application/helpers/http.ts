@@ -1,4 +1,4 @@
-import { ServerError, UnauthorizedError } from '@/application/errors'
+import { ServerError, UnauthorizedError, UnprocessableEntity } from '@/application/errors'
 
 export type HttpResponse<T = any> = {
   statusCode: number
@@ -23,4 +23,9 @@ export const forbidden = (): HttpResponse<Error> => ({
 export const serverError = (error: Error): HttpResponse => ({
   statusCode: 500,
   data: new ServerError(error.stack)
+})
+
+export const unprocessableEntity = (): HttpResponse<Error> => ({
+  statusCode: 422,
+  data: new UnprocessableEntity
 })
