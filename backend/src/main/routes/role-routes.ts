@@ -5,5 +5,5 @@ import { makeCreateRoleFactory } from '@/main/factories/application/controllers'
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.post('/role', adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateRoleFactory()))
+  router.post('/role', adaptMiddleware(makeAuthMiddleware(['CreateRole'])), adaptRoute(makeCreateRoleFactory()))
 }

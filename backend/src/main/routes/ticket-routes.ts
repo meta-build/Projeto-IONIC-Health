@@ -4,16 +4,21 @@ import {
   GetAllTicket,
   GetOneTicket
 } from '@/application/controllers'
+import {
+  adaptMiddleware,
+  adaptRoute,
+  adaptMulter as upload
+} from '@/main/adapters'
 import { authorization } from '@/main/middlewares'
-import { adaptRoute, adaptMulter as upload } from '@/main/adapters'
 import { makeTicketController } from '@/main/factories/application/controllers'
+import { makeAuthMiddleware } from '@/main/factories/middlewares'
 
 import { Router } from 'express'
 
 export default (router: Router): void => {
   router.post(
     '/ticket',
-    authorization,
+    adaptMiddleware(makeAuthMiddleware(['CreateTicket'])),
     upload,
     adaptRoute(makeTicketController())
   )
