@@ -37,7 +37,7 @@ export class CreateRatingController implements Controller {
       return badRequest(new UnprocessableEntity)
     }
 
-    const ticket = await this.ticketRepository.loadTicketById({ id: ticketId })
+    const ticket = await this.ticketRepository.loadById({ id: ticketId })
 
     if (!ticket) {
       return badRequest(new UnprocessableEntity)
