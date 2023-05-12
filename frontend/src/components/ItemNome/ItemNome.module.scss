@@ -1,0 +1,25 @@
+@import '@/styles/variables.scss';
+
+.container {
+  list-style: none;
+  display: flex;
+  box-sizing: border-box;
+  padding: 8px;
+  background-color: $cinza-300;
+  border-radius: 8px;
+}
+
+.nome {
+  flex: 1;
+  font-size: 16px;
+  font-weight: bold;
+  color: $cinza-600;
+}
+
+.desc {
+  color: $cinza-400
+}
+
+.selected {
+  border: 2px solid $ciano-300;
+}
