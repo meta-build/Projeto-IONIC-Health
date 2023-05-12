@@ -1,9 +1,7 @@
 import { Controller } from '@/application/controllers'
-import AppDataSource from '@/infra/repositories/mysql/data-source'
-import { Rating } from '@/infra/repositories/mysql/entities'
 import { Validation } from '@/application/validation'
 import { HttpResponse, badRequest, ok } from '@/application/helpers'
-import { UnauthorizedError } from '@/application/errors'
+import { UnprocessableEntity } from '@/application/errors'
 import { RatingRepository } from '@/infra/repositories/mysql/rating-repository'
 import { UserRepository } from '@/infra/repositories/mysql/user-repository'
 import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository'
@@ -36,13 +34,13 @@ export class CreateRatingController implements Controller {
     const reviewer = await this.userRepository.loadById({ id: requesterId })
 
     if (!reviewer) {
-      return badRequest(new UnauthorizedError)
+      return badRequest(new UnprocessableEntity)
     }
 
     const ticket = await this.ticketRepository.loadTicketById({ id: ticketId })
 
     if (!ticket) {
-      return badRequest(new UnauthorizedError)
+      return badRequest(new UnprocessableEntity)
     }
 
     const rating = await this.ratingRepository.create({

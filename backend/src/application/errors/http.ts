@@ -12,3 +12,9 @@ export class ServerError extends Error {
     this.stack = stack
   }
 }
+export class UnprocessableEntity extends Error {
+  constructor () {
+    super('Unprocessable Entity')
+    this.name = 'UnprocessableEntity'
+  }
+}
