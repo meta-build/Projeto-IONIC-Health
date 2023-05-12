@@ -4,6 +4,7 @@ import BotaoIcon from './BotaoIcon'
 import BotaoNota from './BotaoNota'
 import BotaoPopup from './BotaoPopup'
 import BotaoPreenchido from './BotaoPreenchido'
+import BotaoPreenchidoEscuro from './BotaoPreenchidoEscuro'
 import IconeClicavel from './IconeClicavel'
 
 export {
@@ -14,4 +15,5 @@ export {
     BotaoPopup,
     BotaoPreenchido,
     IconeClicavel,
+    BotaoPreenchidoEscuro,
 }
