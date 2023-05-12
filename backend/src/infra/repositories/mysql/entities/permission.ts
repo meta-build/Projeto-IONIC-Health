@@ -19,6 +19,16 @@ export class Permission {
   humanizedEntity: string
 
   @ManyToMany(() => Role)
-  @JoinTable()
+  @JoinTable({
+    name: 'role_permission',
+    joinColumn: {
+      name: 'permissionId',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'roleId',
+      referencedColumnName: 'id'
+    }
+  })
   roles: Role[]
 }
