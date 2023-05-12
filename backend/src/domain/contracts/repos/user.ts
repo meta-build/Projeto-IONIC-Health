@@ -1,3 +1,5 @@
+import { Role } from '@/infra/repositories/mysql/entities'
+
 export interface CreateUser {
   create: (input: CreateUser.Input) => Promise<CreateUser.Output>
 }
@@ -32,6 +34,7 @@ export namespace LoadUserByEmail {
     email: string
     password: string
     roleId: number
+    role: Role
   }
 }
 
@@ -48,6 +51,26 @@ export namespace LoadUserById {
     name: string
     email: string
     password: string
+    roleId: number
+    role: Role
+  }
+}
+
+export interface UpdateUser {
+  update: (input: UpdateUser.Input) => Promise<UpdateUser.Output>
+}
+
+export namespace UpdateUser {
+  export type Input = {
+    id: number
+    name: string
+    email: string
+    roleId?: number
+  }
+  export type Output = {
+    id: number
+    name: string
+    email: string
     roleId: number
   }
 }

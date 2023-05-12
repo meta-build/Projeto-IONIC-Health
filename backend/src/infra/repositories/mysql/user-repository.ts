@@ -1,7 +1,8 @@
 import {
   CreateUser,
   LoadUserByEmail,
-  LoadUserById
+  LoadUserById,
+  UpdateUser
 } from '@/domain/contracts/repos/user'
 import { User } from './entities'
 import DataSource from './data-source'
@@ -9,7 +10,7 @@ import DataSource from './data-source'
 import { ObjectType, Repository } from 'typeorm'
 
 export class UserRepository
-  implements CreateUser, LoadUserByEmail, LoadUserById
+  implements CreateUser, LoadUserByEmail, LoadUserById, UpdateUser
 {
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
@@ -45,7 +46,12 @@ export class UserRepository
   }: LoadUserByEmail.Input): Promise<LoadUserByEmail.Output> {
     const userRepo = this.getRepository(User)
 
-    const user = await userRepo.findOne({ where: { email } })
+    const user = await userRepo
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .where('user.email = :email', { email })
+      .getOne()
 
     if (user) {
       return user
@@ -57,7 +63,12 @@ export class UserRepository
   async loadById({ id }: LoadUserById.Input): Promise<LoadUserById.Output> {
     const userRepo = this.getRepository(User)
 
-    const user = await userRepo.findOneBy({ id })
+    const user = await userRepo
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .where('user.id = :id', { id })
+      .getOne()
 
     if (user) {
       return user
@@ -65,4 +76,30 @@ export class UserRepository
 
     return null
   }
+
+  async update({
+    id,
+    email,
+    roleId,
+    name
+
+  }: UpdateUser.Input): Promise<UpdateUser.Output>{
+
+    const userRepo = this.getRepository(User)
+
+    const user = await userRepo.findOneBy({id})
+
+    if(!user){
+      return null
+    }
+
+    user.email = email ?? user.email,
+    user.name = name ?? user.name,
+    user.roleId = roleId ?? user.roleId
+    userRepo.save(user)
+
+    return user
+  }
 }
+
+ 
