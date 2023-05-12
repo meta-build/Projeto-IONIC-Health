@@ -1,10 +1,11 @@
-export interface LoadTicketByReqId {
-  loadTicketById: (
-    input: LoadTicketByReqId.Input
-  ) => Promise<LoadTicketByReqId.Output>
+import { Attachment } from '@/infra/repositories/mysql/entities/attachment'
+import { Rating } from '@/infra/repositories/mysql/entities/rating'
+
+export interface LoadTicketById {
+  loadById: (input: LoadTicketById.Input) => Promise<LoadTicketById.Output>
 }
 
-export namespace LoadTicketByReqId {
+export namespace LoadTicketById {
   export type Input = {
     id: number
   }
@@ -13,5 +14,8 @@ export namespace LoadTicketByReqId {
     title: string
     type: string
     description: string
+    status: string
+    ratings: Rating[]
+    attachments: Attachment[]
   }
 }
