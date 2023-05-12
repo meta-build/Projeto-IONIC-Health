@@ -1,0 +1,36 @@
+@import '@/styles/variables.scss';
+
+.botao {
+  border: none;
+  background: none;
+
+  position: relative;
+  cursor: pointer;
+
+  width: 42px;
+  height: 26px;
+  border-radius: 16px;
+
+  border: 2px solid $cinza-400;
+  transition: all 0.25s ease;
+}
+
+.bola {
+  width: 14px;
+  height: 14px;
+  background: $cinza-400;
+  border-radius: 100%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: all 0.25s ease;
+}
+
+button.ativo {
+  border: 2px solid white;
+}
+
+div.ativo {
+  background: white;
+  left: 18px
+}
