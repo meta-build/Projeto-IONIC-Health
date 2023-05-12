@@ -1,6 +1,6 @@
 import { Controller } from '@/application/controllers'
 import AppDataSource from '@/infra/repositories/mysql/data-source'
-import { Rating, Ticket, User } from '@/infra/repositories/mysql/entities'
+import { Rating } from '@/infra/repositories/mysql/entities'
 import { Validation } from '@/application/validation'
 import { HttpResponse, badRequest, ok } from '@/application/helpers'
 import { UnauthorizedError } from '@/application/errors'
