@@ -19,3 +19,17 @@ export class ServerError extends Error {
     this.stack = stack
   }
 }
+
+export class UnprocessableEntity extends Error {
+  constructor () {
+    super('Unprocessable Entity')
+    this.name = 'UnprocessableEntity'
+  }
+}
+
+export class NotFound extends Error {
+  constructor () {
+    super('Recurso não encontrado')
+    this.name = 'NotFoundError'
+  }
+}

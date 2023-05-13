@@ -1,15 +1,13 @@
-import AppDataSource from '../../../infra/repositories/mysql/data-source'
-import { Ticket } from '../../../infra/repositories/mysql/entities'
+import { Controller } from '@/application/controllers'
+import { HttpResponse, ok } from '@/application/helpers'
+import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository'
 
-import { Request, Response } from "express"
+export class GetAllTicketController implements Controller {
+  constructor(private readonly ticketRepository: TicketRepository) {}
 
-export class GetAllTicket {
-  public async getAllTicket(req: Request, res: Response) {
-    const ticket: any = await AppDataSource.getRepository(Ticket)
-      .createQueryBuilder('ticket')
-      .leftJoinAndSelect('ticket.ratings', 'rating')
-      .getMany()
+  async handle (): Promise<HttpResponse> {
+    const tickets = await this.ticketRepository.loadAll()
 
-    res.send(ticket);
+    return ok(tickets)
   }
 }

@@ -7,7 +7,6 @@ export const adaptRoute = (controller: Controller) => {
     const httpResponse = await controller.handle({
       ...req.body,
       ...req.locals,
-      ...res.locals,
       fileDataList: req.fileDataList,
       params: req.params
     })
