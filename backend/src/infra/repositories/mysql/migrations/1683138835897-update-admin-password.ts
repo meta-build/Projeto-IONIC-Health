@@ -5,7 +5,7 @@ export class UpdateAdminPassword1683138835897 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-			UPDATE user SET password = '$2b$12$f.g0xiLx8CmkK38QTH9ViOp0XTtmp2O0J5reuhnslqBQbc7liZT.O' WHERE email = 'admin@admin.com'
+			UPDATE user SET password = '$2b$12$oyOwwGFhKQqIpCoj0KXvc.b5JExtCCj0DozKC6NatFgH3U2qghCh2' WHERE email = 'admin@admin.com'
 		`)
   }
 
