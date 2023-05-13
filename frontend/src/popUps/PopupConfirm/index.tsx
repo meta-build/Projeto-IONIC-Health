@@ -15,7 +15,7 @@ interface Props {
 }
 
 
-export default function PopupUsuarioConfirm (props:Props) {
+export default function PopupConfirm (props:Props) {
     return (
     <PopUp
     visivel={props.visivel}
