@@ -1,11 +1,14 @@
-import { authorization } from '@/main/middlewares'
-import { adaptMiddleware, adaptRoute, adaptMulter as upload } from '@/main/adapters'
-import { TicketController } from '@/application/controllers'
+import {
+  adaptMiddleware,
+  adaptRoute,
+  adaptMulter as upload
+} from '@/main/adapters'
 import { makeAuthMiddleware } from '@/main/factories/middlewares'
 import {
   makeGetAllTicketController,
   makeTicketController,
-  makeGetTicketById
+  makeGetTicketById,
+  makeUpdateTicketController
 } from '@/main/factories/application/controllers'
 
 import { Router } from 'express'
@@ -17,7 +20,11 @@ export default (router: Router): void => {
     upload,
     adaptRoute(makeTicketController())
   )
-  router.put('/ticket/:id', authorization, new TicketController().update)
+  router.put(
+    '/ticket/:id',
+    adaptMiddleware(makeAuthMiddleware()),
+    adaptRoute(makeUpdateTicketController())
+  )
   router.get(
     '/ticket/:id',
     adaptMiddleware(makeAuthMiddleware()),
