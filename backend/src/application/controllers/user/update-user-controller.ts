@@ -30,6 +30,6 @@ export class UpdateUserController implements Controller {
       email: httpRequest.email,
       roleId: httpRequest.roleId,
     });
-    return ok(user);
+    return ok({ id: user.id, name: user.name, email: user.email, roleId: user.roleId });
   }
 }
