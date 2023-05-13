@@ -6,8 +6,13 @@ import { Header32 } from '../../components/Header';
 import InputEscuro from '../../components/Inputs/InputEscuro';
 import DropdownEscuro from '../../components/Dropdowns/DropdownEscuro';
 import { Botao } from '../../components/Botoes';
+import PopupConfirm from '../../popUps/PopupConfirm';
+import { useNavigate } from 'react-router-dom';
+import PopupErro from '../../popUps/PopupErro';
+import PopupCarregando from '../../popUps/PopupCarregando';
 
 export default function NovoUsuario() {
+  const nav = useNavigate();
 
   // pegar valor de cada campo
   const [nome, setNome] = useState('');
@@ -20,6 +25,10 @@ export default function NovoUsuario() {
   const [erroGrupo, setErroGrupo] = useState(false);
   const [erroEmail, setErroEmail] = useState(false);
   const [erroSenha, setErroSenha] = useState(false);
+
+  const [confirm, setConfirm] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   const intGrupo = (grupo: string) => {
     switch (grupo) {
@@ -43,13 +52,18 @@ export default function NovoUsuario() {
       setErroEmail(!email);
       setErroSenha(!senha);
     } else {
+      setCarregando(true);
       Usuarios.criar({
         grupoId: intGrupo(grupo),
         mail: email,
         name: nome,
         password: senha
       }).then(() => {
-
+        setCarregando(false);
+        setConfirm(true);
+      }).catch(() => {
+        setCarregando(false);
+        setFail(true);
       });
     }
   }
@@ -150,6 +164,9 @@ export default function NovoUsuario() {
           }>
             <span className={styles.linha2}>
               <Botao
+                handleClick={() => {
+                  nav(-1);
+                }}
                 className={styles.botaoCancelar}
                 variante='contornado'>
                 Cancelar
@@ -162,10 +179,22 @@ export default function NovoUsuario() {
               </Botao>
             </span>
           </div>
-
         </form>
       </div>
-
+      <PopupConfirm
+      visivel={confirm}
+      onClose={() => {
+        setConfirm(false);
+        nav('/usuarios');
+      }}
+      titulo='Usuário criado com sucesso'
+      descricao={`Usuário ${nome} criado com sucesso.`} />
+      <PopupErro
+      visivel={fail}
+      onClose={() => setFail(false)}
+      titulo='Erro de criação de usuário'
+      descricao='Não foi possível criar o usuário devido a um erro interno do servidor. Tente novamente mais tarde.' />
+      <PopupCarregando visivel={carregando} />
     </>
   );
 }
