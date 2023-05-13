@@ -1,18 +1,16 @@
-import { LoadTicketById } from '@/domain/contracts/repos/ticket'
+import { LoadAllTicket, LoadTicketById } from '@/domain/contracts/repos/ticket'
 import { Ticket } from './entities'
 import DataSource from './data-source'
 
-import { ObjectType, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
-export class TicketRepository implements LoadTicketById {
-  getRepository(entity: ObjectType<Ticket>): Repository<Ticket> {
-    return DataSource.getRepository(entity)
+export class TicketRepository implements LoadTicketById, LoadAllTicket {
+  getRepository(): Repository<Ticket> {
+    return DataSource.getRepository(Ticket)
   }
 
-  async loadById({
-    id
-  }: LoadTicketById.Input): Promise<LoadTicketById.Output> {
-    const ticketRepo = this.getRepository(Ticket)
+  async loadById({ id }: LoadTicketById.Input): Promise<LoadTicketById.Output> {
+    const ticketRepo = this.getRepository()
 
     const ticket = await ticketRepo
       .createQueryBuilder('ticket')
@@ -26,5 +24,16 @@ export class TicketRepository implements LoadTicketById {
     }
 
     return null
+  }
+
+  async loadAll(): Promise<LoadAllTicket.Output> {
+    const ticketRepo = this.getRepository()
+
+    const tickets = await ticketRepo
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.ratings', 'rating')
+      .getMany()
+
+    return tickets
   }
 }
