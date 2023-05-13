@@ -1,14 +1,14 @@
-import { CreatePermission, GetPermissionsById } from '@/domain/contracts/repos'
+import { CreatePermission, GetPermissionsById, LoadAllPermissions } from '@/domain/contracts/repos'
 import { Permission } from './entities'
 import DataSource from './data-source'
 
-import { ObjectType, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
 export class PermissionRepository
-  implements CreatePermission, GetPermissionsById
+  implements CreatePermission, GetPermissionsById, LoadAllPermissions
 {
-  getRepository(entity: ObjectType<Permission>): Repository<Permission> {
-    return DataSource.getRepository(entity)
+  getRepository(): Repository<Permission> {
+    return DataSource.getRepository(Permission)
   }
 
   async create({
@@ -17,7 +17,7 @@ export class PermissionRepository
     entity,
     humanizedEntity
   }: CreatePermission.Input): Promise<CreatePermission.Output> {
-    const permissionRepo = this.getRepository(Permission)
+    const permissionRepo = this.getRepository()
     const permission = permissionRepo.create({
       permissionName,
       humanizedPermissionName,
@@ -39,7 +39,7 @@ export class PermissionRepository
   async getAllById(
     input: GetPermissionsById.Input
   ): Promise<GetPermissionsById.Output> {
-    const permissionRepo = this.getRepository(Permission)
+    const permissionRepo = this.getRepository()
     let permissions: Permission[]
 
     if (input?.ids) {
@@ -60,5 +60,13 @@ export class PermissionRepository
     }
 
     return []
+  }
+
+  async loadAll(): Promise<LoadAllPermissions.Output> {
+    const permissionRepo = this.getRepository()
+
+    const permissions = await permissionRepo.find()
+
+    return permissions
   }
 }
