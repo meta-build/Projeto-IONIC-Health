@@ -36,3 +36,17 @@ export namespace GetPermissionsById {
   }>
 }
 
+export interface LoadAllPermissions {
+  loadAll: () => Promise<LoadAllPermissions.Output>
+}
+
+export namespace LoadAllPermissions {
+  export type Output = Array<{
+    id: number
+    permissionName: string
+    humanizedPermissionName: string
+    entity: string
+    humanizedEntity: string
+  }>
+}
+
