@@ -1,5 +1,3 @@
-import userController from '@/application/controllers/user/user-controller'
-import { authorization } from '@/main/middlewares'
 import {
   makeCreateUserController,
   makeLoginController,
@@ -30,5 +28,4 @@ export default (router: Router): void => {
     adaptMiddleware(makeAuthMiddleware()),
     adaptRoute(makeGetAllUserController())
   )
-  router.delete('/user/:id', authorization, userController.deleteUser)
 }
