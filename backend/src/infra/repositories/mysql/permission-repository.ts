@@ -45,7 +45,7 @@ export class PermissionRepository
     if (input?.ids) {
       permissions = await permissionRepo.query(
         'SELECT * FROM permission WHERE id IN (?)',
-        [[input.ids]]
+        [input.ids]
       )
     }
 
