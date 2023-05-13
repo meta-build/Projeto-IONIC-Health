@@ -1,4 +1,3 @@
-import { DeleteTicket } from '@/application/controllers'
 import { authorization } from '@/main/middlewares'
 import { adaptMiddleware, adaptRoute, adaptMulter as upload } from '@/main/adapters'
 import { TicketController } from '@/application/controllers'
@@ -29,5 +28,4 @@ export default (router: Router): void => {
     adaptMiddleware(makeAuthMiddleware()),
     adaptRoute(makeGetAllTicketController())
   )
-  router.delete('/ticket/:id', new DeleteTicket().deleteTicket)
 }
