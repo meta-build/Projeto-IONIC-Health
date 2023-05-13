@@ -34,7 +34,7 @@ export class AuthMiddleware implements Middleware {
         const hasPermission = this.hasPermission(user.role)
 
         if (hasPermission) {
-          return ok({ requesterId: decoded.id })
+          return ok({ requesterId: decoded.id, requester: user })
         }
 
         return forbidden(new UnauthorizedError())
