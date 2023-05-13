@@ -8,14 +8,25 @@ import { Botao } from '../../components/Botoes';
 import { useContexto } from '../../context/contexto';
 import ItemNome from '../../components/ItemNome';
 import Usuarios from '../../services/Usuarios';
+import PopupAlerta from '../../popUps/PopupAlerta';
+import PopupConfirm from '../../popUps/PopupConfirm';
+import PopupErro from '../../popUps/PopupErro';
+import PopupCarregando from '../../popUps/PopupCarregando';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListaUsuarios() {
   const { usuario } = useContexto();
+  const nav = useNavigate();
 
   const [busca, setBusca] = useState('');
 
   const [usuarios, setUsuarios] = useState<UsuarioProps[]>([]);
   const [userSelecionado, setUserSelecionado] = useState<UsuarioProps>();
+
+  const [alerta, setAlerta] = useState(false);
+  const [carregando, setCarregando] = useState(false);
+  const [confirma, setConfirma] = useState(false);
+  const [erro, setErro] = useState(false);
 
   const filtrarNome = (titulo: string) => {
     const regex = new RegExp(busca, 'i');
@@ -64,24 +75,26 @@ export default function ListaUsuarios() {
     }
   }
 
-  useEffect(() => {
+  const getUsuarios = () => {
     Usuarios.getAll().then((data) => {
       setUsuarios(data.filter((user: UsuarioProps) => {
         const notUser = user.id != usuario.id;
         const filterPesquisa = filtrarNome(user.name);
-
         return notUser && filterPesquisa;
       }));
     });
+  }
+
+  useEffect(() => {
+    getUsuarios();
   }, [busca]);
   return (
     <>
-      <Header32 className={styles.titulo}>{usuario.grupo == 2 ? 'Minhas solicitações' : 'Solicitações'}</Header32>
+      <Header32 className={styles.titulo}>
+        Usuários
+      </Header32>
       <section className={styles.section}>
-        <div
-          className={styles.esquerda}
-          
-        >
+        <div className={styles.esquerda}>
           <div className={styles.inputContainer}>
             <InputContornado
               className={styles.inputPreenchimento}
@@ -91,13 +104,17 @@ export default function ListaUsuarios() {
             />
           </div>
           <div className={styles.inputContainer}>
-            <Botao className={styles.botao}>
+            <Botao
+            handleClick={() => {
+              nav('/criar-usuario');
+            }}
+            className={styles.botao}>
               Criar usuário
             </Botao>
           </div>
           <div
-          className={styles.listContainer}
-          onClick={() => setUserSelecionado(undefined)}>
+            className={styles.listContainer}
+            onClick={() => setUserSelecionado(undefined)}>
             {usuarios.length ?
               usuarios.map((user: UsuarioProps) => (
                 <ItemNome
@@ -144,7 +161,9 @@ export default function ListaUsuarios() {
                 <Botao className={styles.botao}>
                   Editar
                 </Botao>
-                <Botao className={styles.botao}>
+                <Botao
+                  className={styles.botao}
+                  handleClick={() => setAlerta(true)}>
                   Excluir
                 </Botao>
               </div>
@@ -154,6 +173,41 @@ export default function ListaUsuarios() {
             </span>}
         </div>
       </section>
+      {userSelecionado && <>
+        <PopupAlerta
+          visivel={alerta}
+          onClose={() => setAlerta(false)}
+          titulo='Exclusão de usuário'
+          descricao={`Confirma a exclusão do usuário ${userSelecionado.name}?`}
+          onConfirm={() => {
+            setAlerta(false);
+            setCarregando(true);
+            Usuarios.deletar(userSelecionado.id).then(() => {
+              setCarregando(false);
+              setConfirma(true);
+              getUsuarios();
+            }).catch(() => {
+              setCarregando(false);
+              setErro(true);
+            })
+          }}
+        />
+        <PopupConfirm
+          visivel={confirma}
+          onClose={() => setConfirma(false)}
+          titulo='Concluído'
+          descricao={`Usuário ${userSelecionado.name} excluído com sucesso.`}
+        />
+        <PopupErro
+        visivel={erro}
+        onClose={() => setErro(false)}
+        titulo='Erro ao excluir usuário'
+        descricao='Não foi possível excluir o usuário devido à um erro interno do servidor. Tente novamente mais tarde.'
+        />
+        <PopupCarregando
+        visivel={carregando}
+        />
+      </>}
     </>
   );
 }
