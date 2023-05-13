@@ -21,6 +21,8 @@ import PaginaComHeader from "./components/PaginaComHeader";
 import { useEffect, useState } from "react";
 import api from "./services/api";
 import Carregando from "./pages/Carregando";
+import { CriarUsuario } from "./popUps";
+import NovoUsuario from "./pages/NovoUsuario";
 
 export default function AppRouter() {
   const { usuario, setUsuario } = useContexto();
@@ -68,6 +70,10 @@ export default function AppRouter() {
               <Route
                 path='/criar-grupo'
                 element={<PaginaComHeader elemento={<CriarGrupo />} />}
+              />
+              <Route
+                path='/criar-usuario'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
               />
             </>)}
           </>
