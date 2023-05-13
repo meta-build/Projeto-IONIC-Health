@@ -1,4 +1,3 @@
-
 export interface CreateUser {
   create: (input: CreateUser.Input) => Promise<CreateUser.Output>
 }
@@ -48,7 +47,6 @@ export namespace LoadUserById {
     id: number
     name: string
     email: string
-    password: string
     roleId: number
   }
 }
