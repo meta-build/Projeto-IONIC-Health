@@ -4,7 +4,8 @@ import {
   makeCreateUserController,
   makeLoginController,
   makeUpdateUserController,
-  makeGetUserByIdController
+  makeGetUserByIdController,
+  makeGetAllUserController
 } from '@/main/factories/application/controllers/'
 import { makeAuthMiddleware } from '@/main/factories/middlewares'
 import { adaptMiddleware, adaptRoute } from '@/main/adapters'
@@ -24,6 +25,10 @@ export default (router: Router): void => {
     adaptMiddleware(makeAuthMiddleware()),
     adaptRoute(makeGetUserByIdController())
   )
-  router.get('/user', authorization, userController.getAllUser)
+  router.get(
+    '/user',
+    adaptMiddleware(makeAuthMiddleware()),
+    adaptRoute(makeGetAllUserController())
+  )
   router.delete('/user/:id', authorization, userController.deleteUser)
 }
