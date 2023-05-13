@@ -13,7 +13,8 @@ import {
   PaginaNaoEncontrada,
   Tests,
   ListaSolicitacoes,
-  ListaUsuarios
+  ListaUsuarios,
+  CriarGrupo
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
@@ -63,6 +64,10 @@ export default function AppRouter() {
               <Route
                 path='/usuarios'
                 element={<PaginaComHeader elemento={<ListaUsuarios />} />}
+              />
+              <Route
+                path='/criar-grupo'
+                element={<PaginaComHeader elemento={<CriarGrupo />} />}
               />
             </>)}
           </>
