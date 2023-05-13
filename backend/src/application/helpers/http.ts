@@ -20,12 +20,17 @@ export const forbidden = (): HttpResponse<Error> => ({
   data: new UnauthorizedError()
 })
 
-export const serverError = (error: Error): HttpResponse => ({
-  statusCode: 500,
-  data: new ServerError(error.stack)
+export const notFound = (error: Error): HttpResponse<Error> => ({
+  statusCode: 404,
+  data: error
 })
 
 export const unprocessableEntity = (): HttpResponse<Error> => ({
   statusCode: 422,
   data: new UnprocessableEntity
+})
+
+export const serverError = (error: Error): HttpResponse => ({
+  statusCode: 500,
+  data: new ServerError(error.stack)
 })

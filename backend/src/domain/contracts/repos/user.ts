@@ -1,4 +1,3 @@
-
 export interface CreateUser {
   create: (input: CreateUser.Input) => Promise<CreateUser.Output>
 }
@@ -48,9 +47,21 @@ export namespace LoadUserById {
     id: number
     name: string
     email: string
-    password: string
     roleId: number
   }
+}
+
+export interface LoadAllUser {
+  loadAll: () => Promise<LoadAllUser.Output>
+}
+
+export namespace LoadAllUser {
+  export type Output = Array<{
+    id: number
+    name: string
+    email: string
+    roleId: number
+  }>
 }
 
 export interface UpdateUser {

@@ -1,5 +1,6 @@
 import {
   CreateUser,
+  LoadAllUser,
   LoadUserByEmail,
   LoadUserById,
   UpdateUser
@@ -10,7 +11,8 @@ import DataSource from './data-source'
 import { ObjectType, Repository } from 'typeorm'
 
 export class UserRepository
-  implements CreateUser, LoadUserByEmail, LoadUserById, UpdateUser {
+  implements CreateUser, LoadUserByEmail, LoadUserById, UpdateUser, LoadAllUser
+{
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
@@ -57,13 +59,34 @@ export class UserRepository
   async loadById({ id }: LoadUserById.Input): Promise<LoadUserById.Output> {
     const userRepo = this.getRepository(User)
 
-    const user = await userRepo.findOneBy({ id })
+    const user = await userRepo
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .getOne()
 
-    if (user) {
-      return user
+    if (!user) {
+      return null
     }
 
-    return null
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      roleId: user.roleId
+    }
+  }
+
+  async loadAll(): Promise<LoadAllUser.Output> {
+    const userRepo = this.getRepository(User)
+
+    const users = await userRepo.createQueryBuilder('user').getMany()
+
+    return users.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      roleId: user.roleId
+    }))
   }
 
   async update({
@@ -71,9 +94,7 @@ export class UserRepository
     email,
     roleId,
     name
-
   }: UpdateUser.Input): Promise<UpdateUser.Output> {
-
     const userRepo = this.getRepository(User)
 
     const user = await userRepo.findOneBy({ id })
@@ -82,13 +103,12 @@ export class UserRepository
       return null
     }
 
-    user.email = email ?? user.email,
-      user.name = name ?? user.name,
-      user.roleId = roleId ?? user.roleId
+    ;(user.email = email ?? user.email),
+      (user.name = name ?? user.name),
+      (user.roleId = roleId ?? user.roleId)
 
     const updatedUser = await userRepo.save(user)
+
     return updatedUser
   }
 }
-
-
