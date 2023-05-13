@@ -5,5 +5,5 @@ import { makeAuthMiddleware } from '@/main/factories/middlewares'
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.post('/rating', adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateRatingController()))
+  router.post('/rating', adaptMiddleware(makeAuthMiddleware(['CreateRating'])), adaptRoute(makeCreateRatingController()))
 }

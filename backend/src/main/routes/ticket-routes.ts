@@ -22,7 +22,15 @@ export default (router: Router): void => {
   )
   router.put(
     '/ticket/:id',
-    adaptMiddleware(makeAuthMiddleware()),
+    adaptMiddleware(
+      makeAuthMiddleware([
+        'UpdateTicket',
+        'ArchiveTicket',
+        'ApproveTicketToProd',
+        'ApproveTicketToRating',
+        'UpdateTicketProd'
+      ], false)
+    ),
     adaptRoute(makeUpdateTicketController())
   )
   router.get(
