@@ -1,4 +1,3 @@
-import { Role } from '@/infra/repositories/mysql/entities'
 
 export interface CreateUser {
   create: (input: CreateUser.Input) => Promise<CreateUser.Output>
@@ -34,7 +33,6 @@ export namespace LoadUserByEmail {
     email: string
     password: string
     roleId: number
-    role: Role
   }
 }
 
@@ -52,7 +50,6 @@ export namespace LoadUserById {
     email: string
     password: string
     roleId: number
-    role: Role
   }
 }
 
