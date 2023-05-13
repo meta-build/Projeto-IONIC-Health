@@ -1,7 +1,8 @@
 import {
   CreateUser,
   LoadUserByEmail,
-  LoadUserById
+  LoadUserById,
+  UpdateUser
 } from '@/domain/contracts/repos/user'
 import { User } from './entities'
 import DataSource from './data-source'
@@ -9,8 +10,7 @@ import DataSource from './data-source'
 import { ObjectType, Repository } from 'typeorm'
 
 export class UserRepository
-  implements CreateUser, LoadUserByEmail, LoadUserById
-{
+  implements CreateUser, LoadUserByEmail, LoadUserById, UpdateUser {
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
@@ -65,4 +65,30 @@ export class UserRepository
 
     return null
   }
+
+  async update({
+    id,
+    email,
+    roleId,
+    name
+
+  }: UpdateUser.Input): Promise<UpdateUser.Output> {
+
+    const userRepo = this.getRepository(User)
+
+    const user = await userRepo.findOneBy({ id })
+
+    if (!user) {
+      return null
+    }
+
+    user.email = email ?? user.email,
+      user.name = name ?? user.name,
+      user.roleId = roleId ?? user.roleId
+
+    const updatedUser = await userRepo.save(user)
+    return updatedUser
+  }
 }
+
+
