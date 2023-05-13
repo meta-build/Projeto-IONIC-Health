@@ -11,7 +11,6 @@ type HttpRequest = {
   title: string,
   type: string,
   description: string,
-  status?: string,
   fileDataList?: Array<{
     buffer: Buffer,
     fileName: string,
@@ -32,7 +31,7 @@ export class CreateTicketController implements Controller {
       return badRequest(error)
     }
 
-    const { requesterId, title, type, description, status, fileDataList } = req
+    const { requesterId, title, type, description, fileDataList } = req
 
     const requester: any = await AppDataSource.manager
       .findOneByOrFail(User, { id: requesterId })
@@ -54,7 +53,7 @@ export class CreateTicketController implements Controller {
     ticket.type = type.toUpperCase()
     ticket.description = description
     ticket.attachments = attachments
-    ticket.status = status?.toUpperCase() ?? 'NEW'
+    ticket.status = 'OPEN'
 
     const savedTicket = await AppDataSource.manager.save(Ticket, ticket)
 
