@@ -79,7 +79,8 @@ export class UserRepository
       id: user.id,
       name: user.name,
       email: user.email,
-      roleId: user.roleId
+      roleId: user.roleId,
+      role: user.role
     }
   }
 
