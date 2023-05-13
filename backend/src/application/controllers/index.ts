@@ -1,7 +1,5 @@
 export * from './controller'
 
-export * from './group/group-controller'
-
 export * from './notification/notification-controller'
 
 export * from './rating/create-rating-controller'
@@ -20,3 +18,4 @@ export * from './account/login-controller'
 export * from './permission/create-permission-controller'
 
 export * from './role/create-role-controller'
+export * from './role/update-role-controller'
