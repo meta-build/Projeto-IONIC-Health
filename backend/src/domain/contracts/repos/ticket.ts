@@ -19,3 +19,19 @@ export namespace LoadTicketById {
     attachments: Attachment[]
   }
 }
+
+export interface LoadAllTicket {
+  loadAll: () => Promise<LoadAllTicket.Output>
+}
+
+export namespace LoadAllTicket {
+  export type Output = Array<{
+    id: number
+    title: string
+    type: string
+    description: string
+    status: string
+    ratings: Rating[]
+    attachments: Attachment[]
+  }>
+}
