@@ -7,17 +7,20 @@ export interface UpdateTicket {
 
 export namespace UpdateTicket {
   export type Input = {
-    id: number,
-    title?: string,
-    description?: string,
-    status?: string,
-    updatedAt?: Date,
+    id: number
+    title?: string
+    description?: string
+    status?: string
+    updatedAt?: Date
     archivedAt?: Date
+    isArchived?: boolean
+    assignedRoleId?: number
   }
   export type Output = {
     id: number
     title: string
     requesterId: number
+    isArchived: boolean
     type: string
     description: string
     status: string

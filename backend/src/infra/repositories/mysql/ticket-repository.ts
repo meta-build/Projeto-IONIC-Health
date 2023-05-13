@@ -20,8 +20,10 @@ export class TicketRepository
     title,
     description,
     status,
+    isArchived,
     updatedAt,
-    archivedAt
+    archivedAt,
+    assignedRoleId
   }: UpdateTicket.Input): Promise<UpdateTicket.Output> {
     const ticketRepo = this.getRepository()
 
@@ -36,6 +38,11 @@ export class TicketRepository
     ticket.status = status?.toUpperCase() ?? ticket.status
     ticket.updatedAt = updatedAt ?? ticket.updatedAt
     ticket.archivedAt = archivedAt ?? ticket.archivedAt
+    ticket.assignedRoleId = assignedRoleId ?? ticket.assignedRoleId
+
+    if (isArchived !== undefined) {
+      ticket.isArchived = isArchived
+    }
 
     const updatedTicket = await ticketRepo.save(ticket)
 
