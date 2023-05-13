@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { User } from './user'
 import { Permission } from './permission'
+import { Ticket } from './ticket'
 
 @Entity({ name: 'role' })
 export class Role {
@@ -36,4 +37,7 @@ export class Role {
     }
   })
   permissions: Permission[]
+
+  @OneToMany(() => Ticket, (ticket) => ticket.assignedRole)
+  tickets: Ticket[]
 }
