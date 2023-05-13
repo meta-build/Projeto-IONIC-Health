@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class Default1683759321417 implements MigrationInterface {
+export class InsertPermissions1683759321417 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
 			INSERT INTO permission (permissionName, humanizedPermissionName, entity, humanizedEntity)
@@ -18,9 +18,7 @@ export class Default1683759321417 implements MigrationInterface {
 			('ApproveTicketToProd', 'Aprovar solicitação para produção', 'Ticket', 'Solicitações'),
 			('ApproveTicketToRating', 'Liberar solicitação para avaliação', 'Ticket', 'Solicitações'),
 			('UpdateTicketProd', 'Alterar status de produção da solicitação', 'Ticket', 'Solicitações'),
-			('CreateRiksRating', 'Avaliar solicitação para Risco', 'Rating', 'Avaliações'),
-			('CreateImpactRating', 'Avaliar solicitação para Impacto', 'Rating', 'Avaliações'),
-			('CreateCostRating', 'Avaliar solicitação para Custo', 'Rating', 'Avaliações')
+			('CreateRating', 'Avaliar solicitação', 'Rating', 'Avaliações')
 		`)
   }
 
@@ -41,9 +39,7 @@ export class Default1683759321417 implements MigrationInterface {
 				'ApproveTicketToProd',
 				'ApproveTicketToRating',
 				'UpdateTicketProd',
-				'CreateRiksRating',
-				'CreateImpactRating',
-				'CreateCostRating'
+				'CreateRating'
 			)
 		`)
   }
