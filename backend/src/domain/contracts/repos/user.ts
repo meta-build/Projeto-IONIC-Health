@@ -51,6 +51,19 @@ export namespace LoadUserById {
   }
 }
 
+export interface LoadAllUser {
+  loadAll: () => Promise<LoadAllUser.Output>
+}
+
+export namespace LoadAllUser {
+  export type Output = Array<{
+    id: number
+    name: string
+    email: string
+    roleId: number
+  }>
+}
+
 export interface UpdateUser {
   update: (input: UpdateUser.Input) => Promise<UpdateUser.Output>
 }
