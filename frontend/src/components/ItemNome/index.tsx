@@ -5,7 +5,8 @@ interface Props {
   nome: string;
   desc?: string;
   handleClick: () => void;
-  isSelected: boolean
+  isSelected: boolean;
+  className?: string;
 }
 
 export default function ItemNome (props: Props) {
@@ -17,7 +18,8 @@ export default function ItemNome (props: Props) {
     }}
     className={classNames({
       [styles.container]: true,
-      [styles.selected]: props.isSelected
+      [styles.selected]: props.isSelected,
+      [props.className]: true
     })}>
       <div className={styles.nome}>{props.nome}</div>
       <div className={styles.desc}>{props.desc}</div>
