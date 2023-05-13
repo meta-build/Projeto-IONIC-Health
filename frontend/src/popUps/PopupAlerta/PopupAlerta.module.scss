@@ -2,27 +2,28 @@
 
 
 .desc {
-    color: $cinza-600;
-
+  color: $cinza-600;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .botao-container {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .botao {
-    flex: 1;
+  flex: 1;
 }
 
 .excluir {
-    margin-right: 8px;
-    background-color: $vermelho;
-    color: white;
+  margin-right: 8px;
+  background-color: $vermelho;
+  color: white;
 
 }
 
 .excluir:hover {
-    background-color: red;
+  background-color: red;
 
-} 
+}
