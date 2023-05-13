@@ -1,8 +1,10 @@
 import { Controller } from '@/application/controllers'
-import AppDataSource from '@/infra/repositories/mysql/data-source'
-import { Rating, Ticket, User } from '@/infra/repositories/mysql/entities'
 import { Validation } from '@/application/validation'
 import { HttpResponse, badRequest, ok } from '@/application/helpers'
+import { UnprocessableEntity } from '@/application/errors'
+import { RatingRepository } from '@/infra/repositories/mysql/rating-repository'
+import { UserRepository } from '@/infra/repositories/mysql/user-repository'
+import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository'
 
 type HttpRequest = {
   requesterId: number,
@@ -14,7 +16,10 @@ type HttpRequest = {
 
 export class CreateRatingController implements Controller {
   constructor (
-    private readonly validation: Validation
+    private readonly validation: Validation,
+    private readonly userRepository: UserRepository,
+    private readonly ratingRepository: RatingRepository,
+    private readonly ticketRepository: TicketRepository
   ) {}
 
   async handle(req: HttpRequest): Promise<HttpResponse> {
@@ -26,21 +31,26 @@ export class CreateRatingController implements Controller {
 
     const { requesterId, value, committee, comment, ticketId } = req
 
+    const reviewer = await this.userRepository.loadById({ id: requesterId })
 
-    const reviewer: any = await AppDataSource.manager
-      .findOneByOrFail(User, { id: requesterId })
+    if (!reviewer) {
+      return badRequest(new UnprocessableEntity)
+    }
 
-    const ticket: any = await AppDataSource.manager
-      .findOneByOrFail(Ticket, { id: ticketId })
+    const ticket = await this.ticketRepository.loadById({ id: ticketId })
 
-    const rating = new Rating()
-    rating.comment = comment
-    rating.committee = committee
-    rating.value = value
-    rating.ticket = ticket
-    rating.user = reviewer
+    if (!ticket) {
+      return badRequest(new UnprocessableEntity)
+    }
 
-    await AppDataSource.manager.save(Rating, rating)
+    const rating = await this.ratingRepository.create({
+      comment,
+      committee,
+      value,
+      ticketId,
+      requesterId
+    })
+
 
     return ok(rating)
   }
