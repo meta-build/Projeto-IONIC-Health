@@ -1,12 +1,45 @@
-import { LoadAllTicket, LoadTicketById } from '@/domain/contracts/repos/ticket'
+import {
+  LoadAllTicket,
+  LoadTicketById,
+  UpdateTicket
+} from '@/domain/contracts/repos/ticket'
 import { Ticket } from './entities'
 import DataSource from './data-source'
 
 import { Repository } from 'typeorm'
 
-export class TicketRepository implements LoadTicketById, LoadAllTicket {
+export class TicketRepository
+  implements LoadTicketById, LoadAllTicket, UpdateTicket
+{
   getRepository(): Repository<Ticket> {
     return DataSource.getRepository(Ticket)
+  }
+
+  async update({
+    id,
+    title,
+    description,
+    status,
+    updatedAt,
+    archivedAt
+  }: UpdateTicket.Input): Promise<UpdateTicket.Output> {
+    const ticketRepo = this.getRepository()
+
+    const ticket = await ticketRepo.findOneBy({ id })
+
+    if (!ticket) {
+      return null
+    }
+
+    ticket.title = title ?? ticket.title
+    ticket.description = description ?? ticket.description
+    ticket.status = status?.toUpperCase() ?? ticket.status
+    ticket.updatedAt = updatedAt ?? ticket.updatedAt
+    ticket.archivedAt = archivedAt ?? ticket.archivedAt
+
+    const updatedTicket = await ticketRepo.save(ticket)
+
+    return updatedTicket
   }
 
   async loadById({ id }: LoadTicketById.Input): Promise<LoadTicketById.Output> {
