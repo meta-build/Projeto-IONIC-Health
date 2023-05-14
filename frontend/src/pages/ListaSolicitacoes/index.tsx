@@ -120,7 +120,7 @@ export default function ListaSolicitacoes() {
               />}
             </div>
           </div>
-          <div className={styles.inputContainer}>
+          {usuario.grupo == 2 && <div className={styles.inputContainer}>
             <Botao
             handleClick={() => {
               nav('/criar-solicitacao');
@@ -128,7 +128,7 @@ export default function ListaSolicitacoes() {
             className={styles.botao}>
               Criar solicitação
             </Botao>
-          </div>
+          </div>}
           <div
           onClick={() => setSolicSelecionada(undefined)}
           className={styles.listContainer}>
