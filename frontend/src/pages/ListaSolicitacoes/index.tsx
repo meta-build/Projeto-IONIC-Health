@@ -11,8 +11,10 @@ import classNames from 'classnames';
 import BadgeStatus from '../../components/BadgeStatus';
 import { Botao, BotaoPreenchido } from '../../components/Botoes';
 import { useContexto } from '../../context/contexto';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListaSolicitacoes() {
+  const nav = useNavigate();
   const { usuario } = useContexto();
 
   const [busca, setBusca] = useState('');
@@ -118,7 +120,18 @@ export default function ListaSolicitacoes() {
               />}
             </div>
           </div>
-          <div className={styles.listContainer}>
+          <div className={styles.inputContainer}>
+            <Botao
+            handleClick={() => {
+              nav('/criar-solicitacao');
+            }}
+            className={styles.botao}>
+              Criar solicitação
+            </Botao>
+          </div>
+          <div
+          onClick={() => setSolicSelecionada(undefined)}
+          className={styles.listContainer}>
             {solicitacoes.length ?
               solicitacoes.map(solic => (
                 <ItemSolicitacao

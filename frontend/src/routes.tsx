@@ -14,7 +14,8 @@ import {
   Tests,
   ListaSolicitacoes,
   ListaUsuarios,
-  CriarGrupo
+  CriarGrupo,
+  CriarSolicitacao
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
@@ -43,10 +44,16 @@ export default function AppRouter() {
         {usuario && (
           <>
             {usuario.grupo == 2 && (
-              <Route
-                path='/home'
-                element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
-              />
+              <>
+                <Route
+                  path='/home'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+                <Route
+                  path='/criar-solicitacao'
+                  element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+                />
+              </>
             )}
             {usuario.grupo >= 3 && (
               <Route
@@ -80,14 +87,14 @@ export default function AppRouter() {
         )}
         <Route
           path='*'
-          element={ carregando ?
+          element={carregando ?
             <Carregando /> :
             <PaginaNaoEncontrada />
           } />
-          <Route
-            path='/tests'
-            element={<Tests />}
-          />
+        <Route
+          path='/tests'
+          element={<Tests />}
+        />
       </Routes>
     </BrowserRouter>
   );
