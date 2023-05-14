@@ -33,7 +33,10 @@ export default function ItemSolicitacao({ solicitacao, handleClick, isSelecionad
         [styles[`selecionado-em-prod`]]: isSelecionado && solicitacao.status.split('.')[0] == 'Em produção',
         [styles[`selecionado-arq`]]: isSelecionado && solicitacao.status == 'archived',
       })}
-      onClick={handleClick}>
+      onClick={(e) => {
+        e.stopPropagation();
+        handleClick();
+      }}>
       <div className={styles.top}>
         {solicitacao.tipo == 'Feature' ?
           <GoogleIcon className={styles.icon}>&#xe8b8;</GoogleIcon> :
