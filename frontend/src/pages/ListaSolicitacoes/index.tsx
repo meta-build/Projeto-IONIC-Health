@@ -296,9 +296,14 @@ export default function ListaSolicitacoes() {
                     className={styles.botao}>
                     Liberar para produção
                   </Botao>}
-                {solicSelecionada.status == 'Recentes' && <Botao className={styles.botao}>
-                  Editar
-                </Botao>}
+                {solicSelecionada.status == 'Recentes' &&
+                  <Botao
+                    handleClick={() => {
+                      nav(`/editar-solicitacao/${solicSelecionada.id}`);
+                    }}
+                    className={styles.botao}>
+                    Editar
+                  </Botao>}
                 {solicSelecionada.status == 'archived' ?
                   <Botao
                     handleClick={() => {
