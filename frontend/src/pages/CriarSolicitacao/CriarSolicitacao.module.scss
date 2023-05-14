@@ -13,7 +13,7 @@
     border-radius: 16px;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 220px);
+    min-height: calc(100vh - 220px);
     margin: 20px auto;
     gap: 12px;
   }
@@ -28,7 +28,6 @@
 .preencher{
   flex:1;
 }
-
 
 .ip {
   display: flex;
@@ -58,6 +57,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  flex: 1;
 
   .arquivo {
     position: relative;
@@ -109,4 +109,12 @@
 .arquivo {
   margin-right: 8px;
   margin-top: 8px;
+}
+
+.descricao-input {
+  min-height: 80px;
+}
+
+.erro {
+  border: 2px solid $vermelho !important;
 }

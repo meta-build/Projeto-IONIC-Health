@@ -1,28 +1,59 @@
 import styles from './CriarSolicitacao.module.scss';
 import { Header36 } from '../../components/Header';
-import { DropdownPreenchido } from '../../components/Dropdowns';
 import { useState } from 'react';
-import { InputPopup, TextBox } from '../../components/Inputs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Anexar, Botao, BotaoPopup, BotaoPreenchido } from '../../components/Botoes';
+import { Botao, BotaoPreenchido } from '../../components/Botoes';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import InputEscuro from '../../components/Inputs/InputEscuro';
-import DropdownEscuro from '../../components/Dropdowns/DropdownEscuro';
 import TextBoxEscuro from '../../components/Inputs/TextBoxEscuro';
+import DropdownEscuro from '../../components/Dropdowns/DropdownEscuro';
 import AnexarEscuro from '../../components/Botoes/AnexarEscuro';
-
-
+import Solicitacoes from '../../services/Solicitacoes';
+import { useContexto } from '../../context/contexto';
+import PopupCarregando from '../../popUps/PopupCarregando';
+import PopupConfirm from '../../popUps/PopupConfirm';
+import { useNavigate } from 'react-router-dom';
+import PopupErro from '../../popUps/PopupErro';
 
 export default function CriarSolicitacao() {
+  const { usuario } = useContexto();
+  const nav = useNavigate();
+
   const [tipo, setTipo] = useState<string>('Feature');
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
   const [arquivos, setArquivos] = useState({ arquivos: [] });
 
   const [erro, setErro] = useState(false);
+  const [erroTitulo, setErroTitulo] = useState(false);
+  const [erroDesc, setErroDesc] = useState(false);
 
+  const [carregando, setCarregando] = useState(false);
+  const [sucesso, setSucesso] = useState(false);
+  const [falha, setFalha] = useState(false);
 
+  const enviar = () => {
+    if (!titulo || !descricao) {
+      setErro(true);
+      setErroTitulo(!titulo);
+      setErroDesc(!descricao);
+    } else {
+      setCarregando(true);
+      Solicitacoes.criar({
+        arquivos: arquivos.arquivos,
+        descricao,
+        tipo: tipo,
+        titulo: titulo
+      }, usuario.token).then(() => {
+        setCarregando(false);
+        setSucesso(true);
+      }).catch(() => {
+        setCarregando(false);
+        setFalha(true);
+      });
+    }
+  }
 
   return (
     <>
@@ -31,6 +62,10 @@ export default function CriarSolicitacao() {
         Nova Solicitação
       </Header36>
       <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          enviar();
+        }}
         className={styles.form}>
         <div
           className={styles.ip}>
@@ -41,14 +76,22 @@ export default function CriarSolicitacao() {
             })}>
             Título
             <InputEscuro
+              className={classNames({
+                [styles.erro]: erroTitulo
+              })}
               valor={titulo}
+              onFocus={() => {
+                setErroTitulo(false);
+                setErro(false);
+              }}
               handleChange={(e) => setTitulo(e.target.value)}
             />
 
           </label>
           <div className={styles.lb}>
             Tipo
-            <DropdownEscuro itens={['Feature', 'Hotfix']}
+            <DropdownEscuro
+              itens={['Feature', 'Hotfix']}
               selecionadoFst={tipo}
               handleSelected={(s) => setTipo(s)}
             />
@@ -60,7 +103,14 @@ export default function CriarSolicitacao() {
         <TextBoxEscuro
           valor={descricao}
           ajustavel={false}
-          className={styles['descricao-input']}
+          className={classNames({
+            [styles['descricao-input']]: true,
+            [styles.erro]: erroDesc
+          })}
+          onFocus={() => {
+            setErroDesc(false);
+            setErro(false);
+          }}
           onChange={(e) => setDescricao(e.target.value)}
         />
         <div className={styles.linha}>
@@ -75,12 +125,14 @@ export default function CriarSolicitacao() {
               <AnexarEscuro
                 className={styles.arquivo}
                 handleFileChange={(e) => {
-                  setArquivos((prevState) => {
-                    return {
-                      ...prevState,
-                      arquivos: [...prevState.arquivos, e]
-                    }
-                  })
+                  if (e) {
+                    setArquivos((prevState) => {
+                      return {
+                        ...prevState,
+                        arquivos: [...prevState.arquivos, e]
+                      }
+                    })
+                  }
                 }}
               />
             </label>
@@ -126,6 +178,24 @@ export default function CriarSolicitacao() {
           </div>
         </div>
       </form>
+      <PopupCarregando visivel={carregando} />
+      <PopupConfirm
+        visivel={sucesso}
+        onClose={() => {
+          setSucesso(false);
+          nav(-1);
+        }}
+        titulo='Sucesso'
+        descricao='Solicitação criada com sucesso!'
+      />
+      <PopupErro
+        visivel={falha}
+        onClose={() => {
+          setFalha(false);
+        }}
+        titulo='Erro ao criar solicitação'
+        descricao='Não foi possível criar a solicitação por conta de um erro do servidor. Tente novamente mais tarde.'
+      />
     </>
   );
 }
