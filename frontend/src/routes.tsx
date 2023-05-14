@@ -79,12 +79,16 @@ export default function AppRouter() {
                 element={<PaginaComHeader elemento={<ListaUsuarios />} />}
               />
               <Route
-                path='/criar-grupo'
-                element={<PaginaComHeader elemento={<CriarGrupo />} />}
-              />
-              <Route
                 path='/criar-usuario'
                 element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />
+              <Route
+                path='/editar-usuario/:id'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />
+              <Route
+                path='/criar-grupo'
+                element={<PaginaComHeader elemento={<CriarGrupo />} />}
               />
             </>)}
           </>

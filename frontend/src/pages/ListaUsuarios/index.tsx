@@ -105,10 +105,10 @@ export default function ListaUsuarios() {
           </div>
           <div className={styles.inputContainer}>
             <Botao
-            handleClick={() => {
-              nav('/criar-usuario');
-            }}
-            className={styles.botao}>
+              handleClick={() => {
+                nav('/criar-usuario');
+              }}
+              className={styles.botao}>
               Criar usuário
             </Botao>
           </div>
@@ -158,7 +158,11 @@ export default function ListaUsuarios() {
               </div>
               <div className={styles['user-espacador']}></div>
               <div className={styles['user-botoes']}>
-                <Botao className={styles.botao}>
+                <Botao
+                  handleClick={() => {
+                    nav(`/editar-usuario/${userSelecionado.id}`)
+                  }}
+                  className={styles.botao}>
                   Editar
                 </Botao>
                 <Botao
@@ -185,6 +189,7 @@ export default function ListaUsuarios() {
             Usuarios.deletar(userSelecionado.id).then(() => {
               setCarregando(false);
               setConfirma(true);
+              setUserSelecionado(undefined);
               getUsuarios();
             }).catch(() => {
               setCarregando(false);
@@ -192,22 +197,22 @@ export default function ListaUsuarios() {
             })
           }}
         />
-        <PopupConfirm
-          visivel={confirma}
-          onClose={() => setConfirma(false)}
-          titulo='Concluído'
-          descricao={`Usuário ${userSelecionado.name} excluído com sucesso.`}
-        />
-        <PopupErro
+      </>}
+      <PopupConfirm
+        visivel={confirma}
+        onClose={() => setConfirma(false)}
+        titulo='Concluído'
+        descricao={`Usuário excluído com sucesso.`}
+      />
+      <PopupErro
         visivel={erro}
         onClose={() => setErro(false)}
         titulo='Erro ao excluir usuário'
         descricao='Não foi possível excluir o usuário devido à um erro interno do servidor. Tente novamente mais tarde.'
-        />
-        <PopupCarregando
+      />
+      <PopupCarregando
         visivel={carregando}
-        />
-      </>}
+      />
     </>
   );
 }
