@@ -12,6 +12,11 @@
   gap: 4px;
 }
 
+.container:hover {
+  cursor: pointer;
+  background-color: $cinza-300;
+}
+
 .selecionado-recente{
   border: 2px solid $azul2;
 }
