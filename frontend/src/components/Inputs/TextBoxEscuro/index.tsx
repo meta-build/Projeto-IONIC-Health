@@ -8,6 +8,7 @@ interface Props {
   className?: string;
   ajustavel?: boolean;
   valor?: string;
+  onFocus?: () => void;
 }
 
 export default function TextBoxEscuro(props: Props) {
@@ -31,6 +32,7 @@ export default function TextBoxEscuro(props: Props) {
         setValor(e.target.value);
         props.onChange(e);
       }}
+      onFocus={() => {if(props.onFocus) props.onFocus()}}
       value={valor}
     />
   );
