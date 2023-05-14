@@ -15,9 +15,9 @@ export const badRequest = (error: Error): HttpResponse<Error> => ({
   data: error
 })
 
-export const forbidden = (): HttpResponse<Error> => ({
+export const forbidden = (error: Error): HttpResponse<Error> => ({
   statusCode: 403,
-  data: new UnauthorizedError()
+  data: error
 })
 
 export const notFound = (error: Error): HttpResponse<Error> => ({

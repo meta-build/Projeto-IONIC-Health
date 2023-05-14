@@ -1,12 +1,14 @@
-import { DeleteTicket } from '@/application/controllers'
-import { authorization } from '@/main/middlewares'
-import { adaptMiddleware, adaptRoute, adaptMulter as upload } from '@/main/adapters'
-import { TicketController } from '@/application/controllers'
+import {
+  adaptMiddleware,
+  adaptRoute,
+  adaptMulter as upload
+} from '@/main/adapters'
 import { makeAuthMiddleware } from '@/main/factories/middlewares'
 import {
   makeGetAllTicketController,
   makeTicketController,
-  makeGetTicketById
+  makeGetTicketById,
+  makeUpdateTicketController
 } from '@/main/factories/application/controllers'
 
 import { Router } from 'express'
@@ -14,11 +16,23 @@ import { Router } from 'express'
 export default (router: Router): void => {
   router.post(
     '/ticket',
-    authorization,
+    adaptMiddleware(makeAuthMiddleware(['CreateTicket'])),
     upload,
     adaptRoute(makeTicketController())
   )
-  router.put('/ticket/:id', authorization, new TicketController().update)
+  router.put(
+    '/ticket/:id',
+    adaptMiddleware(
+      makeAuthMiddleware([
+        'UpdateTicket',
+        'ArchiveTicket',
+        'ApproveTicketToProd',
+        'ApproveTicketToRating',
+        'UpdateTicketProd'
+      ], false)
+    ),
+    adaptRoute(makeUpdateTicketController())
+  )
   router.get(
     '/ticket/:id',
     adaptMiddleware(makeAuthMiddleware()),
@@ -29,5 +43,4 @@ export default (router: Router): void => {
     adaptMiddleware(makeAuthMiddleware()),
     adaptRoute(makeGetAllTicketController())
   )
-  router.delete('/ticket/:id', new DeleteTicket().deleteTicket)
 }

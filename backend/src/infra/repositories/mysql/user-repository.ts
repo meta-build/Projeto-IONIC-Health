@@ -47,7 +47,12 @@ export class UserRepository
   }: LoadUserByEmail.Input): Promise<LoadUserByEmail.Output> {
     const userRepo = this.getRepository(User)
 
-    const user = await userRepo.findOne({ where: { email } })
+    const user = await userRepo
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .where('user.email = :email', { email })
+      .getOne()
 
     if (user) {
       return user
@@ -61,6 +66,8 @@ export class UserRepository
 
     const user = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
       .where('user.id = :id', { id })
       .getOne()
 
@@ -72,20 +79,26 @@ export class UserRepository
       id: user.id,
       name: user.name,
       email: user.email,
-      roleId: user.roleId
+      roleId: user.roleId,
+      role: user.role
     }
   }
 
   async loadAll(): Promise<LoadAllUser.Output> {
     const userRepo = this.getRepository(User)
 
-    const users = await userRepo.createQueryBuilder('user').getMany()
+    const users = await userRepo
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.role', 'role')
+    .leftJoinAndSelect('role.permissions', 'permission')
+    .getMany()
 
     return users.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email,
-      roleId: user.roleId
+      roleId: user.roleId,
+      role: user.role
     }))
   }
 

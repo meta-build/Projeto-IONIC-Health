@@ -11,11 +11,15 @@ import { adaptMiddleware, adaptRoute } from '@/main/adapters'
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.post('/signup', adaptRoute(makeCreateUserController()))
   router.post('/login', adaptRoute(makeLoginController()))
+  router.post(
+    '/user',
+    adaptMiddleware(makeAuthMiddleware(['CreateUser'])),
+    adaptRoute(makeCreateUserController())
+  )
   router.put(
     '/user/:id',
-    adaptMiddleware(makeAuthMiddleware()),
+    adaptMiddleware(makeAuthMiddleware(['UpdateUser'])),
     adaptRoute(makeUpdateUserController())
   )
   router.get(
