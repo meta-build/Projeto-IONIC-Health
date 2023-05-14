@@ -37,6 +37,8 @@ export default function CriarSolicitacao() {
   const [falha, setFalha] = useState(false);
   const [sucessoEdit, setSucessoEdit] = useState(false);
   const [falhaEdit, setFalhaEdit] = useState(false);
+  
+  const [falhaGet, setFalhaGet] = useState(false);
 
   const enviar = () => {
     if (!titulo || !descricao) {
@@ -83,12 +85,18 @@ export default function CriarSolicitacao() {
 
   useEffect(() => {
     if (id) {
-      Solicitacoes.getByID(Number(id)).then(data => {
+      setCarregando(true);
+      Solicitacoes.getByID(Number(id))
+      .then(data => {
         setTitulo(data.titulo);
         setTipo(data.tipo);
         setDescricao(data.descricao);
         setArquivos({ arquivos: data.attachments })
-      });
+      })
+      .catch(() => {
+        setCarregando(false);
+        setFalhaGet(true);
+      })
     }
   }, []);
   return (
@@ -278,6 +286,15 @@ export default function CriarSolicitacao() {
             }}
             titulo='Erro ao editar solicitação'
             descricao='Não foi possível editar a solicitação por conta de um erro do servidor. Tente novamente mais tarde.'
+          />
+          <PopupErro
+            visivel={falhaGet}
+            onClose={() => {
+              setFalhaGet(false);
+              nav(-1);
+            }}
+            titulo='Erro ao abrir edição de solicitação'
+            descricao='Não será possível editar a solicitação por conta de um erro do servidor. Tente novamente mais tarde.'
           />
         </>
       }
