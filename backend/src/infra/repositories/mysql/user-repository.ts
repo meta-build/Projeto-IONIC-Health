@@ -87,13 +87,18 @@ export class UserRepository
   async loadAll(): Promise<LoadAllUser.Output> {
     const userRepo = this.getRepository(User)
 
-    const users = await userRepo.createQueryBuilder('user').getMany()
+    const users = await userRepo
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.role', 'role')
+    .leftJoinAndSelect('role.permissions', 'permission')
+    .getMany()
 
     return users.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email,
-      roleId: user.roleId
+      roleId: user.roleId,
+      role: user.role
     }))
   }
 
