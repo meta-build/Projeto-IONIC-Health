@@ -53,7 +53,7 @@ export class CreateTicketController implements Controller {
     ticket.type = type.toUpperCase()
     ticket.description = description
     ticket.attachments = attachments
-    ticket.status = 'OPEN'
+    ticket.status = 'RECENT'
 
     const savedTicket = await AppDataSource.manager.save(Ticket, ticket)
 
