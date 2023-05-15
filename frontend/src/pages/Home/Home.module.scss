@@ -1,0 +1,26 @@
+@import '@/styles/variables.scss';
+
+.container {
+  height: calc(100vh - 68px);
+  width: calc(100% - 2px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .children {
+    margin: 8px 0;
+  }
+}
+
+.container-button {
+  display: flex;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  padding: 18px;
+  border-radius: 16px;
+
+  .children-button {
+    margin: 0 12px;
+  }
+}
