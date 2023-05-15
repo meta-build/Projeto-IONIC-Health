@@ -7,6 +7,7 @@ $icon-size: 26px;
   flex-direction: column;
   align-items: center;
   width: fit-content;
+  min-width: 90px;
 
   button {
     background: none;
@@ -33,7 +34,9 @@ $icon-size: 26px;
   }
 
   span {
+    width: fit-content;
     text-align: center;
-    max-width: 112px;
+    max-width: 90px;
+    font-size: 14px;
   }
 }
