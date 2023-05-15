@@ -1,5 +1,7 @@
 @import '@/styles/variables.scss';
 
+
+
 .container {
   display: flex;
   align-items: center;
@@ -11,11 +13,25 @@
   top: 0;
   left: 0;
   z-index: 2;
-
+  
   li:hover {
     background: none;
-    cursor: default;
+    cursor: pointer;
+    color:$ciano-300; 
   }
+
+  
+}
+
+.Active{
+  color: $ciano-300; 
+  margin-left: 50px;
+
+}
+
+
+img {
+  width: 35px;
 }
 
 .espacador {
@@ -24,6 +40,7 @@
 
 .icon {
   margin-right: 16px;
+  
 }
 
 .icon-bolinha {
@@ -57,6 +74,7 @@
   margin: 0;
   text-align: right;
   border-bottom: 1px solid $cinza-300;
+
 }
 
 .conta-item:last-child {
@@ -66,6 +84,7 @@
 .conta-item:hover {
   font-weight: bold;
   cursor: pointer !important;
+  
 }
 
 .notificacao-lista {
@@ -116,3 +135,20 @@
   margin-right: 12px;
   color: $ciano-300;
 }
+
+.headerNav{
+  padding: 1px 0;
+  border:none;
+  margin: -12px 9px;
+
+}
+
+.headerNav ul li{
+  display: inline-block;
+  border:none;
+  font-weight: 130;
+  margin-left: 20px;
+
+}
+
+
