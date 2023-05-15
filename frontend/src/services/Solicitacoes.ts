@@ -4,10 +4,10 @@ import api from "./api";
 
 // alterar depois
 interface SolicitacaoCreate {
-  titulo: string;
-  tipo: string;
-  descricao: string;
-  arquivos: File[];
+  title: string;
+  type: string;
+  description: string;
+  attachments: File[];
 }
 
 interface Avaliacao {
@@ -25,13 +25,13 @@ class Solicitacoes {
         "Authorization": `Bearer ${token}`
       }
     };
-    const url = 'http://localhost:3001/ticket';
+
+    const url = 'http://localhost:3001/api/ticket';
     const formData = new FormData();
-    formData.append('titulo', solicitacao.titulo);
-    formData.append('tipo', solicitacao.tipo);
-    formData.append('descricao', solicitacao.descricao);
-    formData.append('status', 'Recentes');
-    solicitacao.arquivos.forEach(file => {
+    formData.append('title', solicitacao.title);
+    formData.append('type', solicitacao.type);
+    formData.append('description', solicitacao.description);
+    solicitacao.attachments.forEach(file => {
       formData.append('attachments', file);
     });
     const { data } = await axios.post(url, formData, config);
@@ -39,51 +39,52 @@ class Solicitacoes {
   }
 
   async atualizar(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`update/solicitacao/${id}`, solicitacao);
+    const { data } = await api.put(`api/ticket/${id}`, solicitacao);
     return data;
   }
 
   async deletar(id: number) {
-    const { data } = await api.delete(`solicitacao/delete/${id}`);
+    const { data } = await api.delete(`api/ticket/${id}`);
     return data;
   }
 
-  async getAll() {
-    const { data } = await api.get('find/solicitacao')
+  async getAll(): Promise<SolicitacaoProps> {
+    const { data } = await api.get('api/ticket')
     return data;
   }
 
   async getByID(id: number): Promise<SolicitacaoProps> {
-    const { data } = await api.get(`solicitacao/${id}`);
+    const { data } = await api.get(`api/ticket/${id}`);
     return data;
-  }
-
-  async getByCriador(criador: number) {
-    console.log(`pegando solicitações do criador ${criador}`)
   }
 
   async avaliar(avaliacao: Avaliacao) {
-    const { data } = await api.post('/rating', avaliacao)
+    const { data } = await api.post('/api/rating', avaliacao)
     return data;
   }
 
-  async liberarParaAvaliacao(id: number) {
-    const { data } = await api.put(`update/solicitacao/${id}`, { status: 'Em avaliação' });
+  async liberarParaAvaliacao(id: number, solicitacao: EditarSolicitacaoProps) {
+    const { data } = await api.put(`api/ticket/${id}`, { ...solicitacao, status: 'RATING' });
     return data;
   }
 
-  async liberarParaProducao(id: number) {
-    const { data } = await api.put(`update/solicitacao/${id}`, { status: 'Em produção.New' });
+  async liberarParaProducao(id: number, solicitacao: EditarSolicitacaoProps) {
+    const { data } = await api.put(`api/ticket/${id}`, { ...solicitacao, status: 'NEW' });
     return data;
   }
 
-  async arquivar(id: number) {
-    const { data } = await api.put(`update/solicitacao/${id}`, { status: 'archived' });
+  async arquivar(id: number, solicitacao: EditarSolicitacaoProps) {
+    const { data } = await api.put(`api/ticket/${id}`, { ...solicitacao, isArchived: true });
     return data;
   }
 
-  async atualizarProducao(id: number, status: string) {
-    const { data } = await api.put(`update/solicitacao/${id}`, { status: `Em produção.${status}` });
+  async desarquivar(id: number, solicitacao: EditarSolicitacaoProps) {
+    const { data } = await api.put(`api/ticket/${id}`, { ...solicitacao, isArchived: false });
+    return data;
+  }
+
+  async atualizarProducao(id: number, status: 'NEW' | 'ONHOLDING' | 'DONE', solicitacao: EditarSolicitacaoProps) {
+    const { data } = await api.put(`api/ticket/${id}`, { ...solicitacao, status: status });
     return data;
   }
 }

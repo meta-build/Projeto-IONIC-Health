@@ -1,15 +1,15 @@
 interface SolicitacaoProps {
-  id: number;
-  id_user: number;
-  titulo: string,
-  tipo: string,
-  status: string,
-  descricao: string,
-  data_criacao: string,
-  data_edicao: string | null;
-  data_arquivado: string | null;
-  attachments: ArquivoProps[];
-  ratings: RatingProps[];
+  id: number,
+  title: string,
+  type: string,
+  description: string,
+  status: 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE',
+  requesterId: number,
+  createdAt: string,
+  updatedAt: string,
+  archivedAt: string,
+  ratings: RatingProps[],
+  attachments: ArquivoProps[]
 }
 
 interface RatingProps {
@@ -31,9 +31,11 @@ interface ArquivoProps {
 }
 
 interface EditarSolicitacaoProps {
-  titulo?: string;
-  tipo: string;
-  descricao?: string;
+  title: string;
+  description: string;
+  status: 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE';
+  isArchived: boolean;
+  assignedRoleId: number | null;
 }
 
 interface EditarUsuarioProps {
