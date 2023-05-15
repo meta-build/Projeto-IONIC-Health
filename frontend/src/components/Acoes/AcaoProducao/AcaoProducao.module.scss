@@ -1,0 +1,31 @@
+@import '@/styles/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.status {
+  border-radius: 18px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+.label {
+  margin-right: 8px;
+}
+
+.new {
+  background-color: $verde-100;
+}
+
+.on-holding {
+  background-color: $verde-300;
+}
+
+.done {
+  background-color: $verde;
+}

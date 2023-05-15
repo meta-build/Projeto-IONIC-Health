@@ -1,57 +1,58 @@
 @import '@/styles/variables.scss';
 
 .form {
-    width: 600px;
+  width: 600px;
 }
 
 .linha {
-    display: flex;
-    width: 80%;
-    margin-bottom: 16px;
+  display: flex;
+  width: 80%;
+  margin-bottom: 16px;
 }
 
 .linha:first-child {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .campo {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-    span, label {
-        color: $cinza-600;
-        margin-left: 6px;
-        margin-bottom: 4px;
-    }
+  span,
+  label {
+    color: $cinza-600;
+    margin-left: 6px;
+    margin-bottom: 4px;
+  }
 
-    label {
-        font-weight: bold;
-    }
+  label {
+    font-weight: bold;
+  }
 }
 
 .campo:first-child {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 .input-preenchido {
-    width: calc(100% - 20px);
+  width: calc(100% - 20px);
 }
 
 .campo-preenchido {
-    flex: 1;
+  flex: 1;
 }
 
 .linha-submit {
-    display: flex;
-    margin-top: 36px;
-    justify-content: flex-end;
+  display: flex;
+  margin-top: 36px;
+  justify-content: flex-end;
 
-    .botao:first-child {
-        margin-right: 8px;
-    }
+  .botao:first-child {
+    margin-right: 8px;
+  }
 }
 
 .erro {
-    border: 1px solid red;
+  border: 1px solid red;
 }

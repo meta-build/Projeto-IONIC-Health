@@ -1,54 +1,109 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Login, PaginaComHeader, PaginaNaoEncontrada, Tests } from "./pages";
-import { useEffect } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes
+} from "react-router-dom";
+import {
+  Login,
+  HomeSolicitante,
+  HomeAvaliador,
+  HomeAdm,
+  SolicitacoesAdm,
+  UsuariosAdm,
+  PaginaNaoEncontrada,
+  Tests,
+  ListaSolicitacoes,
+  ListaUsuarios,
+  CriarGrupo,
+  CriarSolicitacao
+} from "./pages";
 import { useContexto } from "./context/contexto";
-import Usuario from "./types/Usuario";
-import HomeSolicitante from "./pages/HomeSolicitante";
-import HomeAvaliador from "./pages/HomeAvaliador";
-import HomeAdm from "./pages/HomeAdm";
-import SolicitacoesAdm from "./pages/SolicitacoesAdm";
-import UsuariosAdm from "./pages/UsuariosAdm";
+import PaginaComHeader from "./components/PaginaComHeader";
+import { useEffect, useState } from "react";
 import api from "./services/api";
+import Carregando from "./pages/Carregando";
+import { CriarUsuario } from "./popUps";
+import NovoUsuario from "./pages/NovoUsuario";
 
 export default function AppRouter() {
-
-  const {usuario, setUsuario} = useContexto();
+  const { usuario, setUsuario } = useContexto();
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      const {id, token, grupo} = sessionStorage;
-      console.log(id, token, grupo);
-      setUsuario(new Usuario(id, token, grupo));
+      const { id, token, grupo, nome } = sessionStorage;
+      setUsuario({ id, token, grupo, nome });
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-  }, [])
-
+    setCarregando(false);
+  }, []);
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login />} />
-
-          {usuario && (
-            <>
-              {usuario.getGrupo() == 2 && (
-                  <Route path='/home' element={<PaginaComHeader elemento={<HomeSolicitante />} />} />
-              )}
-              {usuario.getGrupo() >= 3 && (
-                <Route path='/home' element={<PaginaComHeader elemento={<HomeAvaliador />} />} />
-              )}
-              {usuario.getGrupo() == 1 && (<>
-                  <Route path='/home' element={<PaginaComHeader elemento={<HomeAdm />} />} />
-                  <Route path='/solicitacoes' element={<PaginaComHeader elemento={<SolicitacoesAdm />} />} />
-                  <Route path='/usuarios' element={<PaginaComHeader elemento={<UsuariosAdm />} />} />
-              </>)}
-              <Route path='/tests' element={<Tests />} />
-            </>  
-          )}
-
-          <Route path='*' element={<PaginaNaoEncontrada />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Login />} />
+        {usuario && (
+          <>
+            {usuario.grupo == 2 && (
+              <>
+                <Route
+                  path='/home'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+                <Route
+                  path='/criar-solicitacao'
+                  element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+                />
+              </>
+            )}
+            {usuario.grupo >= 3 && (
+              <Route
+                path='/home'
+                element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+              />
+            )}
+            {usuario.grupo == 1 && (<>
+              <Route
+                path='/home'
+                element={<PaginaComHeader elemento={<HomeAdm />} />}
+              />
+              <Route
+                path='/solicitacoes'
+                element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+              />
+              <Route
+                path='/editar-solicitacao/:id'
+                element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+              />
+              <Route
+                path='/usuarios'
+                element={<PaginaComHeader elemento={<ListaUsuarios />} />}
+              />
+              <Route
+                path='/criar-usuario'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />
+              <Route
+                path='/editar-usuario/:id'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />
+              <Route
+                path='/criar-grupo'
+                element={<PaginaComHeader elemento={<CriarGrupo />} />}
+              />
+            </>)}
+          </>
+        )}
+        <Route
+          path='*'
+          element={carregando ?
+            <Carregando /> :
+            <PaginaNaoEncontrada />
+          } />
+        <Route
+          path='/tests'
+          element={<Tests />}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
