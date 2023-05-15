@@ -7,7 +7,7 @@ import {
   Login,
   HomeSolicitante,
   HomeAvaliador,
-  HomeAdm,
+  Home,
   SolicitacoesAdm,
   UsuariosAdm,
   PaginaNaoEncontrada,
@@ -24,6 +24,7 @@ import api from "./services/api";
 import Carregando from "./pages/Carregando";
 import { CriarUsuario } from "./popUps";
 import NovoUsuario from "./pages/NovoUsuario";
+import Usuarios from "./services/Usuarios";
 
 export default function AppRouter() {
   const { usuario, setUsuario } = useContexto();
@@ -31,11 +32,15 @@ export default function AppRouter() {
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      const { id, token, grupo, nome } = sessionStorage;
-      setUsuario({ id, token, grupo, nome });
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const { email, password } = sessionStorage;
+      Usuarios.login({ email, password })
+        .then(data => {
+          const { acessToken } = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${acessToken}`;
+          setUsuario(data);
+          setCarregando(false);
+        });
     }
-    setCarregando(false);
   }, []);
   return (
     <BrowserRouter>
@@ -43,54 +48,48 @@ export default function AppRouter() {
         <Route path='/' element={<Login />} />
         {usuario && (
           <>
-            {usuario.grupo == 2 && (
+            <Route
+              path='/home'
+              element={<PaginaComHeader elemento={<Home />} />}
+            />
+            {usuario.role.permissions.find(perm => perm.id >= 7 && perm.id <= 14) && (
               <>
                 <Route
-                  path='/home'
+                  path='/solicitacoes'
                   element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
-                />
-                <Route
-                  path='/criar-solicitacao'
-                  element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
                 />
               </>
             )}
-            {usuario.grupo >= 3 && (
+            {usuario.role.permissions.find(perm => perm.id == 7) &&
               <Route
-                path='/home'
-                element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
-              />
-            )}
-            {usuario.grupo == 1 && (<>
-              <Route
-                path='/home'
-                element={<PaginaComHeader elemento={<HomeAdm />} />}
-              />
-              <Route
-                path='/solicitacoes'
-                element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
-              />
+                path='/criar-solicitacao'
+                element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 8) &&
               <Route
                 path='/editar-solicitacao/:id'
                 element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
-              />
+              />}
+            {usuario.role.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
               <Route
                 path='/usuarios'
                 element={<PaginaComHeader elemento={<ListaUsuarios />} />}
-              />
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 1) &&
               <Route
                 path='/criar-usuario'
                 element={<PaginaComHeader elemento={<NovoUsuario />} />}
-              />
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 2) &&
               <Route
                 path='/editar-usuario/:id'
                 element={<PaginaComHeader elemento={<NovoUsuario />} />}
-              />
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 4) &&
               <Route
                 path='/criar-grupo'
                 element={<PaginaComHeader elemento={<CriarGrupo />} />}
-              />
-            </>)}
+              />}
           </>
         )}
         <Route
