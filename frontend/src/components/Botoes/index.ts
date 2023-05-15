@@ -6,6 +6,8 @@ import BotaoPopup from './BotaoPopup'
 import BotaoPreenchido from './BotaoPreenchido'
 import BotaoPreenchidoEscuro from './BotaoPreenchidoEscuro'
 import IconeClicavel from './IconeClicavel'
+import BotaoSwitch from './BotaoSwitch'
+import Aba from './Aba'
 
 export {
     Anexar,
@@ -16,4 +18,6 @@ export {
     BotaoPreenchido,
     IconeClicavel,
     BotaoPreenchidoEscuro,
+    BotaoSwitch,
+    Aba
 }

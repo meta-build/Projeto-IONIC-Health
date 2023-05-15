@@ -1,0 +1,155 @@
+@import '@/styles/variables.scss';
+
+
+.hd {
+    text-align: center;
+}
+
+.form {
+    background-color: $black-40;
+    backdrop-filter: $blur;
+    width: 700px;
+    padding: 24px 36px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 210px);
+    margin: 20px auto;
+    gap: 12px;
+  }
+
+.lb {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preencher{
+  flex:1;
+}
+
+
+.ip {
+  display: flex;
+  gap: 10px;
+}
+
+.lb2 {
+  display: flex;
+  flex-direction: column;
+  height: 10px; ;
+  text-align: left;
+  flex: 1;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.linha {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.arquivos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  .arquivo {
+    position: relative;
+  }
+}
+
+.botoes {
+  display: flex;  
+  flex:1;
+  border-radius: 0;
+  gap: 12px;
+}
+
+.bt-branco{
+  border-color: white;
+  color: white;
+}
+
+.bt-branco:hover{
+  background-color: white;
+}
+
+.bt{
+  flex:1;
+  border-radius: 12px;
+}
+
+.close-file-icon {
+  font-size: 10px;
+  position: absolute;
+  display: none;
+  right: 8px;
+  top: 11px;
+}
+
+.arquivo:hover {
+  padding-right: 24px;
+
+  .close-file-icon {
+    display: block;
+  }
+}
+
+.arquivo {
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.aba-container {
+  display: flex;
+  gap: 12px;
+
+  button {
+    flex: 1;
+  }
+}
+
+.perms {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 18px;
+
+  .perms-item {
+    background: none !important;
+    border: none !important;
+    cursor: default;
+    display: flex;
+    gap: 8px;
+
+    div {
+      transition: all 0.5s ease;
+    }
+  }
+}
+
+.espacador {
+  height: 2px;
+}
+
+.desactive {
+  color: $cinza-400;
+}
+
+span.erro {
+  color: $vermelho;
+  display: block;
+  text-align: right;
+  margin-bottom: 12px;
+}
+
+input.erro {
+  border: 2px solid $vermelho;
+}

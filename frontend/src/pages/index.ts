@@ -6,6 +6,11 @@ import Login from "./Login";
 import PaginaNaoEncontrada from "./PaginaNaoEncontrada";
 import SolicitacoesAdm from "./SolicitacoesAdm";
 import UsuariosAdm from "./UsuariosAdm";
+import CriarGrupo from "./CriarGrupo";
+import CriarSolicitacao from "./CriarSolicitacao";
+
+import ListaSolicitacoes from "./ListaSolicitacoes";
+import ListaUsuarios from "./ListaUsuarios";
 
 export {
   HomeAdm,
@@ -15,5 +20,9 @@ export {
   PaginaNaoEncontrada,
   SolicitacoesAdm,
   UsuariosAdm,
-  Tests
+  Tests,
+  ListaSolicitacoes,
+  ListaUsuarios,
+  CriarGrupo,
+  CriarSolicitacao
 }

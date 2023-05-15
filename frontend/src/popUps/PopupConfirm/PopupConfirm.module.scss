@@ -1,0 +1,23 @@
+ @import '@/styles/variables.scss';
+
+
+.excluir {
+    margin-right: 8px;
+    color: white;
+}
+
+
+.desc {
+    color: $cinza-600;
+    margin-top:24px;
+    margin-bottom: 24px;
+}
+
+.botao-container {
+    display: flex;
+    width: 100%;
+}
+
+.botao {
+    flex: 1;
+}

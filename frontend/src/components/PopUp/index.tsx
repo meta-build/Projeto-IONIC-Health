@@ -10,6 +10,7 @@ interface Props {
   children: ReactNode;
   visivel: boolean;
   onClose: () => void;
+  icone?: JSX.Element;
 }
 
 export default function PopUp(props: Props) {
@@ -38,6 +39,7 @@ export default function PopUp(props: Props) {
           handleClick={() => fechar()}
           className={styles.fechar}
         />
+        {props.icone && props.icone}
         <Header32 className={styles.titulo}>{props.titulo}</Header32>
         {props.children}
       </div>
