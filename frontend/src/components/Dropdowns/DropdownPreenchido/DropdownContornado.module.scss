@@ -69,7 +69,7 @@ $icon-size: 16px;
   width: 100%;
   overflow: hidden;
 
-  li {
+  .item {
     padding: 0;
     margin: 0;
     border: none;
@@ -83,7 +83,7 @@ $icon-size: 16px;
   }
 }
 
-li:hover {
+.item:hover {
   background-color: $cinza-300-hover;
   cursor: pointer;
 }

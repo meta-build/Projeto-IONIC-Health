@@ -14,13 +14,16 @@ import {
   Tests,
   ListaSolicitacoes,
   ListaUsuarios,
-  CriarGrupo
+  CriarGrupo,
+  CriarSolicitacao
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
 import { useEffect, useState } from "react";
 import api from "./services/api";
 import Carregando from "./pages/Carregando";
+import { CriarUsuario } from "./popUps";
+import NovoUsuario from "./pages/NovoUsuario";
 
 export default function AppRouter() {
   const { usuario, setUsuario } = useContexto();
@@ -41,10 +44,16 @@ export default function AppRouter() {
         {usuario && (
           <>
             {usuario.grupo == 2 && (
-              <Route
-                path='/home'
-                element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
-              />
+              <>
+                <Route
+                  path='/home'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+                <Route
+                  path='/criar-solicitacao'
+                  element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+                />
+              </>
             )}
             {usuario.grupo >= 3 && (
               <Route
@@ -62,8 +71,20 @@ export default function AppRouter() {
                 element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
               />
               <Route
+                path='/editar-solicitacao/:id'
+                element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+              />
+              <Route
                 path='/usuarios'
                 element={<PaginaComHeader elemento={<ListaUsuarios />} />}
+              />
+              <Route
+                path='/criar-usuario'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />
+              <Route
+                path='/editar-usuario/:id'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
               />
               <Route
                 path='/criar-grupo'
@@ -74,14 +95,14 @@ export default function AppRouter() {
         )}
         <Route
           path='*'
-          element={ carregando ?
+          element={carregando ?
             <Carregando /> :
             <PaginaNaoEncontrada />
           } />
-          <Route
-            path='/tests'
-            element={<Tests />}
-          />
+        <Route
+          path='/tests'
+          element={<Tests />}
+        />
       </Routes>
     </BrowserRouter>
   );

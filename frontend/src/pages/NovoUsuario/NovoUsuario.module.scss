@@ -5,9 +5,10 @@
   margin: 0 auto; // Centraliza horizontalmente
   padding: 25px;
   width: 650px;
-  height: calc(100vh - 120px);
+  min-height: calc(100vh - 190px);
   background-color: $black-40;
-
+  margin-top: 12px;
+  display: flex;
 }
 
 .forms{
@@ -15,7 +16,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  // border: 1px solid blue;
 }
 
 .tamanho {
@@ -25,26 +25,19 @@
 
 
 .linha {
-  flex: 1;
   display: flex;
-  gap: 15px;
-  //  border: 1px solid red;
- 
+  gap: 12px;
 }
 
 .linha2 {
   flex: 1;
   display: flex;
   gap: 8px;
-  margin-top: 30px;
-
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  // border: 1px solid yellow;
-
 }
 
 .campo-preenchido {
@@ -72,8 +65,9 @@
 }
 
 .lista {
-  list-style: circle;
-  margin-left: 1rem; // para indentar a lista
+  padding: 0;
+  margin: 4px;
+  padding-left: 24px; // para indentar a lista
 }
 
 .botaoCriar{
@@ -92,7 +86,6 @@
 
 .botaoCancelar:hover {
   background-color: white;
-
 }
 
 
@@ -102,7 +95,10 @@
 
 .linha-submit {
   display: flex;
-  margin-top: 200px;
   justify-content: center;
   gap: 50px;
+}
+
+.espacador {
+  flex: 1;
 }

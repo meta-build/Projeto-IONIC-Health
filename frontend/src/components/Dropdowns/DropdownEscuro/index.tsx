@@ -50,6 +50,7 @@ export default function DropdownEscuro(props: Props) {
             {props.itens.map((item, index) => (
               <li
                 key={index}
+                className={styles.item}
                 onClick={() => {
                   setSelecionado(item);
                   setAberto(false);

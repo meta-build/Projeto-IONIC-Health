@@ -24,6 +24,17 @@
   gap: 4px;
   width: 100%;
   align-items: end;
+
+  .botao {
+    width: 100%;
+  }
+}
+
+.botao {
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-weight: normal;
 }
 
 .inputRow {

@@ -49,6 +49,7 @@ export default function DropdownPreenchido(props: Props) {
           <ul className={styles.list} >
             {props.itens.map((item, index) => (
               <li
+                className={styles.item}
                 key={index}
                 onClick={() => {
                   setSelecionado(item);
