@@ -40,24 +40,36 @@ interface EditarSolicitacaoProps {
 
 interface EditarUsuarioProps {
   name?: string;
-  mail?: string;
-  password?: string;
-  grupoId?: number;
+  email?: string;
 }
 
 interface UsuarioProps {
   id: number,
   name: string,
-  mail: string,
-  password: string,
-  grupoId: number
+  email: string,
+  roleId: string,
+  role: RoleProps
+}
+
+interface RoleProps {
+  id: number,
+  name: string,
+  isAdmin: boolean,
+  permissions: PermissionProps[]
+}
+
+interface PermissionProps {
+  id: number,
+  permissionName: string,
+  huamnizedPermissionName: string,
+  entity: string,
+  humanizedEntity: string
 }
 
 interface UsuarioContext {
-  id: number;
-  token: string;
-  grupo: number;
-  nome: string;
+  acessToken: string,
+  name: string,
+  role: RoleProps
 }
 
 export type {
