@@ -91,5 +91,6 @@ $icon-size: 16px;
 li:hover {
   background-color: $cinza-400;
   cursor: pointer;
-  border: 2px solid $cinza-400;
+  border: $cinza-600;
+  color: #333333;
 }
