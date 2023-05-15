@@ -23,20 +23,18 @@ export default function Login() {
 
   const logar = () => {
     if (email && senha) {
-      Usuarios.login({ mail: email, password: senha })
+      Usuarios.login({ email: email, password: senha })
         .then(data => {
-          if (data.error) {
-            setErro(true);
-          } else {
-            const { id, grupoId, token, name } = data;
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setUsuario({ id, token, grupo: grupoId, nome: name });
-            sessionStorage.setItem('id', `${id}`);
-            sessionStorage.setItem('token', token);
-            sessionStorage.setItem('grupo', `${grupoId}`);
-            sessionStorage.setItem('nome', `${name}`);
-            nav('/home');
-          }
+          const { acessToken } = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${acessToken}`;
+          setUsuario(data);
+          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('password', senha);
+          setCarregando(false);
+          nav('/home');
+        })
+        .catch(() => {
+          setErro(true);
         })
     } else {
       setErro(true);
@@ -45,10 +43,16 @@ export default function Login() {
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      const { id, token, grupo, nome } = sessionStorage;
-      setUsuario({ id, token, grupo, nome });
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      nav('home');
+      const { email, password } = sessionStorage;
+      Usuarios.login({ email, password })
+        .then(data => {
+          const { acessToken } = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${acessToken}`;
+          setUsuario(data);
+          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('password', password);
+          nav('/home');
+        });
     }
     setCarregando(false);
   }, []);
