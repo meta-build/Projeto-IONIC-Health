@@ -9,10 +9,11 @@ import { useContexto } from '../../context/contexto';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import iconeIonic from '../../assets/iconeIonic.png';
+import profileIonic from '../../assets/profileIonic.png';
 
 
 export default function Menu() {
-  
+
   const [notificacao, setNotificacao] = useState(true);
   const [popupEditar, setPopupEditar] = useState(false);
   const [activeItem, setActiveItem] = useState('');
@@ -27,37 +28,38 @@ export default function Menu() {
     return loc.pathname === route
   }
 
-  
 
-  function handlePath(caminho:string){
-    if (caminho === 'home' ) {
-        history('/home')
-    }else if (caminho === 'solicitacoes' ) {
-        history('/solicitacoes')
-    }else if (caminho === 'usuarios'){
-        history('/usuarios')
+
+  function handlePath(caminho: string) {
+    if (caminho === 'home') {
+      history('/home')
+    } else if (caminho === 'solicitacoes') {
+      history('/solicitacoes')
+    } else if (caminho === 'usuarios') {
+      history('/usuarios')
     } else {
-        history('/grupos')
+      history('/grupos')
     }
-}
+  }
   return (
     <>
       <nav className={styles.container}>
+
         {/* logo */}
         <img src={iconeIonic} />
         <nav className={styles.headerNav}>
           <ul>
-            <li className={isActiveRoute('/home') ? "Active" : "home"} onClick={() => handlePath('home')} >Home</li>
-            <li className={isActiveRoute('/solicitacoes') ? "Active" : "solicitacao"} onClick={() => handlePath('solicitacoes')} >Solicitações</li>
-            <li className={isActiveRoute('/usuarios') ? "Active" : "usuario"} onClick={() => handlePath('usuarios')}>Usuários</li>
-            <li className={isActiveRoute('/grupos') ? "Active" : "grupo"} onClick={() => handlePath('grupos')}>Grupos</li>
+            <li className={isActiveRoute('/home') ? styles.Active : "home"} onClick={() => handlePath('home')} >Home</li>
+            <li className={isActiveRoute('/solicitacoes') ? styles.Active : "solicitacao"} onClick={() => handlePath('solicitacoes')} >Solicitações</li>
+            <li className={isActiveRoute('/usuarios') ? styles.Active : "usuario"} onClick={() => handlePath('usuarios')}>Usuários</li>
+            <li className={isActiveRoute('/grupos') ? styles.Active : "grupo"} onClick={() => handlePath('grupos')}>Grupos</li>
           </ul>
+          
         </nav>
-
         {/* espaçador */}
         <div className={styles.espacador} />
 
-        
+
         {/* notificação, aparecer somente para solicitante */}
         {/* <MenuSuspenso
                 className={styles.icon}
@@ -82,7 +84,9 @@ export default function Menu() {
         {/* usuário */}
         <span className={styles.nome}>{usuario.nome}</span>
         <MenuSuspenso
-          icon={<FontAwesomeIcon icon={faUser} />}>
+        
+          icon={<img src={profileIonic} />}>
+              
           <ul className={styles['conta-lista']}>
             <li
               onClick={() => setPopupEditar(true)}

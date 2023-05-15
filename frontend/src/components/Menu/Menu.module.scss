@@ -1,7 +1,5 @@
 @import '@/styles/variables.scss';
 
-
-
 .container {
   display: flex;
   align-items: center;
@@ -19,16 +17,11 @@
     cursor: pointer;
     color:$ciano-300; 
   }
-
+  li.Active{
+    color:$ciano-300;
+  }
   
 }
-
-.Active{
-  color: $ciano-300; 
-  margin-left: 50px;
-
-}
-
 
 img {
   width: 35px;
@@ -136,19 +129,25 @@ img {
   color: $ciano-300;
 }
 
-.headerNav{
-  padding: 1px 0;
-  border:none;
+.headerNav {
+  padding: 0x 0;
+  border: none;
   margin: -12px 9px;
-
 }
 
-.headerNav ul li{
+.headerNav ul {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.headerNav ul li {
   display: inline-block;
-  border:none;
-  font-weight: 130;
+  border: none;
   margin-left: 20px;
-
 }
+
 
 
