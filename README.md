@@ -28,9 +28,12 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 ## :repeat: Backlog
 Versões anteriores:<br>
 <a href='https://user-images.githubusercontent.com/90328897/229401867-6c327c67-188d-41d4-a167-153cb717ef4c.png'>v1.0</a>
+<a href='https://user-images.githubusercontent.com/90328897/230677847-62fc7bf3-6233-422a-8e71-c77defbc1f3f.png'>v2.0</a>
 <br><br>
-Versão atual (v2.0)
-![image](https://user-images.githubusercontent.com/90328897/230677847-62fc7bf3-6233-422a-8e71-c77defbc1f3f.png)
+Versão atual (v3.0) <br>
+![image](https://github.com/meta-build/Projeto-IONIC-Health/assets/90328897/68ad1ac3-d554-4fdf-a963-1e9f6295d220)
+
+
 
 
 <h2 style="font -weight: bold; margin=bottom: margin-bottom: 0px">
