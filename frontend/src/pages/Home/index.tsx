@@ -25,7 +25,7 @@ export default function Home() {
       { label: 'Grupos', icon: <GoogleIcon>&#xf233;</GoogleIcon>, url: '/grupos' } : null,
     usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) ?
       { label: 'Solicitações', icon: <FontAwesomeIcon icon={faFile} />, url: '/solicitacoes' } : null,
-    usuario.role.permissions.find(perm => perm.id == 1) ?
+    usuario.role.permissions.find(perm => perm.id == 7) ?
       { label: 'Minhas Solicitações', icon: <GoogleIcon>&#xf22e;</GoogleIcon>, url: '/minhas-solicitacoes' } : null,
     usuario.role.permissions.find(perm => perm.id == 14) ?
       { label: 'Solicitações para avaliar', icon: <GoogleIcon>&#xe46e;</GoogleIcon>, url: '/solicitacoes-para-avaliar' } : null,
