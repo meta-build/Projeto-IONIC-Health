@@ -130,8 +130,14 @@ export default function CriarGrupo() {
           </Aba>
         </div>
         <ul className={styles.perms}>
-          {perms && perms.map(perm => (
-            aba == perm.humanizedEntity &&
+          {perms && perms.filter(perm => {
+            if(aba == 'Solicitações') {
+              return perm.humanizedEntity == 'Solicitações' || perm.humanizedEntity == 'Avaliações'
+            } else {
+              return perm.humanizedEntity == aba;
+            }
+          })
+          .map(perm => (
             <li className={styles['perms-item']}>
               <BotaoSwitch
                 isActive={permsEscolhidas.includes(perm.id)}
