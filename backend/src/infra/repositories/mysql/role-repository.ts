@@ -72,14 +72,17 @@ export class RoleRepository
     if (!role) {
       return null
     }
-
+    
     return role
   }
-
+  
   async loadAll (): Promise<LoadAllRole.Output> {
     const roleRepository = this.getRepository()
-
-    const roles = await roleRepository.find()
+    
+    const roles = await roleRepository
+    .createQueryBuilder('role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .getMany()
 
     return roles
   }
