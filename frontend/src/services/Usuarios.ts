@@ -9,7 +9,7 @@ interface Usuario {
 }
 
 interface Login {
-  mail: string;
+  email: string;
   password: string;
 }
 
