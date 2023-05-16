@@ -82,7 +82,7 @@ export default function Menu() {
                 </MenuSuspenso> */}
 
         {/* usuário */}
-        <span className={styles.nome}>{usuario.nome}</span>
+        <span className={styles.nome}>{usuario.name}</span>
         <MenuSuspenso
         
           icon={<img src={profileIonic} />}>
