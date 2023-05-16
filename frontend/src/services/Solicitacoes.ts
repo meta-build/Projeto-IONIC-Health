@@ -39,52 +39,52 @@ class Solicitacoes {
   }
 
   async atualizar(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`ticket/${id}`, solicitacao);
+    const { data } = await api.put(`/ticket/${id}`, solicitacao);
     return data;
   }
 
   async deletar(id: number) {
-    const { data } = await api.delete(`ticket/${id}`);
+    const { data } = await api.delete(`/ticket/${id}`);
     return data;
   }
 
   async getAll(): Promise<SolicitacaoProps> {
-    const { data } = await api.get('ticket')
+    const { data } = await api.get('/ticket')
     return data;
   }
 
   async getByID(id: number): Promise<SolicitacaoProps> {
-    const { data } = await api.get(`ticket/${id}`);
+    const { data } = await api.get(`/ticket/${id}`);
     return data;
   }
 
   async avaliar(avaliacao: Avaliacao) {
-    const { data } = await api.post('rating', avaliacao)
+    const { data } = await api.post('/rating', avaliacao)
     return data;
   }
 
   async liberarParaAvaliacao(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`ticket/${id}`, { ...solicitacao, status: 'RATING' });
+    const { data } = await api.put(`/ticket/${id}`, { ...solicitacao, status: 'RATING' });
     return data;
   }
 
   async liberarParaProducao(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`ticket/${id}`, { ...solicitacao, status: 'NEW' });
+    const { data } = await api.put(`/ticket/${id}`, { ...solicitacao, status: 'NEW' });
     return data;
   }
 
   async arquivar(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`ticket/${id}`, { ...solicitacao, isArchived: true });
+    const { data } = await api.put(`/ticket/${id}`, { ...solicitacao, isArchived: true });
     return data;
   }
 
   async desarquivar(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`ticket/${id}`, { ...solicitacao, isArchived: false });
+    const { data } = await api.put(`/ticket/${id}`, { ...solicitacao, isArchived: false });
     return data;
   }
 
   async atualizarProducao(id: number, status: 'NEW' | 'ONHOLDING' | 'DONE', solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`ticket/${id}`, { ...solicitacao, status: status });
+    const { data } = await api.put(`/ticket/${id}`, { ...solicitacao, status: status });
     return data;
   }
 }
