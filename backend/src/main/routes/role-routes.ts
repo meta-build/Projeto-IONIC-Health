@@ -17,7 +17,7 @@ export default (router: Router): void => {
   )
   router.put(
     '/role/:id',
-    adaptMiddleware(makeAuthMiddleware(['UpdateRole'])),
+    adaptMiddleware(makeAuthMiddleware(['UpdateRole'], false)),
     adaptRoute(makeUpdateRoleController())
   )
   router.get(

@@ -16,7 +16,8 @@ export namespace CreateUser {
     name: string
     email: string
     password: string
-    roleId: number
+    roleId: number,
+    isActive: boolean
   }
 }
 
@@ -34,7 +35,8 @@ export namespace LoadUserByEmail {
     email: string
     password: string
     roleId: number
-    role: Role
+    role: Role,
+    isActive: boolean
   }
 }
 
@@ -51,7 +53,8 @@ export namespace LoadUserById {
     name: string
     email: string
     roleId: number
-    role: Role
+    role: Role,
+    isActive: boolean
   }
 }
 
@@ -64,7 +67,8 @@ export namespace LoadAllUser {
     id: number
     name: string
     email: string
-    roleId: number
+    roleId: number,
+    isActive: boolean
   }>
 }
 
@@ -75,9 +79,11 @@ export interface UpdateUser {
 export namespace UpdateUser {
   export type Input = {
     id: number
-    name: string
-    email: string
+    name?: string
+    email?: string
     roleId?: number
+    isActive?: boolean
+    password?: string
   }
   export type Output = {
     id: number
@@ -85,5 +91,6 @@ export namespace UpdateUser {
     email: string
     roleId: number
     role: Role
+    isActive?: boolean
   }
 }
