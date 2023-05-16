@@ -25,8 +25,9 @@ export default function Login() {
     if (email && senha) {
       Usuarios.login({ email: email, password: senha })
         .then(data => {
-          const { acessToken } = data;
-          api.defaults.headers.common['Authorization'] = `Bearer ${acessToken}`;
+          const { accessToken } = data;
+          console.log(accessToken)
+          api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
           setUsuario(data);
           sessionStorage.setItem('email', email);
           sessionStorage.setItem('password', senha);
@@ -46,8 +47,8 @@ export default function Login() {
       const { email, password } = sessionStorage;
       Usuarios.login({ email, password })
         .then(data => {
-          const { acessToken } = data;
-          api.defaults.headers.common['Authorization'] = `Bearer ${acessToken}`;
+          const { accessToken } = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
           setUsuario(data);
           sessionStorage.setItem('email', email);
           sessionStorage.setItem('password', password);

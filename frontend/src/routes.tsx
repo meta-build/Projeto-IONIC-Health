@@ -5,11 +5,7 @@ import {
 } from "react-router-dom";
 import {
   Login,
-  HomeSolicitante,
-  HomeAvaliador,
   Home,
-  SolicitacoesAdm,
-  UsuariosAdm,
   PaginaNaoEncontrada,
   Tests,
   ListaSolicitacoes,
@@ -22,7 +18,6 @@ import PaginaComHeader from "./components/PaginaComHeader";
 import { useEffect, useState } from "react";
 import api from "./services/api";
 import Carregando from "./pages/Carregando";
-import { CriarUsuario } from "./popUps";
 import NovoUsuario from "./pages/NovoUsuario";
 import Usuarios from "./services/Usuarios";
 
@@ -35,8 +30,8 @@ export default function AppRouter() {
       const { email, password } = sessionStorage;
       Usuarios.login({ email, password })
         .then(data => {
-          const { acessToken } = data;
-          api.defaults.headers.common['Authorization'] = `Bearer ${acessToken}`;
+          const { accessToken } = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
           setUsuario(data);
           setCarregando(false);
         });
