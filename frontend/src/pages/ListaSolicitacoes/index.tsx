@@ -17,6 +17,7 @@ import PopupConfirm from '../../popUps/PopupConfirm';
 import PopupCarregando from '../../popUps/PopupCarregando';
 import PopupErro from '../../popUps/PopupErro';
 import PopupAprovacao from '../../popUps/PopupAprovacao';
+import { AvaliarSolicitacao } from '../../popUps';
 
 export default function ListaSolicitacoes() {
   const nav = useNavigate();
@@ -32,6 +33,8 @@ export default function ListaSolicitacoes() {
   const [solicSelecionada, setSolicSelecionada] = useState<SolicitacaoProps>();
 
   const [carregando, setCarregando] = useState(false);
+
+  const [avaliar, setAvaliar] = useState(false);
 
   const [confirmExcluir, setConfirmExcluir] = useState(false);
   const [confirmArquivar, setConfirmArquivar] = useState(false);
@@ -86,14 +89,20 @@ export default function ListaSolicitacoes() {
   }
 
   const getSolicitacoes = () => {
-    console.log(loc.pathname)
+    console.log(usuario)
     Solicitacoes.getAll()
       .then(data => {
         setSolicitacoes(data.filter((item: SolicitacaoProps) => {
-          const filtroAv = loc.pathname == '/solicitacoes-para-avaliar' ? 
-          (item.status == 'RATING' && !item.isArchived) : true;
+          const filtroNota = loc.pathname == '/solicitacoes-para-avaliar' ?
+            (situacaoNota == 'semNota' ?
+              (!item.ratings.find(rating => rating.committee == usuario.role.name)) : true)
+            : true;
+          const filtroDono = loc.pathname == '/minhas-solicitacoes' ?
+            item.requesterId == usuario.id : true;
+          const filtroAv = loc.pathname == '/solicitacoes-para-avaliar' ?
+            (item.status == 'RATING' && !item.isArchived) : true;
           const filtroProd = loc.pathname == '/solicitacoes-em-prod' ?
-          (item.status == 'NEW' || item.status == 'ONHOLDING' || item.status == 'DONE') : true;
+            (item.status == 'NEW' || item.status == 'ONHOLDING' || item.status == 'DONE') : true;
           const filtroNome = filtrarNome(item.title);
           const filtroTipo = tipo == 'Todos' ? true : item.type == tipo.toUpperCase();
           let filtroSituacao = status == 'Todos' ? true : item.status == strSituacao(status);
@@ -103,7 +112,7 @@ export default function ListaSolicitacoes() {
           if (status == 'Arquivados') {
             filtroSituacao = item.isArchived;
           }
-          return filtroNome && filtroTipo && filtroSituacao && filtroAv && filtroProd;
+          return filtroNome && filtroTipo && filtroSituacao && filtroAv && filtroProd && filtroDono && filtroNota;
         }));
       });
   }
@@ -328,7 +337,9 @@ export default function ListaSolicitacoes() {
                         Liberar para produção
                       </Botao>}
                     {usuario.role.permissions.find(perm => perm.id == 14) && isSemNota(solicSelecionada) &&
-                      <Botao className={styles.botao}>
+                      <Botao
+                        handleClick={() => setAvaliar(true)}
+                        className={styles.botao}>
                         Avaliar
                       </Botao>}
                   </>
@@ -496,11 +507,11 @@ export default function ListaSolicitacoes() {
             onConfirm={() => {
               setConfirmLiberarAv(false);
               setCarregando(true);
-              Solicitacoes.liberarParaAvaliacao(solicSelecionada.id, {
+              Solicitacoes.atualizar(solicSelecionada.id, {
                 assignedRoleId: solicSelecionada.assignedRoleId,
                 description: solicSelecionada.description,
                 isArchived: solicSelecionada.isArchived,
-                status: solicSelecionada.status,
+                status: 'RATING',
                 title: solicSelecionada.title
               })
                 .then(() => {
@@ -571,6 +582,15 @@ export default function ListaSolicitacoes() {
             }}
             titulo='Erro ao liberar para produção'
             descricao='Não foi possível liberar para produção por conta de um erro interno do servidor, tente novamente mais tarde.'
+          />
+          <AvaliarSolicitacao
+            aberto={avaliar}
+            onClose={() => {
+              setAvaliar(false);
+              getSolicitacoes();
+              setSolicSelecionada(undefined);
+            }}
+            idSolic={solicSelecionada.id}
           />
         </>
       }

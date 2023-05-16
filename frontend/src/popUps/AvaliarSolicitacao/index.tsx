@@ -7,6 +7,8 @@ import classNames from "classnames";
 import Solicitacoes from "../../services/Solicitacoes";
 import { SolicitacaoProps } from "../../types";
 import { useContexto } from "../../context/contexto";
+import PopupConfirm from "../PopupConfirm";
+import PopupErro from "../PopupErro";
 
 interface Props {
   aberto: boolean;
@@ -19,6 +21,10 @@ export default function AvaliarSolicitacao(props: Props) {
 
   const [nota, setNota] = useState<number>();
   const [comentario, setComentario] = useState('');
+
+  const [carregando, setCarregando] = useState(false);
+  const [falha, setFalha] = useState(false);
+  const [sucesso, setSucesso] = useState(false);
 
   const { usuario } = useContexto();
 
@@ -34,16 +40,22 @@ export default function AvaliarSolicitacao(props: Props) {
   }
 
   const avaliar = () => {
+    setCarregando(true);
     Solicitacoes.avaliar({
       comment: comentario,
-      committee: strAvaliador(usuario.grupo),
+      committee: usuario.role.name,
       ticketId: props.idSolic,
       value: nota
     }).then(() => {
+      setCarregando(false);
       setNota(undefined);
       setComentario('');
-      props.onClose();
-    });
+      setSucesso(true);
+    })
+      .catch(() => {
+        setCarregando(false);
+        setFalha(true);
+      })
   }
 
   useEffect(() => {
@@ -54,96 +66,90 @@ export default function AvaliarSolicitacao(props: Props) {
     }
   }, [props.idSolic]);
   return (
-    <PopUp
-      visivel={props.aberto}
-      onClose={props.onClose}
-      titulo={`Avaliação da ${solicitacao.tipo} ${solicitacao.titulo} em ${strAvaliador(usuario.grupo)}`}>
-      <form
-        className={styles.form}
-        onSubmit={(e) => {
-          e.preventDefault();
-          avaliar();
-        }}>
-        <div className={styles.inputs}>
-          <div className={classNames({
-            [styles.input]: true,
-            [styles.preencher]: true
-          })}>
-            <span className={styles.label}>
-              Descrição
-            </span>
-            <span className={styles.conteudo}>
-              {solicitacao.descricao}
-            </span>
-            <span className={styles.label}>
-              Arquivos
-            </span>
-            <span className={styles.arquivos}>
-              {solicitacao.attachments && solicitacao.attachments.map(arquivo => (
-                <BotaoPreenchido
-                  key={arquivo.id}
-                  className={styles.arquivo}
-                  handleClick={() => window.open(`http://localhost:3001${arquivo.url}`, '_blank')}>
-                  {arquivo.fileName}
-                </BotaoPreenchido>
-              ))}
-            </span>
+    <>
+      <PopUp
+        visivel={props.aberto}
+        onClose={props.onClose}
+        titulo={`Avaliar solicitação`}>
+        <form
+          className={styles.form}
+          onSubmit={(e) => {
+            e.preventDefault();
+            avaliar();
+          }}>
+          <div className={styles.row}>
+            <label className={styles.item}>
+              Nota:
+            </label>
+            <BotaoNota
+              className={styles.item}
+              valor={0}
+              cor="cinza"
+              selecionado={nota == 0}
+              clicavel={true}
+              handleClick={() => setNota(0)}
+            />
+            <BotaoNota
+              className={styles.item}
+              valor={1}
+              cor="verde"
+              selecionado={nota == 1}
+              clicavel={true}
+              handleClick={() => setNota(1)}
+            />
+            <BotaoNota
+              className={styles.item}
+              valor={2}
+              cor="amarelo"
+              selecionado={nota == 2}
+              clicavel={true}
+              handleClick={() => setNota(2)}
+            />
+            <BotaoNota
+              className={styles.item}
+              valor={3}
+              cor="vermelho"
+              selecionado={nota == 3}
+              clicavel={true}
+              handleClick={() => setNota(3)}
+            />
           </div>
-        </div>
-        <div className={styles.row}>
-          <label className={styles.item}>
-            Nota:
-          </label>
-          <BotaoNota
-            className={styles.item}
-            valor={0}
-            cor="cinza"
-            selecionado={nota == 0}
-            clicavel={true}
-            handleClick={() => setNota(0)}
-          />
-          <BotaoNota
-            className={styles.item}
-            valor={1}
-            cor="verde"
-            selecionado={nota == 1}
-            clicavel={true}
-            handleClick={() => setNota(1)}
-          />
-          <BotaoNota
-            className={styles.item}
-            valor={2}
-            cor="amarelo"
-            selecionado={nota == 2}
-            clicavel={true}
-            handleClick={() => setNota(2)}
-          />
-          <BotaoNota
-            className={styles.item}
-            valor={3}
-            cor="vermelho"
-            selecionado={nota == 3}
-            clicavel={true}
-            handleClick={() => setNota(3)}
-          />
-        </div>
-        <div className={styles['row-comentario']}>
-          <label>
-            Comentário
-          </label>
-          <TextBox
-            ajustavel={false}
-            className={styles['comentario-input']}
-            onChange={(e) => setComentario(e.target.value)}
-            valor={comentario}
-          />
-        </div>
-        <div className={styles['row-botao']}>
-          <BotaoPopup tipo="submit">
-            Avaliar
-          </BotaoPopup>
-        </div>
-      </form>
-    </PopUp>
+          <div className={styles['row-comentario']}>
+            <label>
+              Comentário
+            </label>
+            <TextBox
+              ajustavel={false}
+              className={styles['comentario-input']}
+              onChange={(e) => setComentario(e.target.value)}
+              valor={comentario}
+            />
+          </div>
+          <div className={styles['row-botao']}>
+            <BotaoPopup tipo="submit">
+              Avaliar
+            </BotaoPopup>
+          </div>
+        </form>
+      </PopUp>
+      <PopupConfirm
+        visivel={sucesso}
+        onClose={() => {
+          setSucesso(false);
+          props.onClose();
+        }}
+        titulo='Solicitação avaliada com sucesso'
+        descricao=''
+      />
+      <PopupErro
+        visivel={falha}
+        onClose={() => {
+          setFalha(false);
+          props.onClose();
+        }}
+        titulo='Erro ao avaliar solicitação'
+        descricao='Não foi possível avaliar a solicitação por conta de um erro interno do servidor, tente novamente mais tarde.'
+      />
+    </>
   )
 }

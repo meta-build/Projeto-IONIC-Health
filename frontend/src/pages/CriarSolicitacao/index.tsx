@@ -15,7 +15,7 @@ import PopupCarregando from '../../popUps/PopupCarregando';
 import PopupConfirm from '../../popUps/PopupConfirm';
 import { useNavigate, useParams } from 'react-router-dom';
 import PopupErro from '../../popUps/PopupErro';
-import { ArquivoProps } from '../../types';
+import { ArquivoProps, SolicitacaoProps } from '../../types';
 
 export default function CriarSolicitacao() {
   const { usuario } = useContexto();
@@ -40,6 +40,8 @@ export default function CriarSolicitacao() {
   
   const [falhaGet, setFalhaGet] = useState(false);
 
+  const [solic, setSolic] = useState<SolicitacaoProps>();
+
   const enviar = () => {
     if (!titulo || !descricao) {
       setErro(true);
@@ -48,11 +50,11 @@ export default function CriarSolicitacao() {
     } else {
       setCarregando(true);
       Solicitacoes.criar({
-        arquivos: arquivos.arquivos,
-        descricao,
-        tipo: tipo,
-        titulo: titulo
-      }, usuario.token).then(() => {
+        attachments: arquivos.arquivos,
+        description:descricao,
+        type: tipo,
+        title: titulo
+      }, usuario.accessToken).then(() => {
         setCarregando(false);
         setSucesso(true);
       }).catch(() => {
@@ -70,9 +72,11 @@ export default function CriarSolicitacao() {
     } else {
       setCarregando(true);
       Solicitacoes.atualizar(Number(id), {
-        descricao,
-        tipo: tipo,
-        titulo: titulo
+        description:descricao,
+        title: titulo,
+        status: solic.status,
+        isArchived: solic.isArchived,
+        assignedRoleId: solic.assignedRoleId 
       }).then(() => {
         setCarregando(false);
         setSucessoEdit(true);
@@ -88,10 +92,12 @@ export default function CriarSolicitacao() {
       setCarregando(true);
       Solicitacoes.getByID(Number(id))
       .then(data => {
-        setTitulo(data.titulo);
-        setTipo(data.tipo);
-        setDescricao(data.descricao);
-        setArquivos({ arquivos: data.attachments })
+        setTitulo(data.title);
+        setTipo(data.type);
+        setDescricao(data.description);
+        setSolic(data);
+        setArquivos({ arquivos: data.attachments });
+        setCarregando(false);
       })
       .catch(() => {
         setCarregando(false);
@@ -137,6 +143,7 @@ export default function CriarSolicitacao() {
             />
 
           </label>
+          {!id && 
           <div className={styles.lb}>
             Tipo
             <DropdownEscuro
@@ -144,7 +151,7 @@ export default function CriarSolicitacao() {
               selecionadoFst={tipo}
               handleSelected={(s) => setTipo(s)}
             />
-          </div>
+          </div>}
         </div>
         <label className={styles.label}>
           Descrição

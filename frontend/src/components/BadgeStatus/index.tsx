@@ -14,7 +14,7 @@ export default function ({status, className}: Props) {
       case 'ARCHIVED':
         return 'Arquivado';
       case 'RATING':
-        return status;
+        return 'Em avaliação';
       default:
         return 'Em produção';
     }
