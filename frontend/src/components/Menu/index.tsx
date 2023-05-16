@@ -1,4 +1,3 @@
-
 import styles from './Menu.module.scss';
 import MenuSuspenso from '../MenuSuspenso';
 import { faBell, faUser } from '@fortawesome/free-regular-svg-icons';
@@ -7,23 +6,59 @@ import { useState } from 'react';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import EditarConta from '../../popUps/EditarConta';
 import { useContexto } from '../../context/contexto';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import iconeIonic from '../../assets/iconeIonic.png';
+import profileIonic from '../../assets/profileIonic.png';
+
 
 export default function Menu() {
+
   const [notificacao, setNotificacao] = useState(true);
   const [popupEditar, setPopupEditar] = useState(false);
+  const [activeItem, setActiveItem] = useState('');
   const { usuario, setUsuario } = useContexto();
   const nav = useNavigate();
+  const history = useNavigate();
 
+  const loc = useLocation();
+
+  const isActiveRoute = (route: string): boolean => {
+    console.log(loc.pathname === route)
+    return loc.pathname === route
+  }
+
+
+
+  function handlePath(caminho: string) {
+    if (caminho === 'home') {
+      history('/home')
+    } else if (caminho === 'solicitacoes') {
+      history('/solicitacoes')
+    } else if (caminho === 'usuarios') {
+      history('/usuarios')
+    } else {
+      history('/grupos')
+    }
+  }
   return (
     <>
       <nav className={styles.container}>
-        {/* logo */}
-        <img src='https://uploads-ssl.webflow.com/60dcc4691817e11aa93685ab/636cfbef568f863947dd4951_logo-color.svg' />
 
+        {/* logo */}
+        <img src={iconeIonic} />
+        <nav className={styles.headerNav}>
+          <ul>
+            <li className={isActiveRoute('/home') ? styles.Active : "home"} onClick={() => handlePath('home')} >Home</li>
+            <li className={isActiveRoute('/solicitacoes') ? styles.Active : "solicitacao"} onClick={() => handlePath('solicitacoes')} >Solicitações</li>
+            <li className={isActiveRoute('/usuarios') ? styles.Active : "usuario"} onClick={() => handlePath('usuarios')}>Usuários</li>
+            <li className={isActiveRoute('/grupos') ? styles.Active : "grupo"} onClick={() => handlePath('grupos')}>Grupos</li>
+          </ul>
+          
+        </nav>
         {/* espaçador */}
         <div className={styles.espacador} />
+
 
         {/* notificação, aparecer somente para solicitante */}
         {/* <MenuSuspenso
@@ -49,7 +84,9 @@ export default function Menu() {
         {/* usuário */}
         <span className={styles.nome}>{usuario.nome}</span>
         <MenuSuspenso
-          icon={<FontAwesomeIcon icon={faUser} />}>
+        
+          icon={<img src={profileIonic} />}>
+              
           <ul className={styles['conta-lista']}>
             <li
               onClick={() => setPopupEditar(true)}
