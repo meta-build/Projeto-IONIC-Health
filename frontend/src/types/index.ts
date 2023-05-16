@@ -61,15 +61,21 @@ interface RoleProps {
 interface PermissionProps {
   id: number,
   permissionName: string,
-  huamnizedPermissionName: string,
+  humanizedPermissionName: string,
   entity: string,
   humanizedEntity: string
 }
 
 interface UsuarioContext {
-  acessToken: string,
+  accessToken: string,
   name: string,
   role: RoleProps
+}
+
+interface CreateGrupoProps {
+  name: string,
+  isAdmin: boolean,
+  permissions: number[]
 }
 
 export type {
@@ -79,5 +85,6 @@ export type {
   RatingProps,
   UsuarioProps,
   EditarUsuarioProps,
-  UsuarioContext
+  UsuarioContext,
+  CreateGrupoProps
 }
