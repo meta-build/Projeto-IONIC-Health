@@ -81,6 +81,13 @@ interface CreateGrupoProps {
   permissions: number[]
 }
 
+interface GrupoProps {
+  id: number,
+  name: string,
+  isAdmin: boolean,
+  permissions: PermissionProps[]
+}
+
 export type {
   SolicitacaoProps,
   ArquivoProps,
@@ -89,5 +96,6 @@ export type {
   UsuarioProps,
   EditarUsuarioProps,
   UsuarioContext,
-  CreateGrupoProps
+  CreateGrupoProps,
+  GrupoProps
 }

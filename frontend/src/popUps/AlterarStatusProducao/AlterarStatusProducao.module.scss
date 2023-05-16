@@ -80,6 +80,12 @@
 
 .botao:not(:first-child) {
   margin-left: 12px;
+  background-color: $verde;
+  color: white;
+}
+
+.botao {
+  flex: 1;
 }
 
 .producao {

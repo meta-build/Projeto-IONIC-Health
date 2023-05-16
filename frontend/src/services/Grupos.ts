@@ -1,4 +1,4 @@
-import { CreateGrupoProps } from "../types";
+import { CreateGrupoProps, GrupoProps } from "../types";
 import api from "./api";
 
 class Grupos {
@@ -17,12 +17,12 @@ class Grupos {
     return data;  
   }
   
-  async getByID (id: number) {
+  async getByID (id: number):Promise<GrupoProps> {
     const {data} = await api.get(`/role/${id}`);
     return data;  
   }
 
-  async getAll () {
+  async getAll (): Promise<GrupoProps[]> {
     const {data} = await api.get(`/role`);
     return data;  
   }

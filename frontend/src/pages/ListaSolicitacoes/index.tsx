@@ -6,7 +6,7 @@ import { InputContornado } from '../../components/Inputs';
 import { DropdownContornado } from '../../components/Dropdowns';
 import Solicitacoes from '../../services/Solicitacoes';
 import ItemSolicitacao from '../../components/ItemSolicitacao';
-import { EditarSolicitacaoProps, RatingProps, SolicitacaoProps } from '../../types';
+import { EditarSolicitacaoProps, GrupoProps, RatingProps, SolicitacaoProps } from '../../types';
 import classNames from 'classnames';
 import BadgeStatus from '../../components/BadgeStatus';
 import { Botao, BotaoPreenchido } from '../../components/Botoes';
@@ -17,7 +17,8 @@ import PopupConfirm from '../../popUps/PopupConfirm';
 import PopupCarregando from '../../popUps/PopupCarregando';
 import PopupErro from '../../popUps/PopupErro';
 import PopupAprovacao from '../../popUps/PopupAprovacao';
-import { AprovarParaProducao, AvaliarSolicitacao } from '../../popUps';
+import { AlterarStatusProducao, AprovarParaProducao, AvaliarSolicitacao } from '../../popUps';
+import Grupos from '../../services/Grupos';
 
 export default function ListaSolicitacoes() {
   const nav = useNavigate();
@@ -31,10 +32,12 @@ export default function ListaSolicitacoes() {
 
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [solicSelecionada, setSolicSelecionada] = useState<SolicitacaoProps>();
+  const [grupoSolic, setGrupoSolic] = useState<GrupoProps>();
 
   const [carregando, setCarregando] = useState(false);
 
   const [avaliar, setAvaliar] = useState(false);
+  const [alterarProd, setAlterarProd] = useState(false);
 
   const [confirmExcluir, setConfirmExcluir] = useState(false);
   const [confirmArquivar, setConfirmArquivar] = useState(false);
@@ -101,8 +104,8 @@ export default function ListaSolicitacoes() {
             item.requesterId == usuario.id : true;
           const filtroAv = loc.pathname == '/solicitacoes-para-avaliar' ?
             (item.status == 'RATING' && !item.isArchived) : true;
-          const filtroProd = loc.pathname == '/solicitacoes-em-prod' ?
-            (item.status == 'NEW' || item.status == 'ONHOLDING' || item.status == 'DONE') : true;
+          const filtroProd = loc.pathname == '/solicitacoes-em-producao' ?
+            item.assignedRoleId && item.assignedRoleId == usuario.role.id : true;
           const filtroNome = filtrarNome(item.title);
           const filtroTipo = tipo == 'Todos' ? true : item.type == tipo.toUpperCase();
           let filtroSituacao = status == 'Todos' ? true : item.status == strSituacao(status);
@@ -157,7 +160,7 @@ export default function ListaSolicitacoes() {
                     { label: 'Situação: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon>, value: 'Todos' }
                   ]}
                   handleSelected={(s: string) => setSituacaoNota(s)}
-                /> :
+                /> : loc.pathname !== '/solicitacoes-em-producao' &&
                 <DropdownContornado
                   className={styles.inputPreenchimento}
                   itens={[
@@ -195,6 +198,9 @@ export default function ListaSolicitacoes() {
                     Solicitacoes.getByID(solic.id).then(solicitacao => {
                       setSolicSelecionada(solicitacao);
                     });
+                    solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
+                      setGrupoSolic(grupo);
+                    })
                   }}
                   isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
               )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
@@ -215,11 +221,19 @@ export default function ListaSolicitacoes() {
                   <span className={styles.content}>
                     <span>{'Status: '}</span>
                     <span className={classNames({
-                      [styles.new]: solicSelecionada.status,
-                      [styles['on-holding']]: solicSelecionada.status,
-                      [styles.done]: solicSelecionada.status,
+                      [styles.new]: solicSelecionada.status == 'NEW',
+                      [styles['on-holding']]: solicSelecionada.status == 'ONHOLDING',
+                      [styles.done]: solicSelecionada.status == 'DONE',
                     })}>
                       {solicSelecionada.status}
+                    </span>
+                  </span>
+                  <span className={styles.content}>
+                    <span>{'Grupo: '}</span>
+                    <span className={classNames({
+                      [styles.new]: true,
+                    })}>
+                      {grupoSolic ? grupoSolic.name : 'Carregando...'}
                     </span>
                   </span>
                 </div>}
@@ -363,6 +377,12 @@ export default function ListaSolicitacoes() {
                     handleClick={() => setConfirmExcluir(true)}
                     className={styles.botao}>
                     Excluir
+                  </Botao>}
+                {loc.pathname == '/solicitacoes-em-producao' &&
+                  <Botao
+                    handleClick={() => setAlterarProd(true)}
+                    className={styles.botao}>
+                    Alterar status de produção
                   </Botao>}
               </div>
             </div>
@@ -540,34 +560,12 @@ export default function ListaSolicitacoes() {
             titulo='Erro ao liberar para avaliação'
             descricao='Não foi possível liberar para avaliação por conta de um erro interno do servidor, tente novamente mais tarde.'
           />
-
-          {/* lib prod */}
-          {/* <PopupAprovacao
-            visivel={confirmLiberarProd}
-            titulo={`Liberar para produção a solicitação ${solicSelecionada.title}?`}
-            descricao=''
-            onClose={() => setConfirmLiberarProd(false)}
-            onConfirm={() => {
-              setConfirmLiberarProd(false);
-              setCarregando(true);
-              Solicitacoes.liberarParaProducao(solicSelecionada.id, {
-                assignedRoleId: solicSelecionada.assignedRoleId,
-                description: solicSelecionada.description,
-                isArchived: solicSelecionada.isArchived,
-                status: solicSelecionada.status,
-                title: solicSelecionada.title
-              })
-                .then(() => {
-                  setCarregando(false);
-                  setSucessoLiberarProd(true);
-                }).catch(() => {
-                  setCarregando(false);
-                  setSucessoLiberarProd(true);
-                });
-            }} /> */}
             <AprovarParaProducao
             aberto={confirmLiberarProd}
-            onClose={() => setConfirmLiberarProd(false)}
+            onClose={() => {
+              setConfirmLiberarProd(false);
+              getSolicitacoes();
+            }}
             idSolic={solicSelecionada.id}
             onConfirm={() => console.log()}
             />
@@ -597,6 +595,15 @@ export default function ListaSolicitacoes() {
               setSolicSelecionada(undefined);
             }}
             idSolic={solicSelecionada.id}
+          />
+          <AlterarStatusProducao
+          aberto={alterarProd}
+          idSolic={solicSelecionada.id}
+          onClose={() => {
+            setAlterarProd(false);
+            setSolicSelecionada(undefined);
+            getSolicitacoes();
+          }}
           />
         </>
       }
