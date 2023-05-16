@@ -10,7 +10,8 @@ import PopupConfirm from '../../popUps/PopupConfirm';
 import { useNavigate, useParams } from 'react-router-dom';
 import PopupErro from '../../popUps/PopupErro';
 import PopupCarregando from '../../popUps/PopupCarregando';
-import { UsuarioProps } from '../../types';
+import { GrupoProps, UsuarioProps } from '../../types';
+import Grupos from '../../services/Grupos';
 
 export default function NovoUsuario() {
   const nav = useNavigate();
@@ -18,10 +19,12 @@ export default function NovoUsuario() {
 
   // pegar valor de cada campo
   const [nome, setNome] = useState('');
-  const [grupo, setGrupo] = useState('Solicitante');
+  const [grupo, setGrupo] = useState<GrupoProps>();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  
 
+  const [grupos, setGrupos] = useState<GrupoProps[]>([]);
   // se true > destacar campo em vermelho
   const [erroNome, setErroNome] = useState(false);
   const [erroGrupo, setErroGrupo] = useState(false);
@@ -77,10 +80,8 @@ export default function NovoUsuario() {
       setCarregando(true);
       if (id) {
         Usuarios.editar(Number(id), {
-          grupoId: intGrupo(grupo),
-          mail: email,
-          name: nome,
-          password: senha
+          email: email,
+          name: nome
         }).then(() => {
           setCarregando(false);
           setConfirmEdit(true);
@@ -90,8 +91,8 @@ export default function NovoUsuario() {
         });
       } else {
         Usuarios.criar({
-          grupoId: intGrupo(grupo),
-          mail: email,
+          roleId: grupo.id,
+          email: email,
           name: nome,
           password: senha
         }).then(() => {
@@ -112,16 +113,15 @@ export default function NovoUsuario() {
         .then((user: UsuarioProps) => {
           setCarregando(false);
           setNome(user.name);
-          setGrupo(strGrupo(user.grupoId));
-          setEmail(user.mail);
-          setSenha(user.password);
+          setEmail(user.email);
         })
         .catch(() => {
           setCarregando(false);
           setFailGet(true);
-        })
+        });
     }
-  }, [])
+    Grupos.getAll().then(grupos => setGrupos(grupos))
+  }, []);
 
   return (
     <>
@@ -159,9 +159,9 @@ export default function NovoUsuario() {
                 className={classNames({
                   [styles.erro]: erroGrupo
                 })}
-                itens={['Solicitante', 'Administrador', 'Avaliador (Risco)', 'Avaliador (Impacto)', 'Avaliador (Custo)']}
-                selecionadoFst={grupo}
-                handleSelected={(s) => setGrupo(s)}
+                itens={grupos.map(grupo => grupo.name)}
+                selecionadoFst={grupo ? grupo.name : ''}
+                handleSelected={(s) => setGrupo(grupos.find(grupo => grupo.name == s))}
                 // dropdown implementado com onopen, onde tem a mesma funcionalidade que o onclick do botão e com a mesma finalidade que o onfocus dos outros campos
                 onOpen={() => setErroGrupo(false)}
               />
@@ -213,7 +213,13 @@ export default function NovoUsuario() {
           <div>
             <label>Este usuario poderá: </label>
             <ul className={styles.lista}>
-              <li>Criar solicitação</li>
+              {grupo ? 
+              grupo.permissions.map(perm => (
+                <li key={perm.id}>
+                  {perm.humanizedPermissionName}
+                </li>
+              )) :
+              <span>Escolha o grupo primeiro.</span>}
             </ul>
           </div>
           <div className={styles.espacador} />
