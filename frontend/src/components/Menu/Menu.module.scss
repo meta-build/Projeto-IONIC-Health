@@ -11,11 +11,20 @@
   top: 0;
   left: 0;
   z-index: 2;
-
+  
   li:hover {
     background: none;
-    cursor: default;
+    cursor: pointer;
+    color:$ciano-300; 
   }
+  li.Active{
+    color:$ciano-300;
+  }
+  
+}
+
+img {
+  width: 35px;
 }
 
 .espacador {
@@ -24,6 +33,7 @@
 
 .icon {
   margin-right: 16px;
+  
 }
 
 .icon-bolinha {
@@ -57,6 +67,7 @@
   margin: 0;
   text-align: right;
   border-bottom: 1px solid $cinza-300;
+
 }
 
 .conta-item:last-child {
@@ -66,6 +77,7 @@
 .conta-item:hover {
   font-weight: bold;
   cursor: pointer !important;
+  
 }
 
 .notificacao-lista {
@@ -116,3 +128,26 @@
   margin-right: 12px;
   color: $ciano-300;
 }
+
+.headerNav {
+  padding: 0x 0;
+  border: none;
+  margin: -12px 9px;
+}
+
+.headerNav ul {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.headerNav ul li {
+  display: inline-block;
+  border: none;
+  margin-left: 20px;
+}
+
+
+
