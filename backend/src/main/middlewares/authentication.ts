@@ -1,8 +1,8 @@
-import { UnauthorizedError } from '@/application/errors'
+import { UnauthorizedError, InactiveUserError } from '@/application/errors'
 import { HttpResponse, forbidden, ok, serverError } from '@/application/helpers'
 import { Middleware } from '@/application/middlewares'
 import { LoadUserById } from '@/domain/contracts/repos/user'
-import { Permission, Role } from '@/infra/repositories/mysql/entities'
+import { Permission, User } from '@/infra/repositories/mysql/entities'
 import env from '@/main/config/env'
 
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
@@ -20,18 +20,22 @@ export class AuthMiddleware implements Middleware {
     if (!authorization) {
       return forbidden(new UnauthorizedError())
     }
-
+    
     try {
       const [, token] = authorization.split(' ')
       const decoded = <{id: number}>jwt.verify(token, env.jwtSecret)
-
+      
       if (!decoded?.id) {
         return forbidden(new UnauthorizedError())
       } else {
-
+        
         const user = await this.loadUserById.loadById({ id: decoded.id })
-
-        const hasPermission = this.hasPermission(user.role)
+        
+        if (!user.isActive) {
+          return forbidden(new InactiveUserError())
+        }
+        
+        const hasPermission = this.hasPermission(user, httpRequest.routePath)
 
         if (hasPermission) {
           return ok({ requesterId: decoded.id, requester: user })
@@ -48,19 +52,19 @@ export class AuthMiddleware implements Middleware {
     }
   }
 
-  private hasPermission(role: Role) {
+  private hasPermission(user: LoadUserById.Output, routePath: string) {
     if (this.requiredPermissions.length === 0) {
       return true
     }
 
-    if (role.isAdmin) {
+    if (user.role.isAdmin) {
       return true
     }
 
     if (this.everyPermission) {
-      return this.hasEveryPermission(role.permissions)
+      return this.hasEveryPermission(user.role.permissions)
     } else {
-      return this.hasSomePermission(role.permissions)
+      return this.hasSomePermission(user, routePath)
     }
   }
 
@@ -70,9 +74,13 @@ export class AuthMiddleware implements Middleware {
     )
   }
 
-  private hasSomePermission(permissions: Permission[]) {
+  private hasSomePermission(user: LoadUserById.Output, routePath: string) {
+    if (routePath === `/user/${user.id}`) {
+      return true
+    }
+
     return this.requiredPermissions.some((requiredPermission) =>
-      permissions.some((permission) => permission.permissionName === requiredPermission)
+      user.role.permissions.some((permission) => permission.permissionName === requiredPermission)
     )
   }
 }

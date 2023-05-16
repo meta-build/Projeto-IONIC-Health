@@ -11,8 +11,7 @@ import DataSource from './data-source'
 import { ObjectType, Repository } from 'typeorm'
 
 export class UserRepository
-  implements CreateUser, LoadUserByEmail, LoadUserById, UpdateUser, LoadAllUser
-{
+  implements CreateUser, LoadUserByEmail, LoadUserById, UpdateUser, LoadAllUser {
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
@@ -38,7 +37,8 @@ export class UserRepository
       name: user.name,
       email: user.email,
       password: user.password,
-      roleId: user.roleId
+      roleId: user.roleId,
+      isActive: user.isActive
     }
   }
 
@@ -80,7 +80,8 @@ export class UserRepository
       name: user.name,
       email: user.email,
       roleId: user.roleId,
-      role: user.role
+      role: user.role,
+      isActive: user.isActive
     }
   }
 
@@ -88,17 +89,18 @@ export class UserRepository
     const userRepo = this.getRepository(User)
 
     const users = await userRepo
-    .createQueryBuilder('user')
-    .leftJoinAndSelect('user.role', 'role')
-    .leftJoinAndSelect('role.permissions', 'permission')
-    .getMany()
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .getMany()
 
     return users.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email,
       roleId: user.roleId,
-      role: user.role
+      role: user.role,
+      isActive: user.isActive
     }))
   }
 
@@ -106,7 +108,9 @@ export class UserRepository
     id,
     email,
     roleId,
-    name
+    name,
+    isActive,
+    password
   }: UpdateUser.Input): Promise<UpdateUser.Output> {
     const userRepo = this.getRepository(User)
 
@@ -116,9 +120,11 @@ export class UserRepository
       return null
     }
 
-    ;(user.email = email ?? user.email),
-      (user.name = name ?? user.name),
-      (user.roleId = roleId ?? user.roleId)
+    user.email = email ?? user.email
+    user.name = name ?? user.name
+    user.roleId = roleId ?? user.roleId
+    user.isActive = isActive ?? user.isActive
+    user.password = password ?? user.password
 
     const updatedUser = await userRepo.save(user)
 
