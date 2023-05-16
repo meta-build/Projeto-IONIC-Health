@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import GoogleIcon from '../../components/GoogleIcon';
 import { Header32 } from '../../components/Header';
 import { InputContornado } from '../../components/Inputs';
-import { GrupoProps, UsuarioProps } from '../../types';
+import { GrupoProps } from '../../types';
 import { Botao } from '../../components/Botoes';
 import { useContexto } from '../../context/contexto';
 import ItemNome from '../../components/ItemNome';
-import Usuarios from '../../services/Usuarios';
 import PopupAlerta from '../../popUps/PopupAlerta';
 import PopupConfirm from '../../popUps/PopupConfirm';
 import PopupErro from '../../popUps/PopupErro';
@@ -108,7 +107,7 @@ export default function ListGrupos() {
                 {usuario.role.permissions.find(perm => perm.id == 5) && 
                   <Botao
                   handleClick={() => {
-                    nav(`/editar-usuario/${grupoSelect.id}`)
+                    nav(`/editar-grupo/${grupoSelect.id}`)
                   }}
                   className={styles.botao}>
                   Editar

@@ -97,5 +97,6 @@ export type {
   EditarUsuarioProps,
   UsuarioContext,
   CreateGrupoProps,
-  GrupoProps
+  GrupoProps,
+  PermissionProps
 }
