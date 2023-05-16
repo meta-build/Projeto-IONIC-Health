@@ -47,7 +47,7 @@ export default function AppRouter() {
               path='/home'
               element={<PaginaComHeader elemento={<Home />} />}
             />
-            {usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 14) && (
+            {usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && (
               <>
                 <Route
                   path='/solicitacoes'
@@ -55,6 +55,22 @@ export default function AppRouter() {
                 />
               </>
             )}
+            {usuario.role.permissions.find(perm => perm.id == 14) &&
+              <>
+                <Route
+                  path='/solicitacoes-para-avaliar'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+              </>
+            }
+            {usuario.role.permissions.find(perm => perm.id == 13) &&
+              <>
+                <Route
+                  path='/solicitacoes-em-producao'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+              </>
+            }
             {usuario.role.permissions.find(perm => perm.id == 7) &&
               <>
                 <Route

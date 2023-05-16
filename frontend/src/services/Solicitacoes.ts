@@ -48,7 +48,7 @@ class Solicitacoes {
     return data;
   }
 
-  async getAll(): Promise<SolicitacaoProps> {
+  async getAll(): Promise<SolicitacaoProps[]> {
     const { data } = await api.get('/ticket')
     return data;
   }
@@ -79,7 +79,13 @@ class Solicitacoes {
   }
 
   async desarquivar(id: number, solicitacao: EditarSolicitacaoProps) {
-    const { data } = await api.put(`/ticket/${id}`, { ...solicitacao, isArchived: false });
+    const {data} = await api.put(`/ticket/${id}`, {
+      title: solicitacao.title,
+      description: solicitacao.description,
+      status: solicitacao.status,
+      assignedRoleId: solicitacao.assignedRoleId,
+      isArchived: false
+    });
     return data;
   }
 

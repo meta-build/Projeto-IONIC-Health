@@ -30,7 +30,7 @@ export default function Home() {
     usuario.role.permissions.find(perm => perm.id == 14) ?
       { label: 'Solicitações para avaliar', icon: <GoogleIcon>&#xe46e;</GoogleIcon>, url: '/solicitacoes-para-avaliar' } : null,
     usuario.role.permissions.find(perm => perm.id == 13) ?
-      { label: 'Solicitações em produção', icon: <GoogleIcon>&#xe179;</GoogleIcon>, url: '/minhas-solicitacoes' } : null,
+      { label: 'Solicitações em produção', icon: <GoogleIcon>&#xe179;</GoogleIcon>, url: '/solicitacoes-em-producao' } : null,
   ].filter(Boolean) as HomeItemProps[];
 
   return (

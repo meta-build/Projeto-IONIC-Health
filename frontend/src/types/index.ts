@@ -3,13 +3,15 @@ interface SolicitacaoProps {
   title: string,
   type: string,
   description: string,
-  status: 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE',
+  status: 'RECENT' | 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE',
   requesterId: number,
   createdAt: string,
   updatedAt: string,
   archivedAt: string,
+  isArchived: boolean,
   ratings: RatingProps[],
-  attachments: ArquivoProps[]
+  attachments: ArquivoProps[],
+  assignedRoleId: number | null;
 }
 
 interface RatingProps {
@@ -33,7 +35,7 @@ interface ArquivoProps {
 interface EditarSolicitacaoProps {
   title: string;
   description: string;
-  status: 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE';
+  status: 'RECENT' | 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE',
   isArchived: boolean;
   assignedRoleId: number | null;
 }
@@ -69,7 +71,8 @@ interface PermissionProps {
 interface UsuarioContext {
   accessToken: string,
   name: string,
-  role: RoleProps
+  role: RoleProps,
+  id: number
 }
 
 interface CreateGrupoProps {

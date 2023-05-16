@@ -2,18 +2,18 @@ import classNames from 'classnames';
 import styles from './BadgeStatus.module.scss';
 
 interface Props {
-  status: string;
+  status: 'ARCHIVED' | 'RECENT' | 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE';
   className?: string;
 }
 
 export default function ({status, className}: Props) {
   const strStatus = (status: string) => {
     switch (status) {
-      case 'Recentes':
+      case 'RECENT':
         return 'Recente';
-      case 'archived':
+      case 'ARCHIVED':
         return 'Arquivado';
-      case 'Em avaliação':
+      case 'RATING':
         return status;
       default:
         return 'Em produção';
@@ -23,10 +23,10 @@ export default function ({status, className}: Props) {
   return(
     <span className={classNames({
       [styles.status]: true,
-      [styles.recente]: status == 'Recentes',
-      [styles['em-avaliacao']]: status == 'Em avaliação',
-      [styles['em-producao']]: status.split('.')[0] == 'Em produção',
-      [styles.arquivado]: status == 'archived',
+      [styles.recente]: status == 'RECENT',
+      [styles['em-avaliacao']]: status == 'RATING',
+      [styles['em-producao']]: (status == 'NEW' || status == 'ONHOLDING' || status == 'DONE'),
+      [styles.arquivado]: status == 'ARCHIVED',
       [className]: true
     })}>
       {strStatus(status)}
