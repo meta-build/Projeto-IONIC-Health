@@ -60,6 +60,6 @@ export class Ticket {
   @ManyToOne(() => Role, (role) => role.tickets)
   assignedRole: Role
 
-  @Column()
+  @Column({nullable: true})
   assignedRoleId: number
 }
