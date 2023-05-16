@@ -19,7 +19,7 @@ export default (router: Router): void => {
   )
   router.put(
     '/user/:id',
-    adaptMiddleware(makeAuthMiddleware(['UpdateUser'])),
+    adaptMiddleware(makeAuthMiddleware(['UpdateUser'], false)),
     adaptRoute(makeUpdateUserController())
   )
   router.get(

@@ -33,4 +33,7 @@ export class User {
 
   @Column()
   roleId: number;
+
+  @Column({ default: true })
+  isActive: boolean;
 }
