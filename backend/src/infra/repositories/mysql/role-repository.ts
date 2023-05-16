@@ -1,12 +1,19 @@
-import { CreateRole, LoadRoleById, UpdateRole } from '@/domain/contracts/repos'
+import {
+  CreateRole,
+  LoadAllRole,
+  LoadRoleById,
+  UpdateRole
+} from '@/domain/contracts/repos'
 import { Role } from './entities'
 import DataSource from './data-source'
 
-import { ObjectType, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
-export class RoleRepository implements CreateRole, UpdateRole, LoadRoleById {
-  getRepository(entity: ObjectType<Role>): Repository<Role> {
-    return DataSource.getRepository(entity)
+export class RoleRepository
+  implements CreateRole, UpdateRole, LoadRoleById, LoadAllRole
+{
+  getRepository(): Repository<Role> {
+    return DataSource.getRepository(Role)
   }
 
   async create({
@@ -14,7 +21,7 @@ export class RoleRepository implements CreateRole, UpdateRole, LoadRoleById {
     isAdmin,
     permissions
   }: CreateRole.Input): Promise<CreateRole.Output> {
-    const roleRepository = this.getRepository(Role)
+    const roleRepository = this.getRepository()
     const role = roleRepository.create({
       name,
       isAdmin,
@@ -37,7 +44,7 @@ export class RoleRepository implements CreateRole, UpdateRole, LoadRoleById {
     isAdmin,
     permissions
   }: UpdateRole.Input): Promise<UpdateRole.Output> {
-    const roleRepository = this.getRepository(Role)
+    const roleRepository = this.getRepository()
     const role = await roleRepository.findOneBy({ id })
 
     role.name = name ?? role.name
@@ -55,7 +62,7 @@ export class RoleRepository implements CreateRole, UpdateRole, LoadRoleById {
   }
 
   async loadById({ id }: LoadRoleById.Input): Promise<LoadRoleById.Output> {
-    const roleRepository = this.getRepository(Role)
+    const roleRepository = this.getRepository()
     const role = await roleRepository
       .createQueryBuilder('role')
       .leftJoinAndSelect('role.permissions', 'permission')
@@ -67,5 +74,13 @@ export class RoleRepository implements CreateRole, UpdateRole, LoadRoleById {
     }
 
     return role
+  }
+
+  async loadAll (): Promise<LoadAllRole.Output> {
+    const roleRepository = this.getRepository()
+
+    const roles = await roleRepository.find()
+
+    return roles
   }
 }

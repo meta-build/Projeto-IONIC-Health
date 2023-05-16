@@ -3,7 +3,7 @@ import { PermissionRepository } from '@/infra/repositories/mysql/permission-repo
 import { RoleRepository } from '@/infra/repositories/mysql/role-repository'
 import { makeCreateRoleValidation } from './create-role-validation'
 
-export const makeCreateRoleFactory = (): Controller => {
+export const makeCreateRoleController = (): Controller => {
   const permissionRepository = new PermissionRepository()
   const roleRepository = new RoleRepository
   return new CreateRoleController(makeCreateRoleValidation(), roleRepository, permissionRepository)

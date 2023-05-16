@@ -83,3 +83,15 @@ export namespace LoadRoleById {
     }>
   }
 }
+
+export interface LoadAllRole {
+  loadAll: () => Promise<LoadAllRole.Output>
+}
+
+export namespace LoadAllRole {
+  export type Output = Array<{
+    id: number
+    name: string
+    isAdmin: boolean
+  }>
+}
