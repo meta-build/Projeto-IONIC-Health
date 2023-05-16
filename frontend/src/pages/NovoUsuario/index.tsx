@@ -52,7 +52,6 @@ export default function NovoUsuario() {
           name: nome,
           email: email,
           isActive: true,
-          password: senha,
           roleId: grupo.id
         }).then(() => {
           setCarregando(false);

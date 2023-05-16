@@ -36,9 +36,10 @@ export default function ListaUsuarios() {
   const getUsuarios = () => {
     Usuarios.getAll().then((data) => {
       setUsuarios(data.filter((user: UsuarioProps) => {
+        const isActive = user.isActive;
         const notUser = user.name !== usuario.name;
         const filterPesquisa = filtrarNome(user.name);
-        return notUser && filterPesquisa;
+        return notUser && filterPesquisa && isActive;
       }));
     });
   }
@@ -147,7 +148,12 @@ export default function ListaUsuarios() {
           onConfirm={() => {
             setAlerta(false);
             setCarregando(true);
-            Usuarios.deletar(userSelecionado.id).then(() => {
+            Usuarios.editar(userSelecionado.id, {
+              email: userSelecionado.email,
+              name: userSelecionado.name,
+              roleId: userSelecionado.role.id,
+              isActive: false
+            }).then(() => {
               setCarregando(false);
               setConfirma(true);
               setUserSelecionado(undefined);
