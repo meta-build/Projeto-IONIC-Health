@@ -80,7 +80,7 @@ export default function CriarGrupo() {
     <>
       <Header36
         className={styles.hd}>
-        Novo grupo
+        {id ? 'Editar' : 'Novo'} grupo
       </Header36>
       <form
         className={styles.form}
