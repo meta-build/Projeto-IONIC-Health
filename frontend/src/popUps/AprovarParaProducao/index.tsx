@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
-import {BotaoPreenchido} from "../../components/Botoes";
+import { BotaoPreenchido } from "../../components/Botoes";
 import styles from './AprovarParaProducao.module.scss';
 import classNames from "classnames";
 import { SolicitacaoProps } from "../../types";
 import Solicitacoes from "../../services/Solicitacoes";
+import { DropdownPreenchido } from "../../components/Dropdowns";
 
 interface Props {
   aberto: boolean;
@@ -15,6 +16,14 @@ interface Props {
 
 export default function AprovarParaProducao(props: Props) {
   const [solicitacao, setSolicitacao] = useState({} as SolicitacaoProps);
+  const [grupos, setGrupos] = useState({} as )
+
+  const aprovar = () => {
+    // Solicitacoes.liberarParaProducao(solicitacao.id).then(() => {
+    //   props.onConfirm();
+    //   props.onClose();
+    // })
+  }
 
   useEffect(() => {
     if (props.idSolic) {
@@ -28,11 +37,14 @@ export default function AprovarParaProducao(props: Props) {
     <PopUp
       visivel={props.aberto}
       onClose={props.onClose}
-      titulo={`Liberação para produção`}>
+      titulo={`Liberação solicitação para produção`}>
       <span className={styles.aviso}>
         <div>
-          Liberar a {solicitacao.tipo} {solicitacao.titulo} para producão?
+          Grupo de produção:
         </div>
+        <DropdownPreenchido
+        itens={}
+        handleSelected={}
       </span>
       <div className={styles.botoes}>
         <BotaoPreenchido
@@ -42,10 +54,7 @@ export default function AprovarParaProducao(props: Props) {
         </BotaoPreenchido>
         <BotaoPreenchido
           handleClick={() => {
-            Solicitacoes.liberarParaProducao(solicitacao.id).then(() => {
-              props.onConfirm();
-              props.onClose();
-            })
+
           }}
           className={classNames({
             [styles.botao]: true,

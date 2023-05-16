@@ -17,7 +17,7 @@ import PopupConfirm from '../../popUps/PopupConfirm';
 import PopupCarregando from '../../popUps/PopupCarregando';
 import PopupErro from '../../popUps/PopupErro';
 import PopupAprovacao from '../../popUps/PopupAprovacao';
-import { AvaliarSolicitacao } from '../../popUps';
+import { AprovarParaProducao, AvaliarSolicitacao } from '../../popUps';
 
 export default function ListaSolicitacoes() {
   const nav = useNavigate();
@@ -542,7 +542,7 @@ export default function ListaSolicitacoes() {
           />
 
           {/* lib prod */}
-          <PopupAprovacao
+          {/* <PopupAprovacao
             visivel={confirmLiberarProd}
             titulo={`Liberar para produção a solicitação ${solicSelecionada.title}?`}
             descricao=''
@@ -564,7 +564,13 @@ export default function ListaSolicitacoes() {
                   setCarregando(false);
                   setSucessoLiberarProd(true);
                 });
-            }} />
+            }} /> */}
+            <AprovarParaProducao
+            aberto={confirmLiberarProd}
+            onClose={() => setConfirmLiberarProd(false)}
+            idSolic={solicSelecionada.id}
+            onConfirm={() => console.log()}
+            />
           <PopupConfirm
             visivel={sucessoLiberarProd}
             onClose={() => {
