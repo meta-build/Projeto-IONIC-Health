@@ -11,7 +11,8 @@ import {
   ListaSolicitacoes,
   ListaUsuarios,
   CriarGrupo,
-  CriarSolicitacao
+  CriarSolicitacao,
+  ListGrupos
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
@@ -106,6 +107,16 @@ export default function AppRouter() {
               <Route
                 path='/criar-grupo'
                 element={<PaginaComHeader elemento={<CriarGrupo />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 5) &&
+              <Route
+                path='/editar-grupo/:id'
+                element={<PaginaComHeader elemento={<CriarGrupo />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
+              <Route
+                path='/grupos'
+                element={<PaginaComHeader elemento={<ListGrupos />} />}
               />}
           </>
         )}

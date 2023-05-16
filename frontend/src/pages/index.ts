@@ -11,6 +11,7 @@ import CriarSolicitacao from "./CriarSolicitacao";
 
 import ListaSolicitacoes from "./ListaSolicitacoes";
 import ListaUsuarios from "./ListaUsuarios";
+import ListGrupos from "./ListGrupos";
 
 export {
   Home,
@@ -24,5 +25,6 @@ export {
   ListaSolicitacoes,
   ListaUsuarios,
   CriarGrupo,
-  CriarSolicitacao
+  CriarSolicitacao,
+  ListGrupos
 }
