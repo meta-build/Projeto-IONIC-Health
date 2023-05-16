@@ -8,7 +8,7 @@ export const makeUpdateTicketValidation = (): ValidationComposite => {
   const validations: Validation[] = []
 
   validations.push(
-    new StringInputValidation('status', ['RATING', 'NEW', 'ONHOLDING', 'DONE'])
+    new StringInputValidation('status', ['RECENT', 'RATING', 'NEW', 'ONHOLDING', 'DONE'])
   )
 
   return new ValidationComposite(validations)
