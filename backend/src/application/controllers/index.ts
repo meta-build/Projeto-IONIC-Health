@@ -21,3 +21,4 @@ export * from './permission/get-all-permission-controller'
 
 export * from './role/create-role-controller'
 export * from './role/update-role-controller'
+export * from './role/get-all-role-controller'
