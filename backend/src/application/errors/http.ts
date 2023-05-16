@@ -33,3 +33,10 @@ export class NotFound extends Error {
     this.name = 'NotFoundError'
   }
 }
+
+export class InactiveUserError extends Error {
+  constructor () {
+    super('Usuário inativo. Faça login novamente.')
+    this.name = 'InactiveUserError'
+  }
+}

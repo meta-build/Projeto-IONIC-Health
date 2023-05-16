@@ -5,7 +5,8 @@ import { NextFunction, Request, Response } from 'express'
 export const adaptMiddleware = (middleware: Middleware) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const httpRequest = {
-      headers: req.headers
+      headers: req.headers,
+      routePath: req.path
     }
 
     if (!req.locals) {

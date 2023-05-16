@@ -29,7 +29,7 @@ export class LoginController implements Controller {
 
     const user = await this.userRepository.loadByEmail({ email })
 
-    if (user) {
+    if (user?.isActive) {
       const isValid = await this.hashComparer.compare(password, user.password)
 
       if (isValid) {
