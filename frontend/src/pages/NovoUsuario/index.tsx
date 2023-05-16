@@ -22,7 +22,6 @@ export default function NovoUsuario() {
   const [grupo, setGrupo] = useState<GrupoProps>();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  
 
   const [grupos, setGrupos] = useState<GrupoProps[]>([]);
   // se true > destacar campo em vermelho
@@ -40,38 +39,8 @@ export default function NovoUsuario() {
 
   const [failGet, setFailGet] = useState(false);
 
-  const intGrupo = (grupo: string) => {
-    switch (grupo) {
-      case 'Administrador':
-        return 1;
-      case 'Solicitante':
-        return 2;
-      case 'Avaliador (Risco)':
-        return 3;
-      case 'Avaliador (Custo)':
-        return 4;
-      case 'Avaliador (Impacto)':
-        return 5;
-    }
-  }
-
-  const strGrupo = (grupo: number) => {
-    switch (grupo) {
-      case 1:
-        return 'Administrador';
-      case 2:
-        return 'Solicitante';
-      case 3:
-        return 'Avaliador (Risco)';
-      case 4:
-        return 'Avaliador (Custo)';
-      case 5:
-        return 'Avaliador (Impacto)';
-    }
-  }
-
   const submit = () => {
-    if (!nome || !grupo || !email || !senha) {
+    if ((!id && (!nome || !grupo || !email || !senha)) || id && (!nome || !grupo || !email)) {
       setErroNome(!nome);
       setErroGrupo(!grupo);
       setErroEmail(!email);
@@ -80,8 +49,11 @@ export default function NovoUsuario() {
       setCarregando(true);
       if (id) {
         Usuarios.editar(Number(id), {
+          name: nome,
           email: email,
-          name: nome
+          isActive: true,
+          password: senha,
+          roleId: grupo.id
         }).then(() => {
           setCarregando(false);
           setConfirmEdit(true);
@@ -114,6 +86,7 @@ export default function NovoUsuario() {
           setCarregando(false);
           setNome(user.name);
           setEmail(user.email);
+          setGrupo(user.role);
         })
         .catch(() => {
           setCarregando(false);
@@ -188,6 +161,7 @@ export default function NovoUsuario() {
               </span>
             </div>
           </div>
+          {!id && 
           <div>
             <div className={styles.campo}>
               <span className={classNames({
@@ -208,7 +182,7 @@ export default function NovoUsuario() {
                 />
               </span>
             </div>
-          </div>
+          </div>}
 
           <div>
             <label>Este usuario poderá: </label>
