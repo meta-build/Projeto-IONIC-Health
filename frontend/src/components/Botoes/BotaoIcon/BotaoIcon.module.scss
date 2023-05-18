@@ -3,34 +3,40 @@
 $icon-size: 26px;
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: fit-content;
-    button {
-        background: none;
-        border: 2px solid $ciano-300;
-        color: $ciano-300;
-        font-size: $icon-size;
-        border-radius: 24px;
-        width: 64px;
-        height: 64px;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  min-width: 90px;
 
-        span {
-            font-size: calc($icon-size + 8px);
-        }
-    }
-    button:hover{
-        background-color: $ciano-300;
-        color: $cinza-600;
-        cursor: pointer;
-    }
+  button {
+    background: none;
+    border: 2px solid $ciano-300;
+    color: $ciano-300;
+    font-size: $icon-size;
+    border-radius: 24px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     span {
-        text-align: center;
-        max-width: 112px;
+      font-size: calc($icon-size + 8px);
     }
+  }
+
+  button:hover {
+    background-color: $ciano-300;
+    color: $cinza-600;
+    cursor: pointer;
+  }
+
+  span {
+    width: fit-content;
+    text-align: center;
+    max-width: 90px;
+    font-size: 14px;
+  }
 }

@@ -93,5 +93,12 @@ export namespace LoadAllRole {
     id: number
     name: string
     isAdmin: boolean
+    permissions: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }>
 }

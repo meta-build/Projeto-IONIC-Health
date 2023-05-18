@@ -1,26 +1,26 @@
 @import '@/styles/variables.scss';
 
 .aviso {
-    color: $cinza-600;
-    margin: 20px 0px;
+  color: $cinza-600;
+  margin: 20px 0px;
 }
 
 .botoes {
-    display: flex;
-    margin-top: 10px;
-    width: 100%;
+  display: flex;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .botao {
-    flex: 1;
+  flex: 1;
 }
 
 .excluir {
-    margin-right: 12px;
-    background-color: $vermelho;
-    color: white;
+  margin-right: 12px;
+  background-color: $vermelho;
+  color: white;
 }
 
 .excluir:hover {
-    background-color: rgb(255, 55, 55);
+  background-color: rgb(255, 55, 55);
 }

@@ -1,34 +1,34 @@
 @import '@/styles/variables.scss';
 
 .item {
-    list-style: none;
-    margin: 0;
-    padding: 12px;
-    border-bottom: 1px solid $cinza-600;
-    display: flex;
-    color: $cinza-600;
+  list-style: none;
+  margin: 0;
+  padding: 12px;
+  border-bottom: 1px solid $cinza-600;
+  display: flex;
+  color: $cinza-600;
 }
 
 .item:last-child {
-    border: none;
+  border: none;
 }
 
 .item:hover {
-    background-color: $cinza-300-hover;
-    cursor: pointer;
+  background-color: $cinza-300-hover;
+  cursor: pointer;
 }
 
 .item:first-child:hover {
-    border-start-end-radius: 12px;
-    border-start-start-radius: 12px;
+  border-start-end-radius: 12px;
+  border-start-start-radius: 12px;
 }
 
 .item:last-child:hover {
-    border-end-end-radius: 12px;
-    border-end-start-radius: 12px;
+  border-end-end-radius: 12px;
+  border-end-start-radius: 12px;
 }
 
 .nome {
-    flex: 1;
-    margin-right: 16px;
+  flex: 1;
+  margin-right: 16px;
 }

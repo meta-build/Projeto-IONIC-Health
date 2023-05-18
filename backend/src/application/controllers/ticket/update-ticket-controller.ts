@@ -40,6 +40,7 @@ export class UpdateTicketController implements Controller {
     }
 
     if (httpRequest.status?.toUpperCase() === 'RATING') {
+      console.log(httpRequest.requester)
       const hasPermission = this.checkPermission(
         httpRequest.requester,
         'ApproveTicketToRating'
@@ -76,8 +77,8 @@ export class UpdateTicketController implements Controller {
       return true
     }
 
-    user.role.permissions.find(
+    return Boolean(user.role.permissions.find(
       (permission) => permission.permissionName === permissionName
-    ) !== undefined
+    ))
   }
 }

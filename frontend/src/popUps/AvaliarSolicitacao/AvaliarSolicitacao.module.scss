@@ -1,82 +1,85 @@
 @import '@/styles/variables.scss';
 
 .form {
-    color: $cinza-600;
-    width: 700px;
-    height: fit-content;
+  color: $cinza-600;
+  width: 700px;
+  height: fit-content;
 }
 
-.row, .row-comentario, .row-botao {
-    display: flex;
-    flex: 1;
-    margin-top: 12px;
+.row,
+.row-comentario,
+.row-botao {
+  display: flex;
+  flex: 1;
+  margin-top: 12px;
 }
 
 .item {
-    margin-right: 4px;
+  margin-right: 4px;
 }
 
 .row-comentario {
-    flex-direction: column;
-    text-align: left;
-    height: 150px;
+  flex-direction: column;
+  text-align: left;
+  height: 150px;
 }
 
 .comentario-input {
-    flex: 1;
-    margin-top: 6px;
+  flex: 1;
+  margin-top: 6px;
 }
+
 .row-botao {
-    flex-direction: row-reverse;
-    margin-top: 16px;
+  flex-direction: row-reverse;
+  margin-top: 16px;
 }
 
 .label {
+  text-align: left;
+  color: $cinza-600;
+  margin-bottom: 4px;
+  margin-top: 20px;
+}
+
+.conteudo {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: $cinza-600;
+  font-size: 12px;
+  text-align: justify;
+  text-indent: 12px;
+}
+
+.inputs {
+  display: flex;
+  width: 660px;
+
+  .input {
+    display: flex;
+    flex-direction: column;
+    margin-right: 12px;
+  }
+
+  .input:last-child {
+    margin-right: 0px;
+  }
+
+  .label {
     text-align: left;
     color: $cinza-600;
     margin-bottom: 4px;
     margin-top: 20px;
-}
-
-.conteudo {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: $cinza-600;
-    font-size: 12px;
-    text-align: justify;
-    text-indent: 12px;
-}
-
-.inputs {
-    display: flex;
-    width: 660px;
-
-    .input {
-        display: flex;
-        flex-direction: column;
-        margin-right: 12px;
-    }
-
-    .input:last-child {
-        margin-right: 0px;
-    }
-
-    .label {
-        text-align: left;
-        color: $cinza-600;
-        margin-bottom: 4px;
-        margin-top: 20px;
-    }
+  }
 }
 
 .preencher {
-    flex: 1;
+  flex: 1;
 }
 
 .subtitulo {
-    text-align: left;
-    color: $cinza-600-hover;
-    font-size: 14px;
-    margin-top: 18px;
+  text-align: left;
+  color: $cinza-600-hover;
+  font-size: 14px;
+  margin-top: 18px;
 }

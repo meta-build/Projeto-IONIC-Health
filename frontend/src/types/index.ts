@@ -1,61 +1,102 @@
 interface SolicitacaoProps {
-    id: number;
-    id_user: number;
-    titulo: string,
-    tipo: string,
-    status: string,
-    descricao: string,
-    data_criacao: string,
-    data_edicao: string | null;
-    data_arquivado: string | null;
-    attachments: ArquivoProps[];
-    ratings: RatingProps[];
+  id: number,
+  title: string,
+  type: string,
+  description: string,
+  status: 'RECENT' | 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE',
+  requesterId: number,
+  createdAt: string,
+  updatedAt: string,
+  archivedAt: string,
+  isArchived: boolean,
+  ratings: RatingProps[],
+  attachments: ArquivoProps[],
+  assignedRoleId: number | null;
 }
 
 interface RatingProps {
-    id: number,
-    value: number,
-    committee: string,
-    comment: string,
-    userId: number,
-    ticketId: number
+  id: number,
+  value: number,
+  committee: string,
+  comment: string,
+  userId: number,
+  ticketId: number
 }
 
 interface ArquivoProps {
-    fileName: string;
-    fileType: string;
-    id: number;
-    storageType: string;
-    ticketId: number;
-    url: string;
+  fileName: string;
+  fileType: string;
+  id: number;
+  storageType: string;
+  ticketId: number;
+  url: string;
 }
 
 interface EditarSolicitacaoProps {
-    titulo?: string;
-    tipo: string;
-    descricao?: string;
+  title: string;
+  description: string;
+  status: 'RECENT' | 'RATING' | 'NEW' | 'ONHOLDING' | 'DONE',
+  isArchived: boolean;
+  assignedRoleId: number | null;
 }
 
 interface EditarUsuarioProps {
-    name?: string;
-    mail?: string;
-    password?: string;
-    grupoId?: number;
+  name?: string;
+  email?: string;
 }
 
 interface UsuarioProps {
-    id: number,
-    name: string,
-    mail: string,
-    password: string,
-    grupoId: number
+  id: number,
+  name: string,
+  email: string,
+  roleId: string,
+  role: RoleProps
+}
+
+interface RoleProps {
+  id: number,
+  name: string,
+  isAdmin: boolean,
+  permissions: PermissionProps[]
+}
+
+interface PermissionProps {
+  id: number,
+  permissionName: string,
+  humanizedPermissionName: string,
+  entity: string,
+  humanizedEntity: string
+}
+
+interface UsuarioContext {
+  accessToken: string,
+  name: string,
+  role: RoleProps,
+  id: number
+}
+
+interface CreateGrupoProps {
+  name: string,
+  isAdmin: boolean,
+  permissions: number[]
+}
+
+interface GrupoProps {
+  id: number,
+  name: string,
+  isAdmin: boolean,
+  permissions: PermissionProps[]
 }
 
 export type {
-    SolicitacaoProps,
-    ArquivoProps,
-    EditarSolicitacaoProps,
-    RatingProps,
-    UsuarioProps,
-    EditarUsuarioProps
+  SolicitacaoProps,
+  ArquivoProps,
+  EditarSolicitacaoProps,
+  RatingProps,
+  UsuarioProps,
+  EditarUsuarioProps,
+  UsuarioContext,
+  CreateGrupoProps,
+  GrupoProps,
+  PermissionProps
 }

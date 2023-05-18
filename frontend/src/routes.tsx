@@ -1,54 +1,136 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Login, PaginaComHeader, PaginaNaoEncontrada, Tests } from "./pages";
-import { useEffect } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes
+} from "react-router-dom";
+import {
+  Login,
+  Home,
+  PaginaNaoEncontrada,
+  Tests,
+  ListaSolicitacoes,
+  ListaUsuarios,
+  CriarGrupo,
+  CriarSolicitacao,
+  ListGrupos
+} from "./pages";
 import { useContexto } from "./context/contexto";
-import Usuario from "./types/Usuario";
-import HomeSolicitante from "./pages/HomeSolicitante";
-import HomeAvaliador from "./pages/HomeAvaliador";
-import HomeAdm from "./pages/HomeAdm";
-import SolicitacoesAdm from "./pages/SolicitacoesAdm";
-import UsuariosAdm from "./pages/UsuariosAdm";
+import PaginaComHeader from "./components/PaginaComHeader";
+import { useEffect, useState } from "react";
 import api from "./services/api";
+import Carregando from "./pages/Carregando";
+import NovoUsuario from "./pages/NovoUsuario";
+import Usuarios from "./services/Usuarios";
 
 export default function AppRouter() {
-
-  const {usuario, setUsuario} = useContexto();
+  const { usuario, setUsuario } = useContexto();
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
     if (sessionStorage.length > 0) {
-      const {id, token, grupo} = sessionStorage;
-      console.log(id, token, grupo);
-      setUsuario(new Usuario(id, token, grupo));
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const { email, password } = sessionStorage;
+      Usuarios.login({ email, password })
+        .then(data => {
+          const { accessToken } = data;
+          api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+          setUsuario(data);
+          setCarregando(false);
+        });
     }
-  }, [])
-
+  }, []);
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login />} />
-
-          {usuario && (
-            <>
-              {usuario.getGrupo() == 2 && (
-                  <Route path='/home' element={<PaginaComHeader elemento={<HomeSolicitante />} />} />
-              )}
-              {usuario.getGrupo() >= 3 && (
-                <Route path='/home' element={<PaginaComHeader elemento={<HomeAvaliador />} />} />
-              )}
-              {usuario.getGrupo() == 1 && (<>
-                  <Route path='/home' element={<PaginaComHeader elemento={<HomeAdm />} />} />
-                  <Route path='/solicitacoes' element={<PaginaComHeader elemento={<SolicitacoesAdm />} />} />
-                  <Route path='/usuarios' element={<PaginaComHeader elemento={<UsuariosAdm />} />} />
-              </>)}
-              <Route path='/tests' element={<Tests />} />
-            </>  
-          )}
-
-          <Route path='*' element={<PaginaNaoEncontrada />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Login />} />
+        {usuario && (
+          <>
+            <Route
+              path='/home'
+              element={<PaginaComHeader elemento={<Home />} />}
+            />
+            {usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && (
+              <>
+                <Route
+                  path='/solicitacoes'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+              </>
+            )}
+            {usuario.role.permissions.find(perm => perm.id == 14) &&
+              <>
+                <Route
+                  path='/solicitacoes-para-avaliar'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+              </>
+            }
+            {usuario.role.permissions.find(perm => perm.id == 13) &&
+              <>
+                <Route
+                  path='/solicitacoes-em-producao'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+              </>
+            }
+            {usuario.role.permissions.find(perm => perm.id == 7) &&
+              <>
+                <Route
+                  path='/minhas-solicitacoes'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+                <Route
+                  path='/criar-solicitacao'
+                  element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+                />
+              </>}
+            {usuario.role.permissions.find(perm => perm.id == 8) &&
+              <Route
+                path='/editar-solicitacao/:id'
+                element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
+              <Route
+                path='/usuarios'
+                element={<PaginaComHeader elemento={<ListaUsuarios />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 1) &&
+              <Route
+                path='/criar-usuario'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 2) &&
+              <Route
+                path='/editar-usuario/:id'
+                element={<PaginaComHeader elemento={<NovoUsuario />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 4) &&
+              <Route
+                path='/criar-grupo'
+                element={<PaginaComHeader elemento={<CriarGrupo />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id == 5) &&
+              <Route
+                path='/editar-grupo/:id'
+                element={<PaginaComHeader elemento={<CriarGrupo />} />}
+              />}
+            {usuario.role.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
+              <Route
+                path='/grupos'
+                element={<PaginaComHeader elemento={<ListGrupos />} />}
+              />}
+          </>
+        )}
+        <Route
+          path='*'
+          element={carregando ?
+            <Carregando /> :
+            <PaginaNaoEncontrada />
+          } />
+        <Route
+          path='/tests'
+          element={<Tests />}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }

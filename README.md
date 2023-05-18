@@ -28,94 +28,33 @@ https://github.com/ikatyang/emoji-cheat-sheet#smileys--emotion
 ## :repeat: Backlog
 Versões anteriores:<br>
 <a href='https://user-images.githubusercontent.com/90328897/229401867-6c327c67-188d-41d4-a167-153cb717ef4c.png'>v1.0</a>
+<a href='https://user-images.githubusercontent.com/90328897/230677847-62fc7bf3-6233-422a-8e71-c77defbc1f3f.png'>v2.0</a>
 <br><br>
-Versão atual (v2.0)
-![image](https://user-images.githubusercontent.com/90328897/230677847-62fc7bf3-6233-422a-8e71-c77defbc1f3f.png)
+Versão atual (v3.0) <br>
+![image](https://github.com/meta-build/Projeto-IONIC-Health/assets/90328897/68ad1ac3-d554-4fdf-a963-1e9f6295d220)
 
 
-<!-- sprints --> 
-## :gear: Sprints
-<h2 style="font -weight: bold; margin=bottom: margin-bottom: 0px">
-    1ª Sprint
-</h2>
-<p>Entrega: 13/03/2023 à 02/04/2023</p>
 
-### Backlog
-![image](https://user-images.githubusercontent.com/90328897/230113778-575b3eca-3ca5-4c59-bac9-73b559d5703d.png)
-
-### Burndown
-![image](https://user-images.githubusercontent.com/90328897/230114391-242604c0-5fda-47a5-be9e-24045335b08d.png)
-
-### Diagramas de Banco de Dados
-![image](https://user-images.githubusercontent.com/90328897/230676836-29b1e4fc-1445-43d7-9489-841b511c5361.png)
-![image](https://user-images.githubusercontent.com/90328897/230676786-37077384-f43a-4d9a-a4c8-025bfbc46be4.png)
-
-### Diagrama de Classe
-![image](https://user-images.githubusercontent.com/90328897/230676876-d1d3e963-f43c-45d8-a995-0b91921110f1.png)
-
-### Criar Solicitação
-![criar solicitacao](https://user-images.githubusercontent.com/90328897/230112495-4eebc079-b8b1-40ca-960c-ab071aa8c4a8.gif)
-<br>
-### Tela de Solicitações
-![tela solicitacoes](https://user-images.githubusercontent.com/90328897/230112718-2526c47e-2f28-4eff-b14b-464307f0c802.gif)
-<br>
-### Editar Solicitação
-![editar solicitacao](https://user-images.githubusercontent.com/90328897/230112799-a932c2ff-d061-4a5a-9a9f-2df76dbb8cf1.gif)
 
 <h2 style="font -weight: bold; margin=bottom: margin-bottom: 0px">
-    2ª Sprint
+    Link para as Sprints:
 </h2>
-<p>Entrega: 03/04/2023 à 23/04/2023</p>
+<ul>
+<li> <a href="https://github.com/meta-build/Projeto-IONIC-Health/blob/main/Sprint1.md">Sprint 1</a> </li>
+</ul>
 
-### Backlog
-![image](https://user-images.githubusercontent.com/90328897/233985310-c53e4c11-694f-4bd8-bb6a-456fe7962699.png)
+<ul>
+ <li> <a href="https://github.com/meta-build/Projeto-IONIC-Health/blob/main/Sprint2.md">Sprint 2 </a> </li> 
+</ul>
 
-### Burndown
-![burndown](https://user-images.githubusercontent.com/90328897/234175665-8389bdda-96e4-48b6-97e5-cad72b176cba.png)
+<ul>
+ <li> <a href="https://github.com/meta-build/Projeto-IONIC-Health/blob/main/Sprint3.md">Sprint 3 </a> </li> 
+</ul>
 
-### Diagrama de Banco de dados
-![modelo_bd_relacional](https://user-images.githubusercontent.com/90328897/233985485-544b6f85-04f6-4f22-827d-0e7ad125975a.jpg)
-![modelo_bd_logico_4](https://user-images.githubusercontent.com/90328897/233985526-c18d64aa-8b86-4f0a-b2ad-5d35cb60fcfe.jpg)
+<ul>
+ <li> <a href="https://github.com/meta-build/Projeto-IONIC-Health/blob/main/Sprint4.md">Sprint 4 </a> </li> 
+</ul>
 
-### Diagrama de classes
-![Imagem do WhatsApp de 2023-04-24 à(s) 10 42 28](https://user-images.githubusercontent.com/90328897/234175342-0f4a0194-8e39-4343-b7ea-08d6f102e34e.jpg)
-
-### Usuário administrador
-![adm](https://user-images.githubusercontent.com/90328897/234175366-dfdb1ed4-0033-40e1-af04-25c7a712f53f.gif)
-
-### Usuário solicitante
-![solicitante](https://user-images.githubusercontent.com/90328897/234175407-fc6e9a8c-ef96-4911-ab6f-51ad3187702c.gif)
-
-### Usuário avaliador
-![avaliador](https://user-images.githubusercontent.com/90328897/234175426-8a7be0a9-00c5-4108-8a78-67c049e780fc.gif)
-
-<!--
-### Funcionalidade 1
-(gif aqui)
-<br>
--->
-
-<h2 style="font -weight: bold; margin=bottom: margin-bottom: 0px">
-    3ª Sprint
-</h2>
-<p>Entrega: 24/04/2023 à 14/05/2023</p>
-
-<!--
-### Funcionalidade 1
-(gif aqui)
-<br>
--->
-
-<h2 style="font -weight: bold; margin=bottom: margin-bottom: 0px">
-    4ª Sprint
-</h2>
-<p>Entrega: 15/05/2023 à 04/06/2023</p>
-
-<!--
-### Funcionalidade 1
-(gif aqui)
-<br>
--->
 
 <!-- tecnologias -->
 ## :computer: Tecnologias utilizadas

@@ -1,0 +1,29 @@
+@import '@/styles/variables.scss';
+
+.status {
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  height: fit-content;
+  width: fit-content;
+}
+
+.recente {
+  color: $azul2;
+  border: 1px solid $azul2;
+}
+
+.em-avaliacao {
+  color: $amarelo-300;
+  border: 1px solid $amarelo-300;
+}
+
+.em-producao {
+  color: $verde;
+  border: 1px solid $verde;
+}
+
+.arquivado {
+  color: $vermelho;
+  border: 1px solid $vermelho;
+}

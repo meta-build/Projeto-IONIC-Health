@@ -37,7 +37,8 @@ export class LoginController implements Controller {
         return ok({
           accessToken,
           name: user.name,
-          role: user.role
+          role: user.role,
+          id: user.id
         })
       }
     }

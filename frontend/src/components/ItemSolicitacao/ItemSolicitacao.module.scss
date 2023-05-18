@@ -1,0 +1,98 @@
+@import '@/styles/variables.scss';
+
+.container {
+  color: $cinza-600;
+  box-sizing: border-box;
+  list-style: none;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: $cinza-200;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.container:hover {
+  cursor: pointer;
+  background-color: $cinza-300;
+}
+
+.selecionado-recente{
+  border: 2px solid $azul2;
+}
+.selecionado-em-av{
+  border: 2px solid $amarelo-300;
+}
+.selecionado-em-prod{
+  border: 2px solid $verde;
+}
+.selecionado-arq{
+  border: 2px solid $vermelho;
+}
+
+.top{
+  display: flex;
+  // align-items: center;
+  gap: 8px;
+}
+
+.bottom {
+  flex: 1;
+  min-height: 36px;
+}
+
+.icon {
+  color: white;
+  font-size: 18px;
+  padding: 6px;
+  border-radius: 12px;
+  background-color: $cinza-600;
+  height: fit-content;
+}
+
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+  flex: 1;
+}
+
+.bottom .recente {
+  color: $azul2;
+}
+
+.bottom .em-avaliacao, .new {
+  color: $amarelo-300;
+}
+
+.bottom .em-producao, .on-holding {
+  color: $verde;
+}
+
+.bottom .arquivado {
+  color: $vermelho;
+}
+
+.done {
+  color: $verde-escuro;
+}
+
+.content {
+  display: flex;
+  gap: 4px
+}
+
+.impacto-3, .av-0 {
+  color: $azul2;
+}
+
+.impacto-1, .av-2 {
+  color: $amarelo;
+}
+
+.impacto-2, .av-1 {
+  color: $verde;
+}
+
+.impacto-0, .av-3 {
+  color: $vermelho;
+}

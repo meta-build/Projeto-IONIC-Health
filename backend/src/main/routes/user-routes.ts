@@ -24,12 +24,12 @@ export default (router: Router): void => {
   )
   router.get(
     '/user/:id',
-    adaptMiddleware(makeAuthMiddleware()),
+    adaptMiddleware(makeAuthMiddleware(['CreateUser', 'UpdateUser'], false)),
     adaptRoute(makeGetUserByIdController())
   )
   router.get(
     '/user',
-    adaptMiddleware(makeAuthMiddleware()),
+    adaptMiddleware(makeAuthMiddleware(['CreateUser', 'UpdateUser'], false)),
     adaptRoute(makeGetAllUserController())
   )
 }

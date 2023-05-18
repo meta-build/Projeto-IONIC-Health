@@ -3,13 +3,14 @@ import PopUp from "../../components/PopUp";
 import classNames from "classnames";
 import styles from './VizualizarSolicitacaoProducao.module.scss';
 import BotaoPreenchido from "../../components/Botoes/BotaoPreenchido";
-import { AcaoProducao } from "../../components/ItemLista/Acoes";
-import AlterarStatusProducao from "../AlterarStatusProducao";
-import ConfirmarArquivamentoSolicitacao from "../ConfirmarArquivamentoSolicitacao";
-import ConfirmarExclusaoSolicitacao from "../ConfirmarExclusaoSolicitacao";
+import { AcaoProducao } from "../../components/Acoes";
 import { SolicitacaoProps } from "../../types";
 import Solicitacoes from "../../services/Solicitacoes";
-
+import {
+  AlterarStatusProducao,
+  ConfirmarArquivamentoSolicitacao,
+  ConfirmarExclusaoSolicitacao
+} from '../';
 interface Props {
   aberto: boolean;
   onClose: () => void;
@@ -24,13 +25,13 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
   const [popupArquivar, setPopupArquivar] = useState(false);
   const [popupExclusao, setPopupExclusao] = useState(false);
 
-  const[status, setStatus] = useState('');
+  const [status, setStatus] = useState('');
 
   const producaoMask = {
     'New': 'new',
     'On Holding': 'on-holding',
     'Done': 'done'
-}
+  }
 
   useEffect(() => {
     if (props.idSolic) {
@@ -70,7 +71,7 @@ export default function VizualizarSolicitacaoProducao(props: Props) {
               ))}
             </span>
             <div className={styles.subtitulo}>
-            <div>
+              <div>
                 Criado em {new Date(solicitacao.data_criacao).toLocaleDateString('pt-br', {
                   day: "2-digit",
                   month: "2-digit",
