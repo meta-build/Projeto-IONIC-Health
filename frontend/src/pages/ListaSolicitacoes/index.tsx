@@ -6,31 +6,38 @@ import { InputContornado } from '../../components/Inputs';
 import { DropdownContornado } from '../../components/Dropdowns';
 import Solicitacoes from '../../services/Solicitacoes';
 import ItemSolicitacao from '../../components/ItemSolicitacao';
-import { RatingProps, SolicitacaoProps } from '../../types';
+import { EditarSolicitacaoProps, GrupoProps, RatingProps, SolicitacaoProps } from '../../types';
 import classNames from 'classnames';
 import BadgeStatus from '../../components/BadgeStatus';
 import { Botao, BotaoPreenchido } from '../../components/Botoes';
 import { useContexto } from '../../context/contexto';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PopupAlerta from '../../popUps/PopupAlerta';
 import PopupConfirm from '../../popUps/PopupConfirm';
 import PopupCarregando from '../../popUps/PopupCarregando';
 import PopupErro from '../../popUps/PopupErro';
 import PopupAprovacao from '../../popUps/PopupAprovacao';
+import { AlterarStatusProducao, AprovarParaProducao, AvaliarSolicitacao } from '../../popUps';
+import Grupos from '../../services/Grupos';
 
 export default function ListaSolicitacoes() {
   const nav = useNavigate();
+  const loc = useLocation();
   const { usuario } = useContexto();
 
   const [busca, setBusca] = useState('');
   const [tipo, setTipo] = useState('Todos');
-  const [status, setStatus] = useState(usuario.grupo >= 3 ? 'Em avaliação' : 'Todos');
+  const [status, setStatus] = useState('Todos');
   const [situacaoNota, setSituacaoNota] = useState('semNota')
 
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [solicSelecionada, setSolicSelecionada] = useState<SolicitacaoProps>();
+  const [grupoSolic, setGrupoSolic] = useState<GrupoProps>();
 
   const [carregando, setCarregando] = useState(false);
+
+  const [avaliar, setAvaliar] = useState(false);
+  const [alterarProd, setAlterarProd] = useState(false);
 
   const [confirmExcluir, setConfirmExcluir] = useState(false);
   const [confirmArquivar, setConfirmArquivar] = useState(false);
@@ -55,6 +62,19 @@ export default function ListaSolicitacoes() {
     return regex.test(titulo);
   }
 
+  const strSituacao = (situacao: string) => {
+    switch (situacao) {
+      case 'Recentes': return 'RECENT';
+      case 'Em avaliação': return 'RATING';
+      case 'RECENT': return 'Recente';
+      case 'RATING': return 'Em avaliação';
+      case 'NEW': return 'Em produção';
+      case 'ONHOLDING': return 'Em produção';
+      case 'DONE': return 'Em produção';
+
+    }
+  }
+
   const strAvaliador = (grupoId: number) => {
     switch (grupoId) {
       case 3:
@@ -66,34 +86,36 @@ export default function ListaSolicitacoes() {
     }
   }
 
-  const isSemNota = (solic: SolicitacaoProps) => {
+  const isSemNota = (solic: SolicitacaoProps): boolean => {
     const notas = solic.ratings
-    let result = true;
-    if (notas) {
-      notas.forEach(nota => {
-        if (nota.committee == strAvaliador(usuario.grupo)) {
-          result = false;
-        }
-      });
-    }
-    return result;
+    return Boolean(!notas.find(nota => nota.committee == usuario.role.name));
   }
 
   const getSolicitacoes = () => {
+    console.log(usuario)
     Solicitacoes.getAll()
       .then(data => {
         setSolicitacoes(data.filter((item: SolicitacaoProps) => {
-          const filtroCriador = usuario.grupo == 2 ? item.id_user == usuario.id : true;
-          const filtroAv = usuario.grupo >= 3 ?
-            (situacaoNota == 'Todos' ? true : isSemNota(item)) :
-            true;
-          const filtroNome = filtrarNome(item.titulo);
-          const filtroTipo = tipo == 'Todos' ? true : item.tipo == tipo;
-          let filtroSituacao = status == 'Todos' ? true : item.status == status || item.status.split('.')[0] == status;
-          if (status == 'Arquivados') {
-            filtroSituacao = item.status == 'archived';
+          const filtroNota = loc.pathname == '/solicitacoes-para-avaliar' ?
+            (situacaoNota == 'semNota' ?
+              (!item.ratings.find(rating => rating.committee == usuario.role.name)) : true)
+            : true;
+          const filtroDono = loc.pathname == '/minhas-solicitacoes' ?
+            item.requesterId == usuario.id : true;
+          const filtroAv = loc.pathname == '/solicitacoes-para-avaliar' ?
+            (item.status == 'RATING' && !item.isArchived) : true;
+          const filtroProd = loc.pathname == '/solicitacoes-em-producao' ?
+            item.assignedRoleId && item.assignedRoleId == usuario.role.id : true;
+          const filtroNome = filtrarNome(item.title);
+          const filtroTipo = tipo == 'Todos' ? true : item.type == tipo.toUpperCase();
+          let filtroSituacao = status == 'Todos' ? true : item.status == strSituacao(status);
+          if (status == 'Em produção') {
+            filtroSituacao = item.status == 'NEW' || item.status == 'ONHOLDING' || item.status == 'DONE';
           }
-          return filtroCriador && filtroNome && filtroTipo && filtroSituacao && filtroAv;
+          if (status == 'Arquivados') {
+            filtroSituacao = item.isArchived;
+          }
+          return filtroNome && filtroTipo && filtroSituacao && filtroAv && filtroProd && filtroDono && filtroNota;
         }));
       });
   }
@@ -103,7 +125,12 @@ export default function ListaSolicitacoes() {
   }, [busca, tipo, status, situacaoNota]);
   return (
     <>
-      <Header32 className={styles.titulo}>{usuario.grupo == 2 ? 'Minhas solicitações' : 'Solicitações'}</Header32>
+      <Header32 className={styles.titulo}>
+        {loc.pathname == '/solicitacoes' ? 'Solicitações' :
+          loc.pathname == '/minhas-solicitacoes' ? 'Minhas solicitações' :
+            loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
+              'Solicitações em produção'}
+      </Header32>
       <section className={styles.section}>
         <div className={styles.esquerda}>
           <div className={styles.inputContainer}>
@@ -116,7 +143,7 @@ export default function ListaSolicitacoes() {
             <div className={styles.inputRow}>
               <DropdownContornado
                 className={classNames({
-                  [styles.inputPreenchimento]: usuario.grupo <= 2
+                  [styles.inputPreenchimento]: loc.pathname !== '/solicitacoes-para-avaliar'
                 })}
                 itens={[
                   { label: 'Tipo: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon> },
@@ -125,15 +152,15 @@ export default function ListaSolicitacoes() {
                 ]}
                 handleSelected={(s: string) => setTipo(s.split(' ')[1])}
               />
-              {usuario.grupo >= 3 ?
+              {loc.pathname == '/solicitacoes-para-avaliar' ?
                 <DropdownContornado
                   className={styles.inputPreenchimento}
                   itens={[
-                    { label: `Situação: Sem nota de ${strAvaliador(usuario.grupo)}`, icon: <GoogleIcon>&#xE46E;</GoogleIcon>, value: 'semNota' },
+                    { label: `Situação: Sem nota de ${usuario.role.name}`, icon: <GoogleIcon>&#xE46E;</GoogleIcon>, value: 'semNota' },
                     { label: 'Situação: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon>, value: 'Todos' }
                   ]}
                   handleSelected={(s: string) => setSituacaoNota(s)}
-                /> :
+                /> : loc.pathname !== '/solicitacoes-em-producao' &&
                 <DropdownContornado
                   className={styles.inputPreenchimento}
                   itens={[
@@ -144,18 +171,20 @@ export default function ListaSolicitacoes() {
                     { label: 'Status: Arquivados', icon: <GoogleIcon>&#xE2C8;</GoogleIcon>, value: 'Arquivados' }
                   ]}
                   handleSelected={(s: string) => setStatus(s)}
-                />}
+                />
+              }
             </div>
           </div>
-          {usuario.grupo == 2 && <div className={styles.inputContainer}>
-            <Botao
-              handleClick={() => {
-                nav('/criar-solicitacao');
-              }}
-              className={styles.botao}>
-              Criar solicitação
-            </Botao>
-          </div>}
+          {loc.pathname == '/minhas-solicitacoes' &&
+            <div className={styles.inputContainer}>
+              <Botao
+                handleClick={() => {
+                  nav('/criar-solicitacao');
+                }}
+                className={styles.botao}>
+                Criar solicitação
+              </Botao>
+            </div>}
           <div
             onClick={() => setSolicSelecionada(undefined)}
             className={styles.listContainer}>
@@ -168,6 +197,9 @@ export default function ListaSolicitacoes() {
                     setSolicSelecionada(solic);
                     Solicitacoes.getByID(solic.id).then(solicitacao => {
                       setSolicSelecionada(solicitacao);
+                    });
+                    solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
+                      setGrupoSolic(grupo);
                     })
                   }}
                   isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
@@ -179,25 +211,33 @@ export default function ListaSolicitacoes() {
             <div className={styles['solic-container']}>
               <h2 className={styles['solic-titulo']}>
                 <span className={styles['solic-tipo']}>
-                  [{solicSelecionada.tipo}]
+                  {solicSelecionada.type}
                 </span>
-                {solicSelecionada.titulo}
+                {solicSelecionada.title}
               </h2>
-              <BadgeStatus status={solicSelecionada.status} />
-              {solicSelecionada.status.split('.')[0] == 'Em produção' &&
+              <BadgeStatus status={solicSelecionada.isArchived ? 'ARCHIVED' : solicSelecionada.status} />
+              {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
                 <div className={styles['solic-info']}>
                   <span className={styles.content}>
                     <span>{'Status: '}</span>
                     <span className={classNames({
-                      [styles.new]: solicSelecionada.status.split('.')[1] == 'New',
-                      [styles['on-holding']]: solicSelecionada.status.split('.')[1] == 'On Holding',
-                      [styles.done]: solicSelecionada.status.split('.')[1] == 'Done',
+                      [styles.new]: solicSelecionada.status == 'NEW',
+                      [styles['on-holding']]: solicSelecionada.status == 'ONHOLDING',
+                      [styles.done]: solicSelecionada.status == 'DONE',
                     })}>
-                      {solicSelecionada.status.split('.')[1]}
+                      {solicSelecionada.status}
+                    </span>
+                  </span>
+                  <span className={styles.content}>
+                    <span>{'Grupo: '}</span>
+                    <span className={classNames({
+                      [styles.new]: true,
+                    })}>
+                      {grupoSolic ? grupoSolic.name : 'Carregando...'}
                     </span>
                   </span>
                 </div>}
-              {solicSelecionada.status == 'Em avaliação' &&
+              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
                 <span className={styles['solic-em-av']}>
                   {solicSelecionada.ratings.length ?
                     solicSelecionada.ratings.map(nota => (
@@ -225,7 +265,7 @@ export default function ListaSolicitacoes() {
               <div className={styles['solic-datas']}>
                 <span>
                   {'Criado em '}
-                  {new Date(solicSelecionada.data_criacao).toLocaleDateString('pt-br', {
+                  {new Date(solicSelecionada.createdAt).toLocaleDateString('pt-br', {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
@@ -234,10 +274,10 @@ export default function ListaSolicitacoes() {
                     hour12: false
                   })}
                 </span>
-                {solicSelecionada.data_edicao &&
+                {solicSelecionada.updatedAt &&
                   <span>
                     {'Editado em '}
-                    {new Date(solicSelecionada.data_edicao).toLocaleDateString('pt-br', {
+                    {new Date(solicSelecionada.updatedAt).toLocaleDateString('pt-br', {
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",
@@ -246,10 +286,10 @@ export default function ListaSolicitacoes() {
                       hour12: false
                     })}
                   </span>}
-                {solicSelecionada.status == 'archived' && (
+                {solicSelecionada.isArchived && (
                   <span>
                     {'Arquivado em '}
-                    {new Date(solicSelecionada.data_arquivado).toLocaleDateString('pt-br', {
+                    {new Date(solicSelecionada.archivedAt).toLocaleDateString('pt-br', {
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",
@@ -262,7 +302,7 @@ export default function ListaSolicitacoes() {
               </div>
               <div className={styles['solic-info']}>
                 <span>Descrição</span>
-                {solicSelecionada.descricao}
+                {solicSelecionada.description}
               </div>
               <div className={styles['solic-arqs']}>
                 <span>Anexos</span>
@@ -279,32 +319,46 @@ export default function ListaSolicitacoes() {
                 </span>
               </div>
               <div className={styles['solic-espacador']}></div>
-              {usuario.grupo == 1 && <div className={styles['solic-botoes']}>
-                {solicSelecionada.status == 'Recentes' &&
-                  <Botao
-                    handleClick={() => {
-                      setConfirmLiberarAv(true);
-                    }}
-                    className={styles.botao}>
-                    Liberar para avaliação
-                  </Botao>}
-                {solicSelecionada.status == 'Em avaliação' && solicSelecionada.ratings.length >= 2 &&
-                  <Botao
-                    handleClick={() => {
-                      setConfirmLiberarProd(true);
-                    }}
-                    className={styles.botao}>
-                    Liberar para produção
-                  </Botao>}
-                {solicSelecionada.status == 'Recentes' &&
-                  <Botao
-                    handleClick={() => {
-                      nav(`/editar-solicitacao/${solicSelecionada.id}`);
-                    }}
-                    className={styles.botao}>
-                    Editar
-                  </Botao>}
-                {solicSelecionada.status == 'archived' ?
+              <div className={styles['solic-botoes']}>
+                {!solicSelecionada.isArchived && solicSelecionada.status == 'RECENT' &&
+                  <>
+                    {usuario.role.permissions.find(perm => perm.id == 12) &&
+                      <Botao
+                        handleClick={() => {
+                          setConfirmLiberarAv(true);
+                        }}
+                        className={styles.botao}>
+                        Liberar para avaliação
+                      </Botao>}
+                    {usuario.role.permissions.find(perm => perm.id == 8) &&
+                      <Botao
+                        handleClick={() => {
+                          nav(`/editar-solicitacao/${solicSelecionada.id}`);
+                        }}
+                        className={styles.botao}>
+                        Editar
+                      </Botao>}
+                  </>
+                }
+                {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
+                  <>
+                    {usuario.role.permissions.find(perm => perm.id == 11) &&
+                      <Botao
+                        handleClick={() => {
+                          setConfirmLiberarProd(true);
+                        }}
+                        className={styles.botao}>
+                        Liberar para produção
+                      </Botao>}
+                    {usuario.role.permissions.find(perm => perm.id == 14) && isSemNota(solicSelecionada) &&
+                      <Botao
+                        handleClick={() => setAvaliar(true)}
+                        className={styles.botao}>
+                        Avaliar
+                      </Botao>}
+                  </>
+                }
+                {solicSelecionada.isArchived ?
                   <Botao
                     handleClick={() => {
                       setConfirmDesarquivar(true);
@@ -318,18 +372,19 @@ export default function ListaSolicitacoes() {
                     Arquivar
                   </Botao>
                 }
-                <Botao
-                  handleClick={() => setConfirmExcluir(true)}
-                  className={styles.botao}>
-                  Excluir
-                </Botao>
-              </div>}
-              {usuario.grupo >= 3 && isSemNota(solicSelecionada) &&
-                <div className={styles['solic-botoes']}>
-                  <Botao className={styles.botao}>
-                    Avaliar
-                  </Botao>
-                </div>}
+                {usuario.role.permissions.find(perm => perm.id == 9) &&
+                  <Botao
+                    handleClick={() => setConfirmExcluir(true)}
+                    className={styles.botao}>
+                    Excluir
+                  </Botao>}
+                {loc.pathname == '/solicitacoes-em-producao' &&
+                  <Botao
+                    handleClick={() => setAlterarProd(true)}
+                    className={styles.botao}>
+                    Alterar status de produção
+                  </Botao>}
+              </div>
             </div>
             : <span className={styles['not-found']}>
               Nenhuma solicitação selecionada. Para abrir alguma, clique em uma delas na lista ao lado.
@@ -342,7 +397,7 @@ export default function ListaSolicitacoes() {
           {/* excluir */}
           <PopupAlerta
             visivel={confirmExcluir}
-            titulo={`Excluir ${solicSelecionada.titulo}?`}
+            titulo={`Excluir ${solicSelecionada.title}?`}
             descricao={`Após a exclusão desta, não será possível recupera-la.`}
             onClose={() => setConfirmExcluir(false)}
             onConfirm={() => {
@@ -379,13 +434,19 @@ export default function ListaSolicitacoes() {
           {/* arquivar */}
           <PopupAprovacao
             visivel={confirmArquivar}
-            titulo={`Arquivar ${solicSelecionada.titulo}?`}
+            titulo={`Arquivar ${solicSelecionada.title}?`}
             descricao={`A solicitação após arquivada, poderá ser recuperada retornando ao último status antes de ser arquivada.`}
             onClose={() => setConfirmArquivar(false)}
             onConfirm={() => {
               setConfirmArquivar(false);
               setCarregando(true);
-              Solicitacoes.arquivar(solicSelecionada.id)
+              Solicitacoes.atualizar(solicSelecionada.id, {
+                assignedRoleId: null,
+                description: solicSelecionada.description,
+                isArchived: true,
+                status: solicSelecionada.status,
+                title: solicSelecionada.title
+              })
                 .then(() => {
                   setCarregando(false);
                   setSucessoArquivar(true);
@@ -416,14 +477,20 @@ export default function ListaSolicitacoes() {
           {/* desarquivar */}
           <PopupAprovacao
             visivel={confirmDesarquivar}
-            titulo={`Desarquivar ${solicSelecionada.titulo}?`}
+            titulo={`Desarquivar ${solicSelecionada.title}?`}
             descricao={`A solicitação retornará à última etapa antes de ser arquivada.`}
             onClose={() => setConfirmDesarquivar(false)}
             onConfirm={() => {
               setConfirmDesarquivar(false);
               setCarregando(true);
-              // TROCAR PARA DESARQUIVAR!!!
-              Solicitacoes.arquivar(solicSelecionada.id)
+              console.log(solicSelecionada.assignedRoleId)
+              Solicitacoes.atualizar(solicSelecionada.id, {
+                assignedRoleId: solicSelecionada.assignedRoleId,
+                description: solicSelecionada.description,
+                isArchived: false,
+                status: solicSelecionada.status,
+                title: solicSelecionada.title
+              })
                 .then(() => {
                   setCarregando(false);
                   setSucessoDesarquivar(true);
@@ -454,13 +521,19 @@ export default function ListaSolicitacoes() {
           {/* lib av */}
           <PopupAprovacao
             visivel={confirmLiberarAv}
-            titulo={`Liberar para avaliação a solicitação ${solicSelecionada.titulo}?`}
+            titulo={`Liberar para avaliação a solicitação ${solicSelecionada.title}?`}
             descricao={`Ao liberar para avaliação, não será mais possível edita-lo.`}
             onClose={() => setConfirmLiberarAv(false)}
             onConfirm={() => {
               setConfirmLiberarAv(false);
               setCarregando(true);
-              Solicitacoes.liberarParaAvaliacao(solicSelecionada.id)
+              Solicitacoes.atualizar(solicSelecionada.id, {
+                assignedRoleId: solicSelecionada.assignedRoleId,
+                description: solicSelecionada.description,
+                isArchived: solicSelecionada.isArchived,
+                status: 'RATING',
+                title: solicSelecionada.title
+              })
                 .then(() => {
                   setCarregando(false);
                   setSucessoLiberarAv(true);
@@ -487,25 +560,15 @@ export default function ListaSolicitacoes() {
             titulo='Erro ao liberar para avaliação'
             descricao='Não foi possível liberar para avaliação por conta de um erro interno do servidor, tente novamente mais tarde.'
           />
-
-          {/* lib prod */}
-          <PopupAprovacao
-            visivel={confirmLiberarProd}
-            titulo={`Liberar para produção a solicitação ${solicSelecionada.titulo}?`}
-            descricao=''
-            onClose={() => setConfirmLiberarProd(false)}
-            onConfirm={() => {
+            <AprovarParaProducao
+            aberto={confirmLiberarProd}
+            onClose={() => {
               setConfirmLiberarProd(false);
-              setCarregando(true);
-              Solicitacoes.liberarParaProducao(solicSelecionada.id)
-                .then(() => {
-                  setCarregando(false);
-                  setSucessoLiberarProd(true);
-                }).catch(() => {
-                  setCarregando(false);
-                  setSucessoLiberarProd(true);
-                });
-            }} />
+              getSolicitacoes();
+            }}
+            idSolic={solicSelecionada.id}
+            onConfirm={() => console.log()}
+            />
           <PopupConfirm
             visivel={sucessoLiberarProd}
             onClose={() => {
@@ -523,6 +586,24 @@ export default function ListaSolicitacoes() {
             }}
             titulo='Erro ao liberar para produção'
             descricao='Não foi possível liberar para produção por conta de um erro interno do servidor, tente novamente mais tarde.'
+          />
+          <AvaliarSolicitacao
+            aberto={avaliar}
+            onClose={() => {
+              setAvaliar(false);
+              getSolicitacoes();
+              setSolicSelecionada(undefined);
+            }}
+            idSolic={solicSelecionada.id}
+          />
+          <AlterarStatusProducao
+          aberto={alterarProd}
+          idSolic={solicSelecionada.id}
+          onClose={() => {
+            setAlterarProd(false);
+            setSolicSelecionada(undefined);
+            getSolicitacoes();
+          }}
           />
         </>
       }

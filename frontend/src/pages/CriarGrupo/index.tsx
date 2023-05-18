@@ -1,54 +1,79 @@
 import styles from './CriarGrupo.module.scss';
 import { Header36 } from '../../components/Header';
-import { DropdownPreenchido } from '../../components/Dropdowns';
 import { useEffect, useState } from 'react';
-import { InputPopup, TextBox } from '../../components/Inputs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Aba, Anexar, Botao, BotaoPopup, BotaoPreenchido, BotaoSwitch } from '../../components/Botoes';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+import { Aba, Botao, BotaoSwitch } from '../../components/Botoes';
 import classNames from 'classnames';
 import InputEscuro from '../../components/Inputs/InputEscuro';
-import DropdownEscuro from '../../components/Dropdowns/DropdownEscuro';
-import TextBoxEscuro from '../../components/Inputs/TextBoxEscuro';
-import AnexarEscuro from '../../components/Botoes/AnexarEscuro';
-
-
+import Permissoes from '../../services/Permissoes';
+import { PermissionProps } from '../../types';
+import Grupos from '../../services/Grupos';
+import PopupCarregando from '../../popUps/PopupCarregando';
+import PopupConfirm from '../../popUps/PopupConfirm';
+import PopupErro from '../../popUps/PopupErro';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function CriarGrupo() {
+  const nav = useNavigate();
+  const { id } = useParams();
+
   const [titulo, setTitulo] = useState('');
-  const [permsEscolhidas, setPermsEscolhidas] = useState([]);
+  const [permsEscolhidas, setPermsEscolhidas] = useState<number[]>([]);
 
-  const [perms, setPerms] = useState({});
-
+  const [perms, setPerms] = useState<PermissionProps[]>([]);
   const [aba, setAba] = useState('Solicitações');
 
   const [erro, setErro] = useState(false);
 
+  const [carregando, setCarregando] = useState(false);
+  const [sucesso, setSucesso] = useState(false);
+  const [falha, setFalha] = useState(false);
+
+  const [sucessoEdit, setSucessoEdit] = useState(false);
+  const [falhaEdit, setFalhaEdit] = useState(false);
+
+  const submit = () => {
+    if (!titulo) {
+      setErro(true);
+    } else {
+      setCarregando(true);
+      if (!id) {
+        Grupos.criar({
+          name: titulo,
+          isAdmin: false,
+          permissions: permsEscolhidas
+        }).then(() => {
+          setCarregando(false);
+          setSucesso(true);
+        }).catch(() => {
+          setCarregando(false);
+          setFalha(true)
+        })
+      } else {
+        Grupos.editar(Number(id), {
+          name: titulo,
+          isAdmin: false,
+          permissions: permsEscolhidas
+        }).then(() => {
+          setCarregando(false);
+          setSucessoEdit(true);
+        }).catch(() => {
+          setCarregando(false);
+          setFalhaEdit(true);
+        });
+      }
+    }
+  }
+
   useEffect(() => {
-    setPerms({
-      'Solicitações': [
-        'Criar solitiação',
-        'Editar solicitação',
-        'Arquivar solicitação',
-        'Excluir solicitação',
-        'Avaliar solicitação em Risco',
-        'Avaliar solicitação em Custo',
-        'Avaliar solicitação em Impacto',
-        'Aprovar solicitação para avaliação',
-        'Aprovar solicitação para produção',
-        'Alterar status de produção da solicitação'
-      ],
-      'Usuários': [
-        'Criar usuários',
-        'Editar usuários',
-        'Excluir usuários'
-      ],
-      'Grupos': [
-        'Criar grupos',
-        'Editar grupos',
-        'Excluir grupos'
-      ],
-    })
+    Permissoes.getAll().then(perms => {
+      setPerms(perms);
+    });
+    if (id) {
+      Grupos.getByID(Number(id)).then(grupo => {
+        setTitulo(grupo.name);
+        setPermsEscolhidas(grupo.permissions.map(perm => perm.id));
+      });
+    }
   }, [])
 
   return (
@@ -61,11 +86,7 @@ export default function CriarGrupo() {
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-          if(!titulo){
-            setErro(true);
-          } else {
-            console.log(titulo, permsEscolhidas)
-          }
+          submit();
         }}>
         <div
           className={styles.ip}>
@@ -109,20 +130,21 @@ export default function CriarGrupo() {
           </Aba>
         </div>
         <ul className={styles.perms}>
-          {perms[aba] && perms[aba].map(perm => (
+          {perms && perms.map(perm => (
+            aba == perm.humanizedEntity &&
             <li className={styles['perms-item']}>
               <BotaoSwitch
-              isActive={permsEscolhidas.includes(perm)}
-              handleClick={(value) => {
-                if(value){
-                  setPermsEscolhidas(prevState => [...prevState, perm])
-                } else {
-                  setPermsEscolhidas(prevState => prevState.filter(e => e !== perm))
-                }
-               }} />
+                isActive={permsEscolhidas.includes(perm.id)}
+                handleClick={(value) => {
+                  if (value) {
+                    setPermsEscolhidas(prevState => [...prevState, perm.id])
+                  } else {
+                    setPermsEscolhidas(prevState => prevState.filter(e => e !== perm.id))
+                  }
+                }} />
               <div className={classNames({
-                [styles.desactive]: !permsEscolhidas.includes(perm)
-              })}>{perm}</div>
+                [styles.desactive]: !permsEscolhidas.includes(perm.id)
+              })}>{perm.humanizedPermissionName}</div>
             </li>
           ))}
         </ul>
@@ -141,12 +163,45 @@ export default function CriarGrupo() {
               Cancelar
             </Botao>
             <Botao tipo='submit' className={styles.bt}>
-              Criar
+              {id ? 'Editar' : 'Criar'}
             </Botao>
           </div>
         </div>
       </form>
       <div className={styles.espacador} />
+      <PopupConfirm
+        visivel={sucesso}
+        onClose={() => {
+          setSucesso(false);
+          nav(-1);
+        }}
+        titulo='Concluído'
+        descricao={`Grupo criado com sucesso.`}
+      />
+      <PopupErro
+        visivel={falha}
+        onClose={() => setFalha(false)}
+        titulo='Erro ao criar grupo'
+        descricao='Não foi possível criar o grupo devido à um erro interno do servidor. Tente novamente mais tarde.'
+      />
+      <PopupConfirm
+        visivel={sucessoEdit}
+        onClose={() => {
+          setSucessoEdit(false);
+          nav(-1);
+        }}
+        titulo='Concluído'
+        descricao={`Grupo editado com sucesso.`}
+      />
+      <PopupErro
+        visivel={falhaEdit}
+        onClose={() => setFalhaEdit(false)}
+        titulo='Erro ao editar grupo'
+        descricao='Não foi possível editar o grupo devido à um erro interno do servidor. Tente novamente mais tarde.'
+      />
+      <PopupCarregando
+        visivel={carregando}
+      />
     </>
   );
 }

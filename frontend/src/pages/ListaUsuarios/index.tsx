@@ -33,52 +33,10 @@ export default function ListaUsuarios() {
     return regex.test(titulo);
   }
 
-  const getPermissoes = (grupo: number) => {
-    switch (grupo) {
-      case 1:
-        return [
-          'Editar solicitações',
-          'Arquivar solicitações',
-          'Excluir solicitações',
-          'Aprovar solicitações para avaliação',
-          'Aprovar solicitaçõees para produção',
-          'Criar usuários',
-          'Editar usuários',
-          'Excluir usuários',
-          'Criar grupos',
-          'Editar grupos',
-          'Excluir grupos'
-        ];
-      case 2:
-        return ['Criar solicitações'];
-      case 3:
-        return ['Avaliar solicitações em Risco'];
-      case 4:
-        return ['Avaliar solicitações em Custo'];
-      default:
-        return ['Avaliar solicitações em Impacto'];
-    }
-  }
-
-  const groupStringify = (id: number) => {
-    switch (id) {
-      case 1:
-        return 'Administrador';
-      case 2:
-        return 'Solicitante';
-      case 3:
-        return 'Avaliador (Risco)';
-      case 4:
-        return 'Avaliador (Custo)';
-      default:
-        return 'Avaliador (Impacto)';
-    }
-  }
-
   const getUsuarios = () => {
     Usuarios.getAll().then((data) => {
       setUsuarios(data.filter((user: UsuarioProps) => {
-        const notUser = user.id != usuario.id;
+        const notUser = user.name !== usuario.name;
         const filterPesquisa = filtrarNome(user.name);
         return notUser && filterPesquisa;
       }));
@@ -104,13 +62,14 @@ export default function ListaUsuarios() {
             />
           </div>
           <div className={styles.inputContainer}>
+            {usuario.role.permissions.find(perm => perm.id == 1) && 
             <Botao
               handleClick={() => {
                 nav('/criar-usuario');
               }}
               className={styles.botao}>
               Criar usuário
-            </Botao>
+            </Botao>}
           </div>
           <div
             className={styles.listContainer}
@@ -120,7 +79,7 @@ export default function ListaUsuarios() {
                 <ItemNome
                   key={user.id}
                   nome={user.name}
-                  desc={groupStringify(user.grupoId)}
+                  desc={user.role.name}
                   handleClick={() => setUserSelecionado(user)}
                   isSelected={userSelecionado && user.id == userSelecionado.id}
                 />
@@ -137,39 +96,41 @@ export default function ListaUsuarios() {
               <div className={styles['user-info-container']}>
                 <div>
                   <span>Grupo:</span>
-                  <span className={styles['user-info']}>{groupStringify(userSelecionado.grupoId)}</span>
+                  <span className={styles['user-info']}>{userSelecionado.role.name}</span>
                 </div>
                 <div>
                   <span>Email:</span>
                   <span className={styles['user-info']}>
-                    {userSelecionado.mail}
+                    {userSelecionado.email}
                   </span>
                 </div>
               </div>
               <div className={styles['perm-container']}>
                 <div>Este usuário pode:</div>
                 <ul className={styles['perm-list']}>
-                  {getPermissoes(userSelecionado.grupoId).map((perm, index) => (
-                    <li key={index}>
-                      {perm}
+                  {userSelecionado.role.permissions.map((perm) => (
+                    <li key={perm.id}>
+                      {perm.humanizedPermissionName}
                     </li>
                   ))}
                 </ul>
               </div>
               <div className={styles['user-espacador']}></div>
               <div className={styles['user-botoes']}>
-                <Botao
+                {usuario.role.permissions.find(perm => perm.id == 2) && 
+                  <Botao
                   handleClick={() => {
                     nav(`/editar-usuario/${userSelecionado.id}`)
                   }}
                   className={styles.botao}>
                   Editar
-                </Botao>
-                <Botao
+                </Botao>}
+                {usuario.role.permissions.find(perm => perm.id == 3) && 
+                  <Botao
                   className={styles.botao}
                   handleClick={() => setAlerta(true)}>
                   Excluir
-                </Botao>
+                </Botao>}
               </div>
             </div>
             : <span className={styles['not-found']}>

@@ -1,46 +1,46 @@
-import { EditarUsuarioProps, UsuarioProps } from "../types";
+import { EditarUsuarioProps, UsuarioContext, UsuarioProps } from "../types";
 import api from "./api";
 
 interface Usuario {
   name: string;
-  mail: string;
+  email: string;
   password: string;
-  grupoId: number;
+  roleId: number;
 }
 
 interface Login {
-  mail: string;
+  email: string;
   password: string;
 }
 
 class Usuarios {
   async criar(usuario: Usuario) {
-    const { data } = await api.post('/create/usuario', usuario);
+    const { data } = await api.post('/user', usuario);
     return data;
   }
 
   async editar(id: number, usuarioAtualizado: EditarUsuarioProps) {
-    const { data } = await api.put(`update/usuario/${id}`, usuarioAtualizado);
+    const { data } = await api.put(`/user/${id}`, usuarioAtualizado);
     return data;
   }
 
   async deletar(id: number) {
-    const { data } = await api.delete(`delete/usuario/${id}`)
+    const { data } = await api.delete(`/user/${id}`)
     return data;
   }
 
   async getByID(id: number): Promise<UsuarioProps> {
-    const { data } = await api.get(`find/usuario/${id}`)
+    const { data } = await api.get(`/user/${id}`)
     return data;
   }
 
   async getAll(): Promise<UsuarioProps[]> {
-    const { data } = await api.get('find/usuario')
+    const { data } = await api.get('/user')
     return data;
   }
 
-  async login(login: Login) {
-    const { data } = await api.post('login', login)
+  async login(login: Login):Promise<UsuarioContext> {
+    const { data } = await api.post('/login', login)
     return data;
   }
 }

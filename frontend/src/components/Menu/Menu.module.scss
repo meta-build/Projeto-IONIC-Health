@@ -12,6 +12,11 @@
   left: 0;
   z-index: 2;
   
+  .item {
+    color: white;
+    font-size: 16px;
+  }
+
   li:hover {
     background: none;
     cursor: pointer;
@@ -50,7 +55,7 @@ img {
   right: -2px;
 }
 
-.conta-lista {
+.conta-lista, .menu-lista {
   list-style: none;
   padding: 4px;
   margin: 0;
@@ -60,24 +65,31 @@ img {
   align-items: flex-end;
 }
 
-.conta-item {
+// .menu-lista {
+//   width: 200px;
+// }
+
+.conta-item, .menu-item {
   padding: 8px 15px;
   padding-right: 8px;
   width: 100px;
   margin: 0;
   text-align: right;
   border-bottom: 1px solid $cinza-300;
-
 }
 
-.conta-item:last-child {
+.menu-item {
+  width: 100%;
+  text-align: left;
+}
+
+.conta-item:last-child, .menu-item:last-child {
   border: none;
 }
 
-.conta-item:hover {
-  font-weight: bold;
+.conta-item:hover, .menu-item:hover {
+  // font-weight: bold;
   cursor: pointer !important;
-  
 }
 
 .notificacao-lista {

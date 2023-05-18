@@ -1,4 +1,4 @@
-import HomeAdm from "./HomeAdm";
+import Home from "./Home";
 import HomeAvaliador from "./HomeAvaliador";
 import HomeSolicitante from "./HomeSolicitante";
 import Tests from "./Tests";
@@ -11,9 +11,10 @@ import CriarSolicitacao from "./CriarSolicitacao";
 
 import ListaSolicitacoes from "./ListaSolicitacoes";
 import ListaUsuarios from "./ListaUsuarios";
+import ListGrupos from "./ListGrupos";
 
 export {
-  HomeAdm,
+  Home,
   HomeAvaliador,
   HomeSolicitante,
   Login,
@@ -24,5 +25,6 @@ export {
   ListaSolicitacoes,
   ListaUsuarios,
   CriarGrupo,
-  CriarSolicitacao
+  CriarSolicitacao,
+  ListGrupos
 }
