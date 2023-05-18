@@ -6,7 +6,7 @@ import { InputContornado } from '../../components/Inputs';
 import { DropdownContornado } from '../../components/Dropdowns';
 import Solicitacoes from '../../services/Solicitacoes';
 import ItemSolicitacao from '../../components/ItemSolicitacao';
-import { EditarSolicitacaoProps, GrupoProps, RatingProps, SolicitacaoProps } from '../../types';
+import { GrupoProps, SolicitacaoProps } from '../../types';
 import classNames from 'classnames';
 import BadgeStatus from '../../components/BadgeStatus';
 import { Botao, BotaoPreenchido } from '../../components/Botoes';
@@ -75,17 +75,6 @@ export default function ListaSolicitacoes() {
     }
   }
 
-  const strAvaliador = (grupoId: number) => {
-    switch (grupoId) {
-      case 3:
-        return 'Risco';
-      case 4:
-        return 'Custo';
-      default:
-        return 'Impacto';
-    }
-  }
-
   const isSemNota = (solic: SolicitacaoProps): boolean => {
     const notas = solic.ratings
     return Boolean(!notas.find(nota => nota.committee == usuario.role.name));
@@ -105,12 +94,12 @@ export default function ListaSolicitacoes() {
           const filtroAv = loc.pathname == '/solicitacoes-para-avaliar' ?
             (item.status == 'RATING' && !item.isArchived) : true;
           const filtroProd = loc.pathname == '/solicitacoes-em-producao' ?
-            item.assignedRoleId && item.assignedRoleId == usuario.role.id : true;
+            !item.isArchived && item.assignedRoleId && item.assignedRoleId == usuario.role.id : true;
           const filtroNome = filtrarNome(item.title);
           const filtroTipo = tipo == 'Todos' ? true : item.type == tipo.toUpperCase();
           let filtroSituacao = status == 'Todos' ? true : item.status == strSituacao(status);
           if (status == 'Em produção') {
-            filtroSituacao = item.status == 'NEW' || item.status == 'ONHOLDING' || item.status == 'DONE';
+            filtroSituacao = !item.isArchived && (item.status == 'NEW' || item.status == 'ONHOLDING' || item.status == 'DONE');
           }
           if (status == 'Arquivados') {
             filtroSituacao = item.isArchived;
@@ -122,7 +111,7 @@ export default function ListaSolicitacoes() {
 
   useEffect(() => {
     getSolicitacoes();
-  }, [busca, tipo, status, situacaoNota]);
+  }, [busca, tipo, status, situacaoNota, loc.pathname]);
   return (
     <>
       <Header32 className={styles.titulo}>
