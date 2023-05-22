@@ -7,7 +7,7 @@
 ![image](https://user-images.githubusercontent.com/90328897/233985310-c53e4c11-694f-4bd8-bb6a-456fe7962699.png)
 
 ### Burndown
-![burndown](https://user-images.githubusercontent.com/90328897/234175665-8389bdda-96e4-48b6-97e5-cad72b176cba.png)
+![burndown3](https://github.com/meta-build/Projeto-IONIC-Health/assets/90328897/a65b6a9e-61df-47a0-95de-1ab220471d56)
 
 ### Diagrama de Banco de dados
 ![modelo_bd_relacional](https://user-images.githubusercontent.com/90328897/233985485-544b6f85-04f6-4f22-827d-0e7ad125975a.jpg)
