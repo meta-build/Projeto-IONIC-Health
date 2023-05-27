@@ -115,7 +115,8 @@ export class UserRepository
     roleId,
     name,
     isActive,
-    password
+    password,
+    permissions
   }: UpdateUser.Input): Promise<UpdateUser.Output> {
     const userRepo = this.getRepository(User)
 
@@ -130,6 +131,7 @@ export class UserRepository
     user.roleId = roleId ?? user.roleId
     user.isActive = isActive ?? user.isActive
     user.password = password ?? user.password
+    user.permissions = permissions ?? user.permissions
 
     const updatedUser = await userRepo.save(user)
 

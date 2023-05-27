@@ -55,6 +55,7 @@ export class PermissionRepository
         permissionName: permission.permissionName,
         humanizedPermissionName: permission.humanizedPermissionName,
         entity: permission.entity,
+        roles: permission.roles,
         humanizedEntity: permission.humanizedEntity
       }))
     }

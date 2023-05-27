@@ -111,6 +111,14 @@ export namespace UpdateUser {
     roleId?: number
     isActive?: boolean
     password?: string
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+      roles: Role[]
+    }>
   }
   export type Output = {
     id: number
@@ -119,5 +127,12 @@ export namespace UpdateUser {
     roleId: number
     role: Role
     isActive?: boolean
+    permissions: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
