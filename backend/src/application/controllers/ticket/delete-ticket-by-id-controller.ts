@@ -1,6 +1,6 @@
 import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository'
 import { Controller } from '@/application/controllers'
-import { HttpResponse, badRequest, ok } from '@/application/helpers'
+import { HttpResponse, badRequest, noContent } from '@/application/helpers'
 import { DeleteFile } from '@/domain/contracts'
 
 type HttpRequest = {
@@ -27,6 +27,6 @@ export class DeleteTicketByIdController implements Controller {
 
     await this.ticketRepository.deleteById({ id: ticket.id })
 
-    return ok('deleted')
+    return noContent()
   }
 }
