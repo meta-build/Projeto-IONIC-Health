@@ -9,15 +9,28 @@ export namespace CreateUser {
     name: string
     email: string
     password: string
-    roleId: number
+    roleId?: number
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
   export type Output = {
     id: number
     name: string
     email: string
-    password: string
     roleId: number,
     isActive: boolean
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
 

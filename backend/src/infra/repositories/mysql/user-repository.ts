@@ -20,14 +20,16 @@ export class UserRepository
     name,
     email,
     password,
-    roleId
+    roleId,
+    permissions
   }: CreateUser.Input): Promise<CreateUser.Output> {
     const userRepo = this.getRepository(User)
     const user = userRepo.create({
       name,
       email,
       password,
-      roleId
+      roleId,
+      permissions
     })
 
     await userRepo.save(user)
@@ -36,9 +38,9 @@ export class UserRepository
       id: user.id,
       name: user.name,
       email: user.email,
-      password: user.password,
       roleId: user.roleId,
-      isActive: user.isActive
+      isActive: user.isActive,
+      permissions: user.permissions
     }
   }
 
