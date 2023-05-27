@@ -51,8 +51,9 @@ export class UserRepository
 
     const user = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.permissions', 'userPermission')
       .leftJoinAndSelect('user.role', 'role')
-      .leftJoinAndSelect('role.permissions', 'permission')
+      .leftJoinAndSelect('role.permissions', 'rolePermission')
       .where('user.email = :email', { email })
       .getOne()
 
@@ -68,8 +69,9 @@ export class UserRepository
 
     const user = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.permissions', 'userPermission')
       .leftJoinAndSelect('user.role', 'role')
-      .leftJoinAndSelect('role.permissions', 'permission')
+      .leftJoinAndSelect('role.permissions', 'rolePermission')
       .where('user.id = :id', { id })
       .getOne()
 
@@ -83,7 +85,8 @@ export class UserRepository
       email: user.email,
       roleId: user.roleId,
       role: user.role,
-      isActive: user.isActive
+      isActive: user.isActive,
+      permissions: user.permissions
     }
   }
 

@@ -50,6 +50,13 @@ export namespace LoadUserByEmail {
     roleId: number
     role: Role,
     isActive: boolean
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
 
@@ -68,6 +75,13 @@ export namespace LoadUserById {
     roleId: number
     role: Role,
     isActive: boolean
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
 
