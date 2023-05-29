@@ -11,3 +11,15 @@ body {
   color: white;
   font-size: 16px;
 }
+
+@media (min-width: 769px) {
+  #mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #desktop {
+    display: none;
+  }
+}
