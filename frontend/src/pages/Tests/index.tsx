@@ -1,5 +1,5 @@
-import TestsDesktop from "./TestsDesktop";
-import TestsMobile from "./TestsMobile";
+import TestsDesktop from "./TestsDesktop/TestsDesktop";
+import TestsMobile from "./TestsMobile/TestsMobile";
 
 export default function Tests() {
   return (
