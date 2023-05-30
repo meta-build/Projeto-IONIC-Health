@@ -7,9 +7,6 @@
   backdrop-filter: $blur;
   padding: 16px 20px;
   width: calc(100% - 40px);
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 2;
   
   .item {
