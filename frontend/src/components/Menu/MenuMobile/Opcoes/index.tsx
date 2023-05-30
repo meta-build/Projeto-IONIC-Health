@@ -1,3 +1,4 @@
+import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import GoogleIcon from '../../../GoogleIcon';
 import Dropdown from './Dropdown';
 import styles from './Opcoes.module.scss';
@@ -8,35 +9,62 @@ interface Props {
 }
 
 export default function Opcoes(props: Props) {
+  const containerAnimation = useAnimation();
+  const menuAnimation = useAnimation();
+
+  const handleClose = async () => {
+    props.onClose();
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.menu}>
-        <div className={styles.top}>
-          <h2>Menu</h2>
-          <button className={styles.close}>
-            <GoogleIcon>
-              &#xe5cd;
-            </GoogleIcon>
-          </button>
-        </div>
-        <ul className={styles.botoes}>
-          <li className={styles.botao}>
-            <button
-              className={styles['botao-button']}>
-              Exemplo
-            </button>
-          </li>
-          <li className={styles.botao}>
-            <Dropdown
-              label='dropdown'
-              opcoes={[
-                { label: 'teste 1', onClick: () => console.log('teste') },
-                { label: 'teste 2', onClick: () => console.log('teste 2') }
-              ]}
-            />
-          </li>
-        </ul>
-      </div>
-    </div>
+    <AnimatePresence>
+      {props.visivel &&
+        <motion.div
+          onClick={handleClose}
+          className={styles.container}
+          initial={{ backgroundColor: 'rgba(0, 0, 0, 0)'}}
+          animate={{ backgroundColor: 'rgba(0, 0, 0, 0.4)'}}
+          exit={{ backgroundColor: 'rgba(0, 0, 0, 0)'}}
+          transition={{ duration: 0.4 }}
+        >
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            className={styles.menu}
+            initial={{ x: '100%' }}
+            animate={{ x: '0%'}}
+            exit={{ x: '100%'}}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            
+            >
+            <div className={styles.top}>
+              <h2>Menu</h2>
+              <button
+                onClick={handleClose}
+                className={styles.close}>
+                <GoogleIcon>
+                  &#xe5cd;
+                </GoogleIcon>
+              </button>
+            </div>
+            <ul className={styles.botoes}>
+              <li className={styles.botao}>
+                <button
+                  className={styles['botao-button']}>
+                  Exemplo
+                </button>
+              </li>
+              <li className={styles.botao}>
+                <Dropdown
+                  label='dropdown'
+                  opcoes={[
+                    { label: 'teste 1', onClick: () => console.log('teste') },
+                    { label: 'teste 2', onClick: () => console.log('teste 2') }
+                  ]}
+                />
+              </li>
+            </ul>
+          </motion.div>
+        </motion.div>}
+    </AnimatePresence>
   );
 }
