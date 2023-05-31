@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './Dropdown.module.scss';
 import GoogleIcon from '../../../../GoogleIcon';
 import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface DropdownItem {
   label: string;
@@ -16,12 +17,13 @@ interface Props {
 }
 
 export default function Dropdown(props: Props) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
-    <button
+    <motion.button
       onBlur={() => setOpen(false)}
-      className={styles.botao}>
+      className={styles.botao}
+      >
       <div
         onClick={() => setOpen(!open)}
         className={classNames({
@@ -33,27 +35,35 @@ export default function Dropdown(props: Props) {
           <GoogleIcon>
             &#xe5ce;
           </GoogleIcon>
-        :
+          :
           <GoogleIcon>
             &#xe5cf;
           </GoogleIcon>}
       </div>
-      {open &&
-        <ul className={styles.items}>
-          {props.opcoes.map((item, index) => (
-            <li key={index}>
-              <button
-              className={classNames({
-                [styles['item-botao']]: true,
-                [item.className]: true
-              })}
-              onClick={item.onClick}>
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      }
-    </button>
+      <AnimatePresence>
+        {open &&
+          <motion.ul
+            className={styles.items}
+            initial={{ opacity: 0, y: -20, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -20, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {props.opcoes.map((item, index) => (
+              <li key={index}>
+                <button
+                  className={classNames({
+                    [styles['item-botao']]: true,
+                    [item.className]: true
+                  })}
+                  onClick={item.onClick}>
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        }
+      </AnimatePresence>
+    </motion.button>
   );
 }

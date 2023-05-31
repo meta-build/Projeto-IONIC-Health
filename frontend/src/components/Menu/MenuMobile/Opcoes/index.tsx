@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { AnimatePresence, easeIn, easeInOut, easeOut, motion, useAnimation } from 'framer-motion';
 import GoogleIcon from '../../../GoogleIcon';
 import Dropdown from './Dropdown';
 import styles from './Opcoes.module.scss';
@@ -9,9 +9,6 @@ interface Props {
 }
 
 export default function Opcoes(props: Props) {
-  const containerAnimation = useAnimation();
-  const menuAnimation = useAnimation();
-
   const handleClose = async () => {
     props.onClose();
   };
@@ -22,20 +19,19 @@ export default function Opcoes(props: Props) {
         <motion.div
           onClick={handleClose}
           className={styles.container}
-          initial={{ backgroundColor: 'rgba(0, 0, 0, 0)'}}
-          animate={{ backgroundColor: 'rgba(0, 0, 0, 0.4)'}}
-          exit={{ backgroundColor: 'rgba(0, 0, 0, 0)'}}
+          initial={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
+          animate={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+          exit={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
           transition={{ duration: 0.4 }}
         >
           <motion.div
             onClick={(e) => e.stopPropagation()}
             className={styles.menu}
             initial={{ x: '100%' }}
-            animate={{ x: '0%'}}
-            exit={{ x: '100%'}}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            
-            >
+            animate={{ x: '0%' }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.25, ease: easeOut }}
+          >
             <div className={styles.top}>
               <h2>Menu</h2>
               <button
@@ -61,6 +57,18 @@ export default function Opcoes(props: Props) {
                     { label: 'teste 2', onClick: () => console.log('teste 2') }
                   ]}
                 />
+              </li>
+              <li className={styles.botao}>
+                <button
+                  className={styles['botao-button']}>
+                  Exemplo
+                </button>
+              </li>
+              <li className={styles.botao}>
+                <button
+                  className={styles['botao-button']}>
+                  Exemplo
+                </button>
               </li>
             </ul>
           </motion.div>
