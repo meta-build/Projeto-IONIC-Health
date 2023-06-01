@@ -43,12 +43,15 @@ export default function SolicStatusProducao(props: Props) {
       </div>
       <div className={styles['solic-list-status']}>
         <StatusProducao
+        date={new Date()}
         status="NEW"
         type={statusType('NEW')} />
         <StatusProducao
+        date={new Date()}
         status="ONHOLDING"
         type={statusType('ONHOLDING')} />
         <StatusProducao
+        date={new Date()}
         status="DONE"
         type={statusType('DONE')} />
       </div>

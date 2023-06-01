@@ -7,6 +7,7 @@ import Done from '../../../../assets/done.png';
 interface Props {
   type: "ACTIVE" | "ALREADY" | "DESACTIVE";
   status: "NEW" | "ONHOLDING" | "DONE";
+  date: Date;
 }
 
 export default function StatusProducao(props: Props) {
@@ -39,7 +40,7 @@ export default function StatusProducao(props: Props) {
         </div>
         {props.type !== 'DESACTIVE' &&
           <div className={styles['solic-status-subtitle']}>
-            {new Date().toLocaleDateString('pt-br', {
+            {props.date.toLocaleDateString('pt-br', {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
