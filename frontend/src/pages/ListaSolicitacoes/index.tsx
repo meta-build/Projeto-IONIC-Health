@@ -20,6 +20,7 @@ import PopupAprovacao from '../../popUps/PopupAprovacao';
 import { AlterarStatusProducao, AprovarParaProducao, AvaliarSolicitacao } from '../../popUps';
 import Grupos from '../../services/Grupos';
 import SolicStatusProducao from './SolicStatusProducao';
+import SolicStatusAvaliacao from './SolicStatusAvaliacao';
 
 export default function ListaSolicitacoes() {
   const nav = useNavigate();
@@ -227,7 +228,7 @@ export default function ListaSolicitacoes() {
                     </span>
                   </span>
                 </div>} */}
-              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
+              {/* {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
                 <span className={styles['solic-em-av']}>
                   {solicSelecionada.ratings.length ?
                     solicSelecionada.ratings.map(nota => (
@@ -251,7 +252,7 @@ export default function ListaSolicitacoes() {
                     <span>Sem avaliações</span>
                   }
                 </span>
-              }
+              } */}
               <div className={styles['solic-datas']}>
                 <span>
                   {'Criado em '}
@@ -310,7 +311,10 @@ export default function ListaSolicitacoes() {
               </div>
               {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
                 <SolicStatusProducao solic={solicSelecionada} />
-                }
+              }
+              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
+                <SolicStatusAvaliacao solic={solicSelecionada} />
+              }
               <div className={styles['solic-espacador']}></div>
               <div className={styles['solic-botoes']}>
                 {!solicSelecionada.isArchived && solicSelecionada.status == 'RECENT' &&
