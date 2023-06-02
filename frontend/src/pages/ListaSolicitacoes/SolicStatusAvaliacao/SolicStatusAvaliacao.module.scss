@@ -1,0 +1,25 @@
+@import '@/styles/variables.scss';
+
+.solic-info {
+  display: flex;
+  flex-direction: column;
+
+  span:first-child {
+    font-size: 18px;
+  }
+}
+
+.status-rating {
+  display: flex;
+  gap: 8px;
+}
+
+.date {
+  color: $ciano-300;
+}
+
+.abas {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
