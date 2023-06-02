@@ -3,6 +3,7 @@ import { Aba } from '../../../components/Botoes';
 import { RatingProps, SolicitacaoProps } from '../../../types';
 import styles from './SolicStatusAvaliacao.module.scss';
 import AvaliacaoInfo from './AvaliacaoInfo';
+import Solicitacoes from '../../../services/Solicitacoes';
 
 interface Props {
   solic: SolicitacaoProps;
@@ -10,9 +11,14 @@ interface Props {
 
 export default function SolicStatusAvaliacao(props: Props) {
   const [rating, setRating] = useState<RatingProps>();
+  const [solicitacao, setSolicitacao] = useState<SolicitacaoProps>();
 
   useEffect(() => {
-    setRating(props.solic.ratings[0]);
+    Solicitacoes.getByID(props.solic.id)
+    .then(solic => {
+      setSolicitacao(solic);
+      setRating(solic.ratings[0]);
+    })
   }, [props.solic]);
   return (
     <div className={styles['solic-info']}>

@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function AvaliacaoInfo(props: Props) {
-  const [userName, setUSerName] = useState('nome do usuário');
 
   const getColorValue = (nota: number): "vermelho" | "cinza" | "verde" | "azul1" | "azul2" | "amarelo" => {
     switch (nota) {
@@ -24,7 +23,7 @@ export default function AvaliacaoInfo(props: Props) {
     <div className={styles.container}>
       <div className={styles.row}>
         <span>Avaliador:</span>
-        <span className={styles.info}>{userName}</span>
+        <span className={styles.info}>{props.rating.user.name}</span>
       </div>
       <div className={styles.row}>
         <span>Avaliação feita em</span>
