@@ -55,7 +55,6 @@ class Solicitacoes {
 
   async getByID(id: number): Promise<SolicitacaoProps> {
     const { data } = await api.get(`/ticket/${id}`);
-    console.log(data);
     return data;
   }
 

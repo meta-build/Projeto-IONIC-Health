@@ -19,8 +19,6 @@ import PopupErro from '../../popUps/PopupErro';
 import PopupAprovacao from '../../popUps/PopupAprovacao';
 import { AlterarStatusProducao, AprovarParaProducao, AvaliarSolicitacao } from '../../popUps';
 import Grupos from '../../services/Grupos';
-import SolicStatusProducao from './SolicStatusProducao';
-import SolicStatusAvaliacao from './SolicStatusAvaliacao';
 
 export default function ListaSolicitacoes() {
   const nav = useNavigate();
@@ -207,7 +205,7 @@ export default function ListaSolicitacoes() {
                 {solicSelecionada.title}
               </h2>
               <BadgeStatus status={solicSelecionada.isArchived ? 'ARCHIVED' : solicSelecionada.status} />
-              {/* {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
+              {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
                 <div className={styles['solic-info']}>
                   <span className={styles.content}>
                     <span>{'Status: '}</span>
@@ -227,8 +225,8 @@ export default function ListaSolicitacoes() {
                       {grupoSolic ? grupoSolic.name : 'Carregando...'}
                     </span>
                   </span>
-                </div>} */}
-              {/* {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
+                </div>}
+              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
                 <span className={styles['solic-em-av']}>
                   {solicSelecionada.ratings.length ?
                     solicSelecionada.ratings.map(nota => (
@@ -252,7 +250,7 @@ export default function ListaSolicitacoes() {
                     <span>Sem avaliações</span>
                   }
                 </span>
-              } */}
+              }
               <div className={styles['solic-datas']}>
                 <span>
                   {'Criado em '}
@@ -309,12 +307,6 @@ export default function ListaSolicitacoes() {
                     ))}
                 </span>
               </div>
-              {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
-                <SolicStatusProducao solic={solicSelecionada} />
-              }
-              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
-                <SolicStatusAvaliacao solic={solicSelecionada} />
-              }
               <div className={styles['solic-espacador']}></div>
               <div className={styles['solic-botoes']}>
                 {!solicSelecionada.isArchived && solicSelecionada.status == 'RECENT' &&
@@ -557,7 +549,7 @@ export default function ListaSolicitacoes() {
             titulo='Erro ao liberar para avaliação'
             descricao='Não foi possível liberar para avaliação por conta de um erro interno do servidor, tente novamente mais tarde.'
           />
-          <AprovarParaProducao
+            <AprovarParaProducao
             aberto={confirmLiberarProd}
             onClose={() => {
               setConfirmLiberarProd(false);
@@ -565,7 +557,7 @@ export default function ListaSolicitacoes() {
             }}
             idSolic={solicSelecionada.id}
             onConfirm={() => console.log()}
-          />
+            />
           <PopupConfirm
             visivel={sucessoLiberarProd}
             onClose={() => {
@@ -594,13 +586,13 @@ export default function ListaSolicitacoes() {
             idSolic={solicSelecionada.id}
           />
           <AlterarStatusProducao
-            aberto={alterarProd}
-            idSolic={solicSelecionada.id}
-            onClose={() => {
-              setAlterarProd(false);
-              setSolicSelecionada(undefined);
-              getSolicitacoes();
-            }}
+          aberto={alterarProd}
+          idSolic={solicSelecionada.id}
+          onClose={() => {
+            setAlterarProd(false);
+            setSolicSelecionada(undefined);
+            getSolicitacoes();
+          }}
           />
         </>
       }

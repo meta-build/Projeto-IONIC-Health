@@ -20,17 +20,7 @@ interface RatingProps {
   committee: string,
   comment: string,
   userId: number,
-  user: RatingUserProps,
   ticketId: number
-}
-
-interface RatingUserProps {
-  id: number,
-  name: string,
-  email: string,
-  password: string,
-  roleId: number,
-  isActive: boolean
 }
 
 interface ArquivoProps {
