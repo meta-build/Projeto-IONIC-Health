@@ -1,0 +1,34 @@
+@import '@/styles/variables.scss';
+
+.container {
+  padding: 8px;
+  background-color: $cinza-800;
+  border-radius: 12px;
+}
+
+.aba-container {
+  display: flex;
+  justify-content: center;
+}
+
+.perms {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.perms-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 18px 0;
+}
+
+.perm-label {
+  transition: all 0.5s ease;
+  line-height: 18px;
+}
+
+.desactive {
+  color: $cinza-300
+}
