@@ -12,6 +12,7 @@ import Grupos from "../../../services/Grupos";
 import Solicitacoes from "../../../services/Solicitacoes";
 import { SolicitacaoProps, GrupoProps } from "../../../types";
 import styles from './ListaSolicitacoesMobile.module.scss';
+import ItemSolicitacaoMobile from "./ItemSolicitacaoMobile";
 
 export default function ListaSolicitacoesMobile() {
   const navigate = useNavigate();
@@ -165,16 +166,12 @@ export default function ListaSolicitacoesMobile() {
                   Criar solicitação
                 </Botao>
               </div>}
-
-
-
-            {/* {loc.pathname == '/detalhes-solicitacao' && */}
             <div className={styles.listContainer2}
               onClick={() => setSolicSelecionada(undefined)}
             >
               {solicitacoes.length ?
                 solicitacoes.map(solic => (
-                  <ItemSolicitacao
+                  <ItemSolicitacaoMobile
                     key={solic.id}
                     solicitacao={solic}
                     handleClick={() => {
