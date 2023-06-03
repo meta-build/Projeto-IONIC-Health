@@ -7,7 +7,6 @@ export interface CreateRole {
 export namespace CreateRole {
   export type Input = {
     name: string
-    isAdmin: boolean
     permissions?: Array<{
       id: number
       permissionName: string
@@ -19,7 +18,6 @@ export namespace CreateRole {
   export type Output = {
     id: number
     name: string
-    isAdmin: boolean
     permissions: Array<{
       id: number
       permissionName: string
@@ -38,7 +36,6 @@ export namespace UpdateRole {
   export type Input = {
     id: number
     name: string
-    isAdmin: boolean
     permissions?: Array<{
       id: number
       permissionName: string
@@ -51,7 +48,6 @@ export namespace UpdateRole {
   export type Output = {
     id: number
     name: string
-    isAdmin: boolean
     permissions: Array<{
       id: number
       permissionName: string
@@ -73,7 +69,6 @@ export namespace LoadRoleById {
   export type Output = {
     id: number
     name: string
-    isAdmin: boolean
     permissions: Array<{
       id: number
       permissionName: string
@@ -92,7 +87,6 @@ export namespace LoadAllRole {
   export type Output = Array<{
     id: number
     name: string
-    isAdmin: boolean
     permissions: Array<{
       id: number
       permissionName: string
@@ -101,4 +95,25 @@ export namespace LoadAllRole {
       humanizedEntity: string
     }>
   }>
+}
+
+export interface DeleteRole{
+  delete: (input: DeleteRole.Input) => Promise<DeleteRole.Output>
+}
+
+export namespace DeleteRole{
+  export type Input = {
+    id: number
+  }
+  export type Output = {
+    id: number
+    name: string
+    permissions: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
+  } 
 }
