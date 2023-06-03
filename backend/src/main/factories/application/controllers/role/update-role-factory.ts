@@ -6,5 +6,5 @@ import { makeUpdateRoleValidation } from './update-role-validation'
 export const makeUpdateRoleController = (): Controller => {
   const permissionRepository = new PermissionRepository()
   const roleRepository = new RoleRepository
-  return new UpdateRoleController(makeUpdateRoleValidation(), roleRepository)
+  return new UpdateRoleController(makeUpdateRoleValidation(), roleRepository, permissionRepository)
 }

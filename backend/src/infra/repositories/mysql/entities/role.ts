@@ -18,6 +18,9 @@ export class Role {
   @Column({ nullable: false, unique: true, length: 100 })
   name: string
 
+  @Column({ nullable: false, default: false })
+  isAdmin: boolean
+
   @OneToMany(() => User, (user) => user.role)
   users: User[]
 

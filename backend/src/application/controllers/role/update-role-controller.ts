@@ -7,6 +7,7 @@ import { RoleRepository } from '@/infra/repositories/mysql/role-repository'
 type HttpRequest = {
   params: { id: number }
   name: string
+  isAdmin: boolean
   permissions?: number[]
 }
 
@@ -14,6 +15,7 @@ export class UpdateRoleController implements Controller {
   constructor(
     private readonly validation: Validation,
     private readonly roleRepository: RoleRepository,
+    private readonly permissionRepository: PermissionRepository
   ) {}
 
   async handle(req: HttpRequest): Promise<HttpResponse> {
@@ -24,6 +26,10 @@ export class UpdateRoleController implements Controller {
     }
 
     let permissions = []
+
+    if (!req.isAdmin) {
+      permissions = await this.permissionRepository.getAllById({ ids: req.permissions })
+    }
 
     const updatedRole = await this.roleRepository.update(
       Object.assign({}, req, { id: req.params.id, permissions })
