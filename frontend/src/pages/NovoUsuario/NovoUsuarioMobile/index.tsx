@@ -6,7 +6,7 @@ import { GrupoProps, PermissionProps, UsuarioProps } from '../../../types';
 import classNames from 'classnames';
 import { DropdownEscuro } from '../../../components/Dropdowns';
 import { Botao, BotaoSwitch } from '../../../components/Botoes';
-import PermissoesCustomizadas from './PermissoesCustomizadas';
+import PermissoesCustomizadas from '../../../components/PermissoesCustomizadasPanel';
 import Grupos from '../../../services/Grupos';
 import { useNavigate, useParams } from 'react-router';
 import Usuarios from '../../../services/Usuarios';

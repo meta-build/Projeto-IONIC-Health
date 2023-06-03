@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { DropdownContornado } from '../../../../components/Dropdowns';
-import styles from './PermissoesCustomizadas.module.scss';
-import { PermissionProps } from '../../../../types';
-import Permissoes from '../../../../services/Permissoes';
-import { BotaoSwitch } from '../../../../components/Botoes';
+import { DropdownContornado } from '../Dropdowns';
+import styles from './PermissoesCustomizadasPanel.module.scss';
+import { PermissionProps } from '../../types';
+import Permissoes from '../../services/Permissoes';
+import { BotaoSwitch } from '../Botoes';
 import classNames from 'classnames';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   removePermission: (number) => void;
 }
 
-export default function PermissoesCustomizadas(props:Props) {
+export default function PermissoesCustomizadasPanel(props:Props) {
   const[ aba, setAba] = useState('Solicitações');
   const [perms, setPerms] = useState<PermissionProps[]>([]);
 
