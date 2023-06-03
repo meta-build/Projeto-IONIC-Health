@@ -109,8 +109,8 @@ export class UpdateTicketController implements Controller {
     return ok(updatedTicket)
   }
 
-  private checkPermission = (user: User, permissionName: string) => {
-    if (user.role.permissions) {
+  private checkPermission = (user: User, permissionName: string): boolean => {
+    if (user.role.isAdmin) {
       return true
     }
 

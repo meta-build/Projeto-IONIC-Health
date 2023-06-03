@@ -1,6 +1,5 @@
 import {
   CreateRole,
-  DeleteRole,
   LoadAllRole,
   LoadRoleById,
   UpdateRole
@@ -19,11 +18,13 @@ export class RoleRepository
 
   async create({
     name,
+    isAdmin,
     permissions
   }: CreateRole.Input): Promise<CreateRole.Output> {
     const roleRepository = this.getRepository()
     const role = roleRepository.create({
       name,
+      isAdmin,
       permissions
     })
 
@@ -32,6 +33,7 @@ export class RoleRepository
     return {
       id: role.id,
       name: role.name,
+      isAdmin: role.isAdmin,
       permissions: role.permissions
     }
   }
@@ -39,12 +41,14 @@ export class RoleRepository
   async update({
     id,
     name,
+    isAdmin,
     permissions
   }: UpdateRole.Input): Promise<UpdateRole.Output> {
     const roleRepository = this.getRepository()
     const role = await roleRepository.findOneBy({ id })
 
     role.name = name ?? role.name
+    role.isAdmin = isAdmin ?? role.isAdmin
     role.permissions = permissions ?? role.permissions
 
     await roleRepository.save(role)
@@ -52,6 +56,7 @@ export class RoleRepository
     return {
       id: role.id,
       name: role.name,
+      isAdmin: role.isAdmin,
       permissions: role.permissions
     }
   }
@@ -80,15 +85,5 @@ export class RoleRepository
       .getMany()
 
     return roles
-  }
-
-  async delete({ id }: DeleteRole.Input): Promise<DeleteRole.Output> {
-    const roleRepository = this.getRepository()
-    const role = await roleRepository
-    .delete(id)
-
-    if (!role) {
-      return null
-    }
   }
 }
