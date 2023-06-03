@@ -28,7 +28,7 @@ export default function SolicStatusAvaliacao(props: Props) {
           Em avaliação desde
         </div>
         <div className={styles.date}>
-          {new Date().toLocaleDateString('pt-br', {
+          {new Date(props.solic.statusRatingAt).toLocaleDateString('pt-br', {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -38,7 +38,7 @@ export default function SolicStatusAvaliacao(props: Props) {
           })}
         </div>
       </div>
-      {rating &&
+      {rating ?
         <>
           <div className={styles.abas}>
             {props.solic.ratings.map(av => (
@@ -51,6 +51,9 @@ export default function SolicStatusAvaliacao(props: Props) {
             ))}
           </div>
           <AvaliacaoInfo rating={rating} />
+        </>
+        : <>
+        <span className={styles['no-ratings']}>Sem avaliações</span>
         </>
       }
     </div>

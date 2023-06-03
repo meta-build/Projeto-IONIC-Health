@@ -34,6 +34,7 @@ export default function ListaSolicitacoesDesktop() {
 
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [solicSelecionada, setSolicSelecionada] = useState<SolicitacaoProps>();
+  const [solicId, setSolicId] = useState<number>();
   const [grupoSolic, setGrupoSolic] = useState<GrupoProps>();
 
   const [carregando, setCarregando] = useState(false);
@@ -113,7 +114,11 @@ export default function ListaSolicitacoesDesktop() {
 
   useEffect(() => {
     getSolicitacoes();
-  }, [busca, tipo, status, situacaoNota, loc.pathname]);
+    if (solicId) {
+      Solicitacoes.getByID(solicId)
+        .then(solic => setSolicSelecionada(solic));
+    }
+  }, [busca, tipo, status, situacaoNota, loc.pathname, solicId]);
   return (
     <section id='desktop'>
       <Header32 className={styles.titulo}>
@@ -122,7 +127,7 @@ export default function ListaSolicitacoesDesktop() {
             loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
               'Solicitações em produção'}
       </Header32>
-      
+
       <section className={styles.section}>
         <div className={styles.esquerda}>
           <div className={styles.inputContainer}>
@@ -269,11 +274,7 @@ export default function ListaSolicitacoesDesktop() {
               </div>
               {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
                 <span className={styles['solic-em-av']}>
-                  {solicSelecionada.ratings.length ?
-                    <SolicStatusAvaliacao solic={solicSelecionada} />
-                    :
-                    <span>Sem avaliações</span>
-                  }
+                  <SolicStatusAvaliacao solic={solicSelecionada} />
                 </span>
               }
               {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
@@ -521,7 +522,7 @@ export default function ListaSolicitacoesDesktop() {
             titulo='Erro ao liberar para avaliação'
             descricao='Não foi possível liberar para avaliação por conta de um erro interno do servidor, tente novamente mais tarde.'
           />
-            <AprovarParaProducao
+          <AprovarParaProducao
             aberto={confirmLiberarProd}
             onClose={() => {
               setConfirmLiberarProd(false);
@@ -529,7 +530,7 @@ export default function ListaSolicitacoesDesktop() {
             }}
             idSolic={solicSelecionada.id}
             onConfirm={() => console.log()}
-            />
+          />
           <PopupConfirm
             visivel={sucessoLiberarProd}
             onClose={() => {
@@ -558,13 +559,13 @@ export default function ListaSolicitacoesDesktop() {
             idSolic={solicSelecionada.id}
           />
           <AlterarStatusProducao
-          aberto={alterarProd}
-          idSolic={solicSelecionada.id}
-          onClose={() => {
-            setAlterarProd(false);
-            setSolicSelecionada(undefined);
-            getSolicitacoes();
-          }}
+            aberto={alterarProd}
+            idSolic={solicSelecionada.id}
+            onClose={() => {
+              setAlterarProd(false);
+              setSolicSelecionada(undefined);
+              getSolicitacoes();
+            }}
           />
         </>
       }
