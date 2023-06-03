@@ -11,10 +11,13 @@ export namespace UpdateTicket {
     title?: string
     description?: string
     status?: string
-    updatedAt?: Date
     archivedAt?: Date
     isArchived?: boolean
     assignedRoleId?: number
+    statusNewAt?: Date
+    statusOnHoldingAt?: Date
+    statusDoneAt?: Date
+    statusRatingAt?: Date
   }
   export type Output = {
     id: number
@@ -24,6 +27,10 @@ export namespace UpdateTicket {
     type: string
     description: string
     status: string
+    statusNewAt: Date
+    statusOnHoldingAt: Date
+    statusDoneAt: Date
+    statusRatingAt: Date
   }
 }
 
@@ -43,6 +50,10 @@ export namespace LoadTicketById {
     status: string
     ratings: Rating[]
     attachments: Attachment[]
+    statusNewAt: Date
+    statusDoneAt: Date
+    statusOnHoldingAt: Date
+    statusRatingAt: Date
   }
 }
 
