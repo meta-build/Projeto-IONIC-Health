@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation, useNavigation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Botao } from "../../../components/Botoes";
 import { DropdownContornado } from "../../../components/Dropdowns";
 import GoogleIcon from "../../../components/GoogleIcon";
@@ -12,7 +12,6 @@ import Grupos from "../../../services/Grupos";
 import Solicitacoes from "../../../services/Solicitacoes";
 import { SolicitacaoProps, GrupoProps } from "../../../types";
 import styles from './ListaSolicitacoesMobile.module.scss';
-import { FaArrowLeft } from "react-icons/fa";
 
 export default function ListaSolicitacoesMobile(){
   const navigate = useNavigate();
@@ -98,7 +97,8 @@ export default function ListaSolicitacoesMobile(){
                 className={styles.botaoVoltar} 
                 onClick={handleVoltar} 
             >
-                <FaArrowLeft className="icone-seta" />
+                {/* <FaArrowLeft className="icone-seta" /> */}
+                <GoogleIcon className={styles['icone-seta']}>&#xe5cb;</GoogleIcon>
                 <span className={styles.textoVoltar}>Voltar</span>
             </button> 
 
