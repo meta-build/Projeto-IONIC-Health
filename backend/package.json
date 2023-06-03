@@ -9,7 +9,8 @@
     "migration:create": "typeorm-ts-node-commonjs migration:create ./src/infra/repositories/mysql/migrations/default",
     "migration:generate": "typeorm-ts-node-commonjs -d ./src/infra/repositories/mysql/data-source.ts migration:generate ./src/infra/repositories/mysql/migrations/default",
     "migration:run": "typeorm-ts-node-commonjs -d ./src/infra/repositories/mysql/data-source.ts migration:run",
-    "migration:revert": "typeorm-ts-node-commonjs -d ./src/infra/repositories/mysql/data-source.ts migration:revert"
+    "migration:revert": "typeorm-ts-node-commonjs -d ./src/infra/repositories/mysql/data-source.ts migration:revert",
+    "render": "npm run migration:run && npm run dev"
   },
   "keywords": [],
   "author": "",
