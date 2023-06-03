@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { RatingProps, UsuarioProps } from '../../../../types';
+import { RatingProps} from '../../../../../types';
 import styles from './AvaliacaoInfo.module.scss';
-import Usuarios from '../../../../services/Usuarios';
-import { BotaoNota } from '../../../../components/Botoes';
+import { BotaoNota } from '../../../../../components/Botoes';
 
 interface Props {
   rating: RatingProps;

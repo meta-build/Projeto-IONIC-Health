@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import styles from './StatusProducao.module.scss';
-import New from '../../../../assets/new.png';
-import Onholding from '../../../../assets/onholding.png';
-import Done from '../../../../assets/done.png';
+import New from '../../../../../assets/new.png';
+import Onholding from '../../../../../assets/onholding.png';
+import Done from '../../../../../assets/done.png';
 
 interface Props {
   type: "ACTIVE" | "ALREADY" | "DESACTIVE";

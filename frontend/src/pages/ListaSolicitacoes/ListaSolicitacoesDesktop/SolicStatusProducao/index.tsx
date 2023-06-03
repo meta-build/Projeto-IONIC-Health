@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import styles from './SolicStatusProducao.module.scss';
-import { GrupoProps, SolicitacaoProps } from "../../../types";
+import { GrupoProps, SolicitacaoProps } from "../../../../types";
 import { useEffect, useState } from "react";
-import Grupos from "../../../services/Grupos";
+import Grupos from "../../../../services/Grupos";
 import StatusProducao from "./StatusProducao";
 
 interface Props {

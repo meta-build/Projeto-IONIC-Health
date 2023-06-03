@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Aba } from '../../../components/Botoes';
-import { RatingProps, SolicitacaoProps } from '../../../types';
+import { Aba } from '../../../../components/Botoes';
+import { RatingProps, SolicitacaoProps } from '../../../../types';
 import styles from './SolicStatusAvaliacao.module.scss';
 import AvaliacaoInfo from './AvaliacaoInfo';
-import Solicitacoes from '../../../services/Solicitacoes';
+import Solicitacoes from '../../../../services/Solicitacoes';
 
 interface Props {
   solic: SolicitacaoProps;
