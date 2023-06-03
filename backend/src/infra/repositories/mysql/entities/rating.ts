@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Ticket } from './ticket';
 import { User } from "./user";
 
@@ -28,4 +28,7 @@ export class Rating {
 
     @ManyToOne(() => Ticket, ticket => ticket.attachments, { onDelete: 'CASCADE'})
     ticket: Ticket;
+
+    @CreateDateColumn()
+    createdAt: Date
 }
