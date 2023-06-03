@@ -6,11 +6,11 @@ interface Props {
 
 export default function (props: Props) {
   return (
-    <>
+    <div className={styles.container}>
       <Menu />
-      <div className={styles.container}>
+      <div className={styles.children}>
         {props.elemento}
       </div>
-    </>
+    </div>
   )
 }
