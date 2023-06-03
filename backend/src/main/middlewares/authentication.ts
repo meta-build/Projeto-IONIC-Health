@@ -57,10 +57,6 @@ export class AuthMiddleware implements Middleware {
       return true
     }
 
-    if (user.role.isAdmin) {
-      return true
-    }
-
     if (this.everyPermission) {
       return this.hasEveryPermission(user.role.permissions)
     } else {
