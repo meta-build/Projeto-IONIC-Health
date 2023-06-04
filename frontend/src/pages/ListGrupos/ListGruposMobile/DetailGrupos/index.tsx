@@ -79,7 +79,7 @@ export default function DetailGrupos({ grupoSelect, onBack }: Props) {
       <PopupAlerta
         visivel={alerta}
         onClose={() => setAlerta(false)}
-        titulo='Exclusão de usuário'
+        titulo='Exclusão de grupo'
         descricao={`Confirma a exclusão do grupo ${grupoSelect.name}?`}
         onConfirm={() => {
           setAlerta(false);
