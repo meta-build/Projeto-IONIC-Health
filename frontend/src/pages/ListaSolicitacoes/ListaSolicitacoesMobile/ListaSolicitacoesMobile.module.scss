@@ -1,26 +1,26 @@
 @import '@/styles/variables.scss';
 
 .botaoVoltar {
-    margin-top: -15px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: white;
-    margin-right: 0px;
- 
+  margin-top: -15px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-right: 0px;
 
-  
-    .icone-seta {
-      margin-right: 5px;
-    }
-    .textoVoltar {
-        margin-left: 7px; /* Espaçamento entre a seta e o texto */
-      }
+  .icone-seta {
+    margin-right: 5px;
+  }
+
+  .textoVoltar {
+    margin-left: 7px;
+    /* Espaçamento entre a seta e o texto */
+  }
 }
-  
+
 .titulo {
   text-align: center;
   margin-top: 15px;
@@ -33,7 +33,7 @@
   width: calc(100% - 10px);
   gap: 12px;
   height: calc(100vh - 220px);
-//   border: 1px solid green;
+  //   border: 1px solid green;
 }
 
 .data-texto {
@@ -50,7 +50,7 @@
   .botao {
     width: 100%;
   }
-  
+
 }
 
 .botao {
@@ -64,16 +64,16 @@
   display: flex;
   gap: 8px;
   width: 100%;
-  
+
 }
 
 .inputPreenchimento {
   width: 100%;
   flex: 1;
-  
+
 }
 
-.inputTipo{
+.inputTipo {
   width: 100%;
   flex: 1;
 
@@ -86,14 +86,15 @@
   flex-direction: column;
   gap: 5px;
   box-sizing: border-box;
-  padding: 12px; /* Espaçamento igual de 12px em todos os lados */
+  padding: 12px;
+  /* Espaçamento igual de 12px em todos os lados */
   flex: 1;
   border-radius: 12px;
   background-color: $black-40;
   backdrop-filter: $blur;
   // overflow: auto;
   //  border: 1px solid red;
-  }
+}
 
 .listContainer2 {
   display: flex;
@@ -125,7 +126,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-//   gap: 12px;
+  //   gap: 12px;
 }
 
 .botoes {
@@ -179,7 +180,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  
+
 }
 
 .solic-titulo {
@@ -192,19 +193,29 @@
   color: $ciano-300;
 }
 
-.recente, .impacto-3, .av-0 {
+.recente,
+.impacto-3,
+.av-0 {
   color: $azul2;
 }
 
-.em-av, .new, .impacto-1, .av-2 {
+.em-av,
+.new,
+.impacto-1,
+.av-2 {
   color: $amarelo;
 }
 
-.em-prod, .on-holding, .impacto-2, .av-1 {
+.em-prod,
+.on-holding,
+.impacto-2,
+.av-1 {
   color: $verde;
 }
 
-.arquivado, .impacto-0, .av-3 {
+.arquivado,
+.impacto-0,
+.av-3 {
   color: $vermelho;
 }
 
@@ -222,7 +233,8 @@
   font-size: 14px;
 }
 
-.solic-info, .solic-arqs {
+.solic-info,
+.solic-arqs {
   display: flex;
   flex-direction: column;
 

@@ -1,0 +1,95 @@
+@import '@/styles/variables.scss';
+
+.botaoVoltar {
+  display: flex;
+  align-items: center;
+  // padding: 12px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-right: 0px;
+}
+
+.button-row {
+  width: 100%;
+  text-align: left;
+}
+
+.container {
+  background: $black-40;
+  backdrop-filter: $blur;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 14px;
+  border-radius: 12px;
+  min-height: calc(100vh - 136px);
+  gap: 12px;
+}
+
+.solic-type, .solic-title {
+  font-size: 24px;
+}
+
+.solic-type {
+  color: $ciano-300;
+}
+
+.solic-date {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.solic-date span {
+  text-align: center;
+}
+
+.bolinha {
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background-color: white;
+}
+
+.desc, .files {
+  width: 100%;
+}
+
+.label {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.desc-info {
+  text-align: justify;
+}
+
+.solic-anexos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.espacador {
+  flex: 1;
+}
+
+.botoes {
+  width: 100%;
+  text-align: right;
+}
+
+.content {
+  width: 100%;
+}
+
+.archived {
+  color: $vermelho;
+}
+
+.rating {
+  color: $amarelo-200;
+}
