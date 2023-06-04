@@ -12,14 +12,14 @@ import {
   ListaUsuarios,
   CriarGrupo,
   CriarSolicitacao,
-  ListGrupos
+  ListGrupos,
+  NovoUsuario
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
 import { useEffect, useState } from "react";
 import api from "./services/api";
 import Carregando from "./pages/Carregando";
-import NovoUsuario from "./pages/NovoUsuario";
 import Usuarios from "./services/Usuarios";
 
 export default function AppRouter() {

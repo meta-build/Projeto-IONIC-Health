@@ -1,0 +1,90 @@
+@import '@/styles/variables.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  padding: 14px;
+  margin: 14px auto;
+  width: 90%;
+  border-radius: 12px;
+  gap: 14px;
+  height: calc(100% - 52px);
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: baseline;
+  
+}
+
+.back-icon {
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+}
+
+.espacador {
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dropdown, .dropdown div {
+  width: 100%;
+}
+
+.perm-row {
+  display: flex;
+  gap: 12px;
+}
+
+.perm-label {
+  transition: all 0.3s ease;
+}
+
+.perm-label-desactive, .perm-warning {
+  color: $cinza-400;
+}
+
+.lista {
+  margin: 0;
+  padding: 0;
+  padding-left: 24px;
+}
+
+.linha-submit {
+  display: flex;
+  gap: 14px;
+}
+
+.botao-cancelar, .botao-criar {
+  flex: 1;
+}
+
+.botao-cancelar {
+  border: 2px solid white;
+  color: white;
+}
+
+.erro {
+  border: 2px solid $vermelho;
+}
