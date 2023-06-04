@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import styles from './SolicStatusProducao.module.scss';
-import { GrupoProps, SolicitacaoProps } from "../../../types";
+import { GrupoProps, SolicitacaoProps } from "../../../../../types";
 import { useEffect, useState } from "react";
-import Grupos from "../../../services/Grupos";
+import Grupos from "../../../../../services/Grupos";
 import StatusProducao from "./StatusProducao";
 
 interface Props {
@@ -43,15 +43,15 @@ export default function SolicStatusProducao(props: Props) {
       </div>
       <div className={styles['solic-list-status']}>
         <StatusProducao
-        date={new Date()}
+        date={new Date(props.solic.statusNewAt)}
         status="NEW"
         type={statusType('NEW')} />
         <StatusProducao
-        date={new Date()}
+        date={new Date(props.solic.statusOnHoldingAt)}
         status="ONHOLDING"
         type={statusType('ONHOLDING')} />
         <StatusProducao
-        date={new Date()}
+        date={new Date(props.solic.statusDoneAt)}
         status="DONE"
         type={statusType('DONE')} />
       </div>

@@ -11,7 +11,11 @@ interface SolicitacaoProps {
   isArchived: boolean,
   ratings: RatingProps[],
   attachments: ArquivoProps[],
-  assignedRoleId: number | null;
+  assignedRoleId: number | null,
+  statusNewAt: string,
+  statusOnHoldingAt: string,
+  statusDoneAt: string,
+  statusRatingAt: string
 }
 
 interface RatingProps {
@@ -21,7 +25,8 @@ interface RatingProps {
   comment: string,
   userId: number,
   user: RatingUserProps,
-  ticketId: number
+  ticketId: number,
+  createdAt: string
 }
 
 interface RatingUserProps {

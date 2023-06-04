@@ -12,6 +12,8 @@ import Grupos from "../../../services/Grupos";
 import Solicitacoes from "../../../services/Solicitacoes";
 import { SolicitacaoProps, GrupoProps } from "../../../types";
 import styles from './ListaSolicitacoesMobile.module.scss';
+import ItemSolicitacaoMobile from "./ItemSolicitacaoMobile";
+import SolicitacaoInfoMobile from "./SolicitacaoInfoMobile";
 
 export default function ListaSolicitacoesMobile() {
   const navigate = useNavigate();
@@ -89,110 +91,112 @@ export default function ListaSolicitacoesMobile() {
   };
 
   return (
-    <section id='mobile'>
-      <div className={styles.listContainer}>
+    <>
+      {!solicSelecionada ?
+        <section id='mobile'>
+          <div className={styles.listContainer}>
 
-        <Header32 className={styles.titulo}>
-          <button
-            className={styles.botaoVoltar}
-            onClick={handleVoltar}
-          >
-            {/* <FaArrowLeft className="icone-seta" /> */}
-            <GoogleIcon className={styles['icone-seta']}>&#xe5cb;</GoogleIcon>
-            <span className={styles.textoVoltar}>Voltar</span>
-          </button>
+            <Header32 className={styles.titulo}>
+              <button
+                className={styles.botaoVoltar}
+                onClick={handleVoltar}
+              >
+                {/* <FaArrowLeft className="icone-seta" /> */}
+                <GoogleIcon className={styles['icone-seta']}>&#xe5cb;</GoogleIcon>
+                <span className={styles.textoVoltar}>Voltar</span>
+              </button>
 
-          {loc.pathname == '/solicitacoes' ? 'Solicitações' :
-            loc.pathname == '/minhas-solicitacoes' ? 'Minhas solicitações' :
-              loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
-                'Solicitações em produção'}
-        </Header32>
+              {loc.pathname == '/solicitacoes' ? 'Solicitações' :
+                loc.pathname == '/minhas-solicitacoes' ? 'Minhas solicitações' :
+                  loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
+                    'Solicitações em produção'}
+            </Header32>
 
-        <section className={styles.section}>
-          <div className={styles.esquerda}>
-            <div className={styles.inputContainer}>
-              <InputContornado
-                className={styles.inputPreenchimento}
-                placeholder='Pesquisar solicitação...'
-                icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
-                handleChange={(e) => setBusca(e.target.value)}
-              />
-              <div className={styles.inputTipo}>
-                <DropdownContornado
-                  className={classNames({
-                    [styles.inputPreenchimento]: loc.pathname !== '/solicitacoes-para-avaliar'
-                  })}
-                  itens={[
-                    { label: 'Tipo: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon> },
-                    { label: 'Tipo: Feature', icon: <GoogleIcon>&#xE8B8;</GoogleIcon> },
-                    { label: 'Tipo: Hotfix', icon: <GoogleIcon>&#xf10b;</GoogleIcon> }
-                  ]}
-                  handleSelected={(s: string) => setTipo(s.split(' ')[1])}
-                />
-              </div>
-              <div className={styles.inputRow}>
-
-                {loc.pathname == '/solicitacoes-para-avaliar' ?
-                  <DropdownContornado
+            <section className={styles.section}>
+              <div className={styles.esquerda}>
+                <div className={styles.inputContainer}>
+                  <InputContornado
                     className={styles.inputPreenchimento}
-                    itens={[
-                      { label: `Situação: Sem nota de ${usuario.role.name}`, icon: <GoogleIcon>&#xE46E;</GoogleIcon>, value: 'semNota' },
-                      { label: 'Situação: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon>, value: 'Todos' }
-                    ]}
-                    handleSelected={(s: string) => setSituacaoNota(s)}
-                  /> : loc.pathname !== '/solicitacoes-em-producao' &&
-                  <DropdownContornado
-                    className={styles.inputPreenchimento}
-                    itens={[
-                      { label: 'Status: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon>, value: 'Todos' },
-                      { label: 'Status: Recentes', icon: <GoogleIcon>&#xE8B5;</GoogleIcon>, value: 'Recentes' },
-                      { label: 'Status: Em avaliação', icon: <GoogleIcon>&#xE46E;</GoogleIcon>, value: 'Em avaliação' },
-                      { label: 'Status: Em produção', icon: <GoogleIcon>&#xE179;</GoogleIcon>, value: 'Em produção' },
-                      { label: 'Status: Arquivados', icon: <GoogleIcon>&#xE2C8;</GoogleIcon>, value: 'Arquivados' }
-                    ]}
-                    handleSelected={(s: string) => setStatus(s)}
+                    placeholder='Pesquisar solicitação...'
+                    icon={<GoogleIcon>&#xe8b6;</GoogleIcon>}
+                    handleChange={(e) => setBusca(e.target.value)}
                   />
-                }
+                  <div className={styles.inputTipo}>
+                    <DropdownContornado
+                      className={classNames({
+                        [styles.inputPreenchimento]: loc.pathname !== '/solicitacoes-para-avaliar'
+                      })}
+                      itens={[
+                        { label: 'Tipo: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon> },
+                        { label: 'Tipo: Feature', icon: <GoogleIcon>&#xE8B8;</GoogleIcon> },
+                        { label: 'Tipo: Hotfix', icon: <GoogleIcon>&#xf10b;</GoogleIcon> }
+                      ]}
+                      handleSelected={(s: string) => setTipo(s.split(' ')[1])}
+                    />
+                  </div>
+                  <div className={styles.inputRow}>
+
+                    {loc.pathname == '/solicitacoes-para-avaliar' ?
+                      <DropdownContornado
+                        className={styles.inputPreenchimento}
+                        itens={[
+                          { label: `Situação: Sem nota de ${usuario.role.name}`, icon: <GoogleIcon>&#xE46E;</GoogleIcon>, value: 'semNota' },
+                          { label: 'Situação: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon>, value: 'Todos' }
+                        ]}
+                        handleSelected={(s: string) => setSituacaoNota(s)}
+                      /> : loc.pathname !== '/solicitacoes-em-producao' &&
+                      <DropdownContornado
+                        className={styles.inputPreenchimento}
+                        itens={[
+                          { label: 'Status: Todos', icon: <GoogleIcon>&#xEB75;</GoogleIcon>, value: 'Todos' },
+                          { label: 'Status: Recentes', icon: <GoogleIcon>&#xE8B5;</GoogleIcon>, value: 'Recentes' },
+                          { label: 'Status: Em avaliação', icon: <GoogleIcon>&#xE46E;</GoogleIcon>, value: 'Em avaliação' },
+                          { label: 'Status: Em produção', icon: <GoogleIcon>&#xE179;</GoogleIcon>, value: 'Em produção' },
+                          { label: 'Status: Arquivados', icon: <GoogleIcon>&#xE2C8;</GoogleIcon>, value: 'Arquivados' }
+                        ]}
+                        handleSelected={(s: string) => setStatus(s)}
+                      />
+                    }
+                  </div>
+                </div>
+                {loc.pathname == '/minhas-solicitacoes' &&
+                  <div className={styles.inputContainer}>
+                    <Botao
+                      handleClick={() => {
+                        nav('/criar-solicitacao');
+                      }}
+                      className={styles.botao}>
+                      Criar solicitação
+                    </Botao>
+                  </div>}
+                <div className={styles.listContainer2}
+                  onClick={() => setSolicSelecionada(undefined)}
+                >
+                  {solicitacoes.length ?
+                    solicitacoes.map(solic => (
+                      <ItemSolicitacaoMobile
+                        key={solic.id}
+                        solicitacao={solic}
+                        handleClick={() => {
+                          setSolicSelecionada(solic);
+                          solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
+                            setGrupoSolic(grupo);
+                          })
+                        }}
+                        isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
+                    )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
+                </div>
+                {/* } */}
               </div>
-            </div>
-            {loc.pathname == '/minhas-solicitacoes' &&
-              <div className={styles.inputContainer}>
-                <Botao
-                  handleClick={() => {
-                    nav('/criar-solicitacao');
-                  }}
-                  className={styles.botao}>
-                  Criar solicitação
-                </Botao>
-              </div>}
-
-
-
-            {/* {loc.pathname == '/detalhes-solicitacao' && */}
-            <div className={styles.listContainer2}
-              onClick={() => setSolicSelecionada(undefined)}
-            >
-              {solicitacoes.length ?
-                solicitacoes.map(solic => (
-                  <ItemSolicitacao
-                    key={solic.id}
-                    solicitacao={solic}
-                    handleClick={() => {
-                      setSolicSelecionada(solic);
-                      Solicitacoes.getByID(solic.id).then(solicitacao => {
-                        setSolicSelecionada(solicitacao);
-                      });
-                      solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
-                        setGrupoSolic(grupo);
-                      })
-                    }}
-                    isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
-                )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
-            </div>
-            {/* } */}
+            </section>
           </div>
-        </section>
-      </div>
-    </section>
+        </section> : 
+        <SolicitacaoInfoMobile
+        solic={solicSelecionada}
+        onBack={() => {
+          setSolicSelecionada(undefined)
+        }}/>
+        }
+    </>
   );
 }

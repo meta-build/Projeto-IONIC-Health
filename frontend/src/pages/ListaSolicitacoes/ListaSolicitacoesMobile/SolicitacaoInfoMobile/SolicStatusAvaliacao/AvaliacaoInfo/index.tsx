@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { RatingProps, UsuarioProps } from '../../../../types';
+import { RatingProps} from '../../../../../../types';
 import styles from './AvaliacaoInfo.module.scss';
-import Usuarios from '../../../../services/Usuarios';
-import { BotaoNota } from '../../../../components/Botoes';
+import { BotaoNota } from '../../../../../../components/Botoes';
 
 interface Props {
   rating: RatingProps;
@@ -26,9 +24,9 @@ export default function AvaliacaoInfo(props: Props) {
         <span className={styles.info}>{props.rating.user.name}</span>
       </div>
       <div className={styles.row}>
-        <span>Avaliação feita em</span>
+        <span>Avaliação feita em:</span>
         <span className={styles.info}>
-          {new Date().toLocaleDateString('pt-br', {
+          {new Date(props.rating.createdAt).toLocaleDateString('pt-br', {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",

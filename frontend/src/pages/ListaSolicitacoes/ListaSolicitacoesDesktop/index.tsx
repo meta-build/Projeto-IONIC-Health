@@ -19,7 +19,8 @@ import PopupErro from '../../../popUps/PopupErro';
 import PopupAprovacao from '../../../popUps/PopupAprovacao';
 import { AlterarStatusProducao, AprovarParaProducao, AvaliarSolicitacao } from '../../../popUps';
 import Grupos from '../../../services/Grupos';
-import { FaArrowLeft } from 'react-icons/fa';
+import SolicStatusAvaliacao from './SolicStatusAvaliacao';
+import SolicStatusProducao from './SolicStatusProducao';
 
 export default function ListaSolicitacoesDesktop() {
   const nav = useNavigate();
@@ -33,6 +34,7 @@ export default function ListaSolicitacoesDesktop() {
 
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [solicSelecionada, setSolicSelecionada] = useState<SolicitacaoProps>();
+  const [solicId, setSolicId] = useState<number>();
   const [grupoSolic, setGrupoSolic] = useState<GrupoProps>();
 
   const [carregando, setCarregando] = useState(false);
@@ -112,7 +114,11 @@ export default function ListaSolicitacoesDesktop() {
 
   useEffect(() => {
     getSolicitacoes();
-  }, [busca, tipo, status, situacaoNota, loc.pathname]);
+    if (solicId) {
+      Solicitacoes.getByID(solicId)
+        .then(solic => setSolicSelecionada(solic));
+    }
+  }, [busca, tipo, status, situacaoNota, loc.pathname, solicId]);
   return (
     <section id='desktop'>
       <Header32 className={styles.titulo}>
@@ -121,7 +127,7 @@ export default function ListaSolicitacoesDesktop() {
             loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
               'Solicitações em produção'}
       </Header32>
-      
+
       <section className={styles.section}>
         <div className={styles.esquerda}>
           <div className={styles.inputContainer}>
@@ -210,52 +216,6 @@ export default function ListaSolicitacoesDesktop() {
                 {solicSelecionada.title}
               </h2>
               <BadgeStatus status={solicSelecionada.isArchived ? 'ARCHIVED' : solicSelecionada.status} />
-              {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
-                <div className={styles['solic-info']}>
-                  <span className={styles.content}>
-                    <span>{'Status: '}</span>
-                    <span className={classNames({
-                      [styles.new]: solicSelecionada.status == 'NEW',
-                      [styles['on-holding']]: solicSelecionada.status == 'ONHOLDING',
-                      [styles.done]: solicSelecionada.status == 'DONE',
-                    })}>
-                      {solicSelecionada.status}
-                    </span>
-                  </span>
-                  <span className={styles.content}>
-                    <span>{'Grupo: '}</span>
-                    <span className={classNames({
-                      [styles.new]: true,
-                    })}>
-                      {grupoSolic ? grupoSolic.name : 'Carregando...'}
-                    </span>
-                  </span>
-                </div>}
-              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
-                <span className={styles['solic-em-av']}>
-                  {solicSelecionada.ratings.length ?
-                    solicSelecionada.ratings.map(nota => (
-                      <div>
-                        <span>{`${nota.committee}: `}</span>
-                        <span className={classNames(
-                          nota.committee == 'Impacto' ? {
-                            [styles['impacto-0']]: nota.value == 0,
-                            [styles['impacto-1']]: nota.value == 1,
-                            [styles['impacto-2']]: nota.value == 2,
-                            [styles['impacto-3']]: nota.value == 3,
-                          } :
-                            {
-                              [styles['av-0']]: nota.value == 0,
-                              [styles['av-1']]: nota.value == 1,
-                              [styles['av-2']]: nota.value == 2,
-                              [styles['av-3']]: nota.value == 3,
-                            })}>{nota.value}</span>
-                      </div>
-                    )) :
-                    <span>Sem avaliações</span>
-                  }
-                </span>
-              }
               <div className={styles['solic-datas']}>
                 <span>
                   {'Criado em '}
@@ -312,6 +272,14 @@ export default function ListaSolicitacoesDesktop() {
                     ))}
                 </span>
               </div>
+              {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
+                <span className={styles['solic-em-av']}>
+                  <SolicStatusAvaliacao solic={solicSelecionada} />
+                </span>
+              }
+              {!solicSelecionada.isArchived && (solicSelecionada.status == 'NEW' || solicSelecionada.status == 'ONHOLDING' || solicSelecionada.status == 'DONE') &&
+                <SolicStatusProducao solic={solicSelecionada} />
+              }
               <div className={styles['solic-espacador']}></div>
               <div className={styles['solic-botoes']}>
                 {!solicSelecionada.isArchived && solicSelecionada.status == 'RECENT' &&
@@ -554,7 +522,7 @@ export default function ListaSolicitacoesDesktop() {
             titulo='Erro ao liberar para avaliação'
             descricao='Não foi possível liberar para avaliação por conta de um erro interno do servidor, tente novamente mais tarde.'
           />
-            <AprovarParaProducao
+          <AprovarParaProducao
             aberto={confirmLiberarProd}
             onClose={() => {
               setConfirmLiberarProd(false);
@@ -562,7 +530,7 @@ export default function ListaSolicitacoesDesktop() {
             }}
             idSolic={solicSelecionada.id}
             onConfirm={() => console.log()}
-            />
+          />
           <PopupConfirm
             visivel={sucessoLiberarProd}
             onClose={() => {
@@ -591,13 +559,13 @@ export default function ListaSolicitacoesDesktop() {
             idSolic={solicSelecionada.id}
           />
           <AlterarStatusProducao
-          aberto={alterarProd}
-          idSolic={solicSelecionada.id}
-          onClose={() => {
-            setAlterarProd(false);
-            setSolicSelecionada(undefined);
-            getSolicitacoes();
-          }}
+            aberto={alterarProd}
+            idSolic={solicSelecionada.id}
+            onClose={() => {
+              setAlterarProd(false);
+              setSolicSelecionada(undefined);
+              getSolicitacoes();
+            }}
           />
         </>
       }
