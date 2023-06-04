@@ -9,7 +9,6 @@ import { useContexto } from '../../../../context/contexto';
 import ItemNome from '../../../../components/ItemNome';
 import { useNavigate } from 'react-router-dom';
 import Grupos from '../../../../services/Grupos';
-import { FaArrowLeft } from "react-icons/fa";
 import DetailGrupos from '../DetailGrupos';
 
 
@@ -56,7 +55,7 @@ export default function ListGruposMobile() {
               className={styles.botaoVoltar}
               onClick={handleVoltar}
             >
-              <FaArrowLeft className="icone-seta" />
+              <GoogleIcon>&#xe5cb;</GoogleIcon>
               <span className={styles.textoVoltar}>Voltar</span>
             </button>
             Grupos

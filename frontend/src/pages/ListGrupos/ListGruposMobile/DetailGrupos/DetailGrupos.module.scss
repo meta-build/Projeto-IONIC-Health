@@ -76,14 +76,11 @@
     
   .listContainer {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 10px;
     flex-direction: column;
     gap: 5px;
     box-sizing: border-box;
-    padding: 12px; /* Espaçamento igual de 12px em todos os lados */
+    padding: 18px; /* Espaçamento igual de 12px em todos os lados */
     flex: 1;
     border-radius: 12px;
     background-color: $black-40;
@@ -91,7 +88,7 @@
     overflow: auto;
     // border: 1px solid yellow;
     width: calc(100% - 20px);
-    height: calc(100vh - 90px);
+    min-height: calc(100vh - 70px);
   }
   
   .listContainer2 {
@@ -197,11 +194,6 @@
     .user-botoes {
       display: flex;
       flex-direction: row-reverse;
-      gap: 12px;
-      margin-bottom: -10px;
-      margin-right: 5px;
-
-    
     }
     
     .botao {
