@@ -5,15 +5,12 @@
   margin-top: -15px;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 12px;
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: white;
   margin-right: 0px;
-
-
-
   .icone-seta {
     margin-right: 5px;
   }
@@ -25,8 +22,8 @@
 .titulo {
   text-align: center;
   margin-top: 15px;
-  font-size: 20px;
-  }
+  font-size: 24px;
+}
 
 .section {
   display: flex;
@@ -73,13 +70,11 @@
   flex-direction: column;
   gap: 5px;
   box-sizing: border-box;
-  padding: 12px; /* Espaçamento igual de 12px em todos os lados */
   flex: 1;
   border-radius: 12px;
   background-color: $black-40;
   backdrop-filter: $blur;
   overflow: auto;
-  // border: 1px solid yellow;
   width: calc(100% - 20px);
   height: calc(100vh - 90px);
 }
@@ -93,7 +88,6 @@
   border-radius: 12px;
   background-color: transparent;
   overflow: auto;
-  // border: 1px solid red;
 }
 
 .esquerda {

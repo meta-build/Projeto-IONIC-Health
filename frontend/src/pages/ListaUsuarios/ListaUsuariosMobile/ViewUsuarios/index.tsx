@@ -10,7 +10,6 @@ import ItemNome from '../../../../components/ItemNome';
 import Usuarios from '../../../../services/Usuarios';
 import { useNavigate } from 'react-router-dom';
 import DetailUsuarios from '../DetailUsuarios';
-import { FaArrowLeft } from 'react-icons/fa';
 
 export default function ListaUsuariosMobile(){
     const { usuario } = useContexto();
@@ -55,7 +54,8 @@ export default function ListaUsuariosMobile(){
               className={styles.botaoVoltar}
               onClick={handleVoltar}
             >
-              <FaArrowLeft className="icone-seta" />
+              {/* <FaArrowLeft className="icone-seta" /> */}
+              <GoogleIcon className={styles['icone-seta']}>&#xe5cb;</GoogleIcon>
               <span className={styles.textoVoltar}>Voltar</span>
             </button>
             Usuários

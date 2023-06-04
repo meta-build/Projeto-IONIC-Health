@@ -2,7 +2,7 @@
 
 
 .botaoVoltar {
-  margin-top: -15px;
+  // margin-top: -15px;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -12,28 +12,27 @@
   color: white;
   margin-right: 0px;
 
-
-
   .icone-seta {
     margin-right: 5px;
   }
+
   .textoVoltar {
-      margin-left: 7px; /* Espaçamento entre a seta e o texto */
-    }
+    margin-left: 7px;
+    /* Espaçamento entre a seta e o texto */
+  }
 }
 
 .titulo {
   text-align: center;
-  margin-top: 15px;
   font-size: 20px;
-  }
+}
 
 .section {
   display: flex;
   margin: 12px auto;
-  width: calc(100% - 50px);
+  width: calc(100% - 20px);
   gap: 12px;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 92px);
   // border: 1px solid green;
 }
 
@@ -73,7 +72,8 @@
   flex-direction: column;
   gap: 5px;
   box-sizing: border-box;
-  padding: 12px; /* Espaçamento igual de 12px em todos os lados */
+  padding: 12px;
+  /* Espaçamento igual de 12px em todos os lados */
   flex: 1;
   border-radius: 12px;
   background-color: $black-40;
@@ -93,7 +93,7 @@
   border-radius: 12px;
   background-color: transparent;
   overflow: auto;
-//    border: 1px solid red;
+  //    border: 1px solid red;
 }
 
 .esquerda {
@@ -166,17 +166,14 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  margin-top: 12px;
 }
 
 .user-titulo {
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    font-size: 20px;
-    margin-bottom: 5px;
-    margin-top: -10px;
-  }
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 28px;
+}
 
 .user-info-container {
   display: flex;
@@ -194,13 +191,9 @@
 }
 
 .user-botoes {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 12px;
-    margin-bottom: 5px;
-    margin-right: 5px;
- 
-  }
+  display: flex;
+  flex-direction: row-reverse;
+}
 
 .botao {
   width: fit-content;
