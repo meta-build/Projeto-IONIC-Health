@@ -67,13 +67,18 @@ export class AuthMiddleware implements Middleware {
   }
 
   private hasEveryPermission(user: LoadUserById.Output) {
-    const allPermissions = [
-      ...(user.permissions ?? []),
-      ...(user.role?.permissions ?? [])
-    ]
+    let permissions = []
+
+    if (user.role?.permissions?.length) {
+      permissions = user.role.permissions
+    }
+
+    if (user.permissions?.length) {
+      permissions = user.permissions
+    }
 
     return this.requiredPermissions.every((requiredPermission) =>
-      allPermissions.some(
+      permissions.some(
         (permission) => permission.permissionName === requiredPermission
       )
     )
@@ -84,13 +89,18 @@ export class AuthMiddleware implements Middleware {
       return true
     }
 
-    const allPermissions = [
-      ...(user.permissions ?? []),
-      ...(user.role?.permissions ?? [])
-    ]
+    let permissions = []
+
+    if (user.role?.permissions?.length) {
+      permissions = user.role.permissions
+    }
+
+    if (user.permissions?.length) {
+      permissions = user.permissions
+    }
 
     return this.requiredPermissions.some((requiredPermission) =>
-      allPermissions.some(
+      permissions.some(
         (permission) => permission.permissionName === requiredPermission
       )
     )
