@@ -30,4 +30,9 @@ export default (router: Router): void => {
     adaptMiddleware(makeAuthMiddleware()),
     adaptRoute(makeGetAllRoleController())
   )
+  router.delete(
+    '/role/:id',
+    adaptMiddleware(makeAuthMiddleware()),
+    adaptRoute(makeGetRoleByIdController())
+  )
 }
