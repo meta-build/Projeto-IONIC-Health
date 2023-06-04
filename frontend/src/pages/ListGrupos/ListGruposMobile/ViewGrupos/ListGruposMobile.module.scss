@@ -1,0 +1,229 @@
+@import '@/styles/variables.scss';
+
+
+.botaoVoltar {
+  margin-top: -15px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-right: 0px;
+
+
+
+  .icone-seta {
+    margin-right: 5px;
+  }
+  .textoVoltar {
+      margin-left: 7px; /* Espaçamento entre a seta e o texto */
+    }
+}
+.titulo {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 20px;
+  }
+  
+  .section {
+    display: flex;
+    margin: 12px auto;
+    width: calc(100% - 20px);
+    gap: 12px;
+    height: calc(100vh - 140px);
+    // border: 1px solid green;
+  }
+  
+  .data-texto {
+    margin-right: 4px;
+  }
+  
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  align-items: end;
+  
+  
+  .botao {
+    width: 100%;
+  }
+}
+  
+.inputRow {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  
+  
+}
+  
+.inputPreenchimento {
+  width: 100%;
+  flex: 1;
+  
+}
+  
+.listContainer {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  flex-direction: column;
+  gap: 5px;
+  box-sizing: border-box;
+  padding: 12px; /* Espaçamento igual de 12px em todos os lados */
+  flex: 1;
+  border-radius: 12px;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  overflow: auto;
+  // border: 1px solid yellow;
+  width: calc(100% - 20px);
+  height: calc(100vh - 90px);
+}
+
+.listContainer2 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-sizing: border-box;
+  flex: 1;
+  border-radius: 12px;
+  background-color: transparent;
+  overflow: auto;
+  // border: 1px solid red;
+  
+  
+}
+  
+.esquerda {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+  
+  .direita {
+    flex: 4;
+    max-width: 800px;
+    background-color: $black-40;
+    backdrop-filter: $blur;
+    border-radius: 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  
+ 
+.botaoCriarContainer {
+  width: 100%;
+  display: flex;
+  margin-top: 12px;
+  
+  .botaoCriar {
+    flex: 1;
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+}
+  
+.lista {
+  padding: 12px;
+  margin: 0;
+  // width: 500px;
+  background-color: $cinza-300;
+  border-radius: 12px;
+  margin-top: 12px;
+  width: 100%;
+  height: calc(100vh - 300px);
+  overflow: auto;
+
+  }
+  
+  .not-found {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    color: $cinza-400;
+  }
+  
+  .user-container {
+    flex: 1;
+    box-sizing: border-box;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .user-titulo {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .user-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .user-info {
+    margin-left: 8px;
+    color: $ciano-300;
+  }
+  
+  .user-espacador {
+    flex: 1;
+  }
+  
+  .user-botoes {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+  
+  }
+  
+  .botao {
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-weight: normal;
+  }
+  
+  .perm-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .perm-list {
+    padding-left: 24px;
+    margin: 0;
+  
+    li {
+      background: none !important;
+    }
+  
+    li:hover {
+      background: none !important;
+      cursor: default;
+    }
+  }
+  
+  ::-webkit-scrollbar {
+    background: none;
+    width: 12px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: $cinza-400;
+    border-radius: 36px;
+    width: 20px;
+  }
