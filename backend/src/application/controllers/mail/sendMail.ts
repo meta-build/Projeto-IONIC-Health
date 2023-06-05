@@ -2,7 +2,7 @@ import nodemailer, { Transporter } from 'nodemailer';
 import { Notification } from '@/infra/repositories/mysql/entities';
 import env from '@/main/config/env';
 
-export async function sendEmail(notification: Notification) {
+export async function sendEmail(notification: Notification, recipients: string | string[]) {
   // Configuração do transporte SMTP
   const transporter: Transporter = nodemailer.createTransport({
     host: env.mailHost, // servidor SMTP
@@ -20,7 +20,7 @@ export async function sendEmail(notification: Notification) {
   // Configuração do e-mail
   const mailOptions = {
     from: env.mailUser, // endereço de e-mail do remetente
-    to: notification.user.email, // endereço de e-mail do destinatário (pode ser obtido do usuário)
+    to: recipients, // endereço(s) de e-mail do(s) destinatário(s)
     subject: 'Notificação de Solicitação',
     text: notification.text, // conteúdo do e-mail obtido da notificação
     html: `<p>${notification.text}</p>`, // conteúdo do e-mail em formato HTML
@@ -29,7 +29,7 @@ export async function sendEmail(notification: Notification) {
   try {
     // Envio do e-mail
     const info = await transporter.sendMail(mailOptions);
-    console.log(`E-mail enviado para: '${notification.user.email}`, info.messageId);
+    console.log(`E-mail enviado para: '${recipients}`, info.messageId);
   } catch (error) {
     console.error('Erro ao enviar o e-mail:', error);
   }

@@ -15,6 +15,16 @@ export class UserRepository
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
+  async getUsersByIds(ids: number[]): Promise<User[]> {
+    const userRepo = this.getRepository(User)
+  
+    const users = await userRepo
+      .createQueryBuilder('user')
+      .whereInIds(ids)
+      .getMany()
+  
+    return users
+  }
 
   async create({
     name,

@@ -111,7 +111,8 @@ export class UpdateTicketController implements Controller {
 
     const notification = await this.createNotification(httpRequest.requester, 'Solicitação atualizada')
 
-    await sendEmail(notification);
+    const recipient = notification.user.email;
+    await sendEmail(notification, recipient);
     return ok({updatedTicket, notification})
   }
 

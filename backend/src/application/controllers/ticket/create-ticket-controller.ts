@@ -58,7 +58,8 @@ export class CreateTicketController implements Controller {
 
     const notification = await this.createNotification(requester, savedTicket, "Nova solicitação criada");
 
-    await sendEmail(notification);
+    const recipient = notification.user.email;
+    await sendEmail(notification, recipient);
 
     return ok({ ticket, notification });
   }
