@@ -14,7 +14,7 @@ interface Props {
   aberto: boolean;
   onClose: () => void;
   idSolic: number;
-  onChange?: (string) => void;
+  onChange?: () => void;
 }
 
 export default function AlterarStatusProducao(props: Props) {
@@ -102,16 +102,43 @@ export default function AlterarStatusProducao(props: Props) {
                   />
                 </span>
               </div>
-              <div className={styles['linha-submit']}>
+              <div className={styles['linha-submit']} id='desktop'>
                 <BotaoPreenchido
                   className={styles.botao}
                   handleClick={() => props.onClose()}>
                   Cancelar
                 </BotaoPreenchido>
                 <BotaoPreenchido
-                  className={styles.botao}
+                  className={classNames({
+                    [styles.botao]: true,
+                    [styles['botao-submit']]: true
+                  })}
                   tipo="submit">
                   Alterar
+                </BotaoPreenchido>
+              </div>
+              <div
+              id='mobile'
+              className={classNames({
+                [styles['linha-submit']]: true,
+                [styles['linha-mobile']]: true
+              })}>
+                <BotaoPreenchido
+                  className={classNames({
+                    [styles.botao]: true,
+                    [styles['botao-mobile']]: true,
+                    [styles['botao-submit']]: true
+                  })}
+                  tipo="submit">
+                  Alterar
+                </BotaoPreenchido>
+                <BotaoPreenchido
+                  className={classNames({
+                    [styles.botao]: true,
+                    [styles['botao-mobile']]: true
+                  })}
+                  handleClick={() => props.onClose()}>
+                  Cancelar
                 </BotaoPreenchido>
               </div>
             </div>
@@ -123,7 +150,7 @@ export default function AlterarStatusProducao(props: Props) {
         visivel={sucesso}
         onClose={() => {
           setSucesso(false);
-          props.onClose();
+          props.onChange();
         }}
         titulo='Status de produção alterado com sucesso'
         descricao=''
@@ -132,7 +159,6 @@ export default function AlterarStatusProducao(props: Props) {
         visivel={falha}
         onClose={() => {
           setFalha(false);
-          props.onClose();
         }}
         titulo='Erro ao alterar status de produção'
         descricao='Não foi possível alterar o status de produção por conta de um erro interno do servidor, tente novamente mais tarde.'

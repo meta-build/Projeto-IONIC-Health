@@ -1,0 +1,26 @@
+@import '@/styles/variables.scss';
+
+.solic-info {
+  display: flex;
+  flex-direction: column;
+
+  span:first-child {
+    font-size: 18px;
+  }
+}
+
+.solic-group {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.group-name {
+  color: $ciano-300;
+}
+
+.solic-list-status {
+  display: flex;
+  gap: 36px;
+  margin-top: 18px;
+}

@@ -31,11 +31,6 @@ export default function AprovarParaProducao(props: Props) {
 
   const [carregando, setCarregando] = useState(false);
 
-  const fechar = () => {
-    setGrupoSelect(undefined);
-
-  }
-
   const aprovar = () => {
     if (grupoSelec) {
       setCarregando(true)
@@ -80,7 +75,7 @@ export default function AprovarParaProducao(props: Props) {
           props.onClose();
         }}
         titulo={`Liberação solicitação para produção`}>
-        <span className={styles.aviso}>
+        <span className={styles.aviso} id='desktop'>
           <div>
             Grupo de produção:
           </div>
@@ -94,7 +89,45 @@ export default function AprovarParaProducao(props: Props) {
             selecionadoFst={grupoSelec ? grupoSelec.name : ''}
           />
         </span>
-        <div className={styles.botoes}>
+        <span className={classNames({
+          [styles.aviso]: true,
+          [styles['aviso-mobile']]: true
+        })} id='mobile'>
+          <div>
+            Grupo de produção:
+          </div>
+          <DropdownPreenchido
+            className={classNames({
+              [styles.dropdown]: true,
+              [styles.erro]: erro
+            })}
+            itens={grupos.map(grupo => grupo.name)}
+            handleSelected={(nome) => setGrupoSelect(grupos.find(grupo => grupo.name == nome))}
+            onOpen={() => setErro(false)}
+            selecionadoFst={grupoSelec ? grupoSelec.name : ''}
+          />
+        </span>
+        <div className={styles.botoes} id='desktop'>
+          <BotaoPreenchido
+            handleClick={props.onClose}
+            className={styles.botao}>
+            CANCELAR
+          </BotaoPreenchido>
+          <BotaoPreenchido
+            handleClick={() => {
+              aprovar();
+            }}
+            className={classNames({
+              [styles.botao]: true,
+              [styles.confirmar]: true
+            })}>
+            CONFIRMAR
+          </BotaoPreenchido>
+        </div>
+        <div className={classNames({
+          [styles.botoes]: true,
+          [styles['botoes-mobile']]: true
+        })} id='mobile'>
           <BotaoPreenchido
             handleClick={props.onClose}
             className={styles.botao}>

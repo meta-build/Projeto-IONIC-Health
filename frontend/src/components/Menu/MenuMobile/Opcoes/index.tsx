@@ -1,4 +1,4 @@
-import { AnimatePresence, easeIn, easeInOut, easeOut, motion, useAnimation } from 'framer-motion';
+import { AnimatePresence, easeOut, motion} from 'framer-motion'
 import GoogleIcon from '../../../GoogleIcon';
 import Dropdown from './Dropdown';
 import styles from './Opcoes.module.scss';

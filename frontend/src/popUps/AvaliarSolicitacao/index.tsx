@@ -77,7 +77,7 @@ export default function AvaliarSolicitacao(props: Props) {
             e.preventDefault();
             avaliar();
           }}>
-          <div className={styles.row}>
+          <div className={styles.row} id='desktop'>
             <label className={styles.item}>
               Nota:
             </label>
@@ -113,6 +113,48 @@ export default function AvaliarSolicitacao(props: Props) {
               clicavel={true}
               handleClick={() => setNota(3)}
             />
+          </div>
+          <div className={classNames({
+            [styles.row]: true,
+            [styles['row-mobile']]: true
+          })} id='mobile'>
+            <label className={styles.item}>
+              Nota:
+            </label>
+            <div className={styles.notas}>
+              <BotaoNota
+                className={styles.item}
+                valor={0}
+                cor="cinza"
+                selecionado={nota == 0}
+                clicavel={true}
+                handleClick={() => setNota(0)}
+              />
+              <BotaoNota
+                className={styles.item}
+                valor={1}
+                cor="verde"
+                selecionado={nota == 1}
+                clicavel={true}
+                handleClick={() => setNota(1)}
+              />
+              <BotaoNota
+                className={styles.item}
+                valor={2}
+                cor="amarelo"
+                selecionado={nota == 2}
+                clicavel={true}
+                handleClick={() => setNota(2)}
+              />
+              <BotaoNota
+                className={styles.item}
+                valor={3}
+                cor="vermelho"
+                selecionado={nota == 3}
+                clicavel={true}
+                handleClick={() => setNota(3)}
+              />
+            </div>
           </div>
           <div className={styles['row-comentario']}>
             <label>

@@ -1,0 +1,22 @@
+@import '@/styles/variables.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info {
+  color: $ciano-300;
+}
+
+.comment {
+  text-align: justify;
+}

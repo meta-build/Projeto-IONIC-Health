@@ -1,4 +1,4 @@
-import { HttpResponse, badRequest, forbidden, ok } from '@/application/helpers'
+import { HttpResponse, badRequest, forbidden, notFound, ok } from '@/application/helpers'
 import { Controller } from '@/application/controllers'
 import { Validation } from '@/application/validation'
 import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository'
@@ -52,11 +52,44 @@ export class UpdateTicketController implements Controller {
     }
 
     let archivedAt: Date
-
+    let statusNewAt: Date
+    let statusOnHoldingAt: Date
+    let statusDoneAt: Date
+    let statusRatingAt: Date
+    
     if (httpRequest.isArchived === true) {
       archivedAt = new Date()
     } else if (httpRequest.isArchived === false) {
       archivedAt = null
+    }
+    
+    const ticket = await this.ticketRepository.loadById(httpRequest.params)
+
+    if (!ticket) {
+      return notFound(new Error(`Ticket with id ${httpRequest.params.id} not found`))
+    }
+    
+    statusOnHoldingAt = ticket.statusOnHoldingAt
+    statusNewAt = ticket.statusNewAt
+    statusDoneAt = ticket.statusDoneAt
+
+    switch(httpRequest.status.toUpperCase()){
+      case 'NEW':
+        statusNewAt = new Date()
+        statusOnHoldingAt = null
+        statusDoneAt = null
+        break
+      case 'ONHOLDING':
+        statusOnHoldingAt = new Date()
+        statusDoneAt = null
+        break
+      case 'DONE':
+        statusDoneAt = new Date()
+        break
+      case 'RATING':
+        statusRatingAt = new Date()
+      default:
+        break
     }
 
     const updatedTicket = await this.ticketRepository.update({
@@ -66,7 +99,11 @@ export class UpdateTicketController implements Controller {
       status: httpRequest.status,
       isArchived: httpRequest.isArchived,
       assignedRoleId: httpRequest.assignedRoleId,
-      archivedAt: archivedAt
+      archivedAt: archivedAt,
+      statusNewAt,
+      statusOnHoldingAt,
+      statusDoneAt,
+      statusRatingAt
     })
 
     return ok(updatedTicket)

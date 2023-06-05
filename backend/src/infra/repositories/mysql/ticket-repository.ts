@@ -21,9 +21,12 @@ export class TicketRepository
     description,
     status,
     isArchived,
-    updatedAt,
     archivedAt,
-    assignedRoleId
+    assignedRoleId,
+    statusNewAt,
+    statusOnHoldingAt,
+    statusDoneAt,
+    statusRatingAt
   }: UpdateTicket.Input): Promise<UpdateTicket.Output> {
     const ticketRepo = this.getRepository()
 
@@ -36,9 +39,13 @@ export class TicketRepository
     ticket.title = title ?? ticket.title
     ticket.description = description ?? ticket.description
     ticket.status = status?.toUpperCase() ?? ticket.status
-    ticket.updatedAt = updatedAt ?? ticket.updatedAt
+    ticket.updatedAt = new Date()
     ticket.archivedAt = archivedAt ?? ticket.archivedAt
     ticket.assignedRoleId = assignedRoleId ?? ticket.assignedRoleId
+    ticket.statusNewAt = statusNewAt ?? ticket.statusNewAt
+    ticket.statusOnHoldingAt = statusOnHoldingAt
+    ticket.statusDoneAt = statusDoneAt
+    ticket.statusRatingAt = statusRatingAt ?? ticket.statusRatingAt
 
     if (isArchived !== undefined) {
       ticket.isArchived = isArchived
@@ -55,6 +62,7 @@ export class TicketRepository
     const ticket = await ticketRepo
       .createQueryBuilder('ticket')
       .leftJoinAndSelect('ticket.ratings', 'rating')
+      .leftJoinAndSelect('rating.user', 'ratingUser')
       .leftJoinAndSelect('ticket.attachments', 'attachment')
       .where('ticket.id=:id', { id })
       .getOne()

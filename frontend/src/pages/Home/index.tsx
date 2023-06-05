@@ -35,7 +35,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Header36 className={styles.children}>Bem-vindo, {usuario.name}</Header36>
+      <Header36 className={styles.welcome}>Bem-vindo, {usuario.name}</Header36>
       <div className={classNames({
         [styles['container-button']]: true
       })}>

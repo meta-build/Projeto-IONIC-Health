@@ -62,4 +62,17 @@ export class Ticket {
 
   @Column({nullable: true})
   assignedRoleId: number
+
+  @Column({ nullable: true })
+  statusNewAt: Date
+
+  @Column({ nullable: true })
+  statusOnHoldingAt: Date
+
+  @Column({ nullable: true })
+  statusDoneAt: Date
+
+  @Column({ nullable: true })
+  statusRatingAt: Date
+
 }
