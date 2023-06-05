@@ -46,7 +46,8 @@ export default function Login() {
     if (sessionStorage.length > 0) {
       const { email, password } = sessionStorage;
       Usuarios.login({ email, password })
-        .then(data => {
+      .then(data => {
+          setCarregando(false);
           const { accessToken } = data;
           api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
           setUsuario(data);
@@ -54,8 +55,9 @@ export default function Login() {
           sessionStorage.setItem('password', password);
           nav('/home');
         });
-    }
-    setCarregando(false);
+      } else {
+        setCarregando(false);
+      }
   }, []);
   return (
     <section id='desktop'>

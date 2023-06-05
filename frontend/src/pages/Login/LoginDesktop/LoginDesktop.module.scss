@@ -4,8 +4,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: fit-content;
-  margin: 96px auto;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  // margin: 96px auto;
 
   img {
     width: 300px;
