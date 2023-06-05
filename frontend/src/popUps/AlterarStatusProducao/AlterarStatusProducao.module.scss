@@ -5,11 +5,11 @@
   flex-direction: column;
   margin-top: 2px;
   margin-bottom: 25px;
+  width: 100%;
 }
 
 .inputs {
   display: flex;
-  width: 660px;
 
   .input {
     display: flex;
@@ -78,7 +78,7 @@
   justify-content: flex-end;
 }
 
-.botao:not(:first-child) {
+.botao-submit {
   margin-left: 12px;
   background-color: $verde;
   color: white;
@@ -108,4 +108,13 @@
   label {
     margin-right: 12px;
   }
+}
+
+.linha-mobile {
+  flex-direction: column;
+  gap: 14px;
+}
+
+.botao-mobile {
+  margin: 0 !important;
 }
