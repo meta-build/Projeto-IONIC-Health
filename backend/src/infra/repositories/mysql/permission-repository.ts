@@ -42,12 +42,14 @@ export class PermissionRepository
     const permissionRepo = this.getRepository()
     let permissions: Permission[]
 
-    if (input?.ids) {
-      permissions = await permissionRepo.query(
-        'SELECT * FROM permission WHERE id IN (?)',
-        [input.ids]
-      )
+    if (!input?.ids?.length) {
+      return []
     }
+
+    permissions = await permissionRepo.query(
+      'SELECT * FROM permission WHERE id IN (?)',
+      [input.ids]
+    )
 
     if (permissions) {
       return permissions.map((permission: Permission) => ({
@@ -55,6 +57,7 @@ export class PermissionRepository
         permissionName: permission.permissionName,
         humanizedPermissionName: permission.humanizedPermissionName,
         entity: permission.entity,
+        roles: permission.roles,
         humanizedEntity: permission.humanizedEntity
       }))
     }

@@ -62,6 +62,24 @@ export class CreateTicketController implements Controller {
       await AppDataSource.manager.save(Attachment, attachment)
     })
 
-    return ok(ticket)
+    return ok({
+      id: ticket.id,
+      title: ticket.title,
+      type: ticket.type,
+      description: ticket.description,
+      status: ticket.status,
+      isArchived: ticket.isArchived,
+      attachments: ticket.attachments,
+      assignedRoleId: ticket.assignedRoleId,
+      requester: {
+        id: requester.id,
+        name: requester.name,
+        email: requester.email,
+        roleId: requester.roleId,
+      },
+      createdAt: ticket.createdAt,
+      updatedAt: ticket.updatedAt,
+      archivedAt: ticket.archivedAt,
+    })
   }
 }

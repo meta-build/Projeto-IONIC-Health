@@ -1,3 +1,5 @@
+import { Role } from '@/infra/repositories/mysql/entities'
+
 export interface CreatePermission {
   create: (input: CreatePermission.Input) => Promise<CreatePermission.Output>
 }
@@ -32,6 +34,7 @@ export namespace GetPermissionsById {
     permissionName: string
     humanizedPermissionName: string
     entity: string
+    roles: Role[]
     humanizedEntity: string
   }>
 }
