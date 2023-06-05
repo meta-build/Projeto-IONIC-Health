@@ -97,6 +97,16 @@ export default function Opcoes(props: Props) {
                 </button>
               </div>
               <ul className={styles.botoes}>
+              <li className={styles.botao}>
+                  <button
+                    onClick={() => {
+                      nav('/home')
+                      props.onClose();
+                    }}
+                    className={styles['botao-button']}>
+                    Home
+                  </button>
+                </li>
                 {usuario.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
                   <li className={styles.botao}>
                     <button
