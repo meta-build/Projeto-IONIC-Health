@@ -28,6 +28,8 @@ export default function ListaUsuariosDesktop() {
   const [confirma, setConfirma] = useState(false);
   const [erro, setErro] = useState(false);
 
+  const [carregandoLista, setCarregandoLista] = useState(true);
+
   const filtrarNome = (titulo: string) => {
     const regex = new RegExp(busca, 'i');
     return regex.test(titulo);
@@ -35,6 +37,7 @@ export default function ListaUsuariosDesktop() {
 
   const getUsuarios = () => {
     Usuarios.getAll().then((data) => {
+      setCarregandoLista(false);
       setUsuarios(data.filter((user: UsuarioProps) => {
         const isActive = user.isActive;
         const notUser = user.name !== usuario.name;
@@ -63,32 +66,38 @@ export default function ListaUsuariosDesktop() {
             />
           </div>
           <div className={styles.inputContainer}>
-            {usuario.permissions.find(perm => perm.id == 1) && 
-            <Botao
-              handleClick={() => {
-                nav('/criar-usuario');
-              }}
-              className={styles.botao}>
-              Criar usuário
-            </Botao>}
+            {usuario.permissions.find(perm => perm.id == 1) &&
+              <Botao
+                handleClick={() => {
+                  nav('/criar-usuario');
+                }}
+                className={styles.botao}>
+                Criar usuário
+              </Botao>}
           </div>
           <div
             className={styles.listContainer}
             onClick={() => setUserSelecionado(undefined)}>
-            {usuarios.length ?
-              usuarios.map((user: UsuarioProps) => (
-                <ItemNome
-                  key={user.id}
-                  nome={user.name}
-                  desc={user.role.name}
-                  handleClick={() => setUserSelecionado(user)}
-                  isSelected={userSelecionado && user.id == userSelecionado.id}
-                />
-              ))
-              : <span className={styles['not-found']}>Nenhum usuário encontrado.</span>}
+            {carregando ?
+              <div
+                className={styles.loading}>
+                <GoogleIcon>&#xe86a;</GoogleIcon>
+              </div>
+              :
+              usuarios.length ?
+                usuarios.map((user: UsuarioProps) => (
+                  <ItemNome
+                    key={user.id}
+                    nome={user.name}
+                    desc={user.role.name}
+                    handleClick={() => setUserSelecionado(user)}
+                    isSelected={userSelecionado && user.id == userSelecionado.id}
+                  />
+                ))
+                : <span className={styles['not-found']}>Nenhum usuário encontrado.</span>}
           </div>
         </div>
-        
+
         <div className={styles.direita}>
           {userSelecionado ?
             <div className={styles['user-container']}>
@@ -119,20 +128,20 @@ export default function ListaUsuariosDesktop() {
               </div>
               <div className={styles['user-espacador']}></div>
               <div className={styles['user-botoes']}>
-                {usuario.permissions.find(perm => perm.id == 2) && 
+                {usuario.permissions.find(perm => perm.id == 2) &&
                   <Botao
-                  handleClick={() => {
-                    nav(`/editar-usuario/${userSelecionado.id}`)
-                  }}
-                  className={styles.botao}>
-                  Editar
-                </Botao>}
-                {usuario.permissions.find(perm => perm.id == 3) && 
+                    handleClick={() => {
+                      nav(`/editar-usuario/${userSelecionado.id}`)
+                    }}
+                    className={styles.botao}>
+                    Editar
+                  </Botao>}
+                {usuario.permissions.find(perm => perm.id == 3) &&
                   <Botao
-                  className={styles.botao}
-                  handleClick={() => setAlerta(true)}>
-                  Excluir
-                </Botao>}
+                    className={styles.botao}
+                    handleClick={() => setAlerta(true)}>
+                    Excluir
+                  </Botao>}
               </div>
             </div>
             : <span className={styles['not-found']}>
