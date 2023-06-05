@@ -5,6 +5,7 @@ import styles from './SolicStatusAvaliacao.module.scss';
 import AvaliacaoInfo from './AvaliacaoInfo';
 import Solicitacoes from '../../../../../services/Solicitacoes';
 import { DropdownContornado } from '../../../../../components/Dropdowns';
+import classNames from 'classnames';
 
 interface Props {
   solic: SolicitacaoProps;
@@ -38,7 +39,10 @@ export default function SolicStatusAvaliacao(props: Props) {
             {props.solic.ratings.length ?
               <>
                 <div
-                  className={styles.dropdown}
+                  className={classNames({
+                    [styles.dropdown]: true,
+                    [styles['dropdown-container']]: true
+                  })}
                 >
                   <DropdownContornado
                     itens={props.solic.ratings.map(rating => (

@@ -29,7 +29,7 @@
 
 .section {
   display: flex;
-  margin: 12px auto;
+  margin: 0px auto;
   width: calc(100% - 10px);
   gap: 12px;
   height: calc(100vh - 220px);
@@ -46,7 +46,7 @@
   gap: 4px;
   width: 100%;
   align-items: end;
-
+  margin-top: 12px;
   .botao {
     width: 100%;
   }
