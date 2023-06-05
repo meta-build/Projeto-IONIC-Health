@@ -53,7 +53,8 @@ export default function NovoUsuarioMobile() {
           name: nome,
           email: email,
           isActive: true,
-          roleId: grupo.id
+          roleId: grupo.id,
+          permissions: permsEscolhidas
         }).then(() => {
           setCarregando(false);
           setConfirmEdit(true);
@@ -66,7 +67,8 @@ export default function NovoUsuarioMobile() {
           roleId: grupo.id,
           email: email,
           name: nome,
-          password: senha
+          password: senha,
+          permissions: permsEscolhidas
         }).then(() => {
           setCarregando(false);
           setConfirm(true);
@@ -97,141 +99,143 @@ export default function NovoUsuarioMobile() {
     }
   }, []);
   return (
-    <section id='mobile' className={styles.container}>
-      <button
-      onClick={() => nav(-1)}
-      className={styles['back-btn']}>
-        <GoogleIcon className={styles['back-icon']}>&#xe5e0;</GoogleIcon>
-        <span className={styles['back-span']}>Voltar</span>
-      </button>
-      <h2 className={styles.title}>Novo usuário</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-        className={styles.form}>
-        <div className={styles.row}>
-          <span className={styles.label}>Nome</span>
-          <InputEscuro
-            className={classNames({
-              [styles['input']]: true,
-              [styles.erro]: nomeErro
-            })}
-            handleChange={(s) => setNome(s.target.value)}
-            onFocus={() => setNomeErro(false)}
-            valor={nome}
-          />
-        </div>
-        <div className={styles.row}>
-          <span className={styles.label}>Email</span>
-          <InputEscuro
-            className={classNames({
-              [styles['input']]: true,
-              [styles.erro]: emailErro
-            })}
-            handleChange={(s) => setEmail(s.target.value)}
-            onFocus={() => setEmailErro(false)}
-            valor={email}
-            tipo='email'
-          />
-        </div>
-        <div className={styles.row}>
-          <span className={styles.label}>Senha</span>
-          <InputEscuro
-            className={classNames({
-              [styles['input']]: true,
-              [styles.erro]: senhaErro
-            })}
-            handleChange={(s) => setSenha(s.target.value)}
-            onFocus={() => setSenhaErro(false)}
-            valor={senha}
-            tipo='password'
-          />
-        </div>
-        <div className={classNames({
-          [styles.row]: true,
-          [styles.dropdown]: true
-        })}>
-          <span className={styles.label}>Grupo</span>
-          <DropdownEscuro
-            className={classNames({
-              [styles.dropdown]: true,
-              [styles.erro]: grupoErro
-            })}
-            itens={grupos.map(grupo => grupo.name)}
-            selecionadoFst={grupo ? grupo.name : ''}
-            onOpen={() => setGrupoErro(false)}
-            handleSelected={(s) => {
-              let grupo = grupos.find(grupo => grupo.name == s)
-              setGrupo(grupo);
-              if (!permCustomizada) {
-                setPermsEscolhidas(grupo.permissions.map(perm => perm.id));
-              }
-            }}
-          />
-        </div>
-        <div className={styles['perm-row']}>
-          <BotaoSwitch
-            isActive={permCustomizada}
-            handleClick={(value) => {
-              setPermCustomizada(value);
-              if (!value) {
-                setPermsEscolhidas(grupo.permissions.map(perm => perm.id))
-              }
-            }}
-          />
-          <span className={classNames({
-            [styles['perm-label']]: true,
-            [styles['perm-label-desactive']]: !permCustomizada
+    <>
+      <section id='mobile' className={styles.container}>
+        <button
+          onClick={() => nav(-1)}
+          className={styles['back-btn']}>
+          <GoogleIcon className={styles['back-icon']}>&#xe5e0;</GoogleIcon>
+          <span className={styles['back-span']}>Voltar</span>
+        </button>
+        <h2 className={styles.title}>{id ? 'Editar usuário' : 'Novo usuário'}</h2>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit();
+          }}
+          className={styles.form}>
+          <div className={styles.row}>
+            <span className={styles.label}>Nome</span>
+            <InputEscuro
+              className={classNames({
+                [styles['input']]: true,
+                [styles.erro]: nomeErro
+              })}
+              handleChange={(s) => setNome(s.target.value)}
+              onFocus={() => setNomeErro(false)}
+              valor={nome}
+            />
+          </div>
+          <div className={styles.row}>
+            <span className={styles.label}>Email</span>
+            <InputEscuro
+              className={classNames({
+                [styles['input']]: true,
+                [styles.erro]: emailErro
+              })}
+              handleChange={(s) => setEmail(s.target.value)}
+              onFocus={() => setEmailErro(false)}
+              valor={email}
+              tipo='email'
+            />
+          </div>
+          <div className={styles.row}>
+            <span className={styles.label}>Senha</span>
+            <InputEscuro
+              className={classNames({
+                [styles['input']]: true,
+                [styles.erro]: senhaErro
+              })}
+              handleChange={(s) => setSenha(s.target.value)}
+              onFocus={() => setSenhaErro(false)}
+              valor={senha}
+              tipo='password'
+            />
+          </div>
+          <div className={classNames({
+            [styles.row]: true,
+            [styles.dropdown]: true
           })}>
-            Permissões customizadas
-          </span>
-        </div>
-        {permCustomizada && <div className={styles['perm-warning']}>
-          {'[ ! ] Com permissões customizadas, o usuário não terá as permissões de seu grupo, e sim suas próprias permissões.'}
-        </div>}
-        {permCustomizada ?
-          <PermissoesCustomizadas
-            permEscolhidas={permsEscolhidas}
-            addPermission={id => setPermsEscolhidas(prevState => [...prevState, id])}
-            removePermission={id => setPermsEscolhidas(prevState => prevState.filter(e => e !== id))}
-          /> :
-          <>
-            {grupo ?
-              <>
-                <label>Este usuario poderá: </label>
-                <ul className={styles.lista}>
-                  {grupo.permissions.map(perm => (
-                    <li key={perm.id}>
-                      {perm.humanizedPermissionName}
-                    </li>
-                  ))}
-                </ul>
-              </>
-              :
-              <span>Escolha o grupo para visualizar suas permissões.</span>
-            }
-          </>
-        }
-        <div className={styles.espacador} />
-        <div className={styles['linha-submit']}>
-          <Botao
-            handleClick={() => {
-              nav(-1);
-            }}
-            className={styles['botao-cancelar']}
-            variante='contornado'>
-            Cancelar
-          </Botao>
-          <Botao
-            tipo="submit"
-            className={styles['botao-criar']}
-            variante='contornado'>
-            {id ? 'Editar' : 'Criar'}
-          </Botao>
-        </div>
-      </form>
+            <span className={styles.label}>Grupo</span>
+            <DropdownEscuro
+              className={classNames({
+                [styles.dropdown]: true,
+                [styles.erro]: grupoErro
+              })}
+              itens={grupos.map(grupo => grupo.name)}
+              selecionadoFst={grupo ? grupo.name : ''}
+              onOpen={() => setGrupoErro(false)}
+              handleSelected={(s) => {
+                let grupo = grupos.find(grupo => grupo.name == s)
+                setGrupo(grupo);
+                if (!permCustomizada) {
+                  setPermsEscolhidas(grupo.permissions.map(perm => perm.id));
+                }
+              }}
+            />
+          </div>
+          <div className={styles['perm-row']}>
+            <BotaoSwitch
+              isActive={permCustomizada}
+              handleClick={(value) => {
+                setPermCustomizada(value);
+                if (!value) {
+                  setPermsEscolhidas(grupo.permissions.map(perm => perm.id))
+                }
+              }}
+            />
+            <span className={classNames({
+              [styles['perm-label']]: true,
+              [styles['perm-label-desactive']]: !permCustomizada
+            })}>
+              Permissões customizadas
+            </span>
+          </div>
+          {permCustomizada && <div className={styles['perm-warning']}>
+            {'[ ! ] Com permissões customizadas, o usuário não terá as permissões de seu grupo, e sim suas próprias permissões.'}
+          </div>}
+          {permCustomizada ?
+            <PermissoesCustomizadas
+              permEscolhidas={permsEscolhidas}
+              addPermission={id => setPermsEscolhidas(prevState => [...prevState, id])}
+              removePermission={id => setPermsEscolhidas(prevState => prevState.filter(e => e !== id))}
+            /> :
+            <>
+              {grupo ?
+                <>
+                  <label>Este usuario poderá: </label>
+                  <ul className={styles.lista}>
+                    {grupo.permissions.map(perm => (
+                      <li key={perm.id}>
+                        {perm.humanizedPermissionName}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+                :
+                <span>Escolha o grupo para visualizar suas permissões.</span>
+              }
+            </>
+          }
+          <div className={styles.espacador} />
+          <div className={styles['linha-submit']}>
+            <Botao
+              handleClick={() => {
+                nav(-1);
+              }}
+              className={styles['botao-cancelar']}
+              variante='contornado'>
+              Cancelar
+            </Botao>
+            <Botao
+              tipo="submit"
+              className={styles['botao-criar']}
+              variante='contornado'>
+              {id ? 'Editar' : 'Criar'}
+            </Botao>
+          </div>
+        </form>
+      </section>
       <PopupCarregando visivel={carregando} />
       {!id &&
         <>
@@ -274,6 +278,6 @@ export default function NovoUsuarioMobile() {
             descricao='Não será possível editar o usuário devido a um erro interno do servidor. Tente novamente mais tarde.' />
         </>
       }
-    </section>
+    </>
   );
 }

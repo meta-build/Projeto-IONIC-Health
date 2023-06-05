@@ -8,7 +8,7 @@ import {
 export const makeCreateUserValidation = (): ValidationComposite => {
   const validations: Validation[] = []
 
-  for (const field of ['name', 'email', 'password', 'roleId']) {
+  for (const field of ['name', 'email', 'password']) {
     validations.push(new RequiredFieldValidation(field))
   }
 

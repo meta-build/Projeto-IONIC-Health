@@ -59,7 +59,8 @@ export default function NovoUsuarioDesktop() {
           name: nome,
           email: email,
           isActive: true,
-          roleId: grupo.id
+          roleId: grupo.id,
+          permissions: permsEscolhidas
         }).then(() => {
           setCarregando(false);
           setConfirmEdit(true);
@@ -72,7 +73,8 @@ export default function NovoUsuarioDesktop() {
           roleId: grupo.id,
           email: email,
           name: nome,
-          password: senha
+          password: senha,
+          permissions: permsEscolhidas
         }).then(() => {
           setCarregando(false);
           setConfirm(true);

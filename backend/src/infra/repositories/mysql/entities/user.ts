@@ -5,13 +5,15 @@ import {
   JoinColumn,
   OneToMany,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Role } from "./role";
 import { Rating } from './rating';
+import { Permission } from "./permission";
 
 @Entity({ name: "user" })
 export class User {
-  // define a chave primária como auto incremento
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,9 +33,23 @@ export class User {
   @JoinColumn()
   role: Role;
 
-  @Column()
+  @Column({ nullable: true })
   roleId: number;
 
   @Column({ default: true })
   isActive: boolean;
+
+  @ManyToMany(() => Permission)
+  @JoinTable({
+    name: 'user_permission',
+    joinColumn: {
+      name: 'userId',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'permissionId',
+      referencedColumnName: 'id'
+    }
+  })
+  permissions: Permission[]
 }
