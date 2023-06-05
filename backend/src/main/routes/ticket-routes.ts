@@ -8,7 +8,8 @@ import {
   makeGetAllTicketController,
   makeTicketController,
   makeGetTicketById,
-  makeUpdateTicketController
+  makeUpdateTicketController,
+  makeDeleteTicketByIdController
 } from '@/main/factories/application/controllers'
 
 import { Router } from 'express'
@@ -32,6 +33,11 @@ export default (router: Router): void => {
       ], false)
     ),
     adaptRoute(makeUpdateTicketController())
+  )
+  router.delete(
+    '/ticket/:id',
+    adaptMiddleware(makeAuthMiddleware()),
+    adaptRoute(makeDeleteTicketByIdController())
   )
   router.get(
     '/ticket/:id',
