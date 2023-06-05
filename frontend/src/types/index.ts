@@ -56,10 +56,11 @@ interface EditarSolicitacaoProps {
 }
 
 interface EditarUsuarioProps {
-  name: string;
-  email: string;
-  isActive: boolean;
-  roleId: number;
+  name?: string;
+  email?: string;
+  isActive?: boolean;
+  roleId?: number;
+  password?: string
 }
 
 interface UsuarioProps {
