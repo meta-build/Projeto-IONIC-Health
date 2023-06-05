@@ -1,0 +1,148 @@
+@import '@/styles/variables.scss';
+
+.voltar {
+  background: none;
+  border: none;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 18x;
+}
+
+.container {
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  padding: 18px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px auto;
+  width: calc(100% - 56px);
+
+}
+
+.hd {
+    text-align: center;
+    font-size: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: calc(100vh - 208px);
+    gap: 12px;
+  }
+
+.lb {
+    display: flex;
+    flex-direction: column;
+    // text-align: left;
+    gap: 12px;
+}
+
+.preencher{
+  flex:1;
+}
+
+.ip {
+  display: flex;
+  gap: 10px;
+}
+
+.lb2 {
+  display: flex;
+  flex-direction: column;
+  height: 10px; ;
+  text-align: left;
+  flex: 1;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.linha {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.arquivos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex: 1;
+  margin-top: 12px;
+
+  .arquivo {
+    position: relative;
+  }
+}
+
+.botoes {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.bt-branco{
+  border-color: white;
+  color: white;
+}
+
+.bt-branco:hover{
+  background-color: white;
+}
+
+.bt{
+  flex:1;
+  border-radius: 12px;
+}
+
+.close-file-icon {
+  font-size: 10px;
+  position: absolute;
+  display: none;
+  right: 8px;
+  top: 11px;
+}
+
+.arquivo-hover:hover {
+  padding-right: 24px;
+
+  .close-file-icon {
+    display: block;
+  }
+}
+
+.arquivo {
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.descricao-input {
+  min-height: 80px;
+}
+
+.erro {
+  border: 1px solid red !important;
+}
+
+.erro-message {
+  color: $vermelho;
+}
+
+.dropdown div, .dropdown {
+  width: 100%;
+}
+
+.espacador {
+  min-height: 12px;
+  flex: 1;
+}
