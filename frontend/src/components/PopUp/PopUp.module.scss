@@ -31,7 +31,8 @@
   z-index: 1;
   text-align: center;
   vertical-align: top;
-  min-width: calc(100% - 128px);
+  max-width: calc(100% - 128px);
+  width: fit-content
 }
 
 .fechar {
