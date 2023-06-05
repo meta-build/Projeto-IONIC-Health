@@ -62,7 +62,7 @@ export class CreateRatingController implements Controller {
       requesterId,
     });
 
-    const notification = await this.createNotification(reviewer, rating, ticket);
+    const notification = await this.createNotification(reviewer, rating, ticket, "Nova avaliação criada");
 
     const recipient = [notification.user.email, ticketCreatorEmail];
 
@@ -74,11 +74,12 @@ export class CreateRatingController implements Controller {
   private async createNotification(
     reviewer: any,
     rating: any,
-    ticket: any
+    ticket: any,
+    message: string
   ): Promise<Notification> {
     const notification = new Notification();
     notification.user = reviewer;
-    notification.text = `Nova avaliação criada por ${reviewer.name} em ${new Date().toISOString()}`;
+    notification.text = `${message} por ${reviewer.name} em ${new Date().toISOString()}`;
     notification.id = notification.id;
     notification.userId = notification.userId;
     notification.rating = rating;

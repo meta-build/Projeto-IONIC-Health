@@ -113,6 +113,7 @@ export class UpdateTicketController implements Controller {
 
     const recipient = notification.user.email;
     await sendEmail(notification, recipient);
+    
     return ok({updatedTicket, notification})
   }
 
