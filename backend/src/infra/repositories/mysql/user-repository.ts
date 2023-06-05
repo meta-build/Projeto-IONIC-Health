@@ -95,6 +95,7 @@ export class UserRepository
 
     const users = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.permissions', 'userPermission')
       .leftJoinAndSelect('user.role', 'role')
       .leftJoinAndSelect('role.permissions', 'permission')
       .getMany()
@@ -105,7 +106,8 @@ export class UserRepository
       email: user.email,
       roleId: user.roleId,
       role: user.role,
-      isActive: user.isActive
+      isActive: user.isActive,
+      permissions: user.permissions 
     }))
   }
 
