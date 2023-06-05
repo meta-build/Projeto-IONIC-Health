@@ -1,6 +1,5 @@
 @import '@/styles/variables.scss';
 
-
 .desc {
   color: $cinza-600;
   margin-top: 12px;
@@ -20,10 +19,17 @@
   margin-right: 8px;
   background-color: $vermelho;
   color: white;
-
 }
 
 .excluir:hover {
   background-color: red;
+}
 
+.botao-container-mobile {
+  flex-direction: column;
+  gap: 12px;
+
+  .excluir {
+    margin: 0;
+  }
 }

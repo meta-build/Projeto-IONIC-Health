@@ -2,8 +2,9 @@
 
 .form {
   color: $cinza-600;
-  width: 700px;
+  width: 100%;
   height: fit-content;
+  margin-top: 12px;
 }
 
 .row,
@@ -82,4 +83,25 @@
   color: $cinza-600-hover;
   font-size: 14px;
   margin-top: 18px;
+}
+
+.row-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .item {
+    text-align: left;
+  }
+}
+
+.notas {
+  display: flex;
+  // justify-content: space-between;
+  // margin: 4px auto;
+  .item {
+    font-size: 18px;
+    padding: 14px;
+    margin: 0 !important;
+  }
 }

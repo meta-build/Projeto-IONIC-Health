@@ -404,7 +404,10 @@ export default function SolicitacaoInfoMobile(props: Props) {
             idSolic={solicitacao.id}
             onClose={() => {
               setAlterarProd(false);
-              props.onBack();
+            }}
+            onChange={() => {
+              setAlterarProd(false);
+              props.onBack();  
             }}
           />
           {carregando && <Carregando />}

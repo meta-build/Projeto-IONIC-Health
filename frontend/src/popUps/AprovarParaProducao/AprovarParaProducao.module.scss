@@ -5,10 +5,27 @@
   margin: 20px 0px;
 }
 
+.aviso-mobile {
+  text-align: left;
+}
+
+.aviso-mobile, .aviso-mobile div, .dropdown {
+  width: 100%;
+}
+
 .botoes {
   display: flex;
   margin-top: 10px;
   width: 100%;
+}
+
+.botoes-mobile {
+  flex-direction: column;
+  gap: 12px;
+
+  .confirmar {
+    margin: 0;
+  }
 }
 
 .botao {

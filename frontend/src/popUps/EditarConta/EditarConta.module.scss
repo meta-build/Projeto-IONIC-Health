@@ -1,11 +1,12 @@
 @import '@/styles/variables.scss';
 
 .form {
-  width: 600px;
+  max-width: 100%;
 }
 
 .linha {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   margin-bottom: 16px;
 }
@@ -42,4 +43,11 @@
   display: flex;
   margin-top: 36px;
   justify-content: flex-end;
+}
+
+.linha-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
 }
