@@ -26,7 +26,7 @@ export default function Opcoes(props: Props) {
   const [notif, setNotif] = useState(true);
 
   const solicOptions: DropdownItem[] = [
-    usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) ?
+    usuario.permissions.find(perm => perm.id >= 8 && perm.id <= 12) ?
       {
         label: 'Solicitações',
         onClick: () => {
@@ -34,7 +34,7 @@ export default function Opcoes(props: Props) {
           props.onClose();
         }
       } : undefined,
-    usuario.role.permissions.find(perm => perm.id == 7) ?
+    usuario.permissions.find(perm => perm.id == 7) ?
       {
         label: 'Minhas solicitações',
         onClick: () => {
@@ -42,7 +42,7 @@ export default function Opcoes(props: Props) {
           props.onClose();
         }
       } : undefined,
-    usuario.role.permissions.find(perm => perm.id == 14) ?
+    usuario.permissions.find(perm => perm.id == 14) ?
       {
         label: 'Solicitações para avaliar',
         onClick: () => {
@@ -50,7 +50,7 @@ export default function Opcoes(props: Props) {
           props.onClose();
         }
       } : undefined,
-    usuario.role.permissions.find(perm => perm.id == 13) ?
+    usuario.permissions.find(perm => perm.id == 13) ?
       {
         label: 'Solicitações em produção',
         onClick: () => {
@@ -97,7 +97,7 @@ export default function Opcoes(props: Props) {
                 </button>
               </div>
               <ul className={styles.botoes}>
-                {usuario.role.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
+                {usuario.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
                   <li className={styles.botao}>
                     <button
                       onClick={() => {
@@ -108,7 +108,7 @@ export default function Opcoes(props: Props) {
                       Usuários
                     </button>
                   </li>}
-                {usuario.role.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
+                {usuario.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
                   <li className={styles.botao}>
                     <button
                       onClick={() => {
@@ -119,7 +119,7 @@ export default function Opcoes(props: Props) {
                       Grupos
                     </button>
                   </li>}
-                {usuario.role.permissions.find(perm => perm.id >= 7 && perm.id <= 14) &&
+                {usuario.permissions.find(perm => perm.id >= 7 && perm.id <= 14) &&
                   <li className={styles.botao}>
                     <Dropdown
                       label='Solicitações'

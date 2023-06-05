@@ -48,7 +48,7 @@ export default function AppRouter() {
               path='/home'
               element={<PaginaComHeader elemento={<Home />} />}
             />
-            {usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && (
+            {usuario.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && (
               <>
                 <Route
                   path='/solicitacoes'
@@ -56,7 +56,7 @@ export default function AppRouter() {
                 />
               </>
             )}
-            {usuario.role.permissions.find(perm => perm.id == 14) &&
+            {usuario.permissions.find(perm => perm.id == 14) &&
               <>
                 <Route
                   path='/solicitacoes-para-avaliar'
@@ -64,7 +64,7 @@ export default function AppRouter() {
                 />
               </>
             }
-            {usuario.role.permissions.find(perm => perm.id == 13) &&
+            {usuario.permissions.find(perm => perm.id == 13) &&
               <>
                 <Route
                   path='/solicitacoes-em-producao'
@@ -72,7 +72,7 @@ export default function AppRouter() {
                 />
               </>
             }
-            {usuario.role.permissions.find(perm => perm.id == 7) &&
+            {usuario.permissions.find(perm => perm.id == 7) &&
               <>
                 <Route
                   path='/minhas-solicitacoes'
@@ -83,37 +83,37 @@ export default function AppRouter() {
                   element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
                 />
               </>}
-            {usuario.role.permissions.find(perm => perm.id == 8) &&
+            {usuario.permissions.find(perm => perm.id == 8) &&
               <Route
                 path='/editar-solicitacao/:id'
                 element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
               />}
-            {usuario.role.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
+            {usuario.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
               <Route
                 path='/usuarios'
                 element={<PaginaComHeader elemento={<ListaUsuarios />} />}
               />}
-            {usuario.role.permissions.find(perm => perm.id == 1) &&
+            {usuario.permissions.find(perm => perm.id == 1) &&
               <Route
                 path='/criar-usuario'
                 element={<PaginaComHeader elemento={<NovoUsuario />} />}
               />}
-            {usuario.role.permissions.find(perm => perm.id == 2) &&
+            {usuario.permissions.find(perm => perm.id == 2) &&
               <Route
                 path='/editar-usuario/:id'
                 element={<PaginaComHeader elemento={<NovoUsuario />} />}
               />}
-            {usuario.role.permissions.find(perm => perm.id == 4) &&
+            {usuario.permissions.find(perm => perm.id == 4) &&
               <Route
                 path='/criar-grupo'
                 element={<PaginaComHeader elemento={<CriarGrupo />} />}
               />}
-            {usuario.role.permissions.find(perm => perm.id == 5) &&
+            {usuario.permissions.find(perm => perm.id == 5) &&
               <Route
                 path='/editar-grupo/:id'
                 element={<PaginaComHeader elemento={<CriarGrupo />} />}
               />}
-            {usuario.role.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
+            {usuario.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
               <Route
                 path='/grupos'
                 element={<PaginaComHeader elemento={<ListGrupos />} />}

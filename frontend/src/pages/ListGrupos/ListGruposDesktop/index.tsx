@@ -61,7 +61,7 @@ export default function ListGruposDesktop() {
             />
           </div>
           <div className={styles.inputContainer}>
-            {usuario.role.permissions.find(perm => perm.id == 4) && 
+            {usuario.permissions.find(perm => perm.id == 4) && 
             <Botao
               handleClick={() => {
                 nav('/criar-grupo');
@@ -105,7 +105,7 @@ export default function ListGruposDesktop() {
               </div>
               <div className={styles['user-espacador']}></div>
               <div className={styles['user-botoes']}>
-                {usuario.role.permissions.find(perm => perm.id == 5) && 
+                {usuario.permissions.find(perm => perm.id == 5) && 
                   <Botao
                   handleClick={() => {
                     nav(`/editar-grupo/${grupoSelect.id}`)
@@ -113,7 +113,7 @@ export default function ListGruposDesktop() {
                   className={styles.botao}>
                   Editar
                 </Botao>}
-                {/* {usuario.role.permissions.find(perm => perm.id == 6) && 
+                {/* {usuario.permissions.find(perm => perm.id == 6) && 
                   <Botao
                   className={styles.botao}
                   handleClick={() => setAlerta(true)}>

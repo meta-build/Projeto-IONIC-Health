@@ -63,7 +63,7 @@ export default function ListaUsuariosDesktop() {
             />
           </div>
           <div className={styles.inputContainer}>
-            {usuario.role.permissions.find(perm => perm.id == 1) && 
+            {usuario.permissions.find(perm => perm.id == 1) && 
             <Botao
               handleClick={() => {
                 nav('/criar-usuario');
@@ -119,7 +119,7 @@ export default function ListaUsuariosDesktop() {
               </div>
               <div className={styles['user-espacador']}></div>
               <div className={styles['user-botoes']}>
-                {usuario.role.permissions.find(perm => perm.id == 2) && 
+                {usuario.permissions.find(perm => perm.id == 2) && 
                   <Botao
                   handleClick={() => {
                     nav(`/editar-usuario/${userSelecionado.id}`)
@@ -127,7 +127,7 @@ export default function ListaUsuariosDesktop() {
                   className={styles.botao}>
                   Editar
                 </Botao>}
-                {usuario.role.permissions.find(perm => perm.id == 3) && 
+                {usuario.permissions.find(perm => perm.id == 3) && 
                   <Botao
                   className={styles.botao}
                   handleClick={() => setAlerta(true)}>

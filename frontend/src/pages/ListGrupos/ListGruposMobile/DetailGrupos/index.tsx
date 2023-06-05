@@ -31,9 +31,9 @@ export default function DetailGrupos({ grupoSelect, onBack }: Props) {
   const [erro, setErro] = useState(false);
   
   const botoes: ItemProps[] = [
-    usuario.role.permissions.find(perm => perm.id == 5) ?
+    usuario.permissions.find(perm => perm.id == 5) ?
     { label: 'Editar', onClick: () => nav(`/editar-grupo/${grupoSelect.id}`) } : null,
-    usuario.role.permissions.find(perm => perm.id == 6) ?
+    usuario.permissions.find(perm => perm.id == 6) ?
     { label: 'Excluir', onClick: () => setAlerta(true) } : null
   ].filter(Boolean) as ItemProps[];
   

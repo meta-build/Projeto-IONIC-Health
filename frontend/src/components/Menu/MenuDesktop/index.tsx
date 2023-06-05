@@ -62,25 +62,25 @@ export default function MenuDesktop() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </li>}>
               <ul className={styles['menu-lista']}>
-                {usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && 
+                {usuario.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && 
                 <li
                   onClick={() => nav('/solicitacoes')}
                   className={styles['menu-item']}>
                   Solicitações
                 </li>}
-                {usuario.role.permissions.find(perm => perm.id == 7) &&
+                {usuario.permissions.find(perm => perm.id == 7) &&
                 <li
                   onClick={() => nav('/minhas-solicitacoes')}
                   className={styles['menu-item']}>
                   Minhas solicitações
                 </li>}
-                {usuario.role.permissions.find(perm => perm.id == 14) &&
+                {usuario.permissions.find(perm => perm.id == 14) &&
                 <li
                   onClick={() => nav('/solicitacoes-para-avaliar')}
                   className={styles['menu-item']}>
                   Solicitações para avaliar
                 </li>}
-                {usuario.role.permissions.find(perm => perm.id == 13) &&
+                {usuario.permissions.find(perm => perm.id == 13) &&
                 <li
                   onClick={() => nav('/solicitacoes-em-producao')}
                   className={styles['menu-item']}>
@@ -89,9 +89,9 @@ export default function MenuDesktop() {
               </ul>
             </MenuSuspenso>
             
-            {usuario.role.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
+            {usuario.permissions.find(perm => perm.id >= 1 && perm.id <= 3) &&
               <li className={isActiveRoute('/usuarios') ? styles.Active : "usuario"} onClick={() => nav('/usuarios')}>Usuários</li>}
-            {usuario.role.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
+            {usuario.permissions.find(perm => perm.id >= 4 && perm.id <= 6) &&
               <li className={isActiveRoute('/grupos') ? styles.Active : "grupo"} onClick={() => nav('/grupos')}>Grupos</li>}
           </ul>
 

@@ -71,7 +71,7 @@ export default function ListaUsuariosMobile(){
             />
           </div>
           <div className={styles.inputContainer}>
-            {usuario.role.permissions.find(perm => perm.id == 1) && 
+            {usuario.permissions.find(perm => perm.id == 1) && 
             <Botao
               handleClick={() => {
                 nav('/criar-usuario');

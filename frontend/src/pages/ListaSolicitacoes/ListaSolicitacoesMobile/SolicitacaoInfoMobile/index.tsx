@@ -64,18 +64,18 @@ export default function SolicitacaoInfoMobile(props: Props) {
   }
 
   const opcoes: BotaoItem[] = [
-    (!props.solic.isArchived && props.solic.status === 'RECENT' && usuario.role.permissions.find(perm => perm.id === 12)) ?
+    (!props.solic.isArchived && props.solic.status === 'RECENT' && usuario.permissions.find(perm => perm.id === 12)) ?
       { label: 'Liberar para avaliação', onClick: () => setConfirmLiberarAv(true) } : null,
-    (!props.solic.isArchived && props.solic.status === 'RECENT' && usuario.role.permissions.find(perm => perm.id === 8)) ?
+    (!props.solic.isArchived && props.solic.status === 'RECENT' && usuario.permissions.find(perm => perm.id === 8)) ?
       { label: 'Editar', onClick: () => nav(`/editar-solicitacao/${props.solic.id}`) } : null,
-    (!props.solic.isArchived && props.solic.status === 'RATING' && usuario.role.permissions.find(perm => perm.id === 11)) ?
+    (!props.solic.isArchived && props.solic.status === 'RATING' && usuario.permissions.find(perm => perm.id === 11)) ?
       { label: 'Liberar para produção', onClick: () => setConfirmLiberarProd(true) } : null,
-    (!props.solic.isArchived && props.solic.status === 'RATING' && usuario.role.permissions.find(perm => perm.id === 14) && isSemNota(props.solic)) ?
+    (!props.solic.isArchived && props.solic.status === 'RATING' && usuario.permissions.find(perm => perm.id === 14) && isSemNota(props.solic)) ?
       { label: 'Avaliar', onClick: () => setAvaliar(true) } : null,
     (props.solic.isArchived) ?
       { label: 'Desarquivar', onClick: () => setConfirmDesarquivar(true) } :
       { label: 'Arquivar', onClick: () => setConfirmArquivar(true) },
-    (usuario.role.permissions.find(perm => perm.id === 9)) ?
+    (usuario.permissions.find(perm => perm.id === 9)) ?
       { label: 'Excluir', onClick: () => setConfirmExcluir(true) } : null,
     (loc.pathname === '/solicitacoes-em-producao') ?
       { label: 'Alterar status de produção', onClick: () => setAlterarProd(true) } : null,

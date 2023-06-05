@@ -61,7 +61,7 @@ interface EditarUsuarioProps {
   isActive?: boolean;
   roleId?: number;
   password?: string;
-  permissions: number[]
+  permissions?: number[]
 }
 
 interface UsuarioProps {
@@ -93,6 +93,7 @@ interface UsuarioContext {
   name: string,
   role: RoleProps,
   id: number,
+  permissions: PermissionProps[]
 }
 
 interface CreateGrupoProps {

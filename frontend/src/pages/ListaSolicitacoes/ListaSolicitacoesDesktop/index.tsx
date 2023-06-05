@@ -284,7 +284,7 @@ export default function ListaSolicitacoesDesktop() {
               <div className={styles['solic-botoes']}>
                 {!solicSelecionada.isArchived && solicSelecionada.status == 'RECENT' &&
                   <>
-                    {usuario.role.permissions.find(perm => perm.id == 12) &&
+                    {usuario.permissions.find(perm => perm.id == 12) &&
                       <Botao
                         handleClick={() => {
                           setConfirmLiberarAv(true);
@@ -292,7 +292,7 @@ export default function ListaSolicitacoesDesktop() {
                         className={styles.botao}>
                         Liberar para avaliação
                       </Botao>}
-                    {usuario.role.permissions.find(perm => perm.id == 8) &&
+                    {usuario.permissions.find(perm => perm.id == 8) &&
                       <Botao
                         handleClick={() => {
                           nav(`/editar-solicitacao/${solicSelecionada.id}`);
@@ -304,7 +304,7 @@ export default function ListaSolicitacoesDesktop() {
                 }
                 {!solicSelecionada.isArchived && solicSelecionada.status == 'RATING' &&
                   <>
-                    {usuario.role.permissions.find(perm => perm.id == 11) &&
+                    {usuario.permissions.find(perm => perm.id == 11) &&
                       <Botao
                         handleClick={() => {
                           setConfirmLiberarProd(true);
@@ -312,7 +312,7 @@ export default function ListaSolicitacoesDesktop() {
                         className={styles.botao}>
                         Liberar para produção
                       </Botao>}
-                    {usuario.role.permissions.find(perm => perm.id == 14) && isSemNota(solicSelecionada) &&
+                    {usuario.permissions.find(perm => perm.id == 14) && isSemNota(solicSelecionada) &&
                       <Botao
                         handleClick={() => setAvaliar(true)}
                         className={styles.botao}>
@@ -334,7 +334,7 @@ export default function ListaSolicitacoesDesktop() {
                     Arquivar
                   </Botao>
                 }
-                {usuario.role.permissions.find(perm => perm.id == 9) &&
+                {usuario.permissions.find(perm => perm.id == 9) &&
                   <Botao
                     handleClick={() => setConfirmExcluir(true)}
                     className={styles.botao}>

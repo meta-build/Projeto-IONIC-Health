@@ -71,7 +71,7 @@ export default function ListGruposMobile() {
                 />
               </div>
               <div className={styles.inputContainer}>
-                {usuario.role.permissions.find(perm => perm.id == 4) &&
+                {usuario.permissions.find(perm => perm.id == 4) &&
                   <Botao
                     handleClick={() => {
                       nav('/criar-grupo');
