@@ -21,7 +21,9 @@ export default function ListGruposMobile() {
 
   const [grupos, setGrupos] = useState<GrupoProps[]>([]);
   const [grupoSelect, setGrupoSelect] = useState<GrupoProps>();
-  
+
+  const [carregandoLista, setCarregandoLista] = useState(true);
+
 
   const filtrarNome = (titulo: string) => {
     const regex = new RegExp(busca, 'i');
@@ -30,6 +32,7 @@ export default function ListGruposMobile() {
 
   const getGrupos = () => {
     Grupos.getAll().then((data) => {
+      setCarregandoLista(false)
       setGrupos(data.filter((grupo: GrupoProps) => {
         const filterPesquisa = filtrarNome(grupo.name);
         return filterPesquisa;
@@ -83,24 +86,30 @@ export default function ListGruposMobile() {
               <div
                 className={styles.listContainer2}
                 onClick={() => setGrupoSelect(undefined)}>
-                {grupos.length ?
-                  grupos.map((grupo: GrupoProps) => (
-                    <ItemNome
-                      key={grupo.id}
-                      nome={grupo.name}
-                      desc={''}
-                      handleClick={() => setGrupoSelect(grupo)}
-                      isSelected={grupoSelect && grupo.id == grupoSelect.id}
-                    />
-                  ))
-                  : <span className={styles['not-found']}>Nenhum grupo encontrado.</span>}
+                {carregandoLista ?
+                  <div
+                    className={styles.loading}>
+                    <GoogleIcon>&#xe86a;</GoogleIcon>
+                  </div>
+                  :
+                  grupos.length ?
+                    grupos.map((grupo: GrupoProps) => (
+                      <ItemNome
+                        key={grupo.id}
+                        nome={grupo.name}
+                        desc={''}
+                        handleClick={() => setGrupoSelect(grupo)}
+                        isSelected={grupoSelect && grupo.id == grupoSelect.id}
+                      />
+                    ))
+                    : <span className={styles['not-found']}>Nenhum grupo encontrado.</span>}
               </div>
             </div>
 
           </section>
         </div>
       </section>}
-      {grupoSelect && < DetailGrupos onBack={()=>setGrupoSelect(undefined)} grupoSelect={grupoSelect}/>}
+      {grupoSelect && < DetailGrupos onBack={() => setGrupoSelect(undefined)} grupoSelect={grupoSelect} />}
     </>
   );
 }

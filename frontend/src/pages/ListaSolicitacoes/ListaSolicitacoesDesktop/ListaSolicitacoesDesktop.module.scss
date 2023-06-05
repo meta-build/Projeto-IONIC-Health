@@ -115,12 +115,35 @@
   overflow: auto;
 }
 
-.not-found {
+.not-found,
+.loading {
   display: flex;
   align-items: center;
-  height: 100vh;
   justify-content: center;
+  height: 100vh;
+}
+
+.not-found {
   color: $cinza-400;
+}
+
+.loading {
+  position: relative;
+}
+
+.loading * {
+  animation: spin 2s infinite linear; // Aplica a animação "spin" com duração de 2s e repetição infinita
+  font-size: 36px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); // Define a rotação inicial como 0 graus
+  }
+
+  to {
+    transform: rotate(360deg); // Define a rotação final como 360 graus
+  }
 }
 
 .solic-container {
@@ -142,19 +165,29 @@
   color: $ciano-300;
 }
 
-.recente, .impacto-3, .av-0 {
+.recente,
+.impacto-3,
+.av-0 {
   color: $azul2;
 }
 
-.em-av, .new, .impacto-1, .av-2 {
+.em-av,
+.new,
+.impacto-1,
+.av-2 {
   color: $amarelo;
 }
 
-.em-prod, .on-holding, .impacto-2, .av-1 {
+.em-prod,
+.on-holding,
+.impacto-2,
+.av-1 {
   color: $verde;
 }
 
-.arquivado, .impacto-0, .av-3 {
+.arquivado,
+.impacto-0,
+.av-3 {
   color: $vermelho;
 }
 
@@ -172,7 +205,8 @@
   font-size: 14px;
 }
 
-.solic-info, .solic-arqs {
+.solic-info,
+.solic-arqs {
   display: flex;
   flex-direction: column;
 

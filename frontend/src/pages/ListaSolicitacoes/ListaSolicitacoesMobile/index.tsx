@@ -30,6 +30,7 @@ export default function ListaSolicitacoesMobile() {
   const [solicSelecionada, setSolicSelecionada] = useState<SolicitacaoProps>();
   const [grupoSolic, setGrupoSolic] = useState<GrupoProps>();
 
+  const [carregandoLista, setCarregandoLista] = useState(true);
 
   const filtrarNome = (titulo: string) => {
     const regex = new RegExp(busca, 'i');
@@ -55,9 +56,9 @@ export default function ListaSolicitacoesMobile() {
   }
 
   const getSolicitacoes = () => {
-    console.log(usuario)
     Solicitacoes.getAll()
       .then(data => {
+        setCarregandoLista(false);
         setSolicitacoes(data.filter((item: SolicitacaoProps) => {
           const filtroNota = loc.pathname == '/solicitacoes-para-avaliar' ?
             (situacaoNota == 'semNota' ?
@@ -172,31 +173,37 @@ export default function ListaSolicitacoesMobile() {
                 <div className={styles.listContainer2}
                   onClick={() => setSolicSelecionada(undefined)}
                 >
-                  {solicitacoes.length ?
-                    solicitacoes.map(solic => (
-                      <ItemSolicitacaoMobile
-                        key={solic.id}
-                        solicitacao={solic}
-                        handleClick={() => {
-                          setSolicSelecionada(solic);
-                          solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
-                            setGrupoSolic(grupo);
-                          })
-                        }}
-                        isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
-                    )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
+                  {carregandoLista ?
+                    <div
+                      className={styles.loading}>
+                      <GoogleIcon>&#xe86a;</GoogleIcon>
+                    </div>
+                    :
+                    solicitacoes.length ?
+                      solicitacoes.map(solic => (
+                        <ItemSolicitacaoMobile
+                          key={solic.id}
+                          solicitacao={solic}
+                          handleClick={() => {
+                            setSolicSelecionada(solic);
+                            solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
+                              setGrupoSolic(grupo);
+                            })
+                          }}
+                          isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
+                      )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
                 </div>
                 {/* } */}
               </div>
             </section>
           </div>
-        </section> : 
+        </section> :
         <SolicitacaoInfoMobile
-        solic={solicSelecionada}
-        onBack={() => {
-          setSolicSelecionada(undefined)
-        }}/>
-        }
+          solic={solicSelecionada}
+          onBack={() => {
+            setSolicSelecionada(undefined)
+          }} />
+      }
     </>
   );
 }

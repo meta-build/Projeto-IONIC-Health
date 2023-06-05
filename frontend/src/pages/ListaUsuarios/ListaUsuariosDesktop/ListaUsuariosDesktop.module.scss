@@ -108,12 +108,31 @@
   overflow: auto;
 }
 
-.not-found {
+.not-found,
+.loading {
   display: flex;
   align-items: center;
   height: 100vh;
   justify-content: center;
+}
+
+.not-found {
   color: $cinza-400;
+}
+
+.loading * {
+  animation: spin 2s infinite linear; // Aplica a animação "spin" com duração de 2s e repetição infinita
+  font-size: 36px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); // Define a rotação inicial como 0 graus
+  }
+
+  to {
+    transform: rotate(360deg); // Define a rotação final como 360 graus
+  }
 }
 
 .user-container {

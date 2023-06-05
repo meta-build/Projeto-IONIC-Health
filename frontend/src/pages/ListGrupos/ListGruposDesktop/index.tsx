@@ -28,6 +28,8 @@ export default function ListGruposDesktop() {
   const [confirma, setConfirma] = useState(false);
   const [erro, setErro] = useState(false);
 
+  const [carregandoLista, setCarregandoLista] = useState(true);
+
   const filtrarNome = (titulo: string) => {
     const regex = new RegExp(busca, 'i');
     return regex.test(titulo);
@@ -35,6 +37,7 @@ export default function ListGruposDesktop() {
 
   const getGrupos = () => {
     Grupos.getAll().then((data) => {
+      setCarregandoLista(false);
       setGrupos(data.filter((grupo: GrupoProps) => {
         const filterPesquisa = filtrarNome(grupo.name);
         return filterPesquisa;
@@ -61,32 +64,37 @@ export default function ListGruposDesktop() {
             />
           </div>
           <div className={styles.inputContainer}>
-            {usuario.permissions.find(perm => perm.id == 4) && 
-            <Botao
-              handleClick={() => {
-                nav('/criar-grupo');
-              }}
-              className={styles.botao}>
-              Criar grupo
-            </Botao>}
+            {usuario.permissions.find(perm => perm.id == 4) &&
+              <Botao
+                handleClick={() => {
+                  nav('/criar-grupo');
+                }}
+                className={styles.botao}>
+                Criar grupo
+              </Botao>}
           </div>
           <div
             className={styles.listContainer}
             onClick={() => setGrupoSelect(undefined)}>
-            {grupos.length ?
-              grupos.map((grupo: GrupoProps) => (
-                <ItemNome
-                  key={grupo.id}
-                  nome={grupo.name}
-                  desc={''}
-                  handleClick={() => setGrupoSelect(grupo)}
-                  isSelected={grupoSelect && grupo.id == grupoSelect.id}
-                />
-              ))
-              : <span className={styles['not-found']}>Nenhum grupo encontrado.</span>}
+            {carregandoLista ?
+              <div
+                className={styles.loading}>
+                <GoogleIcon>&#xe86a;</GoogleIcon>
+              </div>
+              : grupos.length ?
+                grupos.map((grupo: GrupoProps) => (
+                  <ItemNome
+                    key={grupo.id}
+                    nome={grupo.name}
+                    desc={''}
+                    handleClick={() => setGrupoSelect(grupo)}
+                    isSelected={grupoSelect && grupo.id == grupoSelect.id}
+                  />
+                ))
+                : <span className={styles['not-found']}>Nenhum grupo encontrado.</span>}
           </div>
         </div>
-        
+
         <div className={styles.direita}>
           {grupoSelect ?
             <div className={styles['user-container']}>
@@ -105,14 +113,14 @@ export default function ListGruposDesktop() {
               </div>
               <div className={styles['user-espacador']}></div>
               <div className={styles['user-botoes']}>
-                {usuario.permissions.find(perm => perm.id == 5) && 
+                {usuario.permissions.find(perm => perm.id == 5) &&
                   <Botao
-                  handleClick={() => {
-                    nav(`/editar-grupo/${grupoSelect.id}`)
-                  }}
-                  className={styles.botao}>
-                  Editar
-                </Botao>}
+                    handleClick={() => {
+                      nav(`/editar-grupo/${grupoSelect.id}`)
+                    }}
+                    className={styles.botao}>
+                    Editar
+                  </Botao>}
                 {/* {usuario.permissions.find(perm => perm.id == 6) && 
                   <Botao
                   className={styles.botao}

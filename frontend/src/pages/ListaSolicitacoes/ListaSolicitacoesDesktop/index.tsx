@@ -21,6 +21,7 @@ import { AlterarStatusProducao, AprovarParaProducao, AvaliarSolicitacao } from '
 import Grupos from '../../../services/Grupos';
 import SolicStatusAvaliacao from './SolicStatusAvaliacao';
 import SolicStatusProducao from './SolicStatusProducao';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function ListaSolicitacoesDesktop() {
   const nav = useNavigate();
@@ -38,6 +39,7 @@ export default function ListaSolicitacoesDesktop() {
   const [grupoSolic, setGrupoSolic] = useState<GrupoProps>();
 
   const [carregando, setCarregando] = useState(false);
+  const [carregandoLista, setCarregandoLista] = useState(true);
 
   const [avaliar, setAvaliar] = useState(false);
   const [alterarProd, setAlterarProd] = useState(false);
@@ -84,9 +86,9 @@ export default function ListaSolicitacoesDesktop() {
   }
 
   const getSolicitacoes = () => {
-    console.log(usuario)
     Solicitacoes.getAll()
       .then(data => {
+        setCarregandoLista(false);
         setSolicitacoes(data.filter((item: SolicitacaoProps) => {
           const filtroNota = loc.pathname == '/solicitacoes-para-avaliar' ?
             (situacaoNota == 'semNota' ?
@@ -185,27 +187,30 @@ export default function ListaSolicitacoesDesktop() {
           <div
             onClick={() => setSolicSelecionada(undefined)}
             className={styles.listContainer}>
-            {solicitacoes.length ?
-              solicitacoes.map(solic => (
-                <ItemSolicitacao
-                  key={solic.id}
-                  solicitacao={solic}
-                  handleClick={() => {
-                    setSolicSelecionada(solic);
-                    Solicitacoes.getByID(solic.id).then(solicitacao => {
-                      setSolicSelecionada(solicitacao);
-                    });
-                    solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
-                      setGrupoSolic(grupo);
-                    })
-                  }}
-                  isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
-              )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
+            {carregandoLista ?
+              <div
+                className={styles.loading}>
+                <GoogleIcon>&#xe86a;</GoogleIcon>
+              </div>
+              :
+              solicitacoes.length ?
+                solicitacoes.map(solic => (
+                  <ItemSolicitacao
+                    key={solic.id}
+                    solicitacao={solic}
+                    handleClick={() => {
+                      setSolicSelecionada(solic);
+                      Solicitacoes.getByID(solic.id).then(solicitacao => {
+                        setSolicSelecionada(solicitacao);
+                      });
+                      solic.assignedRoleId && Grupos.getByID(solic.assignedRoleId).then(grupo => {
+                        setGrupoSolic(grupo);
+                      })
+                    }}
+                    isSelecionado={solicSelecionada ? solic.id == solicSelecionada.id : false} />
+                )) : <span className={styles['not-found']}>Nenhuma solicitação encontrada.</span>}
           </div>
         </div>
-
-
-
         <div className={styles.direita}>
           {solicSelecionada ?
             <div className={styles['solic-container']}>
