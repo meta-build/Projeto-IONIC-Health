@@ -2,8 +2,9 @@ import { HttpResponse, badRequest, forbidden, notFound, ok } from '@/application
 import { Controller } from '@/application/controllers'
 import { Validation } from '@/application/validation'
 import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository'
-import { User } from '@/infra/repositories/mysql/entities'
+import { User, Notification } from '@/infra/repositories/mysql/entities'
 import { UnauthorizedError } from '@/application/errors'
+import { sendEmail } from '../mail/sendMail';
 
 type HttpRequest = {
   params: { id: number }
@@ -37,6 +38,7 @@ export class UpdateTicketController implements Controller {
       if (!hasPermission) {
         return forbidden(new UnauthorizedError())
       }
+
     }
 
     if (httpRequest.status?.toUpperCase() === 'RATING') {
@@ -49,6 +51,7 @@ export class UpdateTicketController implements Controller {
       if (!hasPermission) {
         return forbidden(new UnauthorizedError())
       }
+
     }
 
     let archivedAt: Date
@@ -106,7 +109,10 @@ export class UpdateTicketController implements Controller {
       statusRatingAt
     })
 
-    return ok(updatedTicket)
+    const notification = await this.createNotification(httpRequest.requester, 'Solicitação atualizada')
+
+    await sendEmail(notification);
+    return ok({updatedTicket, notification})
   }
 
   private checkPermission = (user: User, permissionName: string): boolean => {
@@ -117,5 +123,14 @@ export class UpdateTicketController implements Controller {
     return Boolean(user.role.permissions.find(
       (permission) => permission.permissionName === permissionName
     ))
+  }
+
+  private createNotification = (user: User, message: string): Notification => {
+    const notification = new Notification()
+    notification.user = user
+    notification.text = `${message} por ${user.name} em ${new Date().toISOString()}`
+    notification.id = notification.id;
+    notification.userId = notification.userId;
+    return notification
   }
 }
