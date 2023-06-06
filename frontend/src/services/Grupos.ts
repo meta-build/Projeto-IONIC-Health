@@ -19,11 +19,13 @@ class Grupos {
   
   async getByID (id: number):Promise<GrupoProps> {
     const {data} = await api.get(`/role/${id}`);
+    console.log(data);
     return data;  
   }
-
+  
   async getAll (): Promise<GrupoProps[]> {
     const {data} = await api.get(`/role`);
+    console.log(data);
     return data;  
   }
 }

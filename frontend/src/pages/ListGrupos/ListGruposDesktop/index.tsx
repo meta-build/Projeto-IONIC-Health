@@ -121,12 +121,12 @@ export default function ListGruposDesktop() {
                     className={styles.botao}>
                     Editar
                   </Botao>}
-                {/* {usuario.permissions.find(perm => perm.id == 6) && 
+                {usuario.permissions.find(perm => perm.id == 6) && 
                   <Botao
                   className={styles.botao}
                   handleClick={() => setAlerta(true)}>
                   Excluir
-                </Botao>} */}
+                </Botao>}
               </div>
             </div>
             : <span className={styles['not-found']}>
