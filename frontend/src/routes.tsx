@@ -13,7 +13,8 @@ import {
   CriarGrupo,
   CriarSolicitacao,
   ListGrupos,
-  NovoUsuario
+  NovoUsuario,
+  Notificacoes
 } from "./pages";
 import { useContexto } from "./context/contexto";
 import PaginaComHeader from "./components/PaginaComHeader";
@@ -47,6 +48,10 @@ export default function AppRouter() {
             <Route
               path='/home'
               element={<PaginaComHeader elemento={<Home />} />}
+            />
+            <Route
+              path="/notificacoes"
+              element={<PaginaComHeader elemento={<Notificacoes />} />}
             />
             {usuario.permissions.find(perm => perm.id >= 8 && perm.id <= 12) && (
               <>
