@@ -1,5 +1,6 @@
 import {
   CreateRole,
+  DeleteRoleById,
   LoadAllRole,
   LoadRoleById,
   UpdateRole
@@ -10,7 +11,7 @@ import DataSource from './data-source'
 import { Repository } from 'typeorm'
 
 export class RoleRepository
-  implements CreateRole, UpdateRole, LoadRoleById, LoadAllRole
+  implements CreateRole, UpdateRole, LoadRoleById, LoadAllRole, DeleteRoleById
 {
   getRepository(): Repository<Role> {
     return DataSource.getRepository(Role)
@@ -72,15 +73,21 @@ export class RoleRepository
     if (!role) {
       return null
     }
-    
+
     return role
   }
-  
-  async loadAll (): Promise<LoadAllRole.Output> {
+
+  async deleteById({ id }: DeleteRoleById.Input): Promise<void> {
     const roleRepository = this.getRepository()
-    
+
+    roleRepository.delete(id)
+  }
+
+  async loadAll(): Promise<LoadAllRole.Output> {
+    const roleRepository = this.getRepository()
+
     const roles = await roleRepository
-    .createQueryBuilder('role')
+      .createQueryBuilder('role')
       .leftJoinAndSelect('role.permissions', 'permission')
       .getMany()
 
