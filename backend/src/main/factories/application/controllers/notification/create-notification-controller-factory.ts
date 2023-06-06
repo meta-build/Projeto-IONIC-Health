@@ -1,4 +1,4 @@
-import { Controller, DeleteNotificationController, GetAllNotificationsController, GetNotificationByIdController } from '@/application/controllers';
+import { Controller, DeleteNotificationController, GetAllNotificationsByUserIdController, GetNotificationByIdController } from '@/application/controllers';
 import { NotificationRepository } from '@/infra/repositories/mysql/notification-repository';
 
 export const makeDeleteNotificationController = (): Controller => {
@@ -6,9 +6,9 @@ export const makeDeleteNotificationController = (): Controller => {
   return new DeleteNotificationController(notificationRepository)
 }
 
-export const makeGetAllNotificationsController = (): Controller => {
+export const makeGetAllByUserIdNotificationsController = (): Controller => {
   const notificationRepository = new NotificationRepository();
-  return new GetAllNotificationsController(notificationRepository)
+  return new GetAllNotificationsByUserIdController(notificationRepository)
 }
 
 export const makeGetNotificationByIdController = (): Controller => {

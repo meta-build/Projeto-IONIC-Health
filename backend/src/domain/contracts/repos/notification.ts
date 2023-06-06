@@ -29,3 +29,19 @@ export namespace LoadNotificationById {
 export interface RemoveNotification {
   remove: (id: number) => Promise<void>;
 }
+
+export interface LoadAllByUserId {
+  loadAllByUserId: (id: LoadAllByUserId.Input) => Promise<LoadAllByUserId.Output>;
+}
+
+export namespace LoadAllByUserId {
+  export type Input = {
+    id: number
+  }
+  export type Output = Array<{
+    id: number
+    userId: number
+    text: string
+    createdAt: Date
+  }>
+}
