@@ -70,7 +70,8 @@ interface UsuarioProps {
   email: string,
   roleId: string,
   role: RoleProps,
-  isActive: boolean
+  isActive: boolean,
+  permissions: PermissionProps[]
 }
 
 interface RoleProps {

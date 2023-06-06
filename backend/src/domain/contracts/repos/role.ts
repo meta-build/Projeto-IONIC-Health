@@ -84,6 +84,16 @@ export namespace LoadRoleById {
   }
 }
 
+export interface DeleteRoleById {
+  deleteById: (input: DeleteRoleById.Input) => Promise<void>
+}
+
+export namespace DeleteRoleById {
+  export type Input = {
+    id: number
+  }
+}
+
 export interface LoadAllRole {
   loadAll: () => Promise<LoadAllRole.Output>
 }

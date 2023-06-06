@@ -89,7 +89,7 @@ export default function ListaUsuariosDesktop() {
                   <ItemNome
                     key={user.id}
                     nome={user.name}
-                    desc={user.role.name}
+                    desc={user.role ? user.role.name : 'Sem grupo'}
                     handleClick={() => setUserSelecionado(user)}
                     isSelected={userSelecionado && user.id == userSelecionado.id}
                   />
@@ -107,7 +107,9 @@ export default function ListaUsuariosDesktop() {
               <div className={styles['user-info-container']}>
                 <div>
                   <span>Grupo:</span>
-                  <span className={styles['user-info']}>{userSelecionado.role.name}</span>
+                  <span className={styles['user-info']}>
+                    {userSelecionado.role ? userSelecionado.role.name : 'Sem grupo'}
+                  </span>
                 </div>
                 <div>
                   <span>Email:</span>
@@ -119,7 +121,7 @@ export default function ListaUsuariosDesktop() {
               <div className={styles['perm-container']}>
                 <div>Este usuário pode:</div>
                 <ul className={styles['perm-list']}>
-                  {userSelecionado.role.permissions.map((perm) => (
+                  {userSelecionado.permissions.map((perm) => (
                     <li key={perm.id}>
                       {perm.humanizedPermissionName}
                     </li>

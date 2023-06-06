@@ -84,10 +84,13 @@ export default function DetailGrupos({ grupoSelect, onBack }: Props) {
         onConfirm={() => {
           setAlerta(false);
           setCarregando(true);
-          Grupos.deletar(grupoSelect.id).then(() => {
+          console.log(grupoSelect.id);
+          Grupos.deletar(grupoSelect.id)
+          .then(() => {
             setCarregando(false);
             setConfirma(true);
-          }).catch(() => {
+          }).catch((e) => {
+            console.log(e);
             setCarregando(false);
             setErro(true);
           })

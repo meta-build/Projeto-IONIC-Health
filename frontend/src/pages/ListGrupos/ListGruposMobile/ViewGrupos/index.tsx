@@ -42,7 +42,7 @@ export default function ListGruposMobile() {
 
   useEffect(() => {
     getGrupos();
-  }, [busca]);
+  }, [busca, grupoSelect]);
 
 
   const handleVoltar = () => {
