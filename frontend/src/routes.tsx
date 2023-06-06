@@ -38,6 +38,7 @@ export default function AppRouter() {
           setCarregando(false);
         });
     }
+    console.log(import.meta.env.VITE_BACKEND_BASEURL);
   }, []);
   return (
     <BrowserRouter>
