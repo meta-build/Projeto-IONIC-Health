@@ -85,7 +85,7 @@ export default function ListaSolicitacoesMobile() {
       .then(solic => setSolicSelecionada(solic))
     }
     getSolicitacoes();
-  }, [busca, tipo, status, situacaoNota, loc.pathname]);
+  }, [busca, tipo, status, situacaoNota, loc.pathname, solicSelecionada]);
 
   const handleVoltar = () => {
     navigate(-1);

@@ -74,7 +74,7 @@ export default function SolicitacaoInfoMobile(props: Props) {
       { label: 'Avaliar', onClick: () => setAvaliar(true) } : null,
     (props.solic.isArchived && usuario.permissions.find(perm => perm.id == 10)) ?
       { label: 'Desarquivar', onClick: () => setConfirmDesarquivar(true) } : null,
-    (props.solic.isArchived && usuario.permissions.find(perm => perm.id == 10)) ?
+    (!props.solic.isArchived && usuario.permissions.find(perm => perm.id == 10)) ?
       { label: 'Arquivar', onClick: () => setConfirmArquivar(true) } : null,
     (usuario.permissions.find(perm => perm.id === 9)) ?
       { label: 'Excluir', onClick: () => setConfirmExcluir(true) } : null,
