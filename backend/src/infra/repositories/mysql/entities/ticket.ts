@@ -57,7 +57,7 @@ export class Ticket {
   @Column({ nullable: true })
   isArchived: boolean
 
-  @ManyToOne(() => Role, (role) => role.tickets)
+  @ManyToOne(() => Role, (role) => role.tickets, { onDelete: 'SET NULL' })
   assignedRole: Role
 
   @Column({nullable: true})

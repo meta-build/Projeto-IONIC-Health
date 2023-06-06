@@ -27,11 +27,11 @@ export class User {
   @OneToMany(() => Rating, rating => rating.user)
   ratings: Rating[];
 
-  @ManyToOne(() => Role, role => role.name)
-  @JoinColumn()
+  @ManyToOne(() => Role, role => role.users, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'roleId' })
   role: Role;
 
-  @Column()
+  @Column({ nullable: true })
   roleId: number;
 
   @Column({ default: true })
