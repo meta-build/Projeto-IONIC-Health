@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom';
 export default function MenuMobile() {
   const { usuario, setUsuario } = useContexto();
   const [open, setOpen] = useState(false);
-  const [notif, setNotif] = useState(true);
+  const [notif, setNotif] = useState(false);
 
   const loc = useLocation();
 
