@@ -7,7 +7,6 @@ import { UserRepository } from '@/infra/repositories/mysql/user-repository';
 import { TicketRepository } from '@/infra/repositories/mysql/ticket-repository';
 import { Notification } from '@/infra/repositories/mysql/entities';
 import AppDataSource from '@/infra/repositories/mysql/data-source';
-import { sendEmail } from '../mail/sendMail';
 
 type HttpRequest = {
   requesterId: number;
@@ -51,8 +50,6 @@ export class CreateRatingController implements Controller {
     if (!ticketCreator) {
       return badRequest(new UnprocessableEntity());
     }
-    
-    const ticketCreatorEmail = ticketCreator.email;
 
     const rating = await this.ratingRepository.create({
       comment,
@@ -62,11 +59,7 @@ export class CreateRatingController implements Controller {
       requesterId,
     });
 
-    const notification = await this.createNotification(reviewer, rating, ticket, "Nova avaliação criada");
-
-    const recipient = [notification.user.email, ticketCreatorEmail];
-
-    await sendEmail(notification, recipient);
+    const notification = await this.createNotification(ticketCreator, rating, ticket, `${reviewer.name} avaliou sua ${ticket.type}.${ticket.id}`);
 
     return ok({rating, notification});
   }
@@ -79,9 +72,9 @@ export class CreateRatingController implements Controller {
   ): Promise<Notification> {
     const notification = new Notification();
     notification.user = reviewer;
-    notification.text = `${message} por ${reviewer.name} em ${new Date().toISOString()}`;
+    notification.text = message;
     notification.id = notification.id;
-    notification.userId = notification.userId;
+    notification.userId = reviewer.id;
     notification.rating = rating;
     notification.ticket = ticket;
 

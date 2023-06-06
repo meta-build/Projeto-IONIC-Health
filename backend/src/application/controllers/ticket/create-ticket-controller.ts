@@ -56,23 +56,6 @@ export class CreateTicketController implements Controller {
 
     const savedTicket = await AppDataSource.manager.save(Ticket, ticket);
 
-    const notification = await this.createNotification(requester, savedTicket, "Nova solicitação criada");
-
-    const recipient = notification.user.email;
-    await sendEmail(notification, recipient);
-
-    return ok({ ticket, notification });
-  }
-
-  private async createNotification(user: User, ticket: Ticket, message: string): Promise<Notification> {
-    const notification = new Notification();
-    notification.user = user;
-    notification.text = `${message} por ${user.name} em ${ticket.createdAt}`;
-    notification.id = notification.id;
-    notification.userId = notification.userId;
-
-    const savedNotification = await AppDataSource.manager.save(notification);
-
-    return savedNotification;
+    return ok({ ticket });
   }
 }
