@@ -1,8 +1,8 @@
-import { LoadAllNotification, LoadNotificationById, RemoveNotification } from '@/domain/contracts/repos/notification';
+import { LoadAllByUserId, LoadNotificationById, RemoveNotification } from '@/domain/contracts/repos/notification';
 import { Notification } from './entities/notification';
 import DataSource from './data-source';
 
-export class NotificationRepository implements LoadAllNotification, LoadNotificationById, RemoveNotification {
+export class NotificationRepository implements RemoveNotification, LoadAllByUserId {
   async remove(id: number): Promise<void> {
     const notificationRepo = DataSource.getRepository(Notification);
     const notification = await notificationRepo.findOne({ where: { id } });
@@ -19,12 +19,15 @@ export class NotificationRepository implements LoadAllNotification, LoadNotifica
     return notification;
   }
 
-  async loadAll(): Promise<LoadAllNotification.Output> {
+  async loadAllByUserId(input: LoadAllByUserId.Input): Promise<LoadAllByUserId.Output> {
     try {
       const notificationRepo = DataSource.getRepository(Notification);
-      const notifications = await notificationRepo.find();
+      const notifications = await notificationRepo 
+      .find({
+        where: {userId: input.id}
+      });
 
-      const output: LoadAllNotification.Output = notifications.map(notification => ({
+      const output: LoadAllByUserId.Output = notifications.map(notification => ({
         id: notification.id,
         userId: notification.userId,
         text: notification.text,
