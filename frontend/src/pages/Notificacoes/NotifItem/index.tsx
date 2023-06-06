@@ -33,7 +33,9 @@ export default function NotifItem(props: Props) {
           })}
         </span>
       </div>
-      <button className={styles['check-btn']}>
+      <button
+      onClick={props.onClick}
+      className={styles['check-btn']}>
         <GoogleIcon>&#xe876;</GoogleIcon>
       </button>
     </div>
