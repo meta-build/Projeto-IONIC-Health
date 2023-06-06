@@ -45,7 +45,7 @@ export default function NovoUsuarioMobile() {
       setNomeErro(!nome);
       setGrupoErro(!grupo);
       setEmailErro(!email);
-      setSenhaErro(!senha);
+      setSenhaErro(!id && !senha);
     } else {
       setCarregando(true);
       if (id) {
@@ -90,7 +90,10 @@ export default function NovoUsuarioMobile() {
           setNome(user.name);
           setEmail(user.email);
           setGrupo(user.role);
-          setPermsEscolhidas(user.role.permissions.map(perm => perm.id));
+          setPermsEscolhidas(user.permissions.length ? 
+            user.permissions.map(perm => perm.id) : 
+            user.role.permissions.map(perm => perm.id));
+          setPermCustomizada(user.role ? Boolean(user.permissions.length) : true);
         })
         .catch(() => {
           setCarregando(false);

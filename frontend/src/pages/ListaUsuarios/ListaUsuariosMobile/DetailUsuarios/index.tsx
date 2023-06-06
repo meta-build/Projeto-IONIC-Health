@@ -111,7 +111,13 @@ export default function DetailUsuarios({ userSelecionado, onBack }: Props) {
                   <div className={styles['perm-container']}>
                     <div>Este usuário pode:</div>
                     <ul className={styles['perm-list']}>
-                      {userSelecionado.permissions.map((perm) => (
+                      {userSelecionado.permissions.length ?
+                      userSelecionado.permissions.map((perm) => (
+                        <li key={perm.id}>
+                          {perm.humanizedPermissionName}
+                        </li>
+                      )) :
+                      userSelecionado.role.permissions.map((perm) => (
                         <li key={perm.id}>
                           {perm.humanizedPermissionName}
                         </li>

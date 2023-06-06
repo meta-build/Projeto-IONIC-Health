@@ -51,7 +51,7 @@ export default function NovoUsuarioDesktop() {
       setErroNome(!nome);
       setErroGrupo(!grupo);
       setErroEmail(!email);
-      setErroSenha(!senha);
+      setErroSenha(!id && !senha);
     } else {
       setCarregando(true);
       if (id) {
@@ -98,7 +98,10 @@ export default function NovoUsuarioDesktop() {
           setNome(user.name);
           setEmail(user.email);
           setGrupo(user.role);
-          setPermsEscolhidas(user.role.permissions.map(perm => perm.id));
+          setPermsEscolhidas(user.permissions.length ? 
+            user.permissions.map(perm => perm.id) : 
+            user.role.permissions.map(perm => perm.id));
+          setPermsCustomizadas(user.role ? Boolean(user.permissions.length) : true);
         })
         .catch(() => {
           setCarregando(false);
