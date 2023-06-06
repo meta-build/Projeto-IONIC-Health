@@ -1,5 +1,5 @@
 import PopUp from "../../components/PopUp";
-import iconeAlerta from '../../assets/icone alerta.png';
+import iconeAlerta from '../../assets/iconeAlerta.png';
 import { BotaoPreenchido } from "../../components/Botoes";
 import styles from './PopupAlerta.module.scss';
 import classNames from "classnames";
