@@ -1,6 +1,8 @@
 export * from './controller'
 
-export * from './notification/notification-controller'
+export * from './notification/delete-notification-controller'
+export * from './notification/get-all-notification-controller'
+export * from './notification/get-by-id-notification-controller'
 
 export * from './rating/create-rating-controller'
 

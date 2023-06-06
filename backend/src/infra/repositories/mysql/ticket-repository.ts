@@ -70,6 +70,7 @@ export class TicketRepository
 
     const ticket = await ticketRepo
       .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.requester', 'requester')
       .leftJoinAndSelect('ticket.ratings', 'rating')
       .leftJoinAndSelect('rating.user', 'ratingUser')
       .leftJoinAndSelect('ticket.attachments', 'attachment')

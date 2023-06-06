@@ -49,6 +49,8 @@ export namespace LoadTicketById {
     id: number
   }
   export type Output = {
+    isArchived: boolean
+    requester: any
     id: number
     title: string
     type: string
