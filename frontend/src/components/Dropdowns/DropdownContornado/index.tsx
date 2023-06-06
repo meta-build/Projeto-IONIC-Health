@@ -28,6 +28,7 @@ export default function DropdownContornado(props: Props) {
       [props.className]: true
       })}>
       <button
+        type='button'
         onClick={() => setAberto(!aberto)}
         onBlur={() => setAberto(false)}
         className={classNames({

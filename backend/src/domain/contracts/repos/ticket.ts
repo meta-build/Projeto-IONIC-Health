@@ -1,6 +1,12 @@
 import { Attachment } from '@/infra/repositories/mysql/entities/attachment'
 import { Rating } from '@/infra/repositories/mysql/entities/rating'
 
+export namespace DeleteTicketById {
+  export type Input = {
+    id: number
+  }
+}
+
 export interface UpdateTicket {
   update: (input: UpdateTicket.Input) => Promise<UpdateTicket.Output>
 }
@@ -43,6 +49,8 @@ export namespace LoadTicketById {
     id: number
   }
   export type Output = {
+    isArchived: boolean
+    requester: any
     id: number
     title: string
     type: string

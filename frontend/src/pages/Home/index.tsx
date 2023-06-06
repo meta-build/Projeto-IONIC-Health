@@ -19,23 +19,23 @@ export default function Home() {
   const { usuario } = useContexto();
 
   const itens = [
-    usuario.role.permissions.find(perm => perm.id >= 1 && perm.id <= 3) ?
+    usuario.permissions.find(perm => perm.id >= 1 && perm.id <= 3) ?
       { label: 'Usuários', icon: <FontAwesomeIcon icon={faUser} />, url: '/usuarios' } : null,
-    usuario.role.permissions.find(perm => perm.id >= 4 && perm.id <= 6) ?
+    usuario.permissions.find(perm => perm.id >= 4 && perm.id <= 6) ?
       { label: 'Grupos', icon: <GoogleIcon>&#xf233;</GoogleIcon>, url: '/grupos' } : null,
-    usuario.role.permissions.find(perm => perm.id >= 8 && perm.id <= 12) ?
+    usuario.permissions.find(perm => perm.id >= 8 && perm.id <= 12) ?
       { label: 'Solicitações', icon: <FontAwesomeIcon icon={faFile} />, url: '/solicitacoes' } : null,
-    usuario.role.permissions.find(perm => perm.id == 7) ?
+    usuario.permissions.find(perm => perm.id == 7) ?
       { label: 'Minhas Solicitações', icon: <GoogleIcon>&#xf22e;</GoogleIcon>, url: '/minhas-solicitacoes' } : null,
-    usuario.role.permissions.find(perm => perm.id == 14) ?
+    usuario.permissions.find(perm => perm.id == 14) ?
       { label: 'Solicitações para avaliar', icon: <GoogleIcon>&#xe46e;</GoogleIcon>, url: '/solicitacoes-para-avaliar' } : null,
-    usuario.role.permissions.find(perm => perm.id == 13) ?
+    usuario.permissions.find(perm => perm.id == 13) ?
       { label: 'Solicitações em produção', icon: <GoogleIcon>&#xe179;</GoogleIcon>, url: '/solicitacoes-em-producao' } : null,
   ].filter(Boolean) as HomeItemProps[];
 
   return (
     <div className={styles.container}>
-      <Header36 className={styles.children}>Bem-vindo, {usuario.name}</Header36>
+      <Header36 className={styles.welcome}>Bem-vindo, {usuario.name}</Header36>
       <div className={classNames({
         [styles['container-button']]: true
       })}>

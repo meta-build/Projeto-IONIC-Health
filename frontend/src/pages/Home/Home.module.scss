@@ -1,13 +1,14 @@
 @import '@/styles/variables.scss';
 
 .container {
-  height: calc(100vh - 68px);
+  height: 100%;
   width: calc(100% - 2px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 12px;
+  // border: 1px solid red;
 }
 
 .container-button {
@@ -26,4 +27,8 @@
 
 .children-button {
   width: fit-content;
+}
+
+.welcome {
+  text-align: center;
 }

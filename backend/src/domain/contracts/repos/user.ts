@@ -9,15 +9,28 @@ export namespace CreateUser {
     name: string
     email: string
     password: string
-    roleId: number
+    roleId?: number
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
   export type Output = {
     id: number
     name: string
     email: string
-    password: string
     roleId: number,
     isActive: boolean
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
 
@@ -37,6 +50,13 @@ export namespace LoadUserByEmail {
     roleId: number
     role: Role,
     isActive: boolean
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
 
@@ -55,6 +75,13 @@ export namespace LoadUserById {
     roleId: number
     role: Role,
     isActive: boolean
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }
 
@@ -84,6 +111,14 @@ export namespace UpdateUser {
     roleId?: number
     isActive?: boolean
     password?: string
+    permissions?: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+      roles: Role[]
+    }>
   }
   export type Output = {
     id: number
@@ -92,5 +127,12 @@ export namespace UpdateUser {
     roleId: number
     role: Role
     isActive?: boolean
+    permissions: Array<{
+      id: number
+      permissionName: string
+      humanizedPermissionName: string
+      entity: string
+      humanizedEntity: string
+    }>
   }
 }

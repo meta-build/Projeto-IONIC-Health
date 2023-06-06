@@ -1,0 +1,258 @@
+@import '@/styles/variables.scss';
+
+.titulo {
+  text-align: center;
+}
+
+.section {
+  display: flex;
+  margin: 12px auto;
+  width: calc(100% - 50px);
+  gap: 12px;
+  height: calc(100vh - 140px);
+  // border: 1px solid green;
+}
+
+.data-texto {
+  margin-right: 4px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  align-items: end;
+
+  .botao {
+    width: 100%;
+  }
+}
+
+.botao {
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-weight: normal;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.inputPreenchimento {
+  width: 100%;
+  flex: 1;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 12px;
+  flex: 1;
+  border-radius: 12px;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  overflow: auto;
+}
+
+.esquerda {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.direita {
+  flex: 4;
+  max-width: 800px;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.botoes {
+  display: flex;
+  margin-top: 12px;
+  width: 100%;
+
+  .botao {
+    flex: 1;
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+}
+
+.botaoCriarContainer {
+  width: 100%;
+  display: flex;
+  margin-top: 12px;
+
+  .botaoCriar {
+    flex: 1;
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+}
+
+.lista {
+  padding: 12px;
+  margin: 0;
+  // width: 500px;
+  background-color: $cinza-300;
+  border-radius: 12px;
+  margin-top: 12px;
+  width: 100%;
+  height: calc(100vh - 300px);
+  overflow: auto;
+}
+
+.not-found,
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.not-found {
+  color: $cinza-400;
+}
+
+.loading {
+  position: relative;
+}
+
+.loading * {
+  animation: spin 2s infinite linear; // Aplica a animação "spin" com duração de 2s e repetição infinita
+  font-size: 36px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); // Define a rotação inicial como 0 graus
+  }
+
+  to {
+    transform: rotate(360deg); // Define a rotação final como 360 graus
+  }
+}
+
+.solic-container {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.solic-titulo {
+  padding: 0;
+  margin: 0;
+}
+
+.solic-tipo {
+  margin-right: 8px;
+  color: $ciano-300;
+}
+
+.recente,
+.impacto-3,
+.av-0 {
+  color: $azul2;
+}
+
+.em-av,
+.new,
+.impacto-1,
+.av-2 {
+  color: $amarelo;
+}
+
+.em-prod,
+.on-holding,
+.impacto-2,
+.av-1 {
+  color: $verde;
+}
+
+.arquivado,
+.impacto-0,
+.av-3 {
+  color: $vermelho;
+}
+
+.bottom .arquivado {
+  color: $vermelho;
+}
+
+.done {
+  color: $verde-escuro;
+}
+
+.solic-datas {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.solic-info,
+.solic-arqs {
+  display: flex;
+  flex-direction: column;
+
+  span:first-child {
+    font-size: 18px;
+  }
+}
+
+.solic-arqs {
+  gap: 6px;
+}
+
+.arquivos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.solic-espacador {
+  flex: 1;
+}
+
+.solic-botoes {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 12px;
+
+  .botao {
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-weight: normal;
+  }
+}
+
+.solic-em-av {
+  display: flex;
+  gap: 12px;
+}
+
+::-webkit-scrollbar {
+  background: none;
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $cinza-400;
+  border-radius: 36px;
+  width: 20px;
+}

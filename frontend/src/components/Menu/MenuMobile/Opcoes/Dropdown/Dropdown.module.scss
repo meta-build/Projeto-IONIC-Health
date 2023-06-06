@@ -1,0 +1,42 @@
+.botao {
+  padding: 0 !important;
+  margin: 0;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 18px;
+  // border: 1px solid red;
+}
+
+.label {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+  padding-left: 4px;
+  margin-left: 12px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+
+  li {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.item-botao {
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+}

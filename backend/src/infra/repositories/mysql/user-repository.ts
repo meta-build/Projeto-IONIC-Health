@@ -15,19 +15,31 @@ export class UserRepository
   getRepository(entity: ObjectType<User>): Repository<User> {
     return DataSource.getRepository(entity)
   }
+  async getUsersByIds(ids: number[]): Promise<User[]> {
+    const userRepo = this.getRepository(User)
+  
+    const users = await userRepo
+      .createQueryBuilder('user')
+      .whereInIds(ids)
+      .getMany()
+  
+    return users
+  }
 
   async create({
     name,
     email,
     password,
-    roleId
+    roleId,
+    permissions
   }: CreateUser.Input): Promise<CreateUser.Output> {
     const userRepo = this.getRepository(User)
     const user = userRepo.create({
       name,
       email,
       password,
-      roleId
+      roleId,
+      permissions
     })
 
     await userRepo.save(user)
@@ -36,9 +48,9 @@ export class UserRepository
       id: user.id,
       name: user.name,
       email: user.email,
-      password: user.password,
       roleId: user.roleId,
-      isActive: user.isActive
+      isActive: user.isActive,
+      permissions: user.permissions
     }
   }
 
@@ -49,8 +61,9 @@ export class UserRepository
 
     const user = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.permissions', 'userPermission')
       .leftJoinAndSelect('user.role', 'role')
-      .leftJoinAndSelect('role.permissions', 'permission')
+      .leftJoinAndSelect('role.permissions', 'rolePermission')
       .where('user.email = :email', { email })
       .getOne()
 
@@ -66,8 +79,9 @@ export class UserRepository
 
     const user = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.permissions', 'userPermission')
       .leftJoinAndSelect('user.role', 'role')
-      .leftJoinAndSelect('role.permissions', 'permission')
+      .leftJoinAndSelect('role.permissions', 'rolePermission')
       .where('user.id = :id', { id })
       .getOne()
 
@@ -81,7 +95,8 @@ export class UserRepository
       email: user.email,
       roleId: user.roleId,
       role: user.role,
-      isActive: user.isActive
+      isActive: user.isActive,
+      permissions: user.permissions
     }
   }
 
@@ -90,6 +105,7 @@ export class UserRepository
 
     const users = await userRepo
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.permissions', 'userPermission')
       .leftJoinAndSelect('user.role', 'role')
       .leftJoinAndSelect('role.permissions', 'permission')
       .getMany()
@@ -100,7 +116,8 @@ export class UserRepository
       email: user.email,
       roleId: user.roleId,
       role: user.role,
-      isActive: user.isActive
+      isActive: user.isActive,
+      permissions: user.permissions 
     }))
   }
 
@@ -110,7 +127,8 @@ export class UserRepository
     roleId,
     name,
     isActive,
-    password
+    password,
+    permissions
   }: UpdateUser.Input): Promise<UpdateUser.Output> {
     const userRepo = this.getRepository(User)
 
@@ -125,6 +143,7 @@ export class UserRepository
     user.roleId = roleId ?? user.roleId
     user.isActive = isActive ?? user.isActive
     user.password = password ?? user.password
+    user.permissions = permissions ?? user.permissions
 
     const updatedUser = await userRepo.save(user)
 

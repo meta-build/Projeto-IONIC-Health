@@ -1,4 +1,5 @@
 import {
+  DeleteTicketById,
   LoadAllTicket,
   LoadTicketById,
   UpdateTicket
@@ -13,6 +14,14 @@ export class TicketRepository
 {
   getRepository(): Repository<Ticket> {
     return DataSource.getRepository(Ticket)
+  }
+
+  async deleteById({
+    id
+  }: DeleteTicketById.Input): Promise<void> {
+    const ticketRepo = this.getRepository()
+
+    ticketRepo.delete(id)
   }
 
   async update({
@@ -61,6 +70,7 @@ export class TicketRepository
 
     const ticket = await ticketRepo
       .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.requester', 'requester')
       .leftJoinAndSelect('ticket.ratings', 'rating')
       .leftJoinAndSelect('rating.user', 'ratingUser')
       .leftJoinAndSelect('ticket.attachments', 'attachment')

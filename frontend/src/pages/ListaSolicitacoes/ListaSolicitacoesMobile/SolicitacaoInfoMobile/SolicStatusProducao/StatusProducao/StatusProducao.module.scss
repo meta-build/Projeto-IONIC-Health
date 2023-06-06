@@ -1,0 +1,37 @@
+@import '@/styles/variables.scss';
+
+.solic-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.new {
+  color: $amarelo-200;
+}
+
+.onholding {
+  color: $verde-amarelado;
+}
+
+.done {
+  color: $verde;
+}
+
+.already {
+  opacity: 0.5;
+}
+
+.desactive {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
+.status-icon {
+  width: 64px;
+}
+
+.solic-status-title {
+  font-size: 20px;
+  font-weight: bold;
+}

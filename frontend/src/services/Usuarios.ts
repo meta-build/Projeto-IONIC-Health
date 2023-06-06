@@ -6,6 +6,7 @@ interface Usuario {
   email: string;
   password: string;
   roleId: number;
+  permissions: number[]
 }
 
 interface Login {
@@ -35,12 +36,12 @@ class Usuarios {
   }
 
   async getAll(): Promise<UsuarioProps[]> {
-    const { data } = await api.get('/user')
+    const { data } = await api.get('/user');
     return data;
   }
 
   async login(login: Login):Promise<UsuarioContext> {
-    const { data } = await api.post('/login', login)
+    const { data } = await api.post('/login', login);
     return data;
   }
 }

@@ -2,12 +2,31 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-body {
+html {
+  height: 100%;
   margin: 0;
   background-color: #0E0E19;
   background-image: url('assets/background.png');
-  background-position: center top;
-  background-size: cover;
+  background-position: center center;
+  background-size: cover; 
+  background-attachment: fixed;
   color: white;
   font-size: 16px;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+@media (min-width: 769px) {
+  #mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #desktop {
+    display: none;
+  }
 }

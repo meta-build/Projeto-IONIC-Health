@@ -32,13 +32,24 @@ export class LoginController implements Controller {
     if (user?.isActive) {
       const isValid = await this.hashComparer.compare(password, user.password)
 
+      let permissions = []
+
+      if (user.role?.permissions?.length) {
+        permissions = user.role.permissions
+      }
+
+      if (user.permissions?.length) {
+        permissions = user.permissions
+      }
+
       if (isValid) {
         const accessToken = await this.encrypter.encrypt({ id: user.id })
         return ok({
+          id: user.id,
           accessToken,
           name: user.name,
           role: user.role,
-          id: user.id
+          permissions
         })
       }
     }

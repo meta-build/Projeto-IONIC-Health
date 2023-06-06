@@ -1,14 +1,15 @@
+import api from "./api";
+import { NotificationProps } from "../types";
+
 class Notificacoes {
   async deletar(id: number) {
-    console.log('excluindo notificacao do id ', id);
+    const {data} = await api.delete(`/notification/${id}`);
+    return data;
   }
 
-  async deletarByUsuario(idUsuario: number) {
-    console.log(`deletando todas as notificações do usuário ${idUsuario}`);
-  }
-
-  async getByUsuario(idUsuario: number) {
-    console.log(`pegando todas as notif do usuario ${idUsuario}`);
+  async getByUsuario(idUsuario: number): Promise<NotificationProps[]> {
+    const {data} = await api.get(`/notification/${idUsuario}`);
+    return data;
   }
 }
 

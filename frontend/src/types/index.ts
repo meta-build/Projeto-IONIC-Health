@@ -11,7 +11,11 @@ interface SolicitacaoProps {
   isArchived: boolean,
   ratings: RatingProps[],
   attachments: ArquivoProps[],
-  assignedRoleId: number | null;
+  assignedRoleId: number | null,
+  statusNewAt: string,
+  statusOnHoldingAt: string,
+  statusDoneAt: string,
+  statusRatingAt: string
 }
 
 interface RatingProps {
@@ -20,7 +24,18 @@ interface RatingProps {
   committee: string,
   comment: string,
   userId: number,
-  ticketId: number
+  user: RatingUserProps,
+  ticketId: number,
+  createdAt: string
+}
+
+interface RatingUserProps {
+  id: number,
+  name: string,
+  email: string,
+  password: string,
+  roleId: number,
+  isActive: boolean
 }
 
 interface ArquivoProps {
@@ -41,10 +56,12 @@ interface EditarSolicitacaoProps {
 }
 
 interface EditarUsuarioProps {
-  name: string;
-  email: string;
-  isActive: boolean;
-  roleId: number;
+  name?: string;
+  email?: string;
+  isActive?: boolean;
+  roleId?: number;
+  password?: string;
+  permissions?: number[]
 }
 
 interface UsuarioProps {
@@ -53,7 +70,8 @@ interface UsuarioProps {
   email: string,
   roleId: string,
   role: RoleProps,
-  isActive: boolean
+  isActive: boolean,
+  permissions: PermissionProps[]
 }
 
 interface RoleProps {
@@ -75,7 +93,8 @@ interface UsuarioContext {
   accessToken: string,
   name: string,
   role: RoleProps,
-  id: number
+  id: number,
+  permissions: PermissionProps[]
 }
 
 interface CreateGrupoProps {
@@ -91,6 +110,13 @@ interface GrupoProps {
   permissions: PermissionProps[]
 }
 
+interface NotificationProps {
+  id: number,
+  userId: number,
+  text: string,
+  createdAt: string
+}
+
 export type {
   SolicitacaoProps,
   ArquivoProps,
@@ -101,5 +127,6 @@ export type {
   UsuarioContext,
   CreateGrupoProps,
   GrupoProps,
-  PermissionProps
+  PermissionProps,
+  NotificationProps
 }

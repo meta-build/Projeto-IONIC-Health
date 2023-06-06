@@ -1,0 +1,64 @@
+@import '@/styles/variables.scss';
+
+.container {
+  border: none;
+  background: none;
+  position: relative;
+  padding: 0;
+}
+
+.button {
+  border: 2px solid $ciano-300;
+  padding: 8px;
+  display: flex;
+  gap: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button-clicked {
+  background-color: $ciano-300;
+}
+
+.ball-clicked {
+  background-color: $cinza-600;
+}
+
+.button-ball {
+  width: 4px;
+  height: 4px;
+  background-color: $ciano-300;
+  border-radius: 100%;
+}
+
+.list {
+  background-color: $cinza-600;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 16px;
+  list-style: none;
+  padding: 0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 132px;
+  overflow: hidden;
+}
+
+.option {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  flex: 1 !important;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+}
+
+.option-clicked {
+  background-color: $cinza-400;
+}

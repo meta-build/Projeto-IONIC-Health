@@ -1,0 +1,38 @@
+@import '@/styles/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  background-color: $black-40;
+  backdrop-filter: $blur;
+  padding: 16px 20px;
+  gap: 16px;
+  width: calc(100% - 40px);
+  z-index: 2;
+}
+
+.name {
+  flex: 1;
+  font-size: 20px;
+}
+
+.hamburguer-button {
+  background: none;
+  border: none;
+  color: white;
+  position: relative;
+
+  .icon {
+    font-size: 28px;
+  }
+}
+
+.notification {
+  width: 12px;
+  height: 12px;
+  background-color: $vermelho;
+  border-radius: 12px;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+}

@@ -26,7 +26,7 @@ class Solicitacoes {
       }
     };
 
-    const url = 'http://localhost:3001/api/ticket';
+    const url = `${import.meta.env.VITE_BACKEND_BASEURL}/ticket`;
     const formData = new FormData();
     formData.append('title', solicitacao.title);
     formData.append('type', solicitacao.type);
@@ -55,6 +55,7 @@ class Solicitacoes {
 
   async getByID(id: number): Promise<SolicitacaoProps> {
     const { data } = await api.get(`/ticket/${id}`);
+    console.log(data);
     return data;
   }
 
