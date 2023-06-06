@@ -146,6 +146,7 @@ export default function MenuDesktop() {
                   hour12: false
                 })}
                 handleCheckClick={() => excluir(notif.id)}
+                handleClick={() => nav(`/minhas-solicitacoes/${notif.text.split('.')[1]}`)}
               />))
               : <div className={styles['no-notifs']}>Sem notificações</div>
             }
@@ -187,6 +188,7 @@ interface NotificacaoProps {
   titulo: string,
   data: string,
   handleCheckClick: () => void;
+  handleClick: () => void;
 }
 
 function NotificacaoItem(props: NotificacaoProps) {
@@ -194,6 +196,7 @@ function NotificacaoItem(props: NotificacaoProps) {
 
   return (
     <li
+      onClick={props.handleClick}
       onMouseEnter={() => setCheckVisivel(true)}
       onMouseLeave={() => setCheckVisivel(false)}
       className={styles['notificacao-item']}>

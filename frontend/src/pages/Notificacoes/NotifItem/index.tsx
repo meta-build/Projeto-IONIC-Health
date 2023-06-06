@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import GoogleIcon from '../../../components/GoogleIcon';
 import styles from './NotifItem.module.scss';
 
@@ -5,12 +6,19 @@ interface Props {
   title: string;
   date: string;
   onClick: () => void;
+  className?: string;
+  onClickName: () => void;
 }
 
 export default function NotifItem(props: Props) {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
+    <div className={classNames({
+      [styles.container]: true,
+      [props.className]: true
+    })}>
+      <div
+      onClick={props.onClickName}
+      className={styles.content}>
         <span className={styles.title}>
           {props.title}
         </span>

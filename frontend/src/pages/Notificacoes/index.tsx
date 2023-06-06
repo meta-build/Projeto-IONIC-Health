@@ -40,11 +40,15 @@ export default function Notifs() {
       </Header32>
       <div className={styles.notifs}>
         {notifs.length ? notifs.map(notif => (
-          <NotifItem
-            key={notif.id}
-            date={notif.createdAt}
-            title={notif.text.split('.')[0]}
-            onClick={() => excluir(notif.id)} />
+          <div className={styles['notif-item']}>
+            <NotifItem
+              key={notif.id}
+              date={notif.createdAt}
+              title={notif.text.split('.')[0]}
+              onClick={() => excluir(notif.id)}
+              onClickName={() => nav(`/minhas-solicitacoes/${notif.text.split('.')[1]}`)}
+              />  
+          </div>
         )) : <span className={styles['no-notif']}>Sem notificações</span>}
       </div>
     </section>

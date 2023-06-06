@@ -84,6 +84,10 @@ export default function AppRouter() {
                   element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
                 />
                 <Route
+                  path='/minhas-solicitacoes/:id'
+                  element={<PaginaComHeader elemento={<ListaSolicitacoes />} />}
+                />
+                <Route
                   path='/criar-solicitacao'
                   element={<PaginaComHeader elemento={<CriarSolicitacao />} />}
                 />
