@@ -2,6 +2,7 @@ import { adaptMiddleware, adaptRoute } from '@/main/adapters'
 import { makeAuthMiddleware } from '@/main/factories/middlewares'
 import {
   makeCreateRoleController,
+  makeDeleteRoleByIdController,
   makeGetAllRoleController,
   makeGetRoleByIdController,
   makeUpdateRoleController
@@ -29,5 +30,10 @@ export default (router: Router): void => {
     '/role',
     adaptMiddleware(makeAuthMiddleware()),
     adaptRoute(makeGetAllRoleController())
+  )
+  router.delete(
+    '/role/:id',
+    adaptMiddleware(makeAuthMiddleware()),
+    adaptRoute(makeDeleteRoleByIdController())
   )
 }
