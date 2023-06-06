@@ -1,5 +1,5 @@
 import PopUp from "../../components/PopUp";
-import iconeconfirm from '../../assets/iconeConfirm.png';
+import iconeconfirm from '../../assets/IconeConfirm.png';
 import { BotaoPreenchido } from "../../components/Botoes";
 import styles from './PopupConfirm.module.scss';
 
