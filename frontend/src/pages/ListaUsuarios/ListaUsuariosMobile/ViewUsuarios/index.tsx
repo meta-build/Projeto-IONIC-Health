@@ -96,7 +96,7 @@ export default function ListaUsuariosMobile() {
                       <ItemNome
                         key={user.id}
                         nome={user.name}
-                        desc={user.role.name}
+                        desc={user.role ? user.role.name : 'Sem grupo'}
                         handleClick={() => setUserSelecionado(user)}
                         isSelected={userSelecionado && user.id == userSelecionado.id}
                       />

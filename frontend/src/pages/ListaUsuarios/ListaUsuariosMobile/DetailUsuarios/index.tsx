@@ -95,7 +95,9 @@ export default function DetailUsuarios({ userSelecionado, onBack }: Props) {
                   <div className={styles['user-info-container']}>
                     <div>
                       <span>Grupo:</span>
-                      <span className={styles['user-info']}>{userSelecionado.role.name}</span>
+                      <span className={styles['user-info']}>
+                        {userSelecionado.role ?
+                        userSelecionado.role.name : 'Sem grupo'}</span>
                     </div>
                     <div>
                       <span>Email:</span>
@@ -109,7 +111,7 @@ export default function DetailUsuarios({ userSelecionado, onBack }: Props) {
                   <div className={styles['perm-container']}>
                     <div>Este usuário pode:</div>
                     <ul className={styles['perm-list']}>
-                      {userSelecionado.role.permissions.map((perm) => (
+                      {userSelecionado.permissions.map((perm) => (
                         <li key={perm.id}>
                           {perm.humanizedPermissionName}
                         </li>
@@ -152,7 +154,7 @@ export default function DetailUsuarios({ userSelecionado, onBack }: Props) {
             Usuarios.editar(userSelecionado.id, {
               email: userSelecionado.email,
               name: userSelecionado.name,
-              roleId: userSelecionado.role.id,
+              roleId: userSelecionado.role ? userSelecionado.role.id : undefined,
               isActive: false
             }).then(() => {
               setCarregando(false);
