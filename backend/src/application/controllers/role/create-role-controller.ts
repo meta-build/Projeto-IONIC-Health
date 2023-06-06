@@ -6,7 +6,6 @@ import { RoleRepository } from '@/infra/repositories/mysql/role-repository'
 
 type HttpRequest = {
   name: string
-  isAdmin: boolean
   permissions?: number[]
 }
 
@@ -24,11 +23,7 @@ export class CreateRoleController implements Controller {
       return badRequest(error)
     }
 
-    let permissions = []
-
-    if (!req.isAdmin) {
-      permissions = await this.permissionRepository.getAllById({ ids: req.permissions })
-    }
+    const permissions = await this.permissionRepository.getAllById({ ids: req.permissions })
 
     const createdRole = await this.roleRepository.create(
       Object.assign({}, req, { permissions })

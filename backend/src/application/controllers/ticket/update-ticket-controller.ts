@@ -73,10 +73,6 @@ export class UpdateTicketController implements Controller {
   }
 
   private checkPermission = (user: User, permissionName: string): boolean => {
-    if (user.role.isAdmin) {
-      return true
-    }
-
     return Boolean(user.role.permissions.find(
       (permission) => permission.permissionName === permissionName
     ))

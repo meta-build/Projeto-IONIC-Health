@@ -7,7 +7,7 @@ import {
 export const makeCreateRoleValidation = (): ValidationComposite => {
   const validations: Validation[] = []
 
-  for (const field of ['name', 'isAdmin']) {
+  for (const field of ['name']) {
     validations.push(new RequiredFieldValidation(field))
   }
 
