@@ -10,6 +10,7 @@ import { User } from "./user";
 
 @Entity({ name: "notification" })
 export class Notification {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,4 +26,7 @@ export class Notification {
 
   @CreateDateColumn()
   createdAt: Date;
+  ticket: number;
+  rating: number;
+
 }

@@ -72,9 +72,10 @@ export default function SolicitacaoInfoMobile(props: Props) {
       { label: 'Liberar para produção', onClick: () => setConfirmLiberarProd(true) } : null,
     (!props.solic.isArchived && props.solic.status === 'RATING' && usuario.permissions.find(perm => perm.id === 14) && isSemNota(props.solic)) ?
       { label: 'Avaliar', onClick: () => setAvaliar(true) } : null,
-    (props.solic.isArchived) ?
-      { label: 'Desarquivar', onClick: () => setConfirmDesarquivar(true) } :
-      { label: 'Arquivar', onClick: () => setConfirmArquivar(true) },
+    (props.solic.isArchived && usuario.permissions.find(perm => perm.id == 10)) ?
+      { label: 'Desarquivar', onClick: () => setConfirmDesarquivar(true) } : null,
+    (props.solic.isArchived && usuario.permissions.find(perm => perm.id == 10)) ?
+      { label: 'Arquivar', onClick: () => setConfirmArquivar(true) } : null,
     (usuario.permissions.find(perm => perm.id === 9)) ?
       { label: 'Excluir', onClick: () => setConfirmExcluir(true) } : null,
     (loc.pathname === '/solicitacoes-em-producao') ?
@@ -201,7 +202,7 @@ export default function SolicitacaoInfoMobile(props: Props) {
             </div>
             <div className={styles.espacador} />
             <div className={styles.botoes}>
-              <DropdownOpcoes options={opcoes} />
+              {Boolean(opcoes.length) && <DropdownOpcoes options={opcoes} />}
             </div>
           </section>
           <PopupAlerta

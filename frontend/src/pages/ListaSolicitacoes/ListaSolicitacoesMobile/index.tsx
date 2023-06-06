@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Botao } from "../../../components/Botoes";
 import { DropdownContornado } from "../../../components/Dropdowns";
 import GoogleIcon from "../../../components/GoogleIcon";
@@ -20,6 +20,7 @@ export default function ListaSolicitacoesMobile() {
   const nav = useNavigate();
   const loc = useLocation();
   const { usuario } = useContexto();
+  const {id} = useParams();
 
   const [busca, setBusca] = useState('');
   const [tipo, setTipo] = useState('Todos');
@@ -48,11 +49,6 @@ export default function ListaSolicitacoesMobile() {
       case 'DONE': return 'Em produção';
 
     }
-  }
-
-  const isSemNota = (solic: SolicitacaoProps): boolean => {
-    const notas = solic.ratings
-    return Boolean(!notas.find(nota => nota.committee == usuario.role.name));
   }
 
   const getSolicitacoes = () => {
@@ -84,6 +80,10 @@ export default function ListaSolicitacoesMobile() {
       });
   }
   useEffect(() => {
+    if(id){
+      Solicitacoes.getByID(Number(id))
+      .then(solic => setSolicSelecionada(solic))
+    }
     getSolicitacoes();
   }, [busca, tipo, status, situacaoNota, loc.pathname]);
 
@@ -96,7 +96,6 @@ export default function ListaSolicitacoesMobile() {
       {!solicSelecionada ?
         <section id='mobile'>
           <div className={styles.listContainer}>
-
             <Header32 className={styles.titulo}>
               <button
                 className={styles.botaoVoltar}
@@ -108,9 +107,9 @@ export default function ListaSolicitacoesMobile() {
               </button>
 
               {loc.pathname == '/solicitacoes' ? 'Solicitações' :
-                loc.pathname == '/minhas-solicitacoes' ? 'Minhas solicitações' :
+                loc.pathname == '/solicitacoes-em-producao' ? 'Solicitações em produção' :
                   loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
-                    'Solicitações em produção'}
+                    'Minhas solicitações'}
             </Header32>
 
             <section className={styles.section}>

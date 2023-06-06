@@ -109,6 +109,13 @@ interface GrupoProps {
   permissions: PermissionProps[]
 }
 
+interface NotificationProps {
+  id: number,
+  userId: number,
+  text: string,
+  createdAt: string
+}
+
 export type {
   SolicitacaoProps,
   ArquivoProps,
@@ -119,5 +126,6 @@ export type {
   UsuarioContext,
   CreateGrupoProps,
   GrupoProps,
-  PermissionProps
+  PermissionProps,
+  NotificationProps
 }

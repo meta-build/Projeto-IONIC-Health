@@ -8,6 +8,7 @@ import NovoUsuario from "./NovoUsuario";
 import ListaSolicitacoes from "./ListaSolicitacoes";
 import ListaUsuarios from "./ListaUsuarios";
 import ListGrupos from "./ListGrupos";
+import Notificacoes from "./Notificacoes";
 
 export {
   Home,
@@ -19,5 +20,6 @@ export {
   CriarGrupo,
   CriarSolicitacao,
   ListGrupos,
-  NovoUsuario
+  NovoUsuario,
+  Notificacoes
 }

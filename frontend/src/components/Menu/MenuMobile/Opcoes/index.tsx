@@ -6,9 +6,10 @@ import Notificacao from './Notificacao';
 import classNames from 'classnames';
 import { useContexto } from '../../../../context/contexto';
 import api from '../../../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { EditarConta } from '../../../../popUps';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Notificacoes from '../../../../services/Notificacoes';
 
 interface Props {
   visivel: Boolean;
@@ -23,7 +24,10 @@ interface DropdownItem {
 export default function Opcoes(props: Props) {
   const { usuario, setUsuario } = useContexto();
   const [popup, setPopup] = useState(false);
-  const [notif, setNotif] = useState(true);
+  const [notif, setNotif] = useState(false);
+  const [notifLength, setNotifLength] = useState<number>();
+
+  const loc = useLocation();
 
   const solicOptions: DropdownItem[] = [
     usuario.permissions.find(perm => perm.id >= 8 && perm.id <= 12) ?
@@ -66,6 +70,18 @@ export default function Opcoes(props: Props) {
     props.onClose();
   };
 
+  useEffect(() => {
+    Notificacoes.getByUsuario(usuario.id)
+    .then(notifs => {
+      if (notifs.length) {
+        setNotif(true);
+        setNotifLength(notifs.length);
+      }
+      if(loc.pathname == '/notificacoes') {
+        setNotif(false);
+      }
+    });
+  }, [loc.pathname]);
   return (
     <>
       <AnimatePresence>
@@ -139,13 +155,13 @@ export default function Opcoes(props: Props) {
                 <li className={styles.botao}>
                   <button
                     onClick={() => {
-                      setNotif(false);
+                      nav('/notificacoes');
                       props.onClose();
                     }}
                     className={styles['botao-button']}>
                     Notificações
                   </button>
-                  {notif && <Notificacao value={1} />}
+                  {notif && notifLength && <Notificacao value={notifLength} />}
                 </li>
                 <li className={styles.botao}>
                   <button

@@ -1,0 +1,41 @@
+@import '@/styles/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: $cinza-600;
+  border-radius: 14px;
+  gap: 12px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.data {
+  color: $ciano-300;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.check-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

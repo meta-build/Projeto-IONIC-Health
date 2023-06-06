@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import BadgeStatus from '../../../components/BadgeStatus';
 import { Botao, BotaoPreenchido } from '../../../components/Botoes';
 import { useContexto } from '../../../context/contexto';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import PopupAlerta from '../../../popUps/PopupAlerta';
 import PopupConfirm from '../../../popUps/PopupConfirm';
 import PopupCarregando from '../../../popUps/PopupCarregando';
@@ -27,6 +27,8 @@ export default function ListaSolicitacoesDesktop() {
   const nav = useNavigate();
   const loc = useLocation();
   const { usuario } = useContexto();
+
+  const { id } = useParams();
 
   const [busca, setBusca] = useState('');
   const [tipo, setTipo] = useState('Todos');
@@ -116,18 +118,19 @@ export default function ListaSolicitacoesDesktop() {
 
   useEffect(() => {
     getSolicitacoes();
+    if (id) {setSolicId(Number(id))}
     if (solicId) {
       Solicitacoes.getByID(solicId)
         .then(solic => setSolicSelecionada(solic));
     }
-  }, [busca, tipo, status, situacaoNota, loc.pathname, solicId]);
+  }, [busca, tipo, status, situacaoNota, loc.pathname, solicId, id]);
   return (
     <section id='desktop'>
       <Header32 className={styles.titulo}>
         {loc.pathname == '/solicitacoes' ? 'Solicitações' :
-          loc.pathname == '/minhas-solicitacoes' ? 'Minhas solicitações' :
+          loc.pathname == '/solicitacoes-em-producao' ? 'Solicitações em produção' :
             loc.pathname == '/solicitacoes-para-avaliar' ? 'Solicitações para avaliar' :
-              'Solicitações em produção'}
+              'Minhas solicitações'}
       </Header32>
 
       <section className={styles.section}>
@@ -325,7 +328,7 @@ export default function ListaSolicitacoesDesktop() {
                       </Botao>}
                   </>
                 }
-                {solicSelecionada.isArchived ?
+                {usuario.permissions.find(perm => perm.id == 10) && (solicSelecionada.isArchived ?
                   <Botao
                     handleClick={() => {
                       setConfirmDesarquivar(true);
@@ -338,7 +341,7 @@ export default function ListaSolicitacoesDesktop() {
                     className={styles.botao}>
                     Arquivar
                   </Botao>
-                }
+                )}
                 {usuario.permissions.find(perm => perm.id == 9) &&
                   <Botao
                     handleClick={() => setConfirmExcluir(true)}
